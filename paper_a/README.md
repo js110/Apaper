@@ -29,9 +29,7 @@ items. `paper_a.tex` and `references.bib` are the editable sources. The old
   configurations, 27 completed and five stopped at the sampled RSS limit.
   These measurements do not include setup or proof generation at larger sizes.
 
-The last compiled pre-JISA PDF had 45 pages and passed 132 local artifact checks. The JISA branch changes manuscript framing and must be recompiled and re-audited before submission. Its 23 cited
-references include 20 scholarly works and three data/software/documentation
-resources. Seventeen of the 20 scholarly works are from 2022–2026; three original
+The last compiled pre-JISA PDF had 45 pages and passed 132 local artifact checks. The JISA branch changes manuscript framing and must be recompiled and re-audited before submission. Its revised bibliography contains 25 cited entries: 22 scholarly works and three data/software/documentation resources. Seventeen of the 20 scholarly works are from 2022–2026; three original
 method papers and the exact pinned dataset snapshot are the necessary older
 sources. The current bibliography remains technically relevant, but the JISA revision should be rechecked for venue-specific literature positioning before submission. Current
 selection, recency exceptions and source-access notes are in
@@ -155,7 +153,7 @@ A missing issuer causes abort.
 
 The JISA branch now uses the current Elsevier `elsarticle` submission structure with numeric references. Template provenance and unresolved journal-specific points are recorded in `venue_template_jisa/COMPLIANCE.md`. The previous bundled 3.4 class has been upgraded to the maintained 3.4c body aligned with the CTAN 3.5 (2026-01-09) release metadata. The manuscript selects `preprint,review,12pt` with line numbers; it does not try to emulate Elsevier's final production layout.
 
-Run `python3 export_latex.py` after compilation to create the submission-source ZIP. Rename/update the exporter output for the JISA submission package before upload. The exporter flattens figure paths and includes
+Run `python3 export_latex.py` after a fresh LaTeX/BibTeX compilation to create `paper_a_jisa_latex_draft.zip`. The exporter refuses to package the manuscript if the two newly added JISA references are missing from `paper_a.bbl`. The exporter flattens figure paths and includes
 the class, bibliography style and required figures, without experiment raw data.
 The ZIP retains the draft banner and unresolved declaration status. It is
 not an approved submission. The main manuscript remains `paper_a.tex`.
