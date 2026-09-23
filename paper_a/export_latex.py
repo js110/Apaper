@@ -25,6 +25,27 @@ def main():
 
     manuscript = re.sub(r'(\\includegraphics(?:\[[^\]]*\])?)\{([^}]+)\}', flatten, original)
     files['paper_a.tex'] = manuscript.encode()
+
+    bbl = (ROOT/'paper_a.bbl').read_text()
+    required_bibitems = ('Imam2025JISA', 'Wang2025JISA')
+    missing_bibitems = [key for key in required_bibitems if ('\\bibitem{' + key + '}') not in bbl]
+    if missing_bibitems:
+        raise RuntimeError(
+            'paper_a.bbl is stale; recompile with BibTeX before export. '
+            f'Missing bibitems: {missing_bibitems}'
+        )
+
+    highlights = [
+        line.strip()[2:].strip()
+        for line in (ROOT/'highlights.txt').read_text().splitlines()
+        if line.strip().startswith('- ')
+    ]
+    if not 3 <= len(highlights) <= 5:
+        raise RuntimeError('Elsevier highlights must contain 3--5 bullet points')
+    too_long = [(item, len(item)) for item in highlights if len(item) > 85]
+    if too_long:
+        raise RuntimeError(f'Highlights exceed 85 characters: {too_long}')
+
     for name in ('references.bib', 'paper_a.bbl', 'elsarticle.cls', 'elsarticle-num.bst', 'highlights.txt'):
         files[name] = (ROOT/name).read_bytes()
     files['DRAFT_README.txt'] = (
