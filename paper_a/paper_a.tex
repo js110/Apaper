@@ -157,6 +157,26 @@ Figure~\ref{fig:sequence} separates challenge issuance, evidence signing, and su
 The protocol is evaluated against five explicit security objectives. \emph{Evidence authenticity and context integrity} require that an accepted witness contain boxes signed by the configured issuer keys and bound to the same task, report, challenge, expiry, coordinate convention, policy, threshold, and roster. \emph{Conditional acceptance soundness} requires that a valid proof authorize a report only when the certified robust relation is satisfied; connecting that relation to the physical event additionally requires the source-coverage assumption formalized in Proposition~\ref{prop:soundness}. \emph{Witness confidentiality} requires the verifier to learn no box coordinates or signatures beyond what follows from the public statement and decision, relying on the zero-knowledge property of the instantiated proof system. \emph{Freshness} requires successful verification to consume the issued challenge so that the same challenge cannot be replayed within the gateway instance. \emph{Fail-closed evidence handling} requires missing signatures, malformed public inputs, wrong decisions, expired challenges, and inconsistent rosters to abort rather than be reinterpreted as compliant evidence.
 
 These objectives do not provide source availability, physical calibration, anonymous networking, Sybil-resistant real-world authority enrollment, or unlinkability across accepted reports. They also do not authorize a verifier to issue arbitrarily many adaptive geofences against the same event. The intended deployment model therefore restricts verification to administrator-authorized task policies already bound into the challenge context. Rate limiting, audit logging, and policy-granularity controls would be required if task creation itself were exposed to an adversarial verifier; those controls are outside the present prototype.
+
+Table~\ref{tab:security-properties} makes the security boundary explicit by separating cryptographic properties from physical and operational assumptions.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Security properties, dependencies, and validation evidence.}
+\label{tab:security-properties}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.20\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Property & Required assumptions & Mechanism / evidence\\
+\midrule
+Evidence authenticity & Issuer signing keys uncompromised outside the $f$ Byzantine budget & In-circuit EdDSA verification; modified signed bounds rejected\\
+Context integrity & Trusted gateway task configuration; collision resistance of transcript hashing & Task/report/roster/threshold/challenge/expiry binding; substitution tests rejected\\
+Conditional acceptance soundness & Proof-system soundness; at most $f$ Byzantine issuers; at most $r$ honest misses & Four-valued robust relation; Propositions 1--2; direct $M\le r$ diagnostic\\
+Witness confidentiality & Zero-knowledge of the instantiated proof system; public outputs accepted as leakage & Private boxes and signatures remain witness data; public leakage boundary stated explicitly\\
+Freshness & Trusted clock and atomic gateway state within one instance & Expiry and consume-after-verify; eight-copy replay test accepts one copy\\
+Fail-closed handling & Correct gateway execution and complete configured roster & Missing/malformed evidence, wrong decisions, unknown challenges, and duplicate roster entries abort\\
+\bottomrule
+\end{tabularx}
+\end{table}
 \section{Robust compliance semantics}
 For $1\leq k=n-f-r\leq n$, define
 \begin{equation}\label{eq:feasible}
@@ -226,6 +246,8 @@ Writing $b=n-k=f+r$ clarifies the parameter tradeoff: for fixed $b$, subset enum
 
 \subsection{Security and leakage boundary}
 Assuming the instantiated proof system's knowledge soundness, accepted proofs establish an assignment satisfying the signature and geometry relation. Signature unforgeability for authorized keys, collision resistance of the signed-box MiMC prehash and transcript-digest mapping, and correct context validation bind that assignment to authenticated evidence for the intended event. Proposition~\ref{prop:soundness} then connects that evidence to compliance on the stated physical-coverage event. A reduction would add cryptographic failure probabilities to the calibration-failure probability; this paper does not claim a mechanized end-to-end security proof.
+
+The Groth16 instantiation additionally relies on correct circuit-specific setup. Exposure or malicious generation of setup trapdoor material can invalidate the soundness assumption and is therefore part of the trusted setup boundary, not something detected by the proof verifier. The benchmark generates setup material locally for measurement only. A deployment would require an appropriate ceremony or another proof system whose setup model matches the application security policy.
 
 The zero-knowledge property hides box coordinates and signatures from the verifier, conditional on the public statement. The roster, domain, policy, threshold, context, and classification are public. The prover sees the boxes it receives, and issuing authorities retain their observations. Repeated linkable classifications can reveal additional location information. In particular, a verifier allowed to adaptively vary fine-grained policies could use the disclosed classifications as an oracle that narrows the event location. The prototype therefore treats the administrator-authorized task policy as part of the trust boundary and does not provide privacy against unrestricted adaptive policy queries, anonymous networking, private roster membership, or unlinkable rewards. Its privacy claim is limited to the proof witness under the configured public statement.
 
