@@ -1,14 +1,16 @@
 # Cover letter — author-review draft
 
-Dear Editors of Vehicular Communications,
+Dear Editors of the Journal of Information Security and Applications,
 
-We wish to submit “Beyond Point Claims: Zero-Knowledge Certification of Robust Spacetime Compliance in Vehicular Crowdsensing” for consideration as a research article.
+We wish to submit “Privacy-Preserving Robust Spacetime Compliance under Byzantine Evidence: A Zero-Knowledge Framework for Vehicular Crowdsensing” for consideration as a research article.
 
-The manuscript addresses the gap between verifying a private coordinate claim and establishing that uncertain, potentially Byzantine evidence supports a sensing report's task eligibility. It develops an exact four-valued policy relation over signed private uncertainty boxes and implements two zero-knowledge circuit backends with report-bound gateway verification.
+The manuscript studies a security gap in privacy-preserving location verification: a zero-knowledge proof over one hidden coordinate can be cryptographically correct even when the underlying event is uncertain or some authenticated evidence sources are malicious. We formulate the verification target as a robust four-valued relation over private signed uncertainty boxes, with explicit Byzantine and honest-miscoverage budgets.
 
-The evaluation combines real cryptographic measurements, synthetic decision experiments, and measured-trajectory replay with simulated evidence. It examines both computational costs and the availability consequences of uncertainty and source faults. The emphasis on verifiable reporting, privacy, and protocol behavior connects the work to vehicular data collection and communication systems.
+The work implements two Groth16/BN254 circuit backends with in-circuit EdDSA/MiMC verification and binds each proof to the authorized task, issuer roster, report, challenge, threshold, and expiry. A local gateway prototype reconstructs trusted public inputs, rejects context substitution, and atomically consumes a successfully verified challenge to prevent same-challenge replay within the stated execution model.
 
-The study builds on established fault-tolerant fusion and proof primitives; its contribution is the implemented policy-certificate interface and the evaluation of its operating regimes.
+The evaluation separates security-relation validation from physical deployment claims. It includes 64,800 synthetic event-condition observations, matched miscoverage-budget analyses, a 787-state measured reference trajectory replay with simulated evidence, 300 measured zero-knowledge proofs, and a resource-bounded circuit compilation sweep. The manuscript explicitly treats real multisource positioning calibration and field deployment as external validation requirements rather than inferring them from simulation.
+
+We believe the manuscript fits JISA because its primary contribution is a privacy-preserving security certification mechanism with explicit trust assumptions, adversarial evidence handling, authenticated context binding, and reproducible cryptographic implementation, while vehicular crowdsensing serves as the application domain.
 
 Sincerely,
 
@@ -20,4 +22,4 @@ College of Information and Electronic Technology, Jiamusi University
 
 ---
 
-Internal preparation note — remove only after confirmation: This letter has not been sent. Confirm all authors approve this manuscript and submission, that it is not simultaneously under consideration elsewhere, and how the previous PCVCS manuscript relates to this work. No exclusivity, originality, rights, or all-author approval statement has been asserted without confirmation. Final wording must follow the journal's current submission form.
+Internal preparation note — remove only after confirmation: This letter has not been sent. Confirm all authors approve this manuscript and submission, that it is not simultaneously under consideration elsewhere, how the previous PCVCS manuscript relates to this work, and all required JISA declarations. No exclusivity, originality, rights, conflict-of-interest, or all-author approval statement has been asserted without confirmation.
