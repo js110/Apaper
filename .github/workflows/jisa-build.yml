@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Reproduce semantic assumption diagnostics
+        shell: bash
+        run: |
+          python3 -m pip install --quiet numpy matplotlib
+          python3 paper_a/experiments/run_semantic_evaluation.py --output paper_a/experiments/semantic_results_jisa_r0.json
+          python3 paper_a/experiments/run_semantic_evaluation.py --miscoverage-budget 1 --output paper_a/experiments/semantic_results_jisa_r1.json
+          python3 paper_a/experiments/run_semantic_evaluation.py --miscoverage-budget 2 --output paper_a/experiments/semantic_results_jisa_r2.json
       - name: Compile LaTeX and BibTeX
         uses: xu-cheng/latex-action@v3
         with:
@@ -46,3 +53,6 @@ jobs:
             paper_a/paper_a.bbl
             paper_a/paper_a.log
             paper_a/paper_a_jisa_latex_draft.zip
+            paper_a/experiments/semantic_results_jisa_r0.json
+            paper_a/experiments/semantic_results_jisa_r1.json
+            paper_a/experiments/semantic_results_jisa_r2.json
