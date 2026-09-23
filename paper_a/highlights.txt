@@ -1,5 +1,5 @@
-- Robust evidence semantics avoid accepting unsupported point claims
-- Zero-knowledge circuits verify signed uncertainty without exposing evidence
-- Task and challenge binding blocks substitution and same-challenge replay
-- Subset enumeration lowers proof cost in the tested small-omission regime
-- Calibration limits are separated from cryptographic guarantees
+- Robust certification rejects point claims unsupported by signed uncertainty
+- Zero-knowledge proofs bind private evidence to task, report, roster, and challenge
+- Four-valued semantics separate compliance, violation, ambiguity, and inconsistency
+- Same-stack benchmarks quantify cost beyond a hidden-point ZK predicate
+- Security guarantees separate cryptography from physical calibration
