@@ -153,12 +153,7 @@ A missing issuer causes abort.
 
 ## Formatting status
 
-The official publisher-linked `elsarticle` ZIP has now been downloaded and is
-preserved under `venue_template/`, with provenance and unresolved journal rules
-in `venue_template/COMPLIANCE.md`. The downloaded class is **3.4**, generated with
-its supplied installer and used locally, unchanged, with the matching numeric
-style. The manuscript now selects `preprint,review,12pt` and optional line numbers.
-These are template-supported review choices, not verified journal-specific mandates.
+The JISA branch now uses the current Elsevier `elsarticle` submission structure with numeric references. Template provenance and unresolved journal-specific points are recorded in `venue_template_jisa/COMPLIANCE.md`. The previous bundled 3.4 class has been upgraded to the maintained 3.4c body aligned with the CTAN 3.5 (2026-01-09) release metadata. The manuscript selects `preprint,review,12pt` with line numbers; it does not try to emulate Elsevier's final production layout.
 
 Run `python3 export_latex.py` after compilation to create the submission-source ZIP. Rename/update the exporter output for the JISA submission package before upload. The exporter flattens figure paths and includes
 the class, bibliography style and required figures, without experiment raw data.
