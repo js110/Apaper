@@ -1,7 +1,6 @@
 # Paper A — author-review manuscript and reproducible evidence
 
-Updated 2026-09-22. Target remains **Vehicular Communications**, Original Research
-Article, initial submission. **Complete first draft; not cleared for submission.**
+Updated 2026-09-23. Target is now **Journal of Information Security and Applications (JISA)**, research article, initial submission. The manuscript has been reframed around privacy-preserving security certification, authenticated uncertainty, and zero-knowledge verification. **Author declarations and final submission checks remain unresolved.**
 
 Open `paper_a.pdf` for the manuscript, `research_audit_zh.md` for the original internal
 assessment, and `revision_response_zh.md` for the current response and unresolved
@@ -30,11 +29,11 @@ items. `paper_a.tex` and `references.bib` are the editable sources. The old
   configurations, 27 completed and five stopped at the sampled RSS limit.
   These measurements do not include setup or proof generation at larger sizes.
 
-The current PDF has 42 pages and passes 132 local artifact checks. Its 23 cited
+The last compiled pre-JISA PDF had 45 pages and passed 132 local artifact checks. The JISA branch changes manuscript framing and must be recompiled and re-audited before submission. Its 23 cited
 references include 20 scholarly works and three data/software/documentation
 resources. Seventeen of the 20 scholarly works are from 2022–2026; three original
 method papers and the exact pinned dataset snapshot are the necessary older
-sources. All five Vehicular Communications articles are from 2022–2025. Current
+sources. The current bibliography remains technically relevant, but the JISA revision should be rechecked for venue-specific literature positioning before submission. Current
 selection, recency exceptions and source-access notes are in
 `evidence/literature_recency_20260917.md`; the earlier search record is preserved
 in `evidence/literature_update_20260915.md`. Author
@@ -161,20 +160,9 @@ its supplied installer and used locally, unchanged, with the matching numeric
 style. The manuscript now selects `preprint,review,12pt` and optional line numbers.
 These are template-supported review choices, not verified journal-specific mandates.
 
-Run `python3 export_latex.py` after compilation to create
-`paper_a_vehcom_latex_draft.zip`. The exporter flattens figure paths and includes
+Run `python3 export_latex.py` after compilation to create the submission-source ZIP. Rename/update the exporter output for the JISA submission package before upload. The exporter flattens figure paths and includes
 the class, bibliography style and required figures, without experiment raw data.
 The ZIP retains the draft banner and unresolved declaration status. It is
 not an approved submission. The main manuscript remains `paper_a.tex`.
 
-Official journal Guide for Authors was rechecked on 2026-09-22:
-https://www.sciencedirect.com/journal/vehicular-communications/publish/guide-for-authors
-returned HTTP 403. Exact current journal-specific requirements remain unverified;
-this layout is not presented as a certified submission template. The journal's
-2018 guide, available through a university-hosted archive, requires author,
-correspondence and funding information; see `venue_template/COMPLIANCE.md` for
-the source and currency limitation. Author order, affiliation, correspondence
-and funding were directly supplied by the user on 2026-09-22 and checked against
-the manuscript. Contributions, sponsor roles, conflicts, final AI declaration
-and all-author final approval remain unresolved. No submission, upload, or
-external manuscript disclosure occurred.
+JISA is the current target venue. Its current Guide for Authors and declaration requirements must be checked again at final submission because publisher instructions can change. Author order, affiliation, correspondence and funding were previously supplied by the user; contributions, sponsor roles, conflicts, final AI declaration, data/code release arrangement and all-author final approval remain unresolved. No submission, upload, or external manuscript disclosure occurred.
