@@ -159,3 +159,5 @@ The ZIP retains the draft banner and unresolved declaration status. It is
 not an approved submission. The main manuscript remains `paper_a.tex`.
 
 JISA is the current target venue. Its current Guide for Authors and declaration requirements must be checked again at final submission because publisher instructions can change. Author order, affiliation, correspondence and funding were previously supplied by the user; contributions, sponsor roles, conflicts, final AI declaration, data/code release arrangement and all-author final approval remain unresolved. No submission, upload, or external manuscript disclosure occurred.
+
+GitHub Actions build: `.github/workflows/jisa-build.yml` recompiles the JISA manuscript, checks the new JISA bibliography entries, and exports the flat Editorial Manager source package.
