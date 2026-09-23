@@ -111,21 +111,24 @@ def generate_event(
     n: int,
     domain: BoxND,
     policy: BoxND,
-) -> tuple[tuple[int, ...], list[BoxND]]:
+) -> tuple[tuple[int, ...], list[BoxND], int]:
     truth = _boundary_weighted_point(rng, domain.hi[0], policy, condition.radius + 1)
     shared = rng.uniform(-1.0, 1.0, size=3)
     boxes: list[BoxND] = []
+    honest_misses = 0
     for _ in range(n - condition.actual_byzantine):
         radius = int(rng.integers(max(1, condition.radius // 2), condition.radius + 1))
         error = _honest_error(rng, radius, condition.calibration, shared)
         observed = np.clip(np.asarray(truth) + error, 0, domain.hi[0]).astype(int)
-        boxes.append(_box_around(observed, radius, domain.hi[0]))
+        honest_box = _box_around(observed, radius, domain.hi[0])
+        boxes.append(honest_box)
+        honest_misses += int(not honest_box.contains(truth))
     boxes.extend(
         _adversarial_box(truth, policy, domain.hi[0])
         for _ in range(condition.actual_byzantine)
     )
     rng.shuffle(boxes)
-    return truth, boxes
+    return truth, boxes, honest_misses
 
 
 def _center(box: BoxND) -> tuple[float, ...]:
@@ -236,13 +239,24 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         condition.key: {method: [] for method in METHODS} for condition in conditions
     }
     invariant_violations = 0
+    assumption_counts = {
+        condition.key: {
+            "events": 0,
+            "m_le_r": 0,
+            "m_gt_r": 0,
+            "robust_error_m_le_r": 0,
+            "robust_error_m_gt_r": 0,
+            "miss_histogram": {},
+        }
+        for condition in conditions
+    }
     seed_counts = {condition.key: {method: [] for method in METHODS} for condition in conditions}
     for seed in range(args.seeds):
         rng = np.random.default_rng(args.seed_base + seed)
         for condition in conditions:
             counts = {method: _new_counts() for method in METHODS}
             for _ in range(args.events_per_seed):
-                truth, boxes = generate_event(rng, condition, args.sources, domain, policy)
+                truth, boxes, honest_misses = generate_event(rng, condition, args.sources, domain, policy)
                 truth_inside = policy.contains(truth)
                 for method, function in functions.items():
                     _update(counts[method], function(boxes, policy, condition.radius), truth_inside)
@@ -250,6 +264,20 @@ def run(args: argparse.Namespace) -> dict[str, object]:
                     boxes, domain, policy, args.assumed_byzantine, args.miscoverage_budget
                 )
                 _update(counts["robust_depth"], robust, truth_inside)
+                ac = assumption_counts[condition.key]
+                ac["events"] += 1
+                hist_key = str(honest_misses)
+                ac["miss_histogram"][hist_key] = ac["miss_histogram"].get(hist_key, 0) + 1
+                robust_error = (
+                    (robust == ROBUST_VALID and not truth_inside)
+                    or (robust == ROBUST_INVALID and truth_inside)
+                )
+                if honest_misses <= args.miscoverage_budget:
+                    ac["m_le_r"] += 1
+                    ac["robust_error_m_le_r"] += int(robust_error)
+                else:
+                    ac["m_gt_r"] += 1
+                    ac["robust_error_m_gt_r"] += int(robust_error)
                 assumptions_hold = (
                     condition.actual_byzantine <= args.assumed_byzantine
                     and condition.calibration.startswith("calibrated_")
@@ -289,6 +317,16 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             "conditions": [asdict(condition) | {"key": condition.key} for condition in conditions],
         },
         "invariant_violations_under_stated_assumptions": invariant_violations,
+        "assumption_diagnostics": {
+            key: {
+                **value,
+                "p_m_le_r": value["m_le_r"] / value["events"] if value["events"] else None,
+                "p_m_gt_r": value["m_gt_r"] / value["events"] if value["events"] else None,
+                "robust_error_rate_m_le_r": value["robust_error_m_le_r"] / value["m_le_r"] if value["m_le_r"] else None,
+                "robust_error_rate_m_gt_r": value["robust_error_m_gt_r"] / value["m_gt_r"] if value["m_gt_r"] else None,
+            }
+            for key, value in assumption_counts.items()
+        },
         "aggregate": aggregate,
         "seed_results": seed_results,
         "seed_counts": seed_counts,
