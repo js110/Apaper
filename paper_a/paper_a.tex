@@ -170,7 +170,7 @@ Property & Required assumptions & Mechanism / evidence\\
 \midrule
 Evidence authenticity & Issuer signing keys uncompromised outside the $f$ Byzantine budget & In-circuit EdDSA verification; modified signed bounds rejected\\
 Context integrity & Trusted gateway task configuration; collision resistance of transcript hashing & Task/report/roster/threshold/challenge/expiry binding; substitution tests rejected\\
-Conditional acceptance soundness & Proof-system soundness; at most $f$ Byzantine issuers; at most $r$ honest misses & Four-valued robust relation; Propositions 1--2; direct $M\le r$ diagnostic\\
+Conditional acceptance soundness & Proof-system soundness; at most $f$ Byzantine issuers; at most $r$ honest misses & Four-valued robust relation; Propositions~\ref{prop:soundness} and~\ref{prop:gateway}; direct $M\le r$ diagnostic\\
 Witness confidentiality & Zero-knowledge of the instantiated proof system; public outputs accepted as leakage & Private boxes and signatures remain witness data; public leakage boundary stated explicitly\\
 Freshness & Trusted clock and atomic gateway state within one instance & Expiry and consume-after-verify; eight-copy replay test accepts one copy\\
 Fail-closed handling & Correct gateway execution and complete configured roster & Missing/malformed evidence, wrong decisions, unknown challenges, and duplicate roster entries abort\\
@@ -256,7 +256,7 @@ Policy-aware collusion does not require a new geometric safety margin while the 
 \paragraph{Reward deduplication is a separate relation}
 Anonymous membership protocols such as Semaphore provide scoped double-signaling prevention~\cite{SemaphoreDocs}. A potential reward extension would prove ownership of an enrolled secret $s$ and compute a domain-separated nullifier $\eta=\operatorname{PRF}_s(\text{task},\text{epoch})$ in the same report-bound proof. Its scope must not include a fresh challenge, which would permit a new nullifier on every retry. The reward service must atomically enforce uniqueness and persist that state. This prevents repeated rewards per enrolled credential and scope, not Sybil enrollment: freely chosen pseudonym keys defeat it. Unique-credential issuance, renewal, revocation, permitted reporting frequency, and the resulting within-scope linkability are additional assumptions. A prover-selected grid identifier is likewise unsafe unless policy-bound and proven. No nullifier or incentive mechanism is implemented or benchmarked here.
 
-\begin{proposition}[Gateway-conditioned report acceptance]
+\begin{proposition}[Gateway-conditioned report acceptance]\label{prop:gateway}
 Assume an authorized task/key configuration, correct gateway execution with a trustworthy clock, unforgeable issuer signatures, knowledge soundness of the proof system, and collision resistance of both the signed-box MiMC prehash and the instantiated transcript-digest mapping. If the gateway accepts a report and the physical coverage event in Proposition~\ref{prop:soundness} holds, the report's bound reference event satisfies the configured policy, except for cryptographic failure.
 \end{proposition}
 \begin{proof}
