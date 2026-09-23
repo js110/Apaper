@@ -169,7 +169,7 @@ Table~\ref{tab:security-properties} makes the security boundary explicit by sepa
 Property & Required assumptions & Mechanism / evidence\\
 \midrule
 Evidence authenticity & Issuer signing keys uncompromised outside the $f$ Byzantine budget & In-circuit EdDSA verification; modified signed bounds rejected\\
-Context integrity & Trusted gateway task configuration; collision resistance of transcript hashing & Task/report/roster/threshold/challenge/expiry binding; substitution tests rejected\\
+Context integrity & Trusted gateway task configuration; collision resistance of transcript hashing & Binding covers task, report, roster, threshold, challenge, and expiry; substitution tests rejected\\
 Conditional acceptance soundness & Proof-system soundness; at most $f$ Byzantine issuers; at most $r$ honest misses & Four-valued robust relation; Propositions~\ref{prop:soundness} and~\ref{prop:gateway}; direct $M\le r$ diagnostic\\
 Witness confidentiality & Zero-knowledge of the instantiated proof system; public outputs accepted as leakage & Private boxes and signatures remain witness data; public leakage boundary stated explicitly\\
 Freshness & Trusted clock and atomic gateway state within one instance & Expiry and consume-after-verify; eight-copy replay test accepts one copy\\
@@ -279,7 +279,7 @@ An end-to-end submission would have
 \begin{equation}
  T_{\mathrm{total}}=T_{\mathrm{challenge}}+T_{\mathrm{evidence}}+T_{\mathrm{witness}}+T_{\mathrm{prove}}+T_{\mathrm{upload}}+T_{\mathrm{verify}}+T_{\mathrm{queue/store}}.
 \end{equation}
-The benchmark times local witness construction and the proof kernel. The other terms---challenge exchange, physical evidence collection, wireless transport, and service queue/storage---remain unmeasured. We additionally compile a deliberately weaker point-ZK lower bound in the same gnark/Groth16/BN254 stack. It proves only that one private $d$-dimensional point lies inside the public policy and authenticates no issuer evidence. We therefore compare structural constraint counts and serialized proof/public-input sizes, not security equivalence or end-to-end latency. Parallel issuer requests would still wait for the slowest required response; a withholding roster member causes an abort at timeout. Similarly, the 164-byte proof and 556--748-byte public witness account only for the cryptographic components of a wire packet. M1 workstation timings are not extrapolated to an OBU and establish neither embedded-device feasibility nor a real-time deadline.
+The benchmark times local witness construction and the proof kernel. Challenge exchange, physical evidence collection, wireless transport, and service queue or storage remain unmeasured. We additionally compile a deliberately weaker point-ZK lower bound with the same gnark stack, Groth16, and BN254 curve. It proves only that one private $d$-dimensional point lies inside the public policy and authenticates no issuer evidence. We compare structural constraint counts and serialized proof and public-input sizes, not security equivalence or end-to-end latency. Parallel issuer requests still wait for the slowest required response; a withholding roster member causes an abort at timeout. The 164-byte proof and 556--748-byte public witness cover only the cryptographic components of a wire packet. M1 workstation timings are not extrapolated to an OBU and establish neither embedded-device feasibility nor a real-time deadline.
 
 Experimental figures are generated reproducibly from recorded results using Python and Matplotlib. OpenAI Codex (OpenAI; model version not exposed in the retained workflow record) assisted preparation of the analysis and plotting code. The plots are data-derived renderings, not image-model outputs; source-data tables, rendering scripts, and artifact hashes accompany the draft.
 
@@ -394,7 +394,7 @@ Figure~\ref{fig:budget} visualizes the availability--error tradeoff in Table~\re
 \end{figure}
 
 \subsection{Hidden-point ZK lower bound}
-To separate the cost of generic location privacy from the additional authenticated-evidence semantics, Table~\ref{tab:point-zk} compiles a private point-in-policy circuit in the same Groth16/BN254 stack. This baseline is intentionally weaker: it contains no issuer signatures, uncertainty boxes, threshold fusion, Byzantine budget, or four-valued output. It is therefore a lower bound on circuit work rather than a competing security protocol.
+To separate generic location-privacy cost from authenticated-evidence semantics, Table~\ref{tab:point-zk} compiles a private point-in-policy circuit using the same Groth16 proof system over BN254. This intentionally weaker baseline contains no issuer signatures, uncertainty boxes, threshold fusion, Byzantine budget, or four-valued output. It is a lower bound on circuit work rather than a competing security protocol.
 
 \begin{table}[htbp]
 \centering\small
@@ -409,7 +409,7 @@ To separate the cost of generic location privacy from the additional authenticat
 \end{tabular}
 \end{table}
 
-The smallest measured full subset circuits use 32,474 constraints at $(n,d)=(3,2)$ and 35,248 at $(3,3)$, respectively 79.6 and 57.6 times the point-predicate counts. At $(n,d)=(5,2)$ the full relation reaches 53,528 constraints, 131.2 times the 2-D point lower bound. These ratios should not be interpreted as the cost of robustness alone: in-circuit verification of $n$ EdDSA signatures, roster checks, private box range constraints, and the four-valued robust geometry are all included in the full relation. Groth16 proof size remains 164 bytes in both cases despite the larger relation.
+The smallest full subset circuits use 32,474 constraints at $(n,d)=(3,2)$ and 35,248 at $(3,3)$, which are 79.6 and 57.6 times the corresponding point-predicate counts. At $(n,d)=(5,2)$ the full relation uses 53,528 constraints, 131.2 times the two-dimensional point lower bound. These ratios are not the cost of robustness alone: the full relation also includes $n$ in-circuit EdDSA verifications, roster checks, private-box range constraints, and four-valued geometry. Groth16 proof size remains 164 bytes in both cases.
 
 \subsection{Real proof costs}
 Table~\ref{tab:crypto} reports measured proving and verification quantiles. Serialized proofs contain 164 bytes for all tested shapes. Serialized public witnesses add 556--748 bytes, including roster keys; packet headers, report payloads, and transport are additional. Constant proof size does not mean constant report size or constant verification cost in the number of public inputs.
