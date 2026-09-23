@@ -244,7 +244,7 @@ The proposition assumes honest issuers associate their boxes with the same physi
 \section{Implementation and experimental design}
 The ZK prototype uses Go 1.25.6, gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Groth2016}, and gnark's twisted-Edwards EdDSA with MiMC~\cite{MiMC2016}. This EdDSA instantiation differs from Ed25519. Keys and signatures use real cryptographic randomness, and the benchmark runs compilation, setup, witness construction, proving, and verification without placeholder cryptography.
 
-The evaluation is organized around four questions: \textbf{RQ1}, does the implemented proof/gateway reject statement tampering and replay; \textbf{RQ2}, how much decisive coverage is retained by robust semantics relative to point and margin baselines when the stated assumptions hold or fail; \textbf{RQ3}, how does the honest-miscoverage budget change the availability--error tradeoff; and \textbf{RQ4}, what proof, verification, and circuit-growth costs arise for the two exact backends?
+The evaluation is organized around four questions: \textbf{RQ1}, does the implemented proof/gateway reject statement tampering and replay; \textbf{RQ2}, how much decisive coverage is retained by robust semantics relative to point and margin baselines when the stated assumptions hold or fail; \textbf{RQ3}, how does the honest-miscoverage budget change the availability--error tradeoff; and \textbf{RQ4}, what proof, verification, and circuit-growth costs arise for the two exact backends, and how much larger is the authenticated robust relation than a bare hidden-point membership predicate?
 
 \paragraph{AI-assisted coding disclosure}
 OpenAI Codex was used as a coding assistant for portions of analysis/plotting code and repository-level checks. Reported measurements, simulation outputs, and plotted values were produced from the executable code and saved experimental records; generative AI was not used to fabricate or alter experimental result values. The resulting code paths were exercised by the reproducibility tests and artifact audits reported in this study.
@@ -257,7 +257,7 @@ An end-to-end submission would have
 \begin{equation}
  T_{\mathrm{total}}=T_{\mathrm{challenge}}+T_{\mathrm{evidence}}+T_{\mathrm{witness}}+T_{\mathrm{prove}}+T_{\mathrm{upload}}+T_{\mathrm{verify}}+T_{\mathrm{queue/store}}.
 \end{equation}
-The benchmark times local witness construction and the proof kernel. The other terms---challenge exchange, physical evidence collection, wireless transport, and service queue/storage---remain unmeasured. Parallel issuer requests would still wait for the slowest required response; a withholding roster member causes an abort at timeout. Similarly, the 164-byte proof and 556--748-byte public witness account only for the cryptographic components of a wire packet. M1 workstation timings are not extrapolated to an OBU and establish neither embedded-device feasibility nor a real-time deadline.
+The benchmark times local witness construction and the proof kernel. The other terms---challenge exchange, physical evidence collection, wireless transport, and service queue/storage---remain unmeasured. We additionally compile a deliberately weaker point-ZK lower bound in the same gnark/Groth16/BN254 stack. It proves only that one private $d$-dimensional point lies inside the public policy and authenticates no issuer evidence. We therefore compare structural constraint counts and serialized proof/public-input sizes, not security equivalence or end-to-end latency. Parallel issuer requests would still wait for the slowest required response; a withholding roster member causes an abort at timeout. Similarly, the 164-byte proof and 556--748-byte public witness account only for the cryptographic components of a wire packet. M1 workstation timings are not extrapolated to an OBU and establish neither embedded-device feasibility nor a real-time deadline.
 
 Experimental figures are generated reproducibly from recorded results using Python and Matplotlib. OpenAI Codex (OpenAI; model version not exposed in the retained workflow record) assisted preparation of the analysis and plotting code. The plots are data-derived renderings, not image-model outputs; source-data tables, rendering scripts, and artifact hashes accompany the draft.
 
@@ -370,6 +370,24 @@ Figure~\ref{fig:budget} visualizes the availability--error tradeoff in Table~\re
 \centering\includegraphics[width=\linewidth]{figures/budget_tradeoff.pdf}
 \caption{Honest-miscoverage budget sensitivity at $n=5,f=1$, radius four, and one Byzantine source. (a) Decisive coverage for both error models. (b,c) Conditional false acceptance and rejection for undercovered evidence, on separate vertical scales; calibrated errors are zero for all three budgets. Points are seed means and bars are normal 95\% intervals over the same 30 seeds at each budget.}\label{fig:budget}
 \end{figure}
+
+\subsection{Hidden-point ZK lower bound}
+To separate the cost of generic location privacy from the additional authenticated-evidence semantics, Table~\ref{tab:point-zk} compiles a private point-in-policy circuit in the same Groth16/BN254 stack. This baseline is intentionally weaker: it contains no issuer signatures, uncertainty boxes, threshold fusion, Byzantine budget, or four-valued output. It is therefore a lower bound on circuit work rather than a competing security protocol.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Private point-in-policy Groth16 lower bound. No issuer authentication or robust evidence semantics are included.}
+\label{tab:point-zk}
+\begin{tabular}{rrrr}
+\toprule Dimension & Constraints & Proof bytes & Public witness bytes\\
+\midrule
+2 & 408 & 164 & 268\\
+3 & 612 & 164 & 396\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The smallest measured full subset circuits use 32,474 constraints at $(n,d)=(3,2)$ and 35,248 at $(3,3)$, respectively 79.6 and 57.6 times the point-predicate counts. At $(n,d)=(5,2)$ the full relation reaches 53,528 constraints, 131.2 times the 2-D point lower bound. These ratios should not be interpreted as the cost of robustness alone: in-circuit verification of $n$ EdDSA signatures, roster checks, private box range constraints, and the four-valued robust geometry are all included in the full relation. Groth16 proof size remains 164 bytes in both cases despite the larger relation.
 
 \subsection{Real proof costs}
 Table~\ref{tab:crypto} reports measured proving and verification quantiles. Serialized proofs contain 164 bytes for all tested shapes. Serialized public witnesses add 556--748 bytes, including roster keys; packet headers, report payloads, and transport are additional. Constant proof size does not mean constant report size or constant verification cost in the number of public inputs.
