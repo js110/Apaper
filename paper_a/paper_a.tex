@@ -1,6 +1,6 @@
-% Official Elsevier numeric template; see venue_template/COMPLIANCE.md.
-% Review layout is an authoring choice pending access to journal-specific rules.
-\documentclass[preprint,review,12pt,nopreprintline]{elsarticle}
+% Elsevier elsarticle numeric submission template for JISA; see venue_template_jisa/COMPLIANCE.md.
+% The review option increases line spacing for peer review; final production layout is set by Elsevier.
+\documentclass[preprint,review,12pt]{elsarticle}
 \usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,tabularx}
 \usepackage{lineno}
 \usepackage[hidelinks]{hyperref}
@@ -61,6 +61,8 @@ Subset enumeration is the practical choice in the measured small-omission regime
 Anonymous participation need not rule out reliability checks. Cheng et al.'s AARE combines anonymous authentication with private reliability evaluation and reputation updates~\cite{Cheng2023}; Zheng et al.'s BARM adds blockchain-assisted identity management to anonymous authentication and reputation evaluation for sensing vehicles~\cite{Zheng2025BARM}. Zhou et al.'s PPVDA protects multidimensional sensing data using homomorphic message authentication codes and secret sharing, and verifies inner-product aggregation results~\cite{Zhou2024}. These mechanisms establish trust in participants or computations. They address a different question from whether a report's physical evidence supports its policy eligibility.
 
 BCS-LPP, proposed by Shen et al., addresses worker location privacy and participation fairness~\cite{Shen2024}. It combines blockchain, Geohash encoding, order-preserving encryption, and deposits, with verification of submitted sensing locations. Sultana et al. associate suspicious identities through speed time series and roadside evidence fusion for cooperative Sybil detection~\cite{Sultana2024}. Our certificate takes an authorized roster and fault budget as inputs; it does not infer either from reputation or misbehavior detection. Given those inputs, it checks whether every threshold-supported event state satisfies the public policy.
+
+Recent JISA work on vehicular security has emphasized privacy-preserving authentication and efficient verification. Imam and Li design lightweight anonymous certificateless aggregation for VANET authentication~\cite{Imam2025JISA}, while Wang et al. provide privacy-preserving certificateless aggregate signatures with invalid-signature detection~\cite{Wang2025JISA}. These systems protect identities and message authentication under vehicular threat models. Our target is orthogonal: after issuer identities and keys are provisioned, the verifier must decide whether private, uncertain physical evidence robustly supports a public spacetime policy. This distinction motivates treating authenticated evidence semantics, rather than authentication alone, as the certified object.
 
 \subsection{Private location and zero-knowledge policy proofs}
 Mdee et al. examine the effects of location-privacy mechanisms on vehicular applications~\cite{Mdee2022}. For electric-vehicle charging queries, Atmaca et al. use bounded location obfuscation and dummy queries to obtain approximate geo-indistinguishability~\cite{Atmaca2024}. Here the disclosed output is a policy decision rather than a perturbed coordinate. The privacy statement is therefore conditional on the public inputs and decision; it is not a differential-privacy guarantee.
@@ -271,7 +273,27 @@ We downloaded the UrbanNav-HK-Medium-Urban-1 reference file from the official da
 
 For each of 30 evidence realizations on this single trajectory, four honest sources have simulated spatial radii of 8--20~m and temporal radii of 1--3~s. Shared errors follow a bounded autoregressive process with coefficient 0.9 and source-specific bounded jitter. One Byzantine source targets the opposite policy outcome. For inside states, this replay attack uses the nearest lower policy face. A second mode multiplies the common bias by four to test misspecification. These are simulated evidence processes on a measured reference path, not measured GNSS residuals or independent real authorities. Replication estimates uncertainty conditional on the one path and policy, and supports no between-route generalization.
 
-\section{Results}
+\section{Security and performance evaluation}
+\subsection{Adversarial protocol validation}
+Before evaluating decision availability, we test whether the implemented proof and gateway fail closed under adversarial mutations of the authenticated statement. Table~\ref{tab:security-validation} summarizes the regression cases. These tests validate the implemented binding and replay logic; they do not replace the cryptographic assumptions stated in Section 5 or establish physical correctness of issuer observations.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Adversarial validation of the implemented proof/gateway path.}
+\label{tab:security-validation}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Threat & Enforced relation & Observed prototype behavior\\
+\midrule
+Evidence tampering & Issuer signature covers box bounds, issuer slot, and shared context & Modified signed bounds are rejected\\
+Decision substitution & Public decision code is constrained by the in-circuit geometry & All unequal proof/code combinations are rejected\\
+Task/report substitution & Context binds task configuration, report digest, threshold, roster, challenge, and expiry & Report replacement, threshold substitution, and cross-challenge reuse are rejected\\
+Challenge replay & Random nonce, expiry check, and atomic consume-after-verification & Unknown/expired nonces fail; in an eight-copy concurrent replay exactly one copy succeeds\\
+Roster manipulation & Ordered issuer keys, pairwise key inequality, and configured trust-domain labels & Duplicate public keys and duplicate configured trust-domain labels are rejected\\
+Missing evidence & The relation requires the complete configured roster & Missing evidence aborts the protocol rather than becoming an ``inconsistent'' certified decision\\
+\bottomrule
+\end{tabularx}
+\end{table}
 \subsection{Conditional correctness and availability}
 With calibrated errors and no more than one Byzantine source, the robust rule made no observed misclassifications across the 12 synthetic conditions. Because these conditions are generated to satisfy the stated coverage and fault assumptions, the zero-error result is primarily an implementation and semantic-consistency check rather than an empirical estimate of deployment accuracy. Equal weighting of these preselected conditions gives mean decisive coverage of 87.52\%, compared with 75.63\% for the fixed-margin baseline; the averages do not describe a deployment population.
 
