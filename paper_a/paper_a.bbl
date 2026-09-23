@@ -105,6 +105,13 @@ X.~Wang, P.~Zeng, G.~Liu, K.-C. Li, Y.~Liu, B.~Hu, F.~Palmieri, A
 \newblock \href {https://doi.org/10.1016/j.jisa.2025.104001}
   {\path{doi:10.1016/j.jisa.2025.104001}}.
 
+\bibitem{Reinhart2026ADSC}
+J.~Reinhart, E.-O. Blass, B.~Annigh{\"o}fer, {SNARKs} for stateful computations
+  on authenticated data, Journal of Information Security and Applications 99
+  (2026) 104444.
+\newblock \href {https://doi.org/10.1016/j.jisa.2026.104444}
+  {\path{doi:10.1016/j.jisa.2026.104444}}.
+
 \bibitem{Mdee2022}
 A.~P. Mdee, M.~M. Saad, M.~Khan, M.~T.~R. Khan, D.~Kim, Impacts of
   location-privacy preserving schemes on vehicular applications, Vehicular
