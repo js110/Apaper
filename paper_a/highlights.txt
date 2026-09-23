@@ -1,5 +1,5 @@
-Robust evidence semantics avoid accepting unsupported point claims
-Zero-knowledge circuits verify signed uncertainty without exposing evidence
-Task and challenge binding blocks substitution and same-challenge replay
-Subset enumeration lowers proof cost in the tested small-omission regime
-Calibration limits are separated from cryptographic guarantees
+- Robust evidence semantics avoid accepting unsupported point claims
+- Zero-knowledge circuits verify signed uncertainty without exposing evidence
+- Task and challenge binding blocks substitution and same-challenge replay
+- Subset enumeration lowers proof cost in the tested small-omission regime
+- Calibration limits are separated from cryptographic guarantees
