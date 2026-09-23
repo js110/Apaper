@@ -50,7 +50,7 @@ The main contributions are:
 Figure~\ref{fig:architecture} summarizes the evidence-to-proof boundary. The verifier learns the public task inputs and the classification, while the signed uncertainty boxes and their signatures remain private witnesses.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/system_architecture.png}
-\caption{Conceptual architecture of the local prototype. The diagram's $B_i$ and $F$ denote the evidence boxes $U_i$ and feasible set $\F$ used in the text. Issuers sign boxes bound to a common report context; the vehicle proves the robust decision using private evidence. The gateway checks the task-bound proof and expiry, consumes a verified challenge, and accepts only a valid decision. ``Inconsistent'' means proved evidence failure, not a missing signature. Calibration and trusted enrollment remain external assumptions. Icons do not imply physical issuer independence or deployment.}\label{fig:architecture}
+\caption{Conceptual architecture of the local prototype. The diagram's $B_i$ and $F$ denote the evidence boxes $U_i$ and feasible set $\F$ used in the text. Issuers sign boxes bound to a common report context; the vehicle proves the robust decision using private evidence. The gateway checks the task-bound proof and expiry, consumes a verified challenge, and accepts only a valid decision. ``Inconsistent'' means proved evidence failure, not a missing signature. Calibration and trusted enrollment remain external assumptions. Icons do not imply physical issuer independence or deployment. Initial schematic generated using OpenAI image generation through Codex.}\label{fig:architecture}
 \end{figure}
 
 Subset enumeration is the practical choice in the measured small-omission regime. The depth construction instead permits a public threshold and has a polynomial bound at fixed dimension; the matched experiments compare their costs without claiming a universal crossover.
@@ -148,7 +148,7 @@ At submission the gateway looks up the nonce, checks expiry, reconstructs the co
 Figure~\ref{fig:sequence} separates challenge issuance, evidence signing, and submission-time verification.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/protocol_sequence.png}
-\caption{Report-bound challenge lifecycle. The submission in step 6 also identifies the challenge nonce used for the gateway lookup. The diagram abstracts transport and shows the successful verification path; failed proofs do not consume the challenge. Verification and consumption share a process-local critical section. A fresh challenge may still be obtained for the same report.}\label{fig:sequence}
+\caption{Report-bound challenge lifecycle. The submission in step 6 also identifies the challenge nonce used for the gateway lookup. The diagram abstracts transport and shows the successful verification path; failed proofs do not consume the challenge. Verification and consumption share a process-local critical section. A fresh challenge may still be obtained for the same report. Initial schematic generated using OpenAI image generation through Codex.}\label{fig:sequence}
 \end{figure}
 
 \subsection{Security objectives and non-goals}
@@ -177,7 +177,7 @@ Let $I=\ind[\F\cap P\neq\varnothing]$ and $O=\ind[\F\cap(\Omega\setminus P)\neq\
 In the constructed example of Figure~\ref{fig:counterexample}, $\Omega=[-4,8]\cap\mathbb Z$ and both honest intervals contain $z^\star=-1$. The Byzantine interval excludes it. The all-source intersection $[2,4]\cap\mathbb Z$ lies inside the policy even though it excludes the true state, and a conveniently chosen point also passes. Threshold coverage retains $\F=[-2,4]\cap\mathbb Z$, giving an ambiguous decision. The example applies the existing fusion rationale; it supplies neither a new theorem nor an experimental success rate.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/decision_counterexample.png}
-\caption{One evidence set under three rules. All intervals are inclusive integer sets; $n=3,f=1,r=0,k=2$. The two naive acceptance examples contradict the known noncompliant true state, whereas the robust set spans the policy boundary. This is a constructed explanatory example, not measured data.}\label{fig:counterexample}
+\caption{One evidence set under three rules. All intervals are inclusive integer sets; $n=3,f=1,r=0,k=2$. The two naive acceptance examples contradict the known noncompliant true state, whereas the robust set spans the policy boundary. This is a constructed explanatory example, not measured data. Initial schematic generated using OpenAI image generation through Codex.}\label{fig:counterexample}
 \end{figure}
 
 \begin{proposition}[Conditional evidence soundness]\label{prop:soundness}
@@ -243,6 +243,9 @@ The proposition assumes honest issuers associate their boxes with the same physi
 The ZK prototype uses Go 1.25.6, gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Groth2016}, and gnark's twisted-Edwards EdDSA with MiMC~\cite{MiMC2016}. This EdDSA instantiation differs from Ed25519. Keys and signatures use real cryptographic randomness, and the benchmark runs compilation, setup, witness construction, proving, and verification without placeholder cryptography.
 
 The evaluation is organized around four questions: \textbf{RQ1}, does the implemented proof/gateway reject statement tampering and replay; \textbf{RQ2}, how much decisive coverage is retained by robust semantics relative to point and margin baselines when the stated assumptions hold or fail; \textbf{RQ3}, how does the honest-miscoverage budget change the availability--error tradeoff; and \textbf{RQ4}, what proof, verification, and circuit-growth costs arise for the two exact backends?
+
+\paragraph{AI-assisted coding disclosure}
+OpenAI Codex was used as a coding assistant for portions of analysis/plotting code and repository-level checks. Reported measurements, simulation outputs, and plotted values were produced from the executable code and saved experimental records; generative AI was not used to fabricate or alter experimental result values. The resulting code paths were exercised by the reproducibility tests and artifact audits reported in this study.
 
 Backend tests verify four decision fixtures and reject wrong decisions, modified signed bounds, and duplicated public keys. Integration tests additionally sign the full field context and pass real proofs through the gateway. Genuine proofs for all four decision classes verify and consume their challenges, but only the valid class authorizes a report. All twelve unequal proof/code pairings are rejected, as are report replacement, expiry, unknown nonces, cross-challenge reuse, and threshold substitution. A missing proof leaves the challenge unconsumed. In an eight-way concurrent replay, exactly one copy is accepted; duplicate trust-domain registration is also rejected. These are regression tests, not exhaustive cryptographic validation.
 
@@ -488,7 +491,7 @@ Figure~\ref{fig:receiver} shows the complete matched sequence and the fixed cali
 \end{figure}
 
 \section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
-During the preparation of this work, the authors used OpenAI ChatGPT to assist with language editing, manuscript organization, and revision of presentation. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
+During the preparation of this work, the authors used OpenAI ChatGPT and OpenAI Codex to assist with language editing, manuscript organization, revision of presentation, and code-level editing and checking. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
 
 % If generative AI was used to create or modify any submitted figure, add the corresponding tool disclosure to that figure caption before submission, as required by Elsevier policy.
 \bibliographystyle{elsarticle-num}
