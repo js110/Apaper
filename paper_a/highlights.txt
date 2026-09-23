@@ -1,5 +1,6 @@
 Draft highlights for author review:
-- Four outcomes separate robust compliance, ambiguity, and evidence inconsistency.
-- Private signed boxes are checked in two real zero-knowledge circuit backends.
-- Matched measurements favor subset enumeration at the tested fault budgets.
-- Trajectory replay exposes the dependence of correctness on evidence calibration.
+- Robust four-valued semantics prevent point-claim acceptance under uncertain evidence.
+- Groth16 circuits verify private signed boxes under Byzantine and miscoverage budgets.
+- Task/report/challenge binding protects context integrity and same-challenge freshness.
+- Subset enumeration is cheaper than depth evaluation in the tested small-omission regime.
+- Evaluation separates cryptographic validity from unverified physical calibration assumptions.
