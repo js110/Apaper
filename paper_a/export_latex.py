@@ -29,18 +29,18 @@ def main():
         files[name] = (ROOT/name).read_bytes()
     files['DRAFT_README.txt'] = (
         'Author-review draft; not approved for submission.\n'
-        'Target: Vehicular Communications. Publisher official elsarticle 3.4.\n'
-        'Journal-specific Guide for Authors could not be verified (HTTP 403).\n'
+        'Target: Journal of Information Security and Applications (JISA).\nPublisher template: Elsevier elsarticle numeric submission layout; CTAN 3.5 baseline.\nAll files are flattened because Elsevier Editorial Manager does not accept LaTeX subfolders.\n'
+        'JISA Guide for Authors returned HTTP 403 during the 2026-09-23 check; current Elsevier LaTeX instructions were used.\n'
         'Author order, affiliation, corresponding author/email and funding supplied by the user on 2026-09-22.\n'
         'Sponsor roles, other declarations and all-author final approval remain pending.\n'
         'Figure AI disclosures and the general AI statement are deferred for author completion before submission.\n'
         'Compile: latexmk -pdf -interaction=nonstopmode -halt-on-error paper_a.tex\n'
-        'Highlights are draft supporting text, not confirmed mandatory journal content.\n'
+        'Highlights follow Elsevier's 3--5 bullet, <=85-character guidance; final upload item type remains author-controlled.\n'
         'No experiment raw data, private keys or reviewer letters are included.\n'
     ).encode()
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}
     files['MANIFEST.json'] = json.dumps(dict(files=hashes, submission_ready=False), indent=2).encode()
-    output = ROOT/'paper_a_vehcom_latex_draft.zip'
+    output = ROOT/'paper_a_jisa_latex_draft.zip'
     with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, data in files.items():
             archive.writestr(name, data)
