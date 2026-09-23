@@ -161,3 +161,7 @@ not an approved submission. The main manuscript remains `paper_a.tex`.
 JISA is the current target venue. Its current Guide for Authors and declaration requirements must be checked again at final submission because publisher instructions can change. Author order, affiliation, correspondence and funding were previously supplied by the user; contributions, sponsor roles, conflicts, final AI declaration, data/code release arrangement and all-author final approval remain unresolved. No submission, upload, or external manuscript disclosure occurred.
 
 GitHub Actions build: `.github/workflows/jisa-build.yml` recompiles the JISA manuscript, checks the new JISA bibliography entries, and exports the flat Editorial Manager source package.
+
+## JISA-specific security diagnostics
+
+The JISA revision records event-level honest-miscoverage counts in `experiments/jisa_security_diagnostics.json` and adds a same-stack point-in-policy Groth16 lower-bound circuit under `prototype/zkdepth/point_baseline.go`. The point circuit is intentionally weaker and is used only to quantify structural circuit overhead, not as an equivalent trust/security baseline. The manuscript also cites the 2026 JISA ADSC-SNARK work to clarify the boundary between authenticated-data SNARK primitives and the present robust uncertainty relation.
