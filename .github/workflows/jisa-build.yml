@@ -1,5 +1,9 @@
 name: JISA manuscript build
 
+concurrency:
+  group: jisa-manuscript-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [jisa-revision]
