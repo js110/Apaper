@@ -65,7 +65,7 @@ proof pipeline per event. Cryptographic timings come only from Go benchmarks.
 ## Reproduction
 
 ```bash
-cd /Users/jiangsheng/Desktop/IEEE/revision_vehcom/paper_a/prototype
+cd paper_a/prototype
 python3 -m unittest -v test_robust_depth.py
 cd zkdepth
 GOCACHE=/tmp/pcvcs-paper-a-go-cache go test -v ./...
@@ -75,7 +75,7 @@ GOCACHE=/tmp/pcvcs-paper-a-go-cache go run ./cmd/bench --geometry depth --n 4 --
 ```
 
 ```bash
-cd /Users/jiangsheng/Desktop/IEEE/revision_vehcom/paper_a/experiments
+cd paper_a/experiments
 MPLCONFIGDIR=/tmp/pcvcs-mpl python3 run_semantic_evaluation.py
 MPLCONFIGDIR=/tmp/pcvcs-mpl python3 run_semantic_evaluation.py --miscoverage-budget 1 --output semantic_results_r1.json
 MPLCONFIGDIR=/tmp/pcvcs-mpl python3 run_semantic_evaluation.py --miscoverage-budget 2 --output semantic_results_r2.json
