@@ -9,10 +9,10 @@
 \newtheorem{lemma}{Lemma}
 \newcommand{\F}{\mathcal{F}_k}
 \newcommand{\ind}{\mathbf{1}}
-\journal{Vehicular Communications}
+\journal{Journal of Information Security and Applications}
 \begin{document}
 \begin{frontmatter}
-\title{Beyond Point Claims: Zero-Knowledge Certification of Robust Spacetime Compliance in Vehicular Crowdsensing}
+\title{Privacy-Preserving Robust Spacetime Compliance under Byzantine Evidence: A Zero-Knowledge Framework for Vehicular Crowdsensing}
 % Author order, affiliation and correspondence supplied by the user on 2026-09-22.
 \author[aff1]{Lili He}
 \author[aff1]{Sheng Jiang}
@@ -23,10 +23,10 @@
 \affiliation[aff1]{organization={College of Information and Electronic Technology, Jiamusi University},
 city={Jiamusi},postcode={154007},country={China}}
 \begin{abstract}
-A hidden coordinate may satisfy a task policy even when the physical evidence leaves the vehicle's compliance uncertain. We study this gap using private spacetime uncertainty boxes signed by authenticated sources, some of which may be Byzantine. A report is accepted only if every threshold-supported state satisfies the policy. Two reachability predicates separate validity and invalidity from boundary ambiguity and inconsistent evidence. Exact lower-corner and subset-enumeration circuits implement these tests with signature verification in Groth16. Although the depth circuit has a polynomial bound for fixed dimension, subset enumeration is cheaper in every tested small-fault-budget case. The evaluation covers 27 synthetic conditions with 30 randomized repetitions. Under the stated assumptions, mean decisive coverage is 87.52\%, compared with 75.63\% for a fixed-margin rule, with no observed classification errors; errors appear when calibration or fault assumptions are violated. A replay of 787 UrbanNav reference states with simulated evidence gives decisive coverage of 93.27\% versus 81.94\%. On an Apple M1 workstation, the subset circuits produce 164-byte proofs, with median proving times of 163--255~ms, while the depth circuits require 213--1091~ms. The prototype certifies the relation between signed evidence and policy; physical calibration and deployment feasibility still require validation beyond the proof.
+Privacy-preserving location verification commonly proves a predicate over one hidden coordinate, but a point claim can be cryptographically valid while the physical event remains uncertain or some authenticated sources are malicious. We formulate robust spacetime compliance as a security relation over private, signed uncertainty boxes. With $n$ enrolled issuers, Byzantine budget $f$, honest-miscoverage budget $r$, and threshold $k=n-f-r$, the feasible set contains states supported by at least $k$ boxes; only a nonempty feasible set entirely contained in the public policy authorizes a report. A four-valued decision separates valid and invalid outcomes from boundary ambiguity and inconsistent evidence. We implement exact lower-corner and threshold-subset circuits in Groth16/BN254 with in-circuit EdDSA/MiMC verification and bind proofs to the task, roster, report, challenge, and expiry. The evaluation includes 64,800 synthetic event-condition observations, matched miscoverage-budget analyses, and a replay of 787 UrbanNav reference states with simulated evidence. In the predefined calibrated synthetic conditions, robust certification provides 87.52\% mean decisive coverage versus 75.63\% for a fixed-margin rule. On an Apple M1 workstation, subset circuits produce 164-byte proofs with median proving times of 163--255~ms in the tested small-omission regime. The experiments validate the cryptographic relation and robustness semantics rather than field calibration: the acceptance guarantee remains conditional on trusted enrollment and the stated uncertainty-coverage assumptions, while raw evidence stays hidden from the verifier.
 \end{abstract}
 \begin{keyword}
-Vehicular crowdsensing \sep Location privacy \sep Zero-knowledge proofs \sep Byzantine evidence \sep Uncertainty \sep Spacetime compliance
+Zero-knowledge proofs \sep Privacy-preserving verification \sep Byzantine evidence \sep Robust sensor fusion \sep Location privacy \sep Vehicular crowdsensing
 \end{keyword}
 \end{frontmatter}
 \linenumbers
