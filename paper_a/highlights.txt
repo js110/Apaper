@@ -1,6 +1,5 @@
-Draft highlights for author review:
-- Robust four-valued semantics prevent point-claim acceptance under uncertain evidence.
-- Groth16 circuits verify private signed boxes under Byzantine and miscoverage budgets.
-- Task/report/challenge binding protects context integrity and same-challenge freshness.
-- Subset enumeration is cheaper than depth evaluation in the tested small-omission regime.
-- Evaluation separates cryptographic validity from unverified physical calibration assumptions.
+Robust evidence semantics avoid accepting unsupported point claims
+Zero-knowledge circuits verify signed uncertainty without exposing evidence
+Task and challenge binding blocks substitution and same-challenge replay
+Subset enumeration lowers proof cost in the tested small-omission regime
+Calibration limits are separated from cryptographic guarantees
