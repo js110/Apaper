@@ -1,0 +1,48 @@
+name: JISA manuscript build
+
+on:
+  push:
+    branches: [jisa-revision]
+    paths:
+      - 'paper_a/**'
+      - '.github/workflows/jisa-build.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile LaTeX and BibTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: paper_a.tex
+          working_directory: paper_a
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Check bibliography and log
+        shell: bash
+        run: |
+          grep -q '\\bibitem{Imam2025JISA}' paper_a/paper_a.bbl
+          grep -q '\\bibitem{Wang2025JISA}' paper_a/paper_a.bbl
+          if grep -E 'LaTeX Warning: (There were undefined references|Citation .* undefined)|Package natbib Warning: Citation .* undefined' paper_a/paper_a.log; then
+            echo 'Undefined reference/citation warning found.' >&2
+            exit 1
+          fi
+
+      - name: Export flat Editorial Manager source package
+        run: python3 paper_a/export_latex.py
+
+      - name: Upload build outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: jisa-manuscript-build
+          if-no-files-found: error
+          path: |
+            paper_a/paper_a.pdf
+            paper_a/paper_a.bbl
+            paper_a/paper_a.log
+            paper_a/paper_a_jisa_latex_draft.zip
