@@ -23,15 +23,13 @@
 \affiliation[aff1]{organization={College of Information and Electronic Technology, Jiamusi University},
 city={Jiamusi},postcode={154007},country={China}}
 \begin{abstract}
-Privacy-preserving location verification commonly proves a predicate over one hidden coordinate, but a point claim can be cryptographically valid while the physical event remains uncertain or some authenticated sources are malicious. We formulate robust spacetime compliance as a security relation over private, signed uncertainty boxes. With $n$ enrolled issuers, Byzantine budget $f$, honest-miscoverage budget $r$, and threshold $k=n-f-r$, the feasible set contains states supported by at least $k$ boxes; only a nonempty feasible set entirely contained in the public policy authorizes a report. A four-valued decision separates valid and invalid outcomes from boundary ambiguity and inconsistent evidence. We implement exact lower-corner and threshold-subset circuits in Groth16/BN254 with in-circuit EdDSA/MiMC verification and bind proofs to the task, roster, report, challenge, and expiry. The evaluation includes 64,800 synthetic event-condition observations, matched miscoverage-budget analyses, and a replay of 787 UrbanNav reference states with simulated evidence. In the predefined calibrated synthetic conditions, robust certification provides 87.52\% mean decisive coverage versus 75.63\% for a fixed-margin rule. On an Apple M1 workstation, subset circuits produce 164-byte proofs with median proving times of 163--255~ms in the tested small-omission regime. The experiments validate the cryptographic relation and robustness semantics rather than field calibration: the acceptance guarantee remains conditional on trusted enrollment and the stated uncertainty-coverage assumptions, while raw evidence stays hidden from the verifier.
+Privacy-preserving location verification often proves a predicate over one hidden coordinate, even though the underlying event may be uncertain and some authenticated evidence sources may be malicious. We formulate robust spacetime compliance as a security relation over private signed uncertainty boxes. With $n$ enrolled issuers, Byzantine budget $f$, honest-miscoverage budget $r$, and threshold $k=n-f-r$, a report is authorized only when the nonempty set of states supported by at least $k$ boxes lies entirely inside the public policy. A four-valued decision separates valid and invalid outcomes from ambiguity and inconsistent evidence. We implement exact lower-corner and threshold-subset Groth16/BN254 circuits with in-circuit EdDSA/MiMC verification and bind proofs to the task, roster, report, challenge, threshold, and expiry. Gateway tests reject signed-evidence tampering, decision substitution, report/threshold substitution, expired or unknown challenges, and cross-challenge reuse; an eight-copy concurrent replay accepts exactly one copy. Across predefined calibrated synthetic conditions, robust certification provides 87.52\% mean decisive coverage versus 75.63\% for a fixed-margin rule. Subset circuits produce 164-byte proofs with 163--255~ms median proving time on an Apple M1 in the tested small-omission regime. The results validate the security relation and prototype, not field calibration: physical acceptance remains conditional on trusted enrollment and stated uncertainty-coverage assumptions.
 \end{abstract}
 \begin{keyword}
 Zero-knowledge proofs \sep Privacy-preserving verification \sep Byzantine evidence \sep Robust sensor fusion \sep Location privacy \sep Vehicular crowdsensing
 \end{keyword}
 \end{frontmatter}
 \linenumbers
-\noindent\textit{Author-review draft. Scientific evidence, attribution, and declarations require author approval before submission.}
-
 \section{Introduction}
 Privacy-preserving verification is often framed as proving that one hidden attribute satisfies a public predicate. For location-sensitive services, this can mean proving that a hidden coordinate lies in an authorized region without revealing the coordinate~\cite{ZKLP,VehiclePolicy}. The cryptographic statement can nevertheless be correct while the underlying physical claim is weakly supported: location and time estimates are uncertain, an authenticated source can be miscalibrated, and a compromised source can sign deliberately misleading evidence. The security question is therefore not only whether one hidden point satisfies a policy, but whether the available authenticated uncertainty evidence supports that policy robustly.
 
@@ -120,6 +118,9 @@ An issuer signature authenticates the submitted bounds. It does not prove their 
 
 The vehicle may submit false witnesses, replay signatures, modify evidence, or withhold reports. An edge verifier checks proofs and public task inputs. Every roster slot must be present for the relation to hold. A missing signature causes a protocol abort; it is not the same as a proved evidence-failure decision over a complete set of signed boxes. The prototype supplies no availability guarantee against withholding.
 
+\paragraph{Trust boundary and adversary capabilities}
+The reporting vehicle and the communication path are untrusted: an adversary may alter, replay, reorder, or substitute submitted reports, proofs, decisions, and challenges. Up to $f$ enrolled issuers may be Byzantine and may choose policy-aware boxes and signatures arbitrarily under their own keys. Honest issuers are assumed to protect their signing keys and to bind their boxes to the intended event/context, but up to $r$ honest boxes may miss the true event. The gateway's task configuration, verifying key, application clock, and administrator-defined roster are trusted in the present model. The adversary is computationally bounded and is not assumed to break the underlying signature, hash, or proof-system security. Confidentiality is claimed against the proof verifier for private witness fields; it is not claimed against the issuers that created those fields or against an administrator permitted to issue unrestricted adaptive policies.
+
 The public statement contains $c$, $\Omega$, $P$, $k$, a decision code, and the ordered issuer keys. Issuers sign
 \begin{equation}
  m_i=\operatorname{MiMC}(c,i,\ell_{i1},u_{i1},\ldots,\ell_{id},u_{id}).
@@ -140,7 +141,7 @@ An administrator configures a task and its verifying key. The gateway snapshots 
 \begin{equation}
  c=\operatorname{OS2IP}\left(\operatorname{SHA256}(\operatorname{Encode}(v,T,\nu,e,\operatorname{SHA256}(R)))\right)\bmod q,
 \end{equation}
-where $T$ is the complete configured task, $R$ is the report byte string, $\nu$ is the nonce, $e$ is its expiry, and $q$ is the BN254 scalar-field modulus. The executable encoding is a fixed-order JSON structure with no maps and an explicit version tag. A cross-language implementation must reproduce its byte encoding. Every issuer signs its box against this same $c$. SHA-256 reduction is domain binding, not encryption; report-digest dictionary attacks remain possible for low-entropy reports.
+where $T$ is the complete configured task, $R$ is the report byte string, $\nu$ is the nonce, $e$ is its expiry, and $q$ is the BN254 scalar-field modulus. The prototype serializes a Go struct with fields \texttt{Version}, \texttt{Task}, \texttt{Challenge}, and \texttt{ReportSHA256} in declaration order using \texttt{encoding/json}; the version literal is \texttt{PCVCS-PaperA-context-v1}. The task struct contains the task/circuit identifiers, coordinate convention, calibration profile, domain and policy bounds, bit width, threshold, and ordered roster. A generated challenge contains a 32-byte random nonce encoded as 64 hexadecimal characters and an integer expiry; the report field is the lowercase hexadecimal SHA-256 digest of the exact report bytes. Go JSON encodes issuer public-key byte arrays as base64 strings. This executable encoding is deterministic for the current map-free structs, but it is language-bound: a cross-language implementation must reproduce the same bytes or replace it with a separately specified canonical encoding. Every issuer signs its box against the resulting $c$. SHA-256 reduction is domain binding, not encryption; report-digest dictionary attacks remain possible for low-entropy reports.
 
 At submission the gateway looks up the nonce, checks expiry, reconstructs the context and public witness from the trusted configuration and received report, and verifies the proof. Only a valid decision authorizes report acceptance. Every successfully verified decision consumes its nonce. Verification and nonce consumption are serialized under a mutex, so racing copies cannot both succeed within one gateway process. Failed proofs leave the nonce available until expiry. This implementation does not prevent a vehicle from requesting another challenge for the same report, and therefore supplies challenge replay protection rather than identity-based duplicate-report suppression. Restart persistence, distributed atomicity and challenge-rate limiting remain deployment tasks.
 
@@ -241,6 +242,8 @@ The proposition assumes honest issuers associate their boxes with the same physi
 \section{Implementation and experimental design}
 The ZK prototype uses Go 1.25.6, gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Groth2016}, and gnark's twisted-Edwards EdDSA with MiMC~\cite{MiMC2016}. This EdDSA instantiation differs from Ed25519. Keys and signatures use real cryptographic randomness, and the benchmark runs compilation, setup, witness construction, proving, and verification without placeholder cryptography.
 
+The evaluation is organized around four questions: \textbf{RQ1}, does the implemented proof/gateway reject statement tampering and replay; \textbf{RQ2}, how much decisive coverage is retained by robust semantics relative to point and margin baselines when the stated assumptions hold or fail; \textbf{RQ3}, how does the honest-miscoverage budget change the availability--error tradeoff; and \textbf{RQ4}, what proof, verification, and circuit-growth costs arise for the two exact backends?
+
 Backend tests verify four decision fixtures and reject wrong decisions, modified signed bounds, and duplicated public keys. Integration tests additionally sign the full field context and pass real proofs through the gateway. Genuine proofs for all four decision classes verify and consume their challenges, but only the valid class authorizes a report. All twelve unequal proof/code pairings are rejected, as are report replacement, expiry, unknown nonces, cross-challenge reuse, and threshold substitution. A missing proof leaves the challenge unconsumed. In an eight-way concurrent replay, exactly one copy is accepted; duplicate trust-domain registration is also rejected. These are regression tests, not exhaustive cryptographic validation.
 
 Measurements use a Mac mini with an eight-core Apple M1, 16~GB memory, and macOS 26.6.2. For each circuit shape, one randomized setup is followed by 30 sequential proofs of a fixed signed witness. Setup is timed once and excluded from online times. The quantiles describe repetitions within that process, with p99 especially imprecise for 30 measurements. Proof-generation latency excludes compilation, witness construction, signature collection, network transfer, and queueing. OBU energy and end-to-end V2I latency were not measured.
@@ -297,14 +300,14 @@ Missing evidence & The relation requires the complete configured roster & Missin
 \subsection{Conditional correctness and availability}
 With calibrated errors and no more than one Byzantine source, the robust rule made no observed misclassifications across the 12 synthetic conditions. Because these conditions are generated to satisfy the stated coverage and fault assumptions, the zero-error result is primarily an implementation and semantic-consistency check rather than an empirical estimate of deployment accuracy. Equal weighting of these preselected conditions gives mean decisive coverage of 87.52\%, compared with 75.63\% for the fixed-margin baseline; the averages do not describe a deployment population.
 
-The correlated, radius-four, one-Byzantine condition in Table~\ref{tab:semantic} shows where the decisions differ. Robust classification reached 85.04\% decisive coverage, against 75.67\% for the fixed margin. Median-point classification decided every event, but its false acceptance and false rejection rates were 2.10\% and 15.29\%.
+The correlated, radius-four, one-Byzantine condition in Table~\ref{tab:semantic} shows where the decisions differ. Robust classification reached 85.04\% decisive coverage, against 75.67\% for the fixed margin. The median-point baseline, used here as a representative single-point claim rather than a matched ZK implementation, decided every event, but its false acceptance and false rejection rates were 2.10\% and 15.29\%.
 
 \begin{table}[htbp]
 \centering\small
 \caption{Synthetic focus condition. Mean seed-level rates in percent; 30 seeds, 80 events each. FA/FR use outside/inside denominators; Amb., Fail., and Dec. use all events.}\label{tab:semantic}
 \begin{tabular}{lrrrrr}
 \toprule Method&FA&FR&Amb.&Fail.&Dec.\\\midrule
-Median point&2.10&15.29&0&0&100\\
+Point claim (median)&2.10&15.29&0&0&100\\
 Majority center&2.10&16.30&0&0&100\\
 Fixed margin&0&0&24.33&0&75.67\\
 All-source intersection&8.64&47.55&0&87.63&12.38\\
@@ -319,7 +322,22 @@ The nominal 95\% seed-level intervals are 83.39--86.70\% for robust decisive cov
 \caption{Decisive coverage for calibrated correlated errors and one Byzantine source. Error bars are normal 95\% intervals over 30 simulation seeds. The horizontal scale is quantized units, with no physical-unit calibration in this synthetic experiment.}\label{fig:availability}
 \end{figure}
 
-Violating the source assumptions produced errors. The undercovered correlated focus condition had 0.23\% robust false acceptance and 3.41\% false rejection. With two Byzantine sources and a verifier budget of one, the rates reached 11.62\% and 60.86\%, while evidence failure reached 83.33\%. An evidence-failure output cannot serve as a general detector of broken assumptions: undercoverage produced wrong decisive outputs without triggering it.
+\subsection{Stress tests outside the security assumptions}
+The conditional guarantee should fail visibly when its premises are violated. Table~\ref{tab:assumption-stress} isolates two such cases from the synthetic study. Undercovered evidence can violate the honest-coverage premise and produces wrong decisive outputs without evidence failure. Increasing the actual Byzantine count to two while the verifier budgets only one violates the fault premise and produces substantially larger errors. Thus the inconsistent output is not an assumption-violation detector; it is only the fourth value of the certified finite relation.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Focus-condition stress tests outside the stated source assumptions. Rates are mean seed-level percentages.}
+\label{tab:assumption-stress}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}
+\toprule
+Condition & FA & FR & Evidence failure & Decisive\\
+\midrule
+Undercovered evidence; Byzantine count within budget & 0.23 & 3.41 & 0 & 84.92\\
+Two Byzantine sources; verifier budget $f=1$ & 11.62 & 60.86 & 83.33 & 16.67\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 The UrbanNav replay gives a similar comparison on a moving reference path. With nominal simulated evidence, robust decisive coverage was 93.27\%, against 81.94\% for fixed margin, with no observed error for either rule. Median-point classification had false acceptance and rejection rates of 0.29\% and 3.12\%. Amplifying the common bias raised the robust rates to 0.032\% and 0.493\%. The replay tests decision behavior under these simulated errors, not the validity of the assumed evidence calibration.
 
