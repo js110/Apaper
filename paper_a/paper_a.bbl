@@ -1,0 +1,167 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{Suhag2023}
+D.~Suhag, V.~Jha, A comprehensive survey on mobile crowdsensing systems,
+  Journal of Systems Architecture 142 (2023) 102952.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2023.102952}
+  {\path{doi:10.1016/j.sysarc.2023.102952}}.
+
+\bibitem{Zheng2025BARM}
+L.~Zheng, T.~Feng, Z.~Xie, X.~Li, C.~Su, {BARM}: Blockchain-assisted anonymous
+  authentication and reputation management for mobile crowdsensing in internet
+  of vehicles, IEEE Internet of Things Journal 12~(12) (2025) 22463--22477.
+\newblock \href {https://doi.org/10.1109/JIOT.2025.3552447}
+  {\path{doi:10.1109/JIOT.2025.3552447}}.
+
+\bibitem{Marzullo1990}
+K.~Marzullo, Tolerating failures of continuous-valued sensors, ACM Transactions
+  on Computer Systems 8~(4) (1990) 284--304.
+\newblock \href {https://doi.org/10.1145/128733.128735}
+  {\path{doi:10.1145/128733.128735}}.
+
+\bibitem{BFTPoLoc}
+P.~Sheng, V.~Sevani, R.~Rana, H.~Tyagi, P.~Viswanath,
+  \href{https://arxiv.org/abs/2403.13230v2}{{BFT-PoLoc}: A byzantine fortified
+  trigonometric proof of location protocol using internet delays},
+  arXiv:2403.13230v2 (2024).
+\newline\urlprefix\url{https://arxiv.org/abs/2403.13230v2}
+
+\bibitem{PG}
+C.~Jin, C.~Yin, M.~van Dijk, S.~Duan, F.~Massacci, M.~K. Reiter, H.~Zhang,
+  {PG}: Byzantine fault-tolerant and privacy-preserving sensor fusion with
+  guaranteed output delivery, in: Proceedings of the ACM SIGSAC Conference on
+  Computer and Communications Security, 2024, pp. 3272--3286.
+\newblock \href {https://doi.org/10.1145/3658644.3670343}
+  {\path{doi:10.1145/3658644.3670343}}.
+
+\bibitem{CRSF}
+C.~Yin, H.~Tian, Z.~Yang, H.~Zhang, F.~Massacci, C.~Jin,
+  \href{https://arxiv.org/abs/2609.01096v1}{{CRSF}: Collusion-resilient
+  privacy-preserving sensor fusion with byzantine-robust participation},
+  preprint, arXiv:2609.01096v1 (2026).
+\newline\urlprefix\url{https://arxiv.org/abs/2609.01096v1}
+
+\bibitem{Cheng2023}
+Y.~Cheng, J.~Ma, Z.~Liu, L.~Wang, Z.~Ying, X.~Chen, Efficient anonymous
+  authentication and privacy-preserving reliability evaluation for mobile
+  crowdsensing in vehicular networks, IEEE Internet of Things Journal 10~(17)
+  (2023) 14925--14939.
+\newblock \href {https://doi.org/10.1109/JIOT.2023.3259961}
+  {\path{doi:10.1109/JIOT.2023.3259961}}.
+
+\bibitem{Zhou2024}
+F.~Zhou, Q.~Wu, P.~Wu, J.~Xu, D.~Feng, Privacy-preserving and verifiable data
+  aggregation for internet of vehicles, Computer Communications 218 (2024)
+  198--208.
+\newblock \href {https://doi.org/10.1016/j.comcom.2024.02.022}
+  {\path{doi:10.1016/j.comcom.2024.02.022}}.
+
+\bibitem{Shen2024}
+Z.~Shen, F.~Ren, H.~Wang, P.~Liu, K.~Liu, J.~Zhang, Combining blockchain and
+  crowd-sensing for location privacy protection in internet of vehicles,
+  Vehicular Communications 45 (2024) 100724.
+\newblock \href {https://doi.org/10.1016/j.vehcom.2023.100724}
+  {\path{doi:10.1016/j.vehcom.2023.100724}}.
+
+\bibitem{Sultana2024}
+R.~Sultana, J.~Grover, M.~Tripathi, Cooperative approach for data-centric and
+  node-centric misbehavior detection in {VANET}, Vehicular Communications 50
+  (2024) 100855.
+\newblock \href {https://doi.org/10.1016/j.vehcom.2024.100855}
+  {\path{doi:10.1016/j.vehcom.2024.100855}}.
+
+\bibitem{Mdee2022}
+A.~P. Mdee, M.~M. Saad, M.~Khan, M.~T.~R. Khan, D.~Kim, Impacts of
+  location-privacy preserving schemes on vehicular applications, Vehicular
+  Communications 36 (2022) 100499.
+\newblock \href {https://doi.org/10.1016/j.vehcom.2022.100499}
+  {\path{doi:10.1016/j.vehcom.2022.100499}}.
+
+\bibitem{Atmaca2024}
+U.~I. Atmaca, S.~Biswas, C.~Maple, C.~Palamidessi, A privacy-preserving
+  querying mechanism with high utility for electric vehicles, IEEE Open Journal
+  of Vehicular Technology 5 (2024) 262--277.
+\newblock \href {https://doi.org/10.1109/OJVT.2024.3360302}
+  {\path{doi:10.1109/OJVT.2024.3360302}}.
+
+\bibitem{Ghani2025}
+A.~Ghani, S.~U. Jan, S.~A. Chaudhry, R.~Ahmad, A.~K. Das, D.~H. Kim, Enhancing
+  security and trust using efficient privacy-preserving authentication in
+  vehicular edge computing networks, Vehicular Communications 54 (2025) 100921.
+\newblock \href {https://doi.org/10.1016/j.vehcom.2025.100921}
+  {\path{doi:10.1016/j.vehcom.2025.100921}}.
+
+\bibitem{Zhang2025Sybil}
+C.~Zhang, X.~Chang, X.~Jia, S.~Zhang, X.~Wang, Sybil-resistant and
+  privacy-preserving authentication based on short-term pseudonym for internet
+  of vehicles, Scientific Reports 15~(1) (2025) 44966.
+\newblock \href {https://doi.org/10.1038/s41598-025-28854-1}
+  {\path{doi:10.1038/s41598-025-28854-1}}.
+
+\bibitem{Wang2025ZKAuth}
+S.~Wang, Q.~Huang, R.~Yan, J.~Ma, X.~Xie, A privacy-enhanced authentication
+  scheme for {VANETs} based on blockchain and zero-knowledge proof, Vehicular
+  Communications 56 (2025) 100976.
+\newblock \href {https://doi.org/10.1016/j.vehcom.2025.100976}
+  {\path{doi:10.1016/j.vehcom.2025.100976}}.
+
+\bibitem{ZKLP}
+J.~Ernstberger, C.~Zhang, L.~Ciprian, P.~Jovanovic, S.~Steinhorst,
+  Zero-knowledge location privacy via accurate floating-point {SNARKs}, in:
+  IEEE Symposium on Security and Privacy, 2025, pp. 3440--3459.
+\newblock \href {https://doi.org/10.1109/SP61157.2025.00057}
+  {\path{doi:10.1109/SP61157.2025.00057}}.
+
+\bibitem{VehiclePolicy}
+D.~Bogdanov, E.~Brito, A.~Jaakson, P.~Laud, R.-M. Rebane, Zero-knowledge
+  proof-of-location protocols for vehicle subsidies and taxation compliance,
+  in: Availability, Reliability and Security, Vol. 15998 of Lecture Notes in
+  Computer Science, Springer, 2025, pp. 343--360.
+\newblock \href {https://doi.org/10.1007/978-3-032-00642-4_20}
+  {\path{doi:10.1007/978-3-032-00642-4_20}}.
+
+\bibitem{SemaphoreDocs}
+{Privacy and Scaling Explorations}, What is semaphore?,
+  \url{https://docs.semaphore.pse.dev/}, version 4 documentation; accessed 6
+  September 2026 (2026).
+
+\bibitem{gnark}
+{Consensys}, \href{https://github.com/Consensys/gnark/tree/v0.14.0}{gnark,
+  release v0.14.0}, software used in this study (2025).
+\newline\urlprefix\url{https://github.com/Consensys/gnark/tree/v0.14.0}
+
+\bibitem{Groth2016}
+J.~Groth, On the size of pairing-based non-interactive arguments, in: Advances
+  in Cryptology -- EUROCRYPT 2016, Springer, 2016, pp. 305--326.
+\newblock \href {https://doi.org/10.1007/978-3-662-49896-5_11}
+  {\path{doi:10.1007/978-3-662-49896-5_11}}.
+
+\bibitem{MiMC2016}
+M.~Albrecht, L.~Grassi, C.~Rechberger, A.~Roy, T.~Tiessen, {MiMC}: Efficient
+  encryption and cryptographic hashing with minimal multiplicative complexity,
+  in: Advances in Cryptology -- ASIACRYPT 2016, Springer, 2016, pp. 191--219.
+\newblock \href {https://doi.org/10.1007/978-3-662-53887-6_7}
+  {\path{doi:10.1007/978-3-662-53887-6_7}}.
+
+\bibitem{UrbanNav}
+L.-T. Hsu, F.~Huang, H.-F. Ng, G.~Zhang, Y.~Zhong, X.~Bai, W.~Wen, {Hong Kong
+  UrbanNav}: An open-source multisensory dataset for benchmarking urban
+  navigation algorithms, NAVIGATION: Journal of the Institute of Navigation
+  70~(4) (2023) navi.602.
+\newblock \href {https://doi.org/10.33012/navi.602}
+  {\path{doi:10.33012/navi.602}}.
+
+\bibitem{GraphGNSSData}
+W.~Wen, L.-t. Hsu,
+  \href{https://github.com/weisongwen/GraphGNSSLib/tree/e9e4c6a4ded5dc7f2813265a76a56b280f714a3f/global_fusion/dataset/gps_solution_TST2}{{GraphGNSSLib}:
+  {TST2} reference positions and recorded {RTKLIB} solution}, repository
+  snapshot dated June 1, 2021; accessed September 5, 2026; pinned revision
+  recorded in accompanying analysis (2021).
+\newline\urlprefix\url{https://github.com/weisongwen/GraphGNSSLib/tree/e9e4c6a4ded5dc7f2813265a76a56b280f714a3f/global_fusion/dataset/gps_solution_TST2}
+
+\end{thebibliography}

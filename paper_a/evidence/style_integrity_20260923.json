@@ -1,0 +1,78 @@
+{
+  "date": "2026-09-23",
+  "scope": "Protected-token preservation; semantic equivalence separately reviewed. No AI-detection claim.",
+  "before_sha256": "ec3d6ed5308094a6c66a4232eff918b9fd79e401938065cb199b5e5a2956e49e",
+  "after_sha256": "20ba8195cc03b04a3243869084312fce1275403ccee6497a7be7c21cf26f86fb",
+  "checks": [
+    {
+      "check": "numeric tokens",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "citation tokens",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "cross-references and labels",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "inline mathematics",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "displayed equations",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "tabular bodies",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "comparison table",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "figure captions",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "propositions and lemmas",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "proofs",
+      "passed": true,
+      "removed": [],
+      "added": []
+    },
+    {
+      "check": "title and author metadata",
+      "passed": true
+    },
+    {
+      "check": "funding declarations and appendix",
+      "passed": true
+    }
+  ],
+  "passed": 12,
+  "total": 12
+}

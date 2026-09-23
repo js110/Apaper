@@ -1,0 +1,829 @@
+{
+  "sources": [
+    {
+      "id": "E001",
+      "path": "paper_a.tex",
+      "sha256_at_audit": "e89ef6f727c4a8de9781d1450e2b24c669397224cd47fa55c039783f5974d8b2",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E002",
+      "path": "references.bib",
+      "sha256_at_audit": "b6ed10986cd2db36014e316958f4dd96341304003730531b187a02b5ab8b2541",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E003",
+      "path": "experiments/subset_n3_d2_formal.json",
+      "sha256_at_audit": "86c39860e07a3dc3a4f1fd258170a6f0fb858c5d2704c6e58836084bc963c3a7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E004",
+      "path": "experiments/subset_n3_d3_formal.json",
+      "sha256_at_audit": "aa354bba76f432f038690906ae314d48d22afbe6a6814268bc4d0cf51ef0a49f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E005",
+      "path": "experiments/subset_n4_d2_formal.json",
+      "sha256_at_audit": "4cb5e68832511a70c49540b8de518cd6d3f3f4fefadaae7a65967df84c47805d",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E006",
+      "path": "experiments/subset_n4_d3_formal.json",
+      "sha256_at_audit": "383e43479ed71bf4ae63f414ec65c6cf3e1998d0940360206c240df0f6f3e2c7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E007",
+      "path": "experiments/subset_n5_d2_formal.json",
+      "sha256_at_audit": "1095c983af64fe9417153536cb8e9cd2f237b921ea3b0916ad496fd6d9baf6e6",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E008",
+      "path": "experiments/zkdepth_n3_d2_formal.json",
+      "sha256_at_audit": "2e417a8852959f1c6430621ed12e06dd41566989858118230918a609e08f487f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E009",
+      "path": "experiments/zkdepth_n3_d3_formal.json",
+      "sha256_at_audit": "e41ad910cc962aac948b427eea98b62b23fbf5d957d6006c2ac9c0bf407c0da5",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E010",
+      "path": "experiments/zkdepth_n4_d2_formal.json",
+      "sha256_at_audit": "3a5a348a861024b55623106afae5f4e12b8435db580c98e64f1a556a2945ceb4",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E011",
+      "path": "experiments/zkdepth_n4_d3_formal.json",
+      "sha256_at_audit": "96ce966afdc966aa08125243eee25f7f2e3fffc1be19c655b4b7555c8feeec15",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E012",
+      "path": "experiments/zkdepth_n5_d2_formal.json",
+      "sha256_at_audit": "bc70ace65f5d5f2fb6e49acee98d0cd1488765e61931171bd77cd8701b3546d0",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E013",
+      "path": "experiments/semantic_results.json",
+      "sha256_at_audit": "b5df84fa1d24effd0c5866acefeb7d146d3b14912897061b903e6ed391993666",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E014",
+      "path": "experiments/trace_results.json",
+      "sha256_at_audit": "dc0748a520f7c65f7cf8d1d11f25fd20247921ac1c23d44d820c48c278e15063",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E015",
+      "path": "experiments/paired_comparison.json",
+      "sha256_at_audit": "76aca388fde2275f6eddcb44525a1b315fa1bc53db5f1df02abf17425422dda4",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E016",
+      "path": "prototype/zkdepth/circuit.go",
+      "sha256_at_audit": "ad3d92a7abd138b28d11a8a4ed2b6fe17ffcbfa17c7a0315e2e8b67313b694f7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E017",
+      "path": "prototype/zkdepth/circuit_test.go",
+      "sha256_at_audit": "e5b143951cb63123c471776ae503bf271fc1119931bb8abcedac0f3238c421b1",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E018",
+      "path": "prototype/zkdepth/compile_sweep_test.go",
+      "sha256_at_audit": "efa94f45941699bb5df453fa976bbe26a1440baea2921e14be69ba97acd42b58",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E019",
+      "path": "prototype/zkdepth/gateway.go",
+      "sha256_at_audit": "26620c7b2c3452a00d79c64a447e0a9097ddc24a9dbf4958e2c8c90488f3be48",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E020",
+      "path": "prototype/zkdepth/gateway_test.go",
+      "sha256_at_audit": "244b4a3eeaf3bb581b958379f38acc958b1cdc78e7747bf65a4203347ca7635f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E021",
+      "path": "prototype/zkdepth/native.go",
+      "sha256_at_audit": "0daef86ad59e2b2f2589a3be87ce0c788aa6b49be3be745555f6fedfdde0b009",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E022",
+      "path": "prototype/zkdepth/go.mod",
+      "sha256_at_audit": "19ac7b022682c17317eb57f32c09ff87471de9fc2286a1499166625a9d3250dd",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E023",
+      "path": "prototype/zkdepth/go.sum",
+      "sha256_at_audit": "c3ad56614ecdd572d32e6751d7435a33ea20444f8348d49a76fb6945ce6adad8",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E024",
+      "path": "prototype/zkdepth/cmd/bench/main.go",
+      "sha256_at_audit": "bbd5925aee03596a3b597f07268649ff553a8530b14dc41415baca1837900cbb",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E025",
+      "path": "experiments/reviewer_analytical_checks.py",
+      "sha256_at_audit": "da9b42d42b84b8df5c91ed0bd12224de974f4658c2dfc237053eceba813ea824",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E026",
+      "path": "experiments/run_compile_sweep.py",
+      "sha256_at_audit": "fad4985282495edcb72eaaee85d2f7c315091537b2b46d9df5944e97349abe60",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E027",
+      "path": "experiments/run_receiver_calibration.py",
+      "sha256_at_audit": "31f44e164898aa286a6699cdee560946a86a328f3a7dce3334059214a8e50bb8",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E028",
+      "path": "experiments/run_semantic_evaluation.py",
+      "sha256_at_audit": "5b846cb739fc42495c349b3856d5de41f7cde72417830e87147610ab886f3091",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E029",
+      "path": "experiments/run_trace_evaluation.py",
+      "sha256_at_audit": "c0825a73703f610f660c4b90099032ad61b76cea329c303cc898b8da873809e7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E030",
+      "path": "experiments/summarize_ablation.py",
+      "sha256_at_audit": "64c636cb86f538a320298c350b986d42de72855a341c0945e63e1d051946c815",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E031",
+      "path": "experiments/summarize_results.py",
+      "sha256_at_audit": "e2e69ea2493b5bb6f330d934b2db8d24558181b7c3bd91add3da63ff22b69237",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E032",
+      "path": "experiments/test_receiver_calibration.py",
+      "sha256_at_audit": "8064bbc6797de3cdb6407e16943ae3dcb5b54b2ea797ef0403bf5ef188af3cd7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E033",
+      "path": "prototype/robust_depth.py",
+      "sha256_at_audit": "6611c1d9e3c0f62fb4e1d45b32565e535f990941ef1eb44d4d8d691ac6219629",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E034",
+      "path": "prototype/test_robust_depth.py",
+      "sha256_at_audit": "287627519c4923d28b81e3785683f3d741b72f278e5efbf8f723b4851db0b7b9",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E035",
+      "path": "experiments/semantic_results_r1.json",
+      "sha256_at_audit": "5638bf830220fa52135afefa5d59f7abacb85afe43118de056b98b2169a5bc30",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E036",
+      "path": "experiments/semantic_results_r2.json",
+      "sha256_at_audit": "cbbfca44cceadcb032bb77d10194f01698e3f3b7d840ef813ad7756e5393574e",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E037",
+      "path": "experiments/miscoverage_ablation.json",
+      "sha256_at_audit": "30a1ba3412c18324834752e7ae423d0bf484437752fcd00230158a038f617780",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E038",
+      "path": "experiments/receiver_calibration.json",
+      "sha256_at_audit": "0038ae33f511f4a1f20aa74ee0ba8267383bea42d781119728781d08f524fa3a",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E039",
+      "path": "experiments/receiver_residuals.csv",
+      "sha256_at_audit": "cad608b58b2ace353e2f305f940bf3fa8f914dbc4ac3e2dc424501f064dca9c7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E040",
+      "path": "experiments/calibration_protocol.md",
+      "sha256_at_audit": "1b3acad2cad6ece0cf22212cb793a1b79d0187b2bc307077fac7eb2f53908b8f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E041",
+      "path": "experiments/graphgnss_tst2/groundTruth_TST.csv",
+      "sha256_at_audit": "cb7446a94f128197b852faad905f78d16512831c379de7b21b168c02385abe7c",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E042",
+      "path": "experiments/graphgnss_tst2/rtklibResult.pos",
+      "sha256_at_audit": "3bf847c58b7f6da2ca1aa5cf300692ef27cd0271b46939acfa64a4b5388ae545",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E043",
+      "path": "evidence/gateway_validation.json",
+      "sha256_at_audit": "aae28ef7c3a6497641775be5db91acb3ac4b70c0e3d12d2bf6cec95873e3ebca",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E044",
+      "path": "evidence/literature_sources.json",
+      "sha256_at_audit": "fd86805c627fa201e5f8aee176f6ecdbece36203c9798dea72aa0b7ffd72278b",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E045",
+      "path": "evidence/literature_update_20260915.md",
+      "sha256_at_audit": "b735b1177694053794013d5a57798fd372204d87eb13c2aa8f9395ecdfa87d30",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E046",
+      "path": "evidence/added_reference_metadata_20260915.json",
+      "sha256_at_audit": "f2162414e412708f3add029133948b42fac29b34d7c5907e93b61956cdd867c5",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E047",
+      "path": "evidence/citation_validation.json",
+      "sha256_at_audit": "5b6200ae1b62320b42febbb8742f3e0ada7282e8db8d31df7c44df6f3fa9df7f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E048",
+      "path": "evidence/literature_recency_20260917.md",
+      "sha256_at_audit": "30f1ee2c3146d34e5ffcf76f8ee367588fe59ff63a7db14d09e8f7d89f180b89",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E049",
+      "path": "evidence/recent_reference_metadata_20260916.json",
+      "sha256_at_audit": "8a5b097d488e8aa523fbd264587ce3b734708ca9f2180c39ce44ce32794e995f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E050",
+      "path": "evidence/comparison_table_20260917.md",
+      "sha256_at_audit": "b9e31fb3f45217a7f7aaef714db37042be406f223dd9b49f3d7480e702e3afaa",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E051",
+      "path": "audit_scientific.py",
+      "sha256_at_audit": "72ef3370cb5eb9b3513efb3fa18f23e7bbe3000b2dca20343eceddfb6e0c0f0c",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E052",
+      "path": "audit_style.py",
+      "sha256_at_audit": "1e415e7f6848c90e721f30672c73c011a988e75f6e8fa3f5908433018d43a4ba",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E053",
+      "path": "submission_disclosure_notes.md",
+      "sha256_at_audit": "6dbcc274f2acbf3045d441a41886f2805bb34a28568ebeb901790e4c8c76af77",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E054",
+      "path": "evidence/style_integrity_20260923.json",
+      "sha256_at_audit": "3b1683ae47f80c73aac47da6fcfc5c74f0213d7860a003aeb130838bbf75abac",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E055",
+      "path": "evidence/style_rewrite_20260923.diff",
+      "sha256_at_audit": "2b9e327a1bf506f8b37dc6175f1936b2c207cac15dcfaea40b6a313947e0f162",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E056",
+      "path": "evidence/style_revision_20260923_zh.md",
+      "sha256_at_audit": "cba0b4a52ca2ab514d511c559a314d9d36dea1b2d0970495e79a1f7b68d5a673",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E057",
+      "path": "evidence/check_reference_metadata.py",
+      "sha256_at_audit": "6f3bb7d0680beee8cd753bb70e5e360f69038a212b4d662a2b8f9ebe8bb575e0",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E058",
+      "path": "evidence/scientific_recheck_20260922.json",
+      "sha256_at_audit": "f56c5fffeef5bd77290cda41deeed9489cd03f996d0c4a4e1fe78d6ecd9f6700",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E059",
+      "path": "evidence/reference_metadata_recheck_20260922.json",
+      "sha256_at_audit": "39cde26334a71d737d302a3b5d0a0574b7e35fcb62c5ec42ce3bfcf1936aedaa",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E060",
+      "path": "evidence/manuscript_recheck_20260923_zh.md",
+      "sha256_at_audit": "94402339d539dc463cca7c6f9de87a7b3cb2d9fff7b99a56f1060730e08e6438",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E061",
+      "path": "elsarticle.cls",
+      "sha256_at_audit": "01addb492c5d075b320636ac3a30d8a5762fa937220dea07a5e107042d25384d",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E062",
+      "path": "elsarticle-num.bst",
+      "sha256_at_audit": "0db2e53b2378cbe5815e436c1afe9dcac67123a32406fa8f11fad7978808e202",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E063",
+      "path": "export_latex.py",
+      "sha256_at_audit": "190c96d52c6b751e8712c8e5c9a01ad06e394fd1356dfb5d3945107e26ec07db",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E064",
+      "path": "venue_template/COMPLIANCE.md",
+      "sha256_at_audit": "b86121fbb42deb5a0693e75b4f5bf79c3ecbd5e569edb58e892d2629ce4baee7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E065",
+      "path": "author_information_provenance.md",
+      "sha256_at_audit": "7c0a0c155d84d93aa1ace71b6eaf9f8251d0f353ac61450eaaff886afed570f6",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E066",
+      "path": "submission_confirmations_zh.md",
+      "sha256_at_audit": "8ffef793ea206e2b2ac53fdf97866c3ede29ff0a7fcb2cd6a1938b0676256e90",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E067",
+      "path": "experiments/compile_sweep_20260915T010554Z/plan.json",
+      "sha256_at_audit": "22e2bc62c5f4fd482aac6f9779df1c09481bfb64f5b1363612e19de5e82bc6bf",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E068",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_07.log",
+      "sha256_at_audit": "2f000c0e30d1b8d4a1e84af3ad7d56f5e3cac1fd3bd18becdd36ffa81eb1fbee",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E069",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_13.log",
+      "sha256_at_audit": "f2185ee2a5f196338b9de8e933b8763811c0cfa002a60e87349eb18921b5cb91",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E070",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_12.log",
+      "sha256_at_audit": "75edef765ef15783a4c3530f5dc915578c977fd5f3de4f7c7e20e014a99e933f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E071",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_06.log",
+      "sha256_at_audit": "79892e189d8172d820d7a492ff3bf2b35055a6ff15077808bd9bf3fb0f6dc7a5",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E072",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_10.log",
+      "sha256_at_audit": "00c9660ac4c729949db95f50d674580f31db99893700661222f93b9c26570473",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E073",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_04.log",
+      "sha256_at_audit": "977571a37fe46b7f6c16fc322269cff97966a38dc20c7d02fb1b66bb4d8a0bda",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E074",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_05.log",
+      "sha256_at_audit": "0ec404dc16534719d9a4aad4ca99bfa34566626abb92568fe6fd3962b007ab94",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E075",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_11.log",
+      "sha256_at_audit": "43daa84b7d6cae3a3ee615f2746c9872556e69e509bb8e6635323aa511e00dc8",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E076",
+      "path": "experiments/compile_sweep_20260915T010554Z/results.json",
+      "sha256_at_audit": "97abea5ad1b46c19395e5f43100cbc74d7977472a86cb2dc51d7871528840d5b",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E077",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_29.log",
+      "sha256_at_audit": "8a0a2211b2d87a4a91e2f3e44afd59caf16e556a8ce7fb9d03bed58a83ebdc8b",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E078",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_15.log",
+      "sha256_at_audit": "bf6e760bb9ca806de6b381a0808c04e0886fce50c94480ae430c4c21f32bd34a",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E079",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_01.log",
+      "sha256_at_audit": "c43232731361c92b94d969dc46945a3642f71fa2e681dc7f0e3ad4cd28a8b157",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E080",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_00.log",
+      "sha256_at_audit": "ba9faba5b557e9f722640478d6f65d12b0629b93617b6145904b9887875698ac",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E081",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_14.log",
+      "sha256_at_audit": "6421682f0783f4694153c93bbef61e04259a658be2f539a9172084c209414161",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E082",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_28.log",
+      "sha256_at_audit": "fe5ff143bc7b6de944dabd1799f0139bdfa0b7037ca663993b691b4e0f240824",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E083",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_02.log",
+      "sha256_at_audit": "39f27b80b8ad92e1f09ed4999e3dd32dbd56f63bd2ea4537ee4ed4e113f94dc6",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E084",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_16.log",
+      "sha256_at_audit": "492ee273625ec2305a9b890a15a25792d71166b7ce4750ab735fd98429f0138a",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E085",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_17.log",
+      "sha256_at_audit": "1bd6e6624ae0588efb39cfa9f0e6804925ac0d4b598d9ecb8ad4911da20113e5",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E086",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_03.log",
+      "sha256_at_audit": "2e4aaeddf1dc8fa2758e5cbe51c146ed3a3660fdf7443facb39f9422b9972d17",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E087",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_26.log",
+      "sha256_at_audit": "f83974903a20347e4c227f64b0ede0ba70e6d0c390056d1602d1b10cb77230a7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E088",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_27.log",
+      "sha256_at_audit": "bfd3894b43e95704ad51aa4a445984bd599ff3c82de1b34abb09cdb9de7901dd",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E089",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_31.log",
+      "sha256_at_audit": "c4a91da374decc89b04a98abdf6c331c3361f7601e9e14eb409170972faca5ff",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E090",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_25.log",
+      "sha256_at_audit": "42b42df09d8db42b5fb6cfa80b1dd0ec64ebe779f11872085ee0663b487b2476",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E091",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_19.log",
+      "sha256_at_audit": "357523561fcded741b3e0ae750507b0b96cf5a5a6f3630b6631f9ba459015d43",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E092",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_18.log",
+      "sha256_at_audit": "cd1b3df6b0466d993222ec1c18a7e5e98959c2774d124f3f461318c7057afc42",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E093",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_24.log",
+      "sha256_at_audit": "0bd1566c099e3af5c1ad1a02b650ba99c88fdbd34421c6c2a3546bf05fb4d4dc",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E094",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_30.log",
+      "sha256_at_audit": "c0f0450576b4ef53dc7a552dfbcd17572822a8d811b9344250fcd6d5a4e56801",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E095",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_08.log",
+      "sha256_at_audit": "7e55cceaf666448fc6ac96338ed1fcb0113dde9071e0b8057c205d668c67a188",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E096",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_20.log",
+      "sha256_at_audit": "36ccff6b6d3d860816ce01987c7027ebee53fe07adee6a7a289e0d75abae2614",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E097",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_21.log",
+      "sha256_at_audit": "35783d1d8155bc69d49a760c8d7096123b74dfa4f6faafc6568edc11f98f187f",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E098",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_09.log",
+      "sha256_at_audit": "033bdf8e0fee5f097074f67987f51a9fd8c88c0009b8a2aa5c7289e8ef24d97d",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E099",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_23.log",
+      "sha256_at_audit": "92279d3a14ee2fe4f4767c49689edd3f6824f115f3c6c51f483d8ebbf941ddbd",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E100",
+      "path": "experiments/compile_sweep_20260915T010554Z/case_22.log",
+      "sha256_at_audit": "c0f91fd65b0caceabbd384b7732edeacf2b1b50190145c5e7106f2d0d61be9a7",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E101",
+      "path": "prototype/zkdepth/cmd/compilebench/main.go",
+      "sha256_at_audit": "b923cecfdbd9a6d12c8be71f970757ecfe90b384f3479279ce167d32c7d8a42d",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E102",
+      "path": "figures/render_compile_sweep.py",
+      "sha256_at_audit": "11829e2116f2bbcdbe7a081225db6005985ee83d76a0683c28e9913dade33fbd",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    },
+    {
+      "id": "E103",
+      "path": "figures/compile_scalability_manifest.json",
+      "sha256_at_audit": "a5d02b606ee5e711a63713eda21541cf4eefa87f950bfb4be996bb699e122ffc",
+      "agent_check": "local file inspected",
+      "human_verification": "pending",
+      "date_checked": "2026-09-22"
+    }
+  ],
+  "note": "Hashes record audit-time artifacts, not historical benchmark source hashes."
+}

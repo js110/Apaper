@@ -1,0 +1,27 @@
+{
+  "source": "experiments/compile_sweep_20260915T010554Z",
+  "source_sha256": "97abea5ad1b46c19395e5f43100cbc74d7977472a86cb2dc51d7871528840d5b",
+  "checks": [
+    "depth n=4 d=2: same count as prior benchmark",
+    "depth n=4 d=3: same count as prior benchmark",
+    "depth n=5 d=2: same count as prior benchmark",
+    "subset n=4 d=2: same count as prior benchmark",
+    "subset n=4 d=3: same count as prior benchmark",
+    "subset n=5 d=2: same count as prior benchmark"
+  ],
+  "resource_limited": [
+    "d=2: Subset: k=n/2, n=16: rss_limit",
+    "d=3: Depth, n=8: rss_limit",
+    "d=3: Depth, n=12: rss_limit",
+    "d=3: Depth, n=16: rss_limit",
+    "d=3: Subset: k=n/2, n=16: rss_limit"
+  ],
+  "description": "Full-circuit counts versus roster size. Missing values remain gaps, not zero or predictions.",
+  "transformations": "No smoothing. Log10 vertical scale, raw positive counts. Lines join adjacent measured grid points only; no connection across failures.",
+  "physical_size_inches": [
+    6.1,
+    3.2
+  ],
+  "png_dpi": 600,
+  "matplotlib": "3.11.2"
+}

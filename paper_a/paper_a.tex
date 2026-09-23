@@ -1,0 +1,440 @@
+% Official Elsevier numeric template; see venue_template/COMPLIANCE.md.
+% Review layout is an authoring choice pending access to journal-specific rules.
+\documentclass[preprint,review,12pt,nopreprintline]{elsarticle}
+\usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,tabularx}
+\usepackage{lineno}
+\usepackage[hidelinks]{hyperref}
+\pdfstringdefDisableCommands{\def\corref#1{}}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newcommand{\F}{\mathcal{F}_k}
+\newcommand{\ind}{\mathbf{1}}
+\journal{Vehicular Communications}
+\begin{document}
+\begin{frontmatter}
+\title{Beyond Point Claims: Zero-Knowledge Certification of Robust Spacetime Compliance in Vehicular Crowdsensing}
+% Author order, affiliation and correspondence supplied by the user on 2026-09-22.
+\author[aff1]{Lili He}
+\author[aff1]{Sheng Jiang}
+\author[aff1]{Linghui Lyu}
+\author[aff1]{Lei Zhang\corref{cor1}}
+\cortext[cor1]{Corresponding author: Lei Zhang.}
+\ead{8213662@163.com}
+\affiliation[aff1]{organization={College of Information and Electronic Technology, Jiamusi University},
+city={Jiamusi},postcode={154007},country={China}}
+\begin{abstract}
+A hidden coordinate may satisfy a task policy even when the physical evidence leaves the vehicle's compliance uncertain. We study this gap using private spacetime uncertainty boxes signed by authenticated sources, some of which may be Byzantine. A report is accepted only if every threshold-supported state satisfies the policy. Two reachability predicates separate validity and invalidity from boundary ambiguity and inconsistent evidence. Exact lower-corner and subset-enumeration circuits implement these tests with signature verification in Groth16. Although the depth circuit has a polynomial bound for fixed dimension, subset enumeration is cheaper in every tested small-fault-budget case. The evaluation covers 27 synthetic conditions with 30 randomized repetitions. Under the stated assumptions, mean decisive coverage is 87.52\%, compared with 75.63\% for a fixed-margin rule, with no observed classification errors; errors appear when calibration or fault assumptions are violated. A replay of 787 UrbanNav reference states with simulated evidence gives decisive coverage of 93.27\% versus 81.94\%. On an Apple M1 workstation, the subset circuits produce 164-byte proofs, with median proving times of 163--255~ms, while the depth circuits require 213--1091~ms. The prototype certifies the relation between signed evidence and policy; physical calibration and deployment feasibility still require validation beyond the proof.
+\end{abstract}
+\begin{keyword}
+Vehicular crowdsensing \sep Location privacy \sep Zero-knowledge proofs \sep Byzantine evidence \sep Uncertainty \sep Spacetime compliance
+\end{keyword}
+\end{frontmatter}
+\linenumbers
+\noindent\textit{Author-review draft. Scientific evidence, attribution, and declarations require author approval before submission.}
+
+\section{Introduction}
+Mobile crowdsensing pools observations from participating devices~\cite{Suhag2023}, including distributed vehicle sensors used for transportation and environmental monitoring~\cite{Zheng2025BARM}. A road observation is eligible for a task only if it was collected at the required place and time. The verifier therefore needs to check eligibility without learning the vehicle's precise trajectory. Proving a predicate over a hidden coordinate does not settle this question: that coordinate may be an uncertain estimate, and an authenticated source may have signed misleading evidence.
+
+Near a geofence boundary, a signed observation can leave plausible positions and times on both sides of the policy. Selecting a convenient point from that range lets an existential location proof succeed even though other plausible states violate the policy. Intersecting all sources' ranges does not resolve the problem. A compromised source can exclude the true state while retaining a small compliant intersection. The decision must account for both faulty sources and honest measurement error, including cases in which the available evidence supports neither acceptance nor rejection.
+
+We formulate this problem as certification of a report's bound reference event. Each issuer in an authorized roster signs an axis-aligned integer box for that event. The robust feasible set contains every state supported by at least $k=n-f-r$ sources, where $f$ budgets Byzantine issuers and $r$ budgets honest miscoverage. Acceptance requires a nonempty feasible set entirely contained in the policy, while the signed boxes remain private. The certificate concerns the reference event rather than continuous compliance between trajectory observations.
+
+Fault-tolerant sensor fusion~\cite{Marzullo1990,BFTPoLoc} and private robust computation~\cite{PG,CRSF} provide the basis for the evidence model. The question addressed here is how to certify its relation to a public task policy. We define an exact four-valued decision and implement it in two geometric circuits that bind private signed boxes to a report context. The evaluation measures proof costs and decision availability, then tests how the decisions change when the source assumptions fail.
+
+Figure~\ref{fig:architecture} summarizes the evidence-to-proof interface. The gateway learns the policy decision, not the signed evidence boxes.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/system_architecture.png}
+\caption{Conceptual architecture of the local prototype. The diagram's $B_i$ and $F$ denote the evidence boxes $U_i$ and feasible set $\F$ used in the text. Issuers sign boxes bound to a common report context; the vehicle proves the robust decision using private evidence. The gateway checks the task-bound proof and expiry, consumes a verified challenge, and accepts only a valid decision. ``Inconsistent'' means proved evidence failure, not a missing signature. Calibration and trusted enrollment remain external assumptions. Icons do not imply physical issuer independence or deployment.}\label{fig:architecture}
+\end{figure}
+
+Subset enumeration is the practical choice in the measured small omission regime. The depth construction instead permits a public threshold and has a polynomial bound at fixed dimension; the matched experiments compare their costs in the tested cases.
+
+\section{Related work and scope}
+\subsection{Vehicular crowdsensing, trust, and private participation}
+Anonymous participation need not rule out reliability checks. Cheng et al.'s AARE combines anonymous authentication with private reliability evaluation and reputation updates~\cite{Cheng2023}; Zheng et al.'s BARM adds blockchain-assisted identity management to anonymous authentication and reputation evaluation for sensing vehicles~\cite{Zheng2025BARM}. Zhou et al.'s PPVDA protects multidimensional sensing data using homomorphic message authentication codes and secret sharing, and verifies inner-product aggregation results~\cite{Zhou2024}. These mechanisms establish trust in participants or computations. They address a different question from whether a report's physical evidence supports its policy eligibility.
+
+BCS-LPP, proposed by Shen et al., addresses worker location privacy and participation fairness~\cite{Shen2024}. It combines blockchain, Geohash encoding, order-preserving encryption, and deposits, with verification of submitted sensing locations. Sultana et al. associate suspicious identities through speed time series and roadside evidence fusion for cooperative Sybil detection~\cite{Sultana2024}. Our certificate takes an authorized roster and fault budget as inputs; it does not infer either from reputation or misbehavior detection. Given those inputs, it checks whether every threshold-supported event state satisfies the public policy.
+
+\subsection{Location privacy and zero-knowledge authentication}
+Mdee et al. examine the effects of location-privacy mechanisms on vehicular applications~\cite{Mdee2022}. For electric-vehicle charging queries, Atmaca et al. use bounded location obfuscation and dummy queries to obtain approximate geo-indistinguishability~\cite{Atmaca2024}. Here the disclosed output is a policy decision rather than a perturbed coordinate. The privacy statement is therefore conditional on the public inputs and decision; it is not a differential-privacy guarantee.
+
+Ghani et al. use physically unclonable functions, passwords, and randomized nonces for two-factor authentication in vehicular edge networks~\cite{Ghani2025}, while Zhang et al. address Sybil resistance through RSU-authorized short-term pseudonyms~\cite{Zhang2025Sybil}. Authenticating a participant still leaves the calibration of its evidence to be established.
+
+Wang et al. bind polynomial commitments to identity in a blockchain and zero-knowledge design for anonymous vehicular authentication~\cite{Wang2025ZKAuth}. The proof concerns an authorized identity, not robust spatial support. Closer geometric formulations include ZKLP's accurate floating-point SNARKs for private geometric predicates~\cite{ZKLP} and vehicle subsidy and taxation protocols over signed trajectories~\cite{VehiclePolicy}. We use inclusive quantized boxes so that complement and threshold-coverage tests are exact under the stated coordinate convention.
+
+\subsection{Robust fusion and contribution boundary}
+Marzullo's work establishes fault-tolerant fusion of uncertain continuous-valued sensors and supplies the threshold-fusion foundation used here~\cite{Marzullo1990}. BFT-PoLoc addresses the related problem of Byzantine-resistant geometric inference for Internet-delay location verification~\cite{BFTPoLoc}; it is not the source of our box-depth construction. Within our box model, subset enumeration and maximum-depth evaluation give equivalent reachability tests for the threshold-supported feasible set; the research focus is its certification against a public policy.
+
+PG provides privacy-preserving Byzantine sensor fusion with guaranteed output delivery~\cite{PG}. The September 2026 CRSF preprint addresses collusion and manipulation of sensor participation through agreement and protected circuit-input release~\cite{CRSF}. Those distributed liveness guarantees are absent from our fixed-roster prototype. Its output is instead a portable proof of a public policy classification, with evidence boxes and signatures kept private. We compare these interfaces, not performance: neither PG nor CRSF was reimplemented under a matched workload.
+
+Table~\ref{tab:related-work} compares what these systems certify and what evidence they trust. A policy over a signed trajectory and a robust decision over one uncertain reference event have different certification targets, even when both hide location information.
+\begin{table}[p]
+\centering
+\renewcommand{\baselinestretch}{1}\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+\caption{Functional comparison of related systems. Each row uses its own evidence and trust assumptions; this is not a performance ranking.}
+\label{tab:related-work}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=.65\hsize\raggedright\arraybackslash}X>{\hsize=.95\hsize\raggedright\arraybackslash}X>{\hsize=1.15\hsize\raggedright\arraybackslash}X>{\hsize=1.25\hsize\raggedright\arraybackslash}X@{}}
+\toprule
+Work&Checked object&Evidence / trust model&Privacy / output interface\\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Vehicular crowdsensing and participation}}\\[3pt]
+BARM~\cite{Zheng2025BARM}\newline(2025)&Identity and reputation&Reputation evaluation; blockchain identity management&Anonymous authentication; private reputation evaluation and updates\\[5pt]
+PPVDA~\cite{Zhou2024}\newline(2024)&Inner-product aggregate&Homomorphic MACs; secret sharing; malicious model&Private sensing inputs; verifiable aggregate\\[5pt]
+BCS-LPP~\cite{Shen2024}\newline(2024)&Sensing locations&Geohash; order-preserving encryption; deposits&Location privacy levels; location validation and task management\\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Robust inference and private sensor fusion}}\\[3pt]
+BFT-PoLoc~\cite{BFTPoLoc}\newline(2024)$^{\dagger}$&IP-address location&Internet delays; Byzantine-resistant geometry&Distance estimates and multilateration; privacy not assessed here\\[5pt]
+PG~\cite{PG}\newline(2024)&Sensor fusion&Malicious sensors and aggregation servers&Private inputs and fusion result; guaranteed output delivery\\[5pt]
+CRSF~\cite{CRSF}\newline(2026)$^{\dagger}$&Fusion and participation&Sensor--server collusion; agreement on submissions&Private fusion; explicit abort and liveness guarantees\\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Zero-knowledge geometry and policy certification}}\\[3pt]
+ZKLP~\cite{ZKLP}\newline(2025)&Region membership; proximity&Private coordinates; floating-point geometry&Hidden coordinates; zero-knowledge geometric proofs\\[5pt]
+Vehicle policy~\cite{VehiclePolicy}\newline(2025)&Territorial driving requirements&Location claims signed by a trusted witness&Hidden trajectory; subsidy / taxation compliance proofs\\[5pt]
+\textbf{This work}&\textbf{All threshold-supported event states}&Signed boxes; fixed roster; Byzantine budget $f$ and honest-miss budget $r$&Private boxes and signatures; portable proof of a four-valued policy decision\\
+\bottomrule
+\end{tabularx}
+\par\vspace{4pt}\raggedright
+$^{\dagger}$Cited as preprints. MAC: message authentication code. Privacy guarantees depend on each protocol's public outputs. Our four decisions are valid, invalid, ambiguous, and inconsistent; missing signatures instead cause protocol abort.
+\end{table}
+Generic secure computation can evaluate the same finite decision function; no additional computational expressiveness or new cryptographic primitive is claimed. We implement the signed-box relation together with its report binding and measure the resulting circuits. Verification of an issued proof is noninteractive, but issuing the challenge and collecting source signatures still require communication. Complete-system comparisons must account for these exchanges as well as output leakage.
+
+\section{Evidence and adversary model}
+The event reference state is $z^\star=(x,y,t)$, or more generally a point in a finite domain
+\begin{equation}
+ \Omega=\prod_{a=1}^{d}[L_a,H_a]\cap\mathbb{Z}^d.
+\end{equation}
+A policy is an integer box $P=(\prod_a[p^-_a,p^+_a])\cap\mathbb{Z}^d\subseteq\Omega$. Each issuer $i$ signs an evidence box $U_i=(\prod_a[\ell_{ia},u_{ia}])\cap\mathbb{Z}^d\subseteq\Omega$ associated with a common public context $c$. All endpoints are integers, and subsequent box operations use this inclusive integer convention. Coordinates use a public reference frame, epoch, units, and quantization rule. In the prototype, coordinate bounds are unsigned 16-bit integers. Exactness in this paper refers to this finite model; a deployment must conservatively handle physical values falling within a boundary cell.
+
+An issuer signature authenticates the submitted bounds. It does not prove their physical accuracy. We assume at most $f$ Byzantine issuers and at most $r$ additional honest boxes that miss $z^\star$. Honest errors may be dependent. Distinct public keys are necessary but do not establish distinct trust domains: the deployment must reject multiple registered keys controlled by the same counted authority. Sybil-resistant vehicular authentication likewise requires controls on pseudonym authorization~\cite{Zhang2025Sybil}; in our model, the counted unit is an enrolled authority, not an arbitrary key. Several estimates derived from one GNSS receiver cannot be counted as independent authorities simply because they have different field names.
+
+The vehicle may submit false witnesses, replay signatures, modify evidence, or withhold reports. An edge verifier checks proofs and public task inputs. Every roster slot must be present for the relation to hold. A missing signature causes a protocol abort; it is not the same as a proved evidence-failure decision over a complete set of signed boxes. The prototype supplies no availability guarantee against withholding.
+
+The public statement contains $c$, $\Omega$, $P$, $k$, a decision code, and the ordered issuer keys. Issuers sign
+\begin{equation}
+ m_i=\operatorname{MiMC}(c,i,\ell_{i1},u_{i1},\ldots,\ell_{id},u_{id}).
+\end{equation}
+The signed context binds the protocol version, task and circuit identifiers, domain, policy, threshold, and roster. It also includes the coordinate convention, calibration profile, report digest, challenge nonce, and expiry. The gateway reconstructs these inputs from its configured task rather than accepting a vehicle-selected public witness. This gateway is a local integration harness with an in-memory challenge store, without distributed enrollment, durable freshness storage, or a networked task registry. The microbenchmark measures only the proof kernel.
+
+\paragraph{Physical evidence interface}
+A deployable issuer would need to identify the same event, transform its observation into the configured frame and epoch, conservatively enclose spatial and timing uncertainty, attach a validated calibration profile, and sign the resulting box and context. Candidate integration designs include an operator-controlled radio-positioning service, a roadside perception operator, and an independently administered ranging anchor. These are proposed interfaces, not sources integrated or validated in this study. Radio links do not by themselves provide calibrated ranging, and roadside object association, non-line-of-sight bias, synchronization, and frame registration must be included in the uncertainty model. A vehicle-controlled sensor stack cannot be treated as several honest authorities against its owner merely by assigning different keys; its compromise must be covered by the fault budget. A shared operator or calibration failure can compromise several nominal sources simultaneously.
+
+\paragraph{Withholding and partial participation}
+One withholding roster member can abort the current protocol. This is a liveness limitation, not a failure of the conditional acceptance theorem. A possible extension would authorize a registry of $N$ issuers, bind an active set $S$ of size $m$ to the task context, prove membership and distinctness, and use $k_S=m-f_S-r_S\geq1$. Merely accepting any $m\geq k$ signatures while retaining the old threshold does not ensure that $k$ honest covering boxes remain. For an adaptively selected set, the coverage and fault assumptions must hold for that selection, not just for an unrelated population. Prover-controlled omissions can also change a decision, so selection rules and availability reporting require explicit governance. With a Merkle registry, a padded implementation would add membership-path hashing proportional to $m\log N$, active-slot constraints and distinctness checks, besides the geometry and signatures. Actual constraint counts and liveness depend on a new implementation and delivery model; neither is evaluated here. The fixed-roster prototype therefore targets provisioned, delay-tolerant report checks rather than opportunistic safety-critical V2X control.
+
+\paragraph{Conservative physical boundaries}
+For a physical grid cell $C(z)$, evidence indices should include every cell intersecting the physical uncertainty region, while acceptance should use only cells wholly contained in the physical policy. Then an accepted nonempty feasible set cannot accept a boundary-straddling cell as wholly compliant. This can increase abstention or conservative rejection. Conversely, a physical invalidity claim requires disjointness from every cell intersecting the policy; disjointness from an inward-rounded policy alone is insufficient. Preserving all four physical meanings may therefore require separate inner/outer policy approximations or a boundary-ambiguity rule. The implemented single-policy integer relation does not supply this continuous-to-discrete adapter; values beyond the configured range must be rejected rather than silently clamped.
+
+\subsection{Report binding and challenge lifecycle}
+An administrator configures a task and its verifying key. The gateway snapshots the task configuration and rejects duplicated issuer keys or trust-domain labels. Labels enforce the administrator's enrollment decision; they do not prove independence of the underlying authorities. It issues a random 256-bit nonce with an expiry, using a trusted application clock. The vehicle and issuers derive
+\begin{equation}
+ c=\operatorname{OS2IP}\left(\operatorname{SHA256}(\operatorname{Encode}(v,T,\nu,e,\operatorname{SHA256}(R)))\right)\bmod q,
+\end{equation}
+where $T$ is the complete configured task, $R$ is the report byte string, $\nu$ is the nonce, $e$ is its expiry, and $q$ is the BN254 scalar-field modulus. The executable encoding is a fixed-order JSON structure with no maps and an explicit version tag. A cross-language implementation must reproduce its byte encoding. Every issuer signs its box against this same $c$. SHA-256 reduction is domain binding, not encryption; report-digest dictionary attacks remain possible for low-entropy reports.
+
+At submission the gateway looks up the nonce, checks expiry, reconstructs the context and public witness from the trusted configuration and received report, and verifies the proof. Only a valid decision authorizes report acceptance. Every successfully verified decision consumes its nonce. Verification and nonce consumption are serialized under a mutex, so racing copies cannot both succeed within one gateway process. Failed proofs leave the nonce available until expiry. This implementation does not prevent a vehicle from requesting another challenge for the same report, and therefore supplies challenge replay protection rather than identity-based duplicate-report suppression. Restart persistence, distributed atomicity and challenge-rate limiting remain deployment tasks.
+
+Figure~\ref{fig:sequence} separates challenge issuance, evidence signing, and submission-time verification.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/protocol_sequence.png}
+\caption{Report-bound challenge lifecycle. The submission in step 6 also identifies the challenge nonce used for the gateway lookup. The diagram abstracts transport and shows the successful verification path; failed proofs do not consume the challenge. Verification and consumption share a process-local critical section. A fresh challenge may still be obtained for the same report.}\label{fig:sequence}
+\end{figure}
+
+\section{Robust compliance semantics}
+For $1\leq k=n-f-r\leq n$, define
+\begin{equation}\label{eq:feasible}
+ \F=\{z\in\Omega:\sum_{i=1}^{n}\ind[z\in U_i]\geq k\}.
+\end{equation}
+Let $I=\ind[\F\cap P\neq\varnothing]$ and $O=\ind[\F\cap(\Omega\setminus P)\neq\varnothing]$. These two bits give all four outcomes in Table~\ref{tab:decisions}. The inconsistent outcome is called evidence failure in the implementation and result tables. Distinguishing it avoids vacuous acceptance: the empty set is mathematically a subset of every policy, but it supplies no evidence of a compliant event.
+
+\begin{table}[htbp]
+\centering
+\caption{Exact decision semantics. Only valid authorizes acceptance.}\label{tab:decisions}
+\begin{tabular}{cccl}
+\toprule $I$ & $O$ & Code & Decision \\\midrule
+1&0&0&Valid: nonempty feasible set contained in $P$\\
+0&1&1&Invalid: nonempty feasible set disjoint from $P$\\
+1&1&2&Ambiguous: feasible states on both sides\\
+0&0&3&Inconsistent: no threshold-supported state\\\bottomrule
+\end{tabular}
+\end{table}
+
+In the constructed example of Figure~\ref{fig:counterexample}, $\Omega=[-4,8]\cap\mathbb Z$ and both honest intervals contain $z^\star=-1$. The Byzantine interval excludes it. The all-source intersection $[2,4]\cap\mathbb Z$ lies inside the policy even though it excludes the true state, and a conveniently chosen point also passes. Threshold coverage retains $\F=[-2,4]\cap\mathbb Z$, giving an ambiguous decision. The example applies the existing fusion rationale; it supplies neither a new theorem nor an experimental success rate.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/decision_counterexample.png}
+\caption{One evidence set under three rules. All intervals are inclusive integer sets; $n=3,f=1,r=0,k=2$. The two naive acceptance examples contradict the known noncompliant true state, whereas the robust set spans the policy boundary. This is a constructed explanatory example, not measured data.}\label{fig:counterexample}
+\end{figure}
+
+\begin{proposition}[Conditional evidence soundness]\label{prop:soundness}
+If at most $f$ issuers are Byzantine and at most $r$ honest boxes miss $z^\star$, then $z^\star\in\F$. Consequently, a valid decision implies $z^\star\in P$, and an invalid decision implies $z^\star\notin P$.
+\end{proposition}
+\begin{proof}
+At least $n-f-r=k$ boxes contain the true state, so its coverage reaches the threshold in~\eqref{eq:feasible}. The two implications follow respectively from set containment and disjointness.\end{proof}
+The proof uses the classical threshold-containment argument. The extra condition $n>2f+r$ guarantees at least one honest supporter for a threshold-supported point, but truth inclusion above does not require it.
+
+For probabilistic calibration, let $M$ be the number of honest boxes missing the event and assume honest source $i$ has marginal failure probability at most $\alpha_i$ for the specified operating population. Without independence,
+\begin{equation}\label{eq:calibration}
+ \Pr(M>r)\leq \min\left(1,\frac{\sum_{i\in\mathcal H}\alpha_i}{r+1}\right).
+\end{equation}
+Indeed, $\mathbb{E}M\leq\sum_i\alpha_i$ and $M>r$ entails $M\geq r+1$. This loose bound does not supply missing calibration estimates. For adaptively chosen tasks, applicable conditional calibration or a suitable joint bound is required; a marginal guarantee from unrelated data is insufficient.
+
+If honest misses were independently Bernoulli with known probabilities $\alpha_i$, the tighter reference probability would be the upper tail of the Poisson-binomial distribution, obtained from coefficients of $\prod_i[(1-\alpha_i)+\alpha_i z]$. For five hypothetical honest sources with $\alpha_i=0.05$, the independence-based tails for $r=0,1,2$ are 0.226219, 0.0225925, and 0.00115813, versus the dependence-agnostic bounds 0.25, 0.125, and 0.0833333. Thus the gap is modest at $r=0$ but large for positive budgets. These are analytical illustrations, not fitted failure probabilities; shared positioning errors do not justify substituting an independence-based bound for the dependence-agnostic guarantee.
+
+\section{Finite proof construction}
+\subsection{Lower-corner reachability}
+For a query box $Q$, intersect each evidence box with $Q$. Let $A_a$ contain the lower endpoints of nonempty clipped boxes on axis $a$.
+\begin{lemma}\label{lem:corner}
+If the maximum overlap depth in $Q$ is positive, some maximizer belongs to $A_1\times\cdots\times A_d$.
+\end{lemma}
+\begin{proof}
+Choose a maximum-depth point $z$ and all boxes covering it. Their intersections with $Q$ have a common intersection. Its lower corner $v$ is formed by taking the greatest lower endpoint on each axis, hence $v_a\in A_a$. Every selected box contains $v$, so its depth is at least that of $z$ and therefore maximal.\end{proof}
+The circuit considers $n^d$ candidates, including duplicates, with coordinate $v_a=\max(\ell_{j_a a},Q^-_a)$. It tests query membership and coverage by every evidence box. Candidates associated with boxes not intersecting the query cannot cause false reachability because all membership comparisons are evaluated. Reachability is the OR of all candidate tests with depth at least $k$.
+
+The integer complement $\Omega\setminus P$ is the union of at most $2d$ slabs. The low slab for axis $a$ ends at $p^-_a-1$ and the high slab begins at $p^+_a+1$. Other coordinates span the domain. Slabs can overlap. A slab beyond the domain boundary is inactive, with a safe selected endpoint before comparisons. The circuit computes $I$ over $P$ and $O$ over these slabs, then constrains the public code to
+\begin{equation}
+ \delta=(1-I)O+2IO+3(1-I)(1-O).
+\end{equation}
+All box coordinates are range-constrained, lower endpoints do not exceed upper endpoints, and boxes and policy lie within $\Omega$. Issuer signatures are checked inside the circuit. Pairwise public-key equality is forbidden.
+
+\subsection{Cost and competing exact algorithms}
+For fixed bit width, the geometric circuit performs $O((2d+1)d n^{d+1})$ bounded comparisons and associated Boolean operations, besides signature checks and $O(n^2)$ key-distinctness tests. The cost is polynomial in $n$ for fixed $d$ and independent of the allowed omissions, but grows exponentially with dimension.
+
+An alternative uses
+\begin{equation}
+ \F=\bigcup_{S\subseteq[n],\,|S|=k}\ \bigcap_{i\in S}U_i.
+\end{equation}
+Each intersection is itself a box, so nonemptiness, containment, and intersection with the policy can be checked directly. The native reference and a second ZK backend use $O\bigl(\binom nk kd\bigr)$ geometric operations for these tests. At $n=5,k=4$, five subsets suffice, compared with $5^3$ lower-corner candidates per query. The subset circuit fixes $k$ at compilation and checks it against the public threshold. The depth circuit leaves that threshold public without fixing it at compilation. Both backends use the same signature verification, coordinate checks, and output semantics. Semantic evaluation uses the native subset implementation after equivalence testing; backend selection is explicit rather than automatically optimized.
+
+Writing $b=n-k=f+r$ clarifies the parameter tradeoff: for fixed $b$, subset enumeration scales as $O(n^{b+1}d)$, while the depth construction scales as $O(n^{d+1})$ for fixed $d$. Thus a small fixed omission budget need not produce a crossover merely by increasing $n$; balanced $k\approx n/2$ instead makes the subset count exponential. As an explicit leading-order work proxy, define $W_D=(2d+1)dn^{d+1}$ and $W_S=\binom nk kd$. At $(n,d,k)=(20,3,19)$ these are 3,360,000 and 1,140; at $(20,3,10)$ they are 3,360,000 and 5,542,680. The depth construction has $n^d=8,000$ candidates per query at $n=20,d=3$, not $n^4$ candidates: each candidate still requires source-coverage tests. The proxies count unlike operations and omit implementation constants, so their ordering is not a measured constraint or runtime crossover. The current data justify subset enumeration for the tested regime only.
+
+\subsection{Security and leakage boundary}
+Assuming the instantiated proof system's knowledge soundness, accepted proofs establish an assignment satisfying the signature and geometry relation. Signature unforgeability for authorized keys, collision resistance of the signed-box MiMC prehash and transcript-digest mapping, and correct context validation bind that assignment to authenticated evidence for the intended event. Proposition~\ref{prop:soundness} then connects that evidence to compliance on the stated physical-coverage event. A reduction would add cryptographic failure probabilities to the calibration-failure probability; this paper does not claim a mechanized end-to-end security proof.
+
+The zero-knowledge property hides box coordinates and signatures from the verifier, conditional on the public statement. The roster, domain, policy, threshold, context, and classification are public. The prover sees the boxes it receives, and issuing authorities retain their observations. Repeated linkable classifications can reveal additional location information. The prototype does not provide anonymous networking, private roster membership, unlinkable rewards, or a defense against adaptive policy queries. Its privacy claim is limited to the proof witness.
+
+Policy-aware collusion does not require a new geometric safety margin while the stated fault and coverage assumptions hold: regardless of how Byzantine boxes are chosen, $z^\star\in\F$ prevents an outside true event from yielding $\F\subseteq P$. The adversary can nevertheless reduce decisiveness or withhold signatures. Once the budget or coverage event fails, no fixed policy margin restores a distribution-free guarantee. The synthetic attacks already choose boxes using the true state and policy, rather than only adding random drift.
+
+\paragraph{Reward deduplication is a separate relation}
+Anonymous membership protocols such as Semaphore provide scoped double-signaling prevention~\cite{SemaphoreDocs}. A potential reward extension would prove ownership of an enrolled secret $s$ and compute a domain-separated nullifier $\eta=\operatorname{PRF}_s(\text{task},\text{epoch})$ in the same report-bound proof. Its scope must not include a fresh challenge, which would permit a new nullifier on every retry. The reward service must atomically enforce uniqueness and persist that state. This prevents repeated rewards per enrolled credential and scope, not Sybil enrollment: freely chosen pseudonym keys defeat it. Unique-credential issuance, renewal, revocation, permitted reporting frequency, and the resulting within-scope linkability are additional assumptions. A prover-selected grid identifier is likewise unsafe unless policy-bound and proven. No nullifier or incentive mechanism is implemented or benchmarked here.
+
+\begin{proposition}[Gateway-conditioned report acceptance]
+Assume an authorized task/key configuration, correct gateway execution with a trustworthy clock, unforgeable issuer signatures, knowledge soundness of the proof system, and collision resistance of both the signed-box MiMC prehash and the instantiated transcript-digest mapping. If the gateway accepts a report and the physical coverage event in Proposition~\ref{prop:soundness} holds, the report's bound reference event satisfies the configured policy, except for cryptographic failure.
+\end{proposition}
+\begin{proof}
+Verification uses public inputs reconstructed from the authorized task and the submitted report bytes. A sound accepted proof supplies correctly signed boxes for that context and the valid output. Replacing an honest issuer's signed box or its bound transcript while reusing a signature requires a prehash/transcript collision or a successful signature/proof forgery. The finite relation establishes a nonempty feasible set contained in the authorized policy. Proposition~\ref{prop:soundness} places the bound event in that set. The nonce store additionally prevents reuse of the same challenge after successful verification within that gateway instance.\end{proof}
+The proposition assumes honest issuers associate their boxes with the same physical event and report context. It does not establish that the report content accurately describes the event. Its probabilistic physical failure term can be bounded by~\eqref{eq:calibration} only when the stated calibration assumptions are applicable.
+
+\section{Implementation and experimental design}
+The ZK prototype uses Go 1.25.6, gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Groth2016}, and gnark's twisted-Edwards EdDSA with MiMC~\cite{MiMC2016}. This EdDSA instantiation differs from Ed25519. Keys and signatures use real cryptographic randomness, and the benchmark runs compilation, setup, witness construction, proving, and verification without placeholder cryptography.
+
+Backend tests verify four decision fixtures and reject wrong decisions, modified signed bounds, and duplicated public keys. Integration tests additionally sign the full field context and pass real proofs through the gateway. Genuine proofs for all four decision classes verify and consume their challenges, but only the valid class authorizes a report. All twelve unequal proof/code pairings are rejected, as are report replacement, expiry, unknown nonces, cross-challenge reuse, and threshold substitution. A missing proof leaves the challenge unconsumed. In an eight-way concurrent replay, exactly one copy is accepted; duplicate trust-domain registration is also rejected. These are regression tests, not exhaustive cryptographic validation.
+
+Measurements use a Mac mini with an eight-core Apple M1, 16~GB memory, and macOS 26.6.2. For each circuit shape, one randomized setup is followed by 30 sequential proofs of a fixed signed witness. Setup is timed once and excluded from online times. The quantiles describe repetitions within that process, with p99 especially imprecise for 30 measurements. Proof-generation latency excludes compilation, witness construction, signature collection, network transfer, and queueing. OBU energy and end-to-end V2I latency were not measured.
+
+An end-to-end submission would have
+\begin{equation}
+ T_{\mathrm{total}}=T_{\mathrm{challenge}}+T_{\mathrm{evidence}}+T_{\mathrm{witness}}+T_{\mathrm{prove}}+T_{\mathrm{upload}}+T_{\mathrm{verify}}+T_{\mathrm{queue/store}}.
+\end{equation}
+The benchmark times local witness construction and the proof kernel. The other terms---challenge exchange, physical evidence collection, wireless transport, and service queue/storage---remain unmeasured. Parallel issuer requests would still wait for the slowest required response; a withholding roster member causes an abort at timeout. Similarly, the 164-byte proof and 556--748-byte public witness account only for the cryptographic components of a wire packet. M1 workstation timings are not extrapolated to an OBU and establish neither embedded-device feasibility nor a real-time deadline.
+
+Experimental figures are generated reproducibly from recorded results using Python and Matplotlib. OpenAI Codex (OpenAI; model version not exposed in the retained workflow record) assisted preparation of the analysis and plotting code. The plots are data-derived renderings, not image-model outputs; source-data tables, rendering scripts, and artifact hashes accompany the draft.
+
+\subsection{Resource-bounded circuit compilation}
+The compilation sweep uses 4, 8, 12, and 16 issuers in two and three dimensions, with 16-bit coordinates. It compiles the complete signed-box R1CS. Subset thresholds cover $k=n-1$, $n-2$, and $n/2$; coincident settings at $n=4$ are run once. The depth circuit retains its public threshold and is compiled once per shape. Two $(n,d)=(5,2)$ controls reproduce prior counts, giving 32 separate process invocations in a seeded randomized order (seed 20260915). One compilation is performed per configuration: constraint counts are structural measurements, while compile times are descriptive single runs. Each child process has a 30~s timeout, a sampled RSS termination threshold of 3~GiB at 50~ms polling intervals, and a Go soft memory target of 2500~MiB. Setup and proof generation are excluded. Failed runs retain their logs and resource status without estimated constraint counts. The sweep uses the same workstation and gnark version as the proof benchmark.
+
+\subsection{Synthetic semantic experiment}
+The domain is $[0,63]^3$ and the policy is $[18,45]^3$. We use five sources, $f=1$, and $r=0$. Twenty-seven conditions cross three maximum radii (2, 4, 6), three actual Byzantine counts (0, 1, 2), and three error models. Each condition contains 30 seeds with 80 events per seed, for 64,800 event-condition observations. A seed is the experimental unit. Seventy-five percent of event generation chooses one axis near a policy face; the other events are uniform. This face-biased construction can include points far from the actual policy boundary on other axes.
+
+Honest box radii vary between half the maximum radius and that maximum, rounded to integers. Independent calibrated errors lie within the declared radius. Correlated calibrated errors share a bounded direction and have bounded jitter. A misspecified model increases the common error scale beyond the declared radius. Byzantine boxes equal the policy for an outside event, or select the nearest outside slab for an inside event. These attacks are deliberately informed by truth and policy; their distribution is not an estimate of real adversarial traffic.
+
+Baselines are median-center point classification, majority voting on center compliance, a fixed maximum-radius box around the median center, and intersection of all sources. The robust native subset classifier provides the proposed semantic output. We also compare subset and depth outputs in 1,200 randomized tests across one, two, and three dimensions, and compare maximum depth with exhaustive grid enumeration in a further 1,200 tests. The baselines isolate semantic choices; they are not replicas of PG, CRSF, or BFT-PoLoc.
+
+False acceptance and false rejection use different denominators: outside events for acceptance, inside events for invalid classification. Decisive coverage is the fraction of all events classified valid or invalid; ambiguity and evidence failure are reported separately. Confidence intervals are normal approximations over seed-level rates, describing simulation variability rather than a population guarantee of zero error. Raw outcome counts and class denominators are retained for each seed. When a denominator is zero, that conditional rate is undefined and omitted from its seed average, with the number of defined seeds recorded. The seed still contributes to other metrics.
+
+\subsection{Miscoverage-budget ablation}
+We repeat the 27-condition synthetic experiment with $r=1$ and $r=2$, preserving the random seeds and event-generation logic. Together with $r=0$, these are 194,400 event-condition evaluations, but only 64,800 distinct randomized base observations. The paired runs isolate the classification effect of changing $k$ from four to three to two. They use the native exact classifier; the cryptographic table remains a $k=n-1$ benchmark. These runs do not fit or estimate empirical calibration parameters.
+
+\subsection{Trajectory replay}
+We downloaded the UrbanNav-HK-Medium-Urban-1 reference file from the official dataset links~\cite{UrbanNav}. The file supplies 787 timestamped states over 786~s. Latitude and longitude are converted from degrees/minutes/seconds to a local equirectangular frame using an Earth radius of 6,371,000~m; horizontal coordinates and elapsed seconds are rounded to integers with positive offsets. Policy bounds are the per-axis 20th and 80th percentiles, fixed before evidence replay; 169 reference states satisfy this policy.
+
+For each of 30 evidence realizations on this single trajectory, four honest sources have simulated spatial radii of 8--20~m and temporal radii of 1--3~s. Shared errors follow a bounded autoregressive process with coefficient 0.9 and source-specific bounded jitter. One Byzantine source targets the opposite policy outcome. For inside states, this replay attack uses the nearest lower policy face. A second mode multiplies the common bias by four to test misspecification. These are simulated evidence processes on a measured reference path, not measured GNSS residuals or independent real authorities. Replication estimates uncertainty conditional on the one path and policy, and supports no between-route generalization.
+
+\section{Results}
+\subsection{Conditional correctness and availability}
+With calibrated errors and no more than one Byzantine source, the robust rule made no observed misclassifications across the 12 synthetic conditions. Equal weighting of these preselected conditions gives mean decisive coverage of 87.52\%, compared with 75.63\% for the fixed-margin baseline; the averages do not describe a deployment population.
+
+The correlated, radius-four, one-Byzantine condition in Table~\ref{tab:semantic} shows where the decisions differ. Robust classification reached 85.04\% decisive coverage, against 75.67\% for the fixed margin. Median-point classification decided every event, but its false acceptance and false rejection rates were 2.10\% and 15.29\%.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Synthetic focus condition. Mean seed-level rates in percent; 30 seeds, 80 events each. FA/FR use outside/inside denominators; Amb., Fail., and Dec. use all events.}\label{tab:semantic}
+\begin{tabular}{lrrrrr}
+\toprule Method&FA&FR&Amb.&Fail.&Dec.\\\midrule
+Median point&2.10&15.29&0&0&100\\
+Majority center&2.10&16.30&0&0&100\\
+Fixed margin&0&0&24.33&0&75.67\\
+All-source intersection&8.64&47.55&0&87.63&12.38\\
+Robust set&0&0&14.96&0&85.04\\\bottomrule
+\end{tabular}
+\end{table}
+
+The nominal 95\% seed-level intervals are 83.39--86.70\% for robust decisive coverage and 74.06--77.27\% for the fixed margin. Pairing the same 30 seeds in a bootstrap with 10,000 resamples and random seed 20260905 gives a difference of 9.38 percentage points, with a percentile 95\% interval of 8.25--10.54 points. This exploratory estimate is conditional on the chosen workload. The all-source intersection often becomes empty under the constructed attack; its remaining decisive outcomes are wrong. That frequency is specific to this attack and workload.
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/availability.pdf}
+\caption{Decisive coverage for calibrated correlated errors and one Byzantine source. Error bars are normal 95\% intervals over 30 simulation seeds. The horizontal scale is quantized units, with no physical-unit calibration in this synthetic experiment.}\label{fig:availability}
+\end{figure}
+
+Violating the source assumptions produced errors. The undercovered correlated focus condition had 0.23\% robust false acceptance and 3.41\% false rejection. With two Byzantine sources and a verifier budget of one, the rates reached 11.62\% and 60.86\%, while evidence failure reached 83.33\%. An evidence-failure output cannot serve as a general detector of broken assumptions: undercoverage produced wrong decisive outputs without triggering it.
+
+The UrbanNav replay gives a similar comparison on a moving reference path. With nominal simulated evidence, robust decisive coverage was 93.27\%, against 81.94\% for fixed margin, with no observed error for either rule. Median-point classification had false acceptance and rejection rates of 0.29\% and 3.12\%. Amplifying the common bias raised the robust rates to 0.032\% and 0.493\%. The replay tests decision behavior under these simulated errors, not the validity of the assumed evidence calibration.
+
+\subsection{Effect of the honest-miscoverage budget}
+Table~\ref{tab:miscoverage} holds correlated errors, radius four, and one Byzantine source fixed while varying the honest-miscoverage budget. Increasing $r$ reduces decisive coverage from 85.04\% to 77.46\% under calibrated simulated evidence, without observed errors. Undercovered evidence gives a different tradeoff: false rejection falls from 3.41\% to 0.94\%, but decisive coverage also drops from 84.92\% to 78.50\%. Errors persist at $r=2$. Decreasing $k$ expands the feasible set and makes universal acceptance more conservative; it changes the decision rule, not the accuracy or calibration of the simulated evidence.
+\begin{table}[htbp]
+\centering\small
+\caption{Matched miscoverage-budget ablation. Mean seed-level percentages; $n=5,f=1$, radius four, one Byzantine source.}\label{tab:miscoverage}
+\begin{tabular}{lrrrr}
+\toprule Error model&$r$&False accept&False reject&Decisive coverage\\\midrule
+Calibrated&0&0&0&85.04\\
+Calibrated&1&0&0&81.25\\
+Calibrated&2&0&0&77.46\\
+Undercovered&0&0.23&3.41&84.92\\
+Undercovered&1&0&1.79&81.67\\
+Undercovered&2&0&0.94&78.50\\\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:budget} visualizes the availability--error tradeoff in Table~\ref{tab:miscoverage} without treating matched budgets as independent replications. The normal false-rejection interval can extend below zero; its full extent is displayed as an approximation artifact, not a negative physical error rate.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/budget_tradeoff.pdf}
+\caption{Honest-miscoverage budget sensitivity at $n=5,f=1$, radius four, and one Byzantine source. (a) Decisive coverage for both error models. (b,c) Conditional false acceptance and rejection for undercovered evidence, on separate vertical scales; calibrated errors are zero for all three budgets. Points are seed means and bars are normal 95\% intervals over the same 30 seeds at each budget.}\label{fig:budget}
+\end{figure}
+
+\subsection{Real proof costs}
+Table~\ref{tab:crypto} reports measured proving and verification quantiles. Serialized proofs contain 164 bytes for all tested shapes. Serialized public witnesses add 556--748 bytes, including roster keys; packet headers, report payloads, and transport are additional. Constant proof size does not mean constant report size or constant verification cost in the number of public inputs.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Measured lower-corner Groth16 costs. Times are milliseconds except setup (seconds). Each row uses 30 proofs after one setup.}\label{tab:crypto}
+\begin{tabular}{rrrrrrr}
+\toprule $(n,d)$&Constraints&Setup&Prove p50&Prove p95&Verify p50&Verify p95\\\midrule
+$(3,2)$&55,987&3.64&213.12&244.83&1.033&1.350\\
+$(4,2)$&97,493&7.47&360.74&427.17&1.081&1.514\\
+$(5,2)$&158,781&11.56&574.69&700.49&1.073&1.212\\
+$(3,3)$&185,229&13.84&548.33&707.35&1.067&1.412\\
+$(4,3)$&510,362&38.34&1090.95&1212.54&1.093&1.506\\\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/backend_costs.pdf}
+\caption{Matched circuit sizes and measured proving costs for both backends on the Apple M1 workstation. Right: open markers show all 30 timings per shape and backend (300 in total); filled markers denote medians and bars span sample p5--p95, not confidence intervals. Horizontal offsets separate observations without changing their values. Backend batches were not interleaved.}\label{fig:scaling}
+\end{figure}
+At $n=4$, moving from two to three dimensions raises depth-backend constraints from 97,493 to 510,362; the largest depth case takes about 1.09~s to prove at the median. The subset circuits in Table~\ref{tab:subset} are smaller in every tested $k=n-1$ case. For $(n,d)=(4,3)$, subset enumeration needs 46,737 constraints and a median proving time of 234.93~ms. Proof and public-witness sizes are the same for both backends.
+
+Constraint counts are deterministic for these circuit shapes. Timing ratios have a narrower interpretation because the backends ran in separate batches on the same workstation, without randomized interleaving or thermal controls. They are descriptive comparisons, not controlled causal estimates or evidence of suitability for safety-critical control loops. Deployment would also require a trusted-setup lifecycle; the local benchmark ceremony is only an experimental setup.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Matched subset-backend measurements, $k=n-1$, 30 proofs per row. Median times are milliseconds.}\label{tab:subset}
+\begin{tabular}{rrrr}
+\toprule $(n,d)$&Constraints&Prove p50&Verify p50\\\midrule
+$(3,2)$&32,474&163.42&1.028\\
+$(4,2)$&42,918&225.79&1.038\\
+$(5,2)$&53,528&254.66&1.051\\
+$(3,3)$&35,248&206.34&1.059\\
+$(4,3)$&46,737&234.93&1.038\\\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Circuit growth and resource boundaries}
+Figure~\ref{fig:compilegrowth} and Table~\ref{tab:compilegrowth} report the compilation sweep. Twenty-seven configurations completed and five stopped at the sampled RSS threshold; none timed out. Six overlapping configurations reproduce the earlier constraint counts exactly. At $n=16,d=2$, depth requires 3,509,645 constraints, while subset enumeration uses 181,194 at $k=15$ and 308,978 at $k=14$. Balanced subset selection grows faster: $n=12,d=3,k=6$ requires 962,018 constraints, compared with 147,506 at $k=11$.
+
+The $n=16,k=8$ subset runs hit the resource threshold in both dimensions, as do three-dimensional depth runs at $n=8,12,16$. More resources might allow those configurations to compile; their constraint counts remain unobserved here. Among cases completed by both backends, no constraint-count crossover occurs. The censored runs support no further ordering.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/compile_scalability.pdf}
+\caption{Measured complete-circuit constraint counts on a logarithmic vertical scale. Subset budgets are $b=n-k$. Missing points denote resource-limited runs listed in Table~\ref{tab:compilegrowth}, not zero constraints; lines are visual guides between measured grid points. At $n=4$, $b=2$ and $k=n/2$ coincide. The sweep measures compilation, not proving latency.}\label{fig:compilegrowth}
+\end{figure}
+\begin{table}[htbp]
+\centering\small
+\caption{Full R1CS counts. RL: process terminated after sampled RSS exceeded 3~GiB; the constraint count is unobserved.}\label{tab:compilegrowth}
+\begin{tabular}{rrrrrr}
+\toprule $d$&$n$&Depth&Subset $b=1$&Subset $b=2$&Subset $k=n/2$\\\midrule
+2&4&97,493&42,918&43,160&43,160\\
+2&8&509,277&86,354&97,734&111,776\\
+2&12&1,544,390&132,447&181,221&675,759\\
+2&16&3,509,645&181,194&308,978&RL\\
+3&4&510,362&46,737&47,099&47,099\\
+3&8&RL&95,153&112,213&133,255\\
+3&12&RL&147,506&220,640&962,018\\
+3&16&RL&203,793&395,417&RL\\\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Limitations and deployment implications}
+The certificate concerns the report's reference event, not the truth of its sensed content. It also leaves relay attacks, physical sensor possession, and validation of claimed calibration profiles unresolved. Acceptance depends on correct enrollment, event binding, and trustworthy issuance of uncertainty boxes outside the circuit.
+
+Full-roster signatures avoid silent omission within an accepted witness, but a malicious source can block completion. A retry must use an authorized new roster and matching fault policy; allowing the vehicle to drop inconvenient evidence without such authorization changes the security model. Distinct-key checks alone do not prevent Sybil authorities. Public rosters can also reveal where a vehicle obtained evidence.
+
+The measured omission budgets and dimensions favor subset enumeration. Depth allows threshold flexibility, but no measured crossover yet supports choosing it on cost grounds. A comparison with complete private-fusion systems would need matched leakage, liveness, geometry, adversaries, and hardware.
+
+The evaluation covers small-roster proofs on one workstation and synthetic evidence, including replay on one measured reference trajectory. Its scope is algorithmic and prototype validation, not multisource field calibration or vehicle-side communication and energy consumption. The retrospective single-receiver diagnostic in \ref{app:receiver} shows how poorly a calibration prescription can transfer even within one sequence. Cross-route behavior and tail latency across processes and thermal conditions remain unmeasured. The absence of errors in covering-box simulations is a result for those workloads.
+
+\section{Conclusion}
+Robust spacetime compliance asks whether all threshold-supported states meet a policy, rather than whether one selected coordinate does. The report-bound certificate makes this decision publicly verifiable while keeping signed boxes private, and separates valid and invalid outcomes from ambiguity and inconsistent evidence.
+
+Both implemented circuits evaluate that exact relation. Subset enumeration costs less throughout the measured small omission regime; increasing uncertainty tolerance changes decision availability, while failures of the source assumptions can produce incorrect decisions. The next deployment question is whether calibrated multisource evidence can be supplied reliably in an integrated vehicular testbed.
+
+\section*{Funding}
+% Funding statement supplied by the user on 2026-09-22; letter O in D2O25O185 retained.
+\begingroup\raggedright
+This work was supported in part by the Heilongjiang Provincial University Teacher Scientific Research Business Fee under Grant 2018-KYYWF0941, in part by the Heilongjiang Provincial Natural Science Foundation Joint Fund Cultivation Project under Grant PL2024F002, in part by the National Foreign Expert Key Support Project under Grant D2O25O185, and in part by the Heilongjiang Provincial Undergraduate University Excellent Young Teacher Fundamental Research Support Plan under Grant YQJH2024239.
+
+\par\endgroup
+\section*{Declaration of competing interest}
+Author confirmation is required: the prior manuscript does not contain a completed competing-interest declaration.
+
+\section*{Author contributions}
+Lili He: Supervision. Sheng Jiang: Methodology, Software, Investigation. Linghui Lyu: Writing -- original draft. Lei Zhang: Supervision.
+
+\section*{Data and code availability}
+Local scripts, raw benchmark measurements, synthetic results, and the trajectory replay record accompany this author-review draft. No public code release or repository DOI is claimed. Redistribution permissions for third-party data and the final access arrangement require confirmation before submission.
+
+\appendix
+\setcounter{table}{0}
+\renewcommand{\theHtable}{appendix.\arabic{table}}
+\section{Retrospective single-receiver calibration diagnostic}\label{app:receiver}
+We analyze reference positions and precomputed RTKLIB outputs from GraphGNSSLib's TST2 directory~\cite{GraphGNSSData}, a static sequence separate from the moving UrbanNav replay. The analysis records a pinned revision and source hashes. Its constant reference position has 157 epochs, GPS week 2108, seconds 270149--270305; all exactly match solution epochs. The remaining 829 solution epochs are excluded without reference extrapolation.
+
+The header specifies RTKLIB 2.4.2 and kinematic, combined processing. Horizontal residuals use WGS84 Earth-centered coordinates projected east--north at the reference, without fitted alignment, bias correction, quality filtering, or interpolation. Vertical residuals are excluded because reference height and antenna conventions are unverified. This analyzes published outputs against the repository reference; it neither reproduces the estimator nor independently surveys positioning errors.
+
+The first 78 matched epochs form a calibration segment, followed by ten omitted epochs and 69 evaluation epochs. Before computing residual summaries, we recorded this exploratory recipe: let $s_j=\max(|e_j|,|n_j|)$ and choose the $\lceil(78+1)0.95\rceil=76$th ordered calibration score as a fixed square half-width. The resulting radius is 0.863506~m. We also evaluate rectangles with east/north half-widths of three times the corresponding standard deviations reported in the solution file. This multiplier is a diagnostic choice, not an asserted simultaneous coverage level.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Reference containment in the static receiver diagnostic. Counts are contained epochs / available epochs; epochs are not independent trials.}\label{tab:receiver}
+\begin{tabular}{lrr}
+\toprule Rule&Calibration segment&Evaluation segment\\\midrule
+Reported $3\sigma$ rectangle&8/78&0/69\\
+Calibrated square (0.863506~m)&76/78&2/69\\\bottomrule
+\end{tabular}
+\end{table}
+
+The fixed square contains 97.44\% of calibration references but only 2.90\% of evaluation references (Table~\ref{tab:receiver}). Median horizontal residual increases from 0.869 to 1.038~m; the largest evaluation residual is 1.522~m. Calibration contains eight fixed and 70 float solutions, whereas every evaluation solution is float. These observations expose poor transfer for this particular prescription and sequence; they do not identify its physical cause or rank positioning algorithms.
+
+Serial dependence precludes an unqualified exchangeability-based coverage guarantee; counts have no iid binomial intervals. Combined processing can use later observations, so this is a retrospective split, not a leakage-free online experiment. The ten-epoch gap does not resolve these limitations or independently validate the reference. This diagnostic supplies neither independent issuer streams nor signed uncertainty. It motivates calibration validation without closing the protocol's multisource calibration requirement.
+
+Figure~\ref{fig:receiver} shows the complete matched sequence and the fixed calibration threshold, including the ten-epoch gap.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/receiver_diagnostic.pdf}
+\caption{Retrospective static-receiver diagnostic. The score is $\max(|e_E|,|e_N|)$, not Euclidean horizontal distance. All 157 matched epochs are shown: 78 calibration, ten gap, and 69 evaluation epochs. The dashed line is the fixed 0.863506~m square half-width. No smoothing or interpolation is applied. Combined processing and serial dependence prevent interpreting this split as an online calibration guarantee.}\label{fig:receiver}
+\end{figure}
+
+% AI disclosure drafting records are retained in submission_disclosure_notes.md.
+% Author will supply submission disclosures before upload.
+
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+\end{document}

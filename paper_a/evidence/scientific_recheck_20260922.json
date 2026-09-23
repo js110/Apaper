@@ -1,0 +1,132 @@
+{
+  "scope": "Local consistency and deterministic regeneration, not external peer review or deployment validation",
+  "full_regeneration": true,
+  "checks": [
+    {
+      "check": "r=0: all event-count partitions",
+      "passed": true
+    },
+    {
+      "check": "r=0: all seed rates rederived from counts",
+      "passed": true
+    },
+    {
+      "check": "r=0: all means and normal intervals rederived",
+      "passed": true
+    },
+    {
+      "check": "r=0: regenerated record matches (float tolerance 1e-12)",
+      "passed": true,
+      "max_float_difference": 0.0,
+      "discrepancies": []
+    },
+    {
+      "check": "r=1: all event-count partitions",
+      "passed": true
+    },
+    {
+      "check": "r=1: all seed rates rederived from counts",
+      "passed": true
+    },
+    {
+      "check": "r=1: all means and normal intervals rederived",
+      "passed": true
+    },
+    {
+      "check": "r=1: regenerated record matches (float tolerance 1e-12)",
+      "passed": true,
+      "max_float_difference": 0.0,
+      "discrepancies": []
+    },
+    {
+      "check": "r=2: all event-count partitions",
+      "passed": true
+    },
+    {
+      "check": "r=2: all seed rates rederived from counts",
+      "passed": true
+    },
+    {
+      "check": "r=2: all means and normal intervals rederived",
+      "passed": true
+    },
+    {
+      "check": "r=2: regenerated record matches (float tolerance 1e-12)",
+      "passed": true,
+      "max_float_difference": 0.0,
+      "discrepancies": []
+    },
+    {
+      "check": "abstract coverage means from twelve conditions",
+      "passed": true
+    },
+    {
+      "check": "paired bootstrap regenerated",
+      "passed": true
+    },
+    {
+      "check": "zkdepth_n3_d2_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "zkdepth_n3_d3_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "zkdepth_n4_d2_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "zkdepth_n4_d3_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "zkdepth_n5_d2_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "subset_n3_d2_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "subset_n3_d3_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "subset_n4_d2_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "subset_n4_d3_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "subset_n5_d2_formal: stored medians agree with raw timings",
+      "passed": true
+    },
+    {
+      "check": "four experimental figures retain matching source hashes",
+      "passed": true
+    },
+    {
+      "check": "experimental figure renderer matches recorded hash",
+      "passed": true
+    },
+    {
+      "check": "all 300 plotted proving times match raw observations",
+      "passed": true
+    },
+    {
+      "check": "replay schema-only added defined-seed counts all equal 30",
+      "passed": true
+    },
+    {
+      "check": "trajectory replay matches apart from documented added seed-count metadata",
+      "passed": true,
+      "max_float_difference": 0.0,
+      "discrepancies": []
+    }
+  ],
+  "passed": 29,
+  "total": 29
+}

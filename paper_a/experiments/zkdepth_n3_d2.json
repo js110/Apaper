@@ -1,0 +1,35 @@
+{
+  "n": 3,
+  "d": 2,
+  "bits": 16,
+  "repetitions": 5,
+  "constraints": 56004,
+  "compile_ms": 345.298,
+  "setup_ms": 8379.125,
+  "witness_ms": 0.105,
+  "prove_ms": [
+    437.062,
+    433.736,
+    736.208,
+    560.366,
+    471.253
+  ],
+  "verify_ms": [
+    2.361,
+    2.831,
+    1.526,
+    2.38,
+    1.843
+  ],
+  "prove_median_ms": 471.253,
+  "verify_median_ms": 2.361,
+  "proof_bytes": 164,
+  "public_witness_bytes": 556,
+  "go_version": "go1.25.6",
+  "goos": "darwin",
+  "goarch": "arm64",
+  "gnark_version": "v0.14.0",
+  "backend": "Groth16",
+  "curve": "BN254",
+  "coordinate_convention": "inclusive quantized integer boxes"
+}

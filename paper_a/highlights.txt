@@ -1,0 +1,5 @@
+Draft highlights for author review:
+- Four outcomes separate robust compliance, ambiguity, and evidence inconsistency.
+- Private signed boxes are checked in two real zero-knowledge circuit backends.
+- Matched measurements favor subset enumeration at the tested fault budgets.
+- Trajectory replay exposes the dependence of correctness on evidence calibration.
