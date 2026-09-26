@@ -34,6 +34,22 @@ jobs:
           go test ./...
           go run ./cmd/pointbench --d 2 --bits 16 --output ../../experiments/point_zk_d2.json
           go run ./cmd/pointbench --d 3 --bits 16 --output ../../experiments/point_zk_d3.json
+
+      - name: Regenerate backend cost figure
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path("paper_a/figures").resolve()))
+          import render_results as rr
+          import matplotlib.pyplot as plt
+          with plt.style.context(rr.HERE/"publication.mplstyle"), plt.rc_context({
+              "font.family":"DejaVu Sans","font.size":9,"axes.labelsize":9,
+              "axes.titlesize":9,"xtick.labelsize":8,"ytick.labelsize":8,
+              "legend.fontsize":8,"lines.linewidth":1.2,"svg.fonttype":"none"}):
+              rr.backend_costs()
+          PY
       - name: Compile LaTeX and BibTeX
         uses: xu-cheng/latex-action@v3
         with:
