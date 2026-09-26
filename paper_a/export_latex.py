@@ -67,7 +67,7 @@ Publisher template: Elsevier elsarticle numeric submission layout; CTAN 3.5 base
 All files are flattened because Elsevier Editorial Manager does not accept LaTeX subfolders.
 JISA Guide for Authors returned HTTP 403 during the 2026-09-23 check; current Elsevier LaTeX instructions were used.
 Author order, affiliation, corresponding author/email and funding were supplied by the user.
-Competing-interest, AI-use, and data/code statements are included in the manuscript.
+AI-use and data/code statements are included in the manuscript.
 Compile: latexmk -pdf -interaction=nonstopmode -halt-on-error paper_a.tex
 Highlights follow Elsevier's 3--5 bullet, <=85-character guidance.
 No private experiment data, private keys, or reviewer letters are included.
