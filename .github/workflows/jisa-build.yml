@@ -27,6 +27,7 @@ jobs:
           python3 paper_a/experiments/run_semantic_evaluation.py --output paper_a/experiments/semantic_results_jisa_r0.json
           python3 paper_a/experiments/run_semantic_evaluation.py --miscoverage-budget 1 --output paper_a/experiments/semantic_results_jisa_r1.json
           python3 paper_a/experiments/run_semantic_evaluation.py --miscoverage-budget 2 --output paper_a/experiments/semantic_results_jisa_r2.json
+
       - name: Validate Go prototype and point-ZK lower bound
         shell: bash
         run: |
@@ -50,7 +51,6 @@ jobs:
               "legend.fontsize":8,"lines.linewidth":1.2,"svg.fonttype":"none"}):
               rr.backend_costs()
           PY
-
 
       - name: Check out ZKLP reference implementation
         uses: actions/checkout@v4
@@ -84,37 +84,43 @@ jobs:
           )
 
           type reproSummary struct {
-              Constraints int       `json:"constraints"`
-              Repetitions int       `json:"repetitions"`
-              ProveMS     []float64 `json:"prove_ms"`
-              VerifyMS    []float64 `json:"verify_ms"`
+              Constraints int `json:"constraints"`
+              Repetitions int `json:"repetitions"`
+              ProveMS []float64 `json:"prove_ms"`
+              VerifyMS []float64 `json:"verify_ms"`
               ProveMedianMS float64 `json:"prove_median_ms"`
               VerifyMedianMS float64 `json:"verify_median_ms"`
-              ProofBytes int        `json:"proof_bytes"`
+              ProofBytes int `json:"proof_bytes"`
               PublicWitnessBytes int `json:"public_witness_bytes"`
-              GoVersion string      `json:"go_version"`
-              GOOS string           `json:"goos"`
-              GOARCH string         `json:"goarch"`
-              Backend string        `json:"backend"`
-              Curve string          `json:"curve"`
+              GoVersion string `json:"go_version"`
+              GOOS string `json:"goos"`
+              GOARCH string `json:"goarch"`
+              Backend string `json:"backend"`
+              Curve string `json:"curve"`
               UpstreamCommit string `json:"upstream_commit"`
-              Note string           `json:"note"`
+              Note string `json:"note"`
           }
 
           func reproMedian(v []float64) float64 {
               x := append([]float64(nil), v...)
               sort.Float64s(x)
               n := len(x)
-              if n%2 == 1 { return x[n/2] }
-              return (x[n/2-1]+x[n/2])/2
+              if n%2 == 1 {
+                  return x[n/2]
+              }
+              return (x[n/2-1] + x[n/2]) / 2
           }
 
           func TestExternalReproComparison(t *testing.T) {
               file, err := os.Open("../data/f32/loc2index32.txt")
-              if err != nil { t.Fatal(err) }
+              if err != nil {
+                  t.Fatal(err)
+              }
               defer file.Close()
               scanner := bufio.NewScanner(file)
-              if !scanner.Scan() { t.Fatal("empty ZKLP input file") }
+              if !scanner.Scan() {
+                  t.Fatal("empty ZKLP input file")
+              }
               d := strings.Fields(scanner.Text())
               lat, _ := new(big.Int).SetString(d[0], 16)
               lng, _ := new(big.Int).SetString(d[1], 16)
@@ -123,58 +129,104 @@ jobs:
               jj, _ := new(big.Int).SetString(d[4], 16)
               kk, _ := new(big.Int).SetString(d[5], 16)
 
-              circuit := &loc2Index32Circuit{Lat:0, Lng:0, Resolution:0}
-              assignment := &loc2Index32Circuit{Lat:lat, Lng:lng, Resolution:res, I:ii, J:jj, K:kk}
+              circuit := &loc2Index32Circuit{Lat: 0, Lng: 0, Resolution: 0}
+              assignment := &loc2Index32Circuit{Lat: lat, Lng: lng, Resolution: res, I: ii, J: jj, K: kk}
 
               ccs, err := frontend.Compile(
-                  ecc.BN254.ScalarField(), r1cs.NewBuilder, circuit,
+                  ecc.BN254.ScalarField(),
+                  r1cs.NewBuilder,
+                  circuit,
                   frontend.WithCompressThreshold(1000),
               )
-              if err != nil { t.Fatal(err) }
+              if err != nil {
+                  t.Fatal(err)
+              }
               witness, err := frontend.NewWitness(assignment, ecc.BN254.ScalarField())
-              if err != nil { t.Fatal(err) }
+              if err != nil {
+                  t.Fatal(err)
+              }
               publicWitness, err := witness.Public()
-              if err != nil { t.Fatal(err) }
+              if err != nil {
+                  t.Fatal(err)
+              }
               pk, vk, err := groth16.Setup(ccs)
-              if err != nil { t.Fatal(err) }
+              if err != nil {
+                  t.Fatal(err)
+              }
 
               const reps = 10
               prove := make([]float64, 0, reps)
               verify := make([]float64, 0, reps)
               proofBytes := 0
-              for i:=0; i<reps; i++ {
+              for i := 0; i < reps; i++ {
                   start := time.Now()
                   proof, err := groth16.Prove(ccs, pk, witness)
-                  if err != nil { t.Fatal(err) }
+                  if err != nil {
+                      t.Fatal(err)
+                  }
                   prove = append(prove, float64(time.Since(start).Microseconds())/1000.0)
+
                   start = time.Now()
-                  if err := groth16.Verify(proof, vk, publicWitness); err != nil { t.Fatal(err) }
+                  if err := groth16.Verify(proof, vk, publicWitness); err != nil {
+                      t.Fatal(err)
+                  }
                   verify = append(verify, float64(time.Since(start).Microseconds())/1000.0)
+
                   if i == 0 {
                       var b bytes.Buffer
-                      if _, err := proof.WriteTo(&b); err != nil { t.Fatal(err) }
+                      if _, err := proof.WriteTo(&b); err != nil {
+                          t.Fatal(err)
+                      }
                       proofBytes = b.Len()
                   }
               }
-              var pub bytes.Buffer
-              if _, err := publicWitness.WriteTo(&pub); err != nil { t.Fatal(err) }
 
+              var pub bytes.Buffer
+              if _, err := publicWitness.WriteTo(&pub); err != nil {
+                  t.Fatal(err)
+              }
               out := reproSummary{
-                  Constraints: ccs.GetNbConstraints(), Repetitions: reps,
-                  ProveMS: prove, VerifyMS: verify,
-                  ProveMedianMS: reproMedian(prove), VerifyMedianMS: reproMedian(verify),
-                  ProofBytes: proofBytes, PublicWitnessBytes: pub.Len(),
-                  GoVersion: runtime.Version(), GOOS: runtime.GOOS, GOARCH: runtime.GOARCH,
-                  Backend:"Groth16", Curve:"BN254",
-                  UpstreamCommit:"e8e321524982ddd9dddea37db6fa352529db62c4",
-                  Note:"Independent same-runner smoke benchmark over the first upstream ZKLP32 test vector; upstream gnark fork based on v0.9.1. Different relation and library version from this paper.",
+                  Constraints: ccs.GetNbConstraints(),
+                  Repetitions: reps,
+                  ProveMS: prove,
+                  VerifyMS: verify,
+                  ProveMedianMS: reproMedian(prove),
+                  VerifyMedianMS: reproMedian(verify),
+                  ProofBytes: proofBytes,
+                  PublicWitnessBytes: pub.Len(),
+                  GoVersion: runtime.Version(),
+                  GOOS: runtime.GOOS,
+                  GOARCH: runtime.GOARCH,
+                  Backend: "Groth16",
+                  Curve: "BN254",
+                  UpstreamCommit: "e8e321524982ddd9dddea37db6fa352529db62c4",
+                  Note: "Independent same-runner smoke benchmark over the first upstream ZKLP32 test vector; upstream gnark fork based on v0.9.1. Different relation and library version from this paper.",
               }
               enc, _ := json.MarshalIndent(out, "", "  ")
-              if err := os.WriteFile("../../../paper_a/experiments/zklp_same_runner.json", append(enc,'\n'), 0644); err != nil { t.Fatal(err) }
+              if err := os.WriteFile("../../../paper_a/experiments/zklp_same_runner.json", append(enc, '\n'), 0644); err != nil {
+                  t.Fatal(err)
+              }
           }
           GO
           cd external/zklp/loc2index32
-          go test -run '^TestExternalReproComparison      - name: Compile LaTeX and BibTeX
+          go test -run '^TestExternalReproComparison$' -count=1 -v .
+
+      - name: Run our matched-runner subset benchmark
+        shell: bash
+        run: |
+          cd paper_a/prototype/zkdepth
+          go run ./cmd/bench --n 3 --d 2 --bits 16 --geometry subset --repetitions 10 --output ../../experiments/ours_same_runner_subset_n3_d2.json
+
+      - name: Build recent-work comparison record
+        shell: bash
+        run: |
+          python3 paper_a/experiments/build_recent_work_comparison.py \
+            --zklp-csv external/zklp/benchmarks/m6i.xlarge/bench_ZKLP32_G16_BN254.txt \
+            --zklp-same-runner paper_a/experiments/zklp_same_runner.json \
+            --ours-same-runner paper_a/experiments/ours_same_runner_subset_n3_d2.json \
+            --output paper_a/experiments/recent_work_comparison.json
+
+      - name: Compile LaTeX and BibTeX
         uses: xu-cheng/latex-action@v3
         with:
           root_file: paper_a.tex
@@ -212,54 +264,3 @@ jobs:
             paper_a/experiments/zklp_same_runner.json
             paper_a/experiments/ours_same_runner_subset_n3_d2.json
             paper_a/experiments/recent_work_comparison.json
- -count=1 -v .
-
-      - name: Run our matched-runner subset benchmark
-        shell: bash
-        run: |
-          cd paper_a/prototype/zkdepth
-          go run ./cmd/bench --n 3 --d 2 --bits 16 --geometry subset --repetitions 10 --output ../../experiments/ours_same_runner_subset_n3_d2.json
-
-      - name: Build recent-work comparison record
-        shell: bash
-        run: |
-          python3 paper_a/experiments/build_recent_work_comparison.py \
-            --zklp-csv external/zklp/benchmarks/m6i.xlarge/bench_ZKLP32_G16_BN254.txt \
-            --zklp-same-runner paper_a/experiments/zklp_same_runner.json \
-            --ours-same-runner paper_a/experiments/ours_same_runner_subset_n3_d2.json \
-            --output paper_a/experiments/recent_work_comparison.json
-      - name: Compile LaTeX and BibTeX
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: paper_a.tex
-          working_directory: paper_a
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-
-      - name: Check bibliography and log
-        shell: bash
-        run: |
-          grep -q '\\bibitem{Imam2025JISA}' paper_a/paper_a.bbl
-          grep -q '\\bibitem{Wang2025JISA}' paper_a/paper_a.bbl
-          if grep -E 'LaTeX Warning: (There were undefined references|Citation .* undefined)|Package natbib Warning: Citation .* undefined' paper_a/paper_a.log; then
-            echo 'Undefined reference/citation warning found.' >&2
-            exit 1
-          fi
-
-      - name: Export flat Editorial Manager source package
-        run: python3 paper_a/export_latex.py
-
-      - name: Upload build outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: jisa-manuscript-build
-          if-no-files-found: error
-          path: |
-            paper_a/paper_a.pdf
-            paper_a/paper_a.bbl
-            paper_a/paper_a.log
-            paper_a/paper_a_jisa_latex_draft.zip
-            paper_a/experiments/semantic_results_jisa_r0.json
-            paper_a/experiments/semantic_results_jisa_r1.json
-            paper_a/experiments/semantic_results_jisa_r2.json
-            paper_a/experiments/point_zk_d2.json
-            paper_a/experiments/point_zk_d3.json
