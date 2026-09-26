@@ -11,7 +11,9 @@ def read_json(path):
 def read_zklp_csv(path):
     rows=[]
     with open(path,newline="") as f:
-        for r in csv.DictReader(f):
+        reader=csv.DictReader(f, skipinitialspace=True)
+        for raw in reader:
+            r={k.strip(): v.strip() for k,v in raw.items()}
             rows.append({
                 "resolution": int(r["Resolution"]),
                 "index": int(r["Index"]),
