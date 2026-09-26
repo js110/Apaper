@@ -429,7 +429,7 @@ $(4,3)$&510,362&38.34&1090.95&1212.54&1.093&1.506\\\bottomrule
 
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/backend_costs.pdf}
-\caption{Matched circuit sizes and measured proving costs for both backends on the Apple M1 workstation. Right: open markers show all 30 timings per shape and backend (300 in total); filled markers denote medians and bars span sample p5--p95, not confidence intervals. Horizontal offsets separate observations without changing their values. Backend batches were not interleaved.}\label{fig:scaling}
+\caption{Matched circuit sizes and measured proving costs for both backends on the Apple M1 workstation. Right: small filled markers show all 30 timings per shape and backend (300 in total); larger markers denote medians and bars span sample p5--p95, not confidence intervals. Horizontal offsets separate observations without changing their values. Backend batches were not interleaved.}\label{fig:scaling}
 \end{figure}
 At $n=4$, moving from two to three dimensions raises depth-backend constraints from 97,493 to 510,362; the largest depth case takes about 1.09~s to prove at the median. The subset circuits in Table~\ref{tab:subset} are smaller in every tested $k=n-1$ case. For $(n,d)=(4,3)$, subset enumeration needs 46,737 constraints and a median proving time of 234.93~ms. Proof and public-witness sizes are the same for both backends.
 
@@ -497,9 +497,6 @@ The contribution is therefore a privacy-preserving certification mechanism with 
 This work was supported in part by the Heilongjiang Provincial University Teacher Scientific Research Business Fee under Grant 2018-KYYWF0941, in part by the Heilongjiang Provincial Natural Science Foundation Joint Fund Cultivation Project under Grant PL2024F002, in part by the National Foreign Expert Key Support Project under Grant D2O25O185, and in part by the Heilongjiang Provincial Undergraduate University Excellent Young Teacher Fundamental Research Support Plan under Grant YQJH2024239.
 
 \par\endgroup
-\section*{Declaration of competing interest}
-The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
-
 \section*{Author contributions}
 Lili He: Supervision. Sheng Jiang: Methodology, Software, Investigation. Linghui Lyu: Writing -- original draft. Lei Zhang: Supervision.
 
