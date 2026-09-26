@@ -95,13 +95,16 @@ def backend_costs():
             assert len(values)==30
             constraints.append(result['constraints']/1000)
             x=j+offset
-            # Small, deterministic horizontal displacement; no y-value jitter.
-            jitter=np.linspace(-.045,.045,len(values))
-            axes[1].scatter(x+jitter,values,s=8,facecolors='none',edgecolors=color,
-                            marker=marker,linewidths=.5,alpha=.35,zorder=2)
+            # Wider deterministic strip: keep every measured y-value but avoid
+            # translucent hollow-marker overlap that appears blurred in PDF viewers.
+            jitter=np.linspace(-.075,.075,len(values))
+            axes[1].scatter(x+jitter,values,s=6,c=color,marker=marker,
+                            linewidths=0,alpha=.42,zorder=2)
             p05,p50,p95=np.quantile(values,[.05,.5,.95])
             axes[1].errorbar(x,p50,yerr=[[p50-p05],[p95-p50]],fmt=marker,
-                             color=color,capsize=3,markersize=4,elinewidth=1.1,zorder=3)
+                             color=color,capsize=3.5,markersize=5.2,
+                             markeredgecolor='white',markeredgewidth=.55,
+                             elinewidth=1.2,zorder=3)
             for i,v in enumerate(values):
                 rows.append(dict(backend=backend,n=n,d=d,repetition=i+1,
                                  constraints=result['constraints'],prove_ms=v,
@@ -121,9 +124,9 @@ def backend_costs():
     axes[0].legend(loc='upper left',bbox_to_anchor=(0,.89),fontsize=7)
     export(fig,'backend_costs',
            'Five matched circuit shapes. Subset uses fewer constraints and lower proving times in the measured small-fault regime. All 300 timing observations are shown.',
-           'Constraints divided by 1000. Raw 30 proof times per shape/backend, filled markers show medians; '
-           'whiskers are 5th–95th sample percentiles, NOT confidence intervals. '
-           'No connecting lines across distinct shapes; all raw timings retained. '
+           'Constraints divided by 1000. Raw 30 proof times per shape/backend are shown as small filled markers; '
+           'larger markers show medians and whiskers are 5th–95th sample percentiles, NOT confidence intervals. '
+           'Deterministic horizontal displacement separates repeated timings; no y-value jitter or smoothing. '
            'Backend batches were separate, not randomized interleaved comparisons.',rows)
 
 
