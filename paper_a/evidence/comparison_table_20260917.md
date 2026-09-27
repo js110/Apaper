@@ -38,3 +38,21 @@ source summaries remain limited to the recorded abstract/preview scope.
 No experiments, measurements, bibliography entries, or author declarations were
 changed. Human verification remains pending; local consistency and rendering
 checks do not establish comparative security or novelty.
+
+
+## Revision 3: quantitative recent-work context (2026-09-27)
+
+The JISA revision adds a second, quantitative comparison layer in the evaluation section. This is intentionally separate from the functional Table 1 above.
+
+1. **Pinned external reproduction.** The public ZKLP repository is pinned to commit `e8e321524982ddd9dddea37db6fa352529db62c4`. The first upstream ZKLP32 test vector is compiled and proved on the same GitHub Actions Ubuntu runner used for a fresh subset `(n,d)=(3,2)` benchmark of this work. Both use Groth16/BN254, but the upstream ZKLP code uses its gnark fork based on v0.9.1 while this work uses gnark v0.14.0. The two relations are not security-equivalent.
+2. **Observed same-runner values.** ZKLP smoke: 19,467 constraints, 515.529 ms median proving time, 1.7385 ms median verification, 196-byte proof, 140-byte public witness. This work, subset `(3,2)`: 32,474 constraints, 645.136 ms median proving time, 1.5475 ms median verification, 164-byte proof, 556-byte public witness. Each timing summary uses 10 proofs after one setup.
+3. **Historical upstream artifact.** ZKLP's repository also stores an m6i.xlarge benchmark artifact with 137 rows, 21,878 constraints and a 270.03 ms median proving time. Because the pinned current code compiles to 19,467 constraints in the smoke run, the manuscript explicitly treats this as artifact/code-version drift and does not infer a speedup or regression from the historical artifact.
+4. **Source-reported context only.** BFT-PoLoc (2024), PG (2024), Vehicle ZK-PoL (2025), and CRSF (2026) are included with their reported evaluation scale and headline measurements. Their runtimes are not normalized against this work because their certified objects, hardware, and cryptographic/network protocols differ.
+
+Generated records:
+- `experiments/zklp_same_runner.json`
+- `experiments/ours_same_runner_subset_n3_d2.json`
+- `experiments/recent_work_comparison.json`
+- CI workflow: `.github/workflows/jisa-build.yml`
+
+The purpose is to provide reproducible external context without turning heterogeneous systems into an invalid ranking.
