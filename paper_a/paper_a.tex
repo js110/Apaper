@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,tabularx}
 \usepackage{lineno}
 \usepackage[hidelinks]{hyperref}
+\emergencystretch=2em
 \pdfstringdefDisableCommands{\def\corref#1{}}
 \newtheorem{proposition}{Proposition}
 \newtheorem{lemma}{Lemma}
@@ -55,9 +56,9 @@ Figure~\ref{fig:architecture} summarizes the evidence-to-proof boundary. The ver
 
 Subset enumeration is the practical choice in the measured small-omission regime. The depth construction instead permits a public threshold and has a polynomial bound at fixed dimension; the matched experiments compare their costs without claiming a universal crossover.
 \section{Related work and security positioning}
-Vehicular privacy work spans authentication, protected aggregation, location privacy, and misbehavior detection. AARE and BARM combine anonymous participation with reliability or reputation mechanisms~\cite{Cheng2023,Zheng2025BARM}; PPVDA protects and verifies sensing aggregation~\cite{Zhou2024}; BCS-LPP protects sensing locations~\cite{Shen2024}; and cooperative Sybil detection fuses motion and roadside evidence~\cite{Sultana2024}. Recent JISA studies similarly emphasize anonymous authentication, aggregate signatures, and authenticated-data SNARKs~\cite{Imam2025JISA,Wang2025JISA,Reinhart2026ADSC}. These systems secure identities, inputs, or computations, whereas our certified object is whether private uncertain evidence robustly supports a public spacetime policy.
+Vehicular privacy work spans authentication, protected aggregation, location privacy, and misbehavior detection. AARE and BARM combine anonymous participation with reliability or reputation~\cite{Cheng2023,Zheng2025BARM}. PPVDA protects sensing aggregation~\cite{Zhou2024}, BCS-LPP protects sensing locations~\cite{Shen2024}, and cooperative Sybil detection fuses motion and roadside evidence~\cite{Sultana2024}. Recent JISA studies address anonymous authentication, aggregate signatures, and authenticated-data SNARKs~\cite{Imam2025JISA,Wang2025JISA,Reinhart2026ADSC}. Our certified object instead asks whether private uncertain evidence supports a public spacetime policy.
 
-Location-privacy mechanisms range from application-aware obfuscation~\cite{Mdee2022,Atmaca2024} to authentication and Sybil-resistant credentialing~\cite{Ghani2025,Zhang2025Sybil,Wang2025ZKAuth}. The closest zero-knowledge formulations are ZKLP's private geometric predicates~\cite{ZKLP} and signed-trajectory policy proofs for vehicle subsidies and taxation~\cite{VehiclePolicy}. They motivate private policy verification but do not model threshold-supported uncertainty under Byzantine evidence.
+Location privacy includes application-aware obfuscation~\cite{Mdee2022,Atmaca2024} and credential-based protection~\cite{Ghani2025,Zhang2025Sybil,Wang2025ZKAuth}. The closest ZK formulations are ZKLP's private geometric predicates~\cite{ZKLP} and signed-trajectory policy proofs~\cite{VehiclePolicy}; neither models threshold-supported uncertainty under Byzantine evidence.
 
 Robust fusion originates in fault-tolerant interval reasoning~\cite{Marzullo1990}. BFT-PoLoc applies Byzantine-resistant geometry to Internet-delay location inference~\cite{BFTPoLoc}, while PG and CRSF protect Byzantine sensor fusion and participation in distributed secure-computation settings~\cite{PG,CRSF}. Our fixed-roster prototype does not inherit their liveness guarantees; it produces a portable proof of a four-valued policy decision over signed uncertainty boxes. Table~\ref{tab:related-work} summarizes these different certification targets.
 \begin{table}[htbp]
@@ -134,7 +135,7 @@ Figure~\ref{fig:sequence} separates challenge issuance, evidence signing, and su
 \subsection{Security objectives and non-goals}
 The evaluated properties are evidence authenticity, context integrity, conditional acceptance soundness, witness confidentiality, freshness, and fail-closed handling. Table~\ref{tab:security-properties} states their assumptions and validation evidence.
 
-The design does not provide source availability, physical calibration, anonymous networking, Sybil-resistant enrollment, unlinkability, or privacy against unrestricted adaptive policy queries. Task policies are therefore assumed to be administrator-authorized and bound into the challenge context.
+Non-goals include source availability, physical calibration, anonymous networking, Sybil-resistant enrollment, unlinkability, and privacy against unrestricted adaptive policy queries. Task policies are administrator-authorized and challenge-bound.
 
 \begin{table}[htbp]
 \centering\footnotesize
@@ -229,7 +230,7 @@ Zero knowledge hides box coordinates and signatures, not the public roster, doma
 
 Policy-aware collusion does not require a new geometric safety margin while the stated fault and coverage assumptions hold: regardless of how Byzantine boxes are chosen, $z^\star\in\F$ prevents an outside true event from yielding $\F\subseteq P$. The adversary can nevertheless reduce decisiveness or withhold signatures. Once the budget or coverage event fails, no fixed policy margin restores a distribution-free guarantee. The synthetic attacks already choose boxes using the true state and policy, rather than only adding random drift.
 
-A reward layer would require a separately scoped nullifier and persistent uniqueness state, as in anonymous membership systems such as Semaphore~\cite{SemaphoreDocs}; no incentive or deduplication relation is implemented here.
+Reward deduplication would require a scoped nullifier and persistent uniqueness state, e.g., Semaphore-style membership~\cite{SemaphoreDocs}; it is not implemented.
 
 \begin{proposition}[Gateway-conditioned report acceptance]\label{prop:gateway}
 Assume an authorized task/key configuration, correct gateway execution with a trustworthy clock, unforgeable issuer signatures, knowledge soundness of the proof system, and collision resistance of both the signed-box MiMC prehash and the instantiated transcript-digest mapping. If the gateway accepts a report and the physical coverage event in Proposition~\ref{prop:soundness} holds, the report's bound reference event satisfies the configured policy, except for cryptographic failure.
@@ -244,27 +245,27 @@ The prototype uses Go 1.25.6, gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Gr
 The evaluation asks five questions: \textbf{RQ1} whether tampering and replay are rejected; \textbf{RQ2} how robust semantics trade error for decisiveness; \textbf{RQ3} how the honest-miscoverage budget changes that tradeoff; \textbf{RQ4} what circuit/proof costs arise relative to a bare hidden-point predicate; and \textbf{RQ5} how the closest reproducible recent ZK-location implementation behaves on the same runner without treating heterogeneous relations as a speed ranking.
 
 \paragraph{AI-assisted coding disclosure}
-OpenAI Codex assisted portions of analysis/plotting code and repository checks. Measurements and plots come from executable code and saved records; generative AI did not fabricate or alter result values.
+OpenAI Codex assisted analysis/plotting code and repository checks. All reported values come from executable code and saved records.
 
-Regression tests cover all four decisions and reject wrong decision codes, modified signed bounds, duplicate keys or trust-domain labels, report/threshold substitution, expired or unknown challenges, cross-challenge reuse, and missing evidence. Genuine proofs for all four classes verify, but only valid authorizes acceptance; in an eight-way concurrent replay exactly one copy succeeds.
+Regression tests cover all four decisions and reject wrong codes, altered bounds, duplicate identities, report/threshold substitution, stale or unknown challenges, replay, and missing evidence. Only valid authorizes acceptance; eight concurrent replay attempts yield one success.
 
-Proof benchmarks run on an eight-core Apple M1 Mac mini with 16~GB memory. Each circuit shape uses one randomized setup followed by 30 sequential proofs of a fixed signed witness. Reported proving times exclude compilation, evidence acquisition, networking, queueing, and embedded-device energy. A deliberately weaker same-stack point-ZK circuit provides a structural lower bound: it proves only that one private point lies in the public policy and authenticates no issuer evidence.
+Proof benchmarks use an eight-core Apple M1 Mac mini with 16~GB memory. Each shape has one randomized setup and 30 proofs of a fixed signed witness. Timings exclude compilation, evidence acquisition, networking, queueing, and energy. A weaker same-stack point-ZK circuit supplies a structural lower bound without issuer authentication.
 
 \subsection{Resource-bounded circuit compilation}
-We compile complete signed-box R1CS instances for $n\in\{4,8,12,16\}$, $d\in\{2,3\}$, and subset thresholds $k=n-1,n-2,n/2$, plus one depth circuit per shape. Thirty-two process invocations use a fixed randomized order (seed 20260915), a 30~s timeout, a sampled 3~GiB RSS stop threshold, and a 2500~MiB Go soft-memory target. Constraint counts are structural; compile times are descriptive single runs, and failed runs retain no estimated counts.
+We compile signed-box R1CS instances for $n\in\{4,8,12,16\}$, $d\in\{2,3\}$, subset thresholds $k=n-1,n-2,n/2$, and one depth circuit per shape. The 32 seeded invocations use a 30~s timeout, a sampled 3~GiB RSS limit, and a 2500~MiB Go soft-memory target. Failed runs retain no estimated counts.
 
 \subsection{Synthetic semantic experiment}
 The synthetic domain is $[0,63]^3$ with policy $[18,45]^3$, five sources, $f=1$, and baseline $r=0$. Twenty-seven conditions cross radii $\{2,4,6\}$, actual Byzantine counts $\{0,1,2\}$, and independent-calibrated, correlated-calibrated, or undercovered errors. Each condition uses 30 seeds and 80 events, totaling 64,800 observations; 75\% of events are generated near one policy face.
 
 Honest radii range from half the maximum radius to the maximum. Calibrated errors remain within declared radii; correlated errors share a bounded direction plus source-specific jitter; the undercovered model exceeds the declared radius. Byzantine boxes are policy-aware and deliberately adversarial. Baselines are median-center point classification, majority-center voting, a fixed maximum-radius box around the median center, and all-source intersection. The proposed output uses the exact native subset classifier. Independent randomized checks establish subset/depth equivalence and maximum-depth agreement with exhaustive enumeration.
 
-False acceptance uses outside-event denominators and false rejection inside-event denominators; decisive coverage is the fraction labeled valid or invalid. Seed-level normal intervals describe simulation variability only. Each event also records $M$, the number of honest boxes missing the true state, enabling direct conditioning on the theorem premise $M\le r$.
+False acceptance uses outside-event denominators, false rejection uses inside-event denominators, and decisive coverage counts valid or invalid outcomes. Each event also records the honest-miss count $M$, enabling direct tests of $M\le r$.
 
 \subsection{Miscoverage-budget ablation}
 The same randomized observations are re-evaluated at $r=1$ and $r=2$, giving 194,400 condition evaluations but only 64,800 distinct base observations. This isolates the effect of changing $k=n-f-r$; it does not estimate calibration parameters.
 
 \subsection{Trajectory replay}
-UrbanNav-HK-Medium-Urban-1 supplies 787 reference states over 786~s~\cite{UrbanNav}. We convert the trajectory to a local integer frame and fix the policy at the per-axis 20th/80th percentiles, leaving 169 inside states. Thirty evidence realizations use four simulated honest sources with 8--20~m spatial and 1--3~s temporal radii, bounded correlated error, and one policy-aware Byzantine source; a second mode multiplies the common bias by four. Thus the path is measured, but the evidence is simulated and supports no between-route or real-calibration claim.
+UrbanNav-HK-Medium-Urban-1 supplies 787 states over 786~s~\cite{UrbanNav}. After conversion to a local integer frame, a fixed percentile policy contains 169 states. Thirty replays use four simulated honest sources, one policy-aware Byzantine source, and bounded correlated error; a second mode multiplies common bias by four. The path is measured, but the evidence is simulated.
 \section{Security and performance evaluation}
 \subsection{Adversarial protocol validation}
 Table~\ref{tab:security-validation} summarizes fail-closed regression tests for the proof/gateway path. They validate implementation-level binding and replay handling, not physical evidence accuracy.
@@ -302,7 +303,7 @@ Robust set&0&0&14.96&0&85.04\\\bottomrule
 \end{tabular}
 \end{table}
 
-A paired 10,000-resample bootstrap over the same 30 seeds gives a robust-minus-fixed-margin decisive-coverage difference of 9.38 percentage points (95\% percentile interval 8.25--10.54). The estimate is conditional on this workload.
+A paired 10,000-resample bootstrap gives a 9.38-point robust-minus-fixed-margin coverage difference (95\% interval 8.25--10.54), conditional on this workload.
 
 \paragraph{Direct assumption diagnostic}
 The generator records $M$, the number of honest boxes missing the truth. In the calibrated focus condition all 2,400 events have $M=0$ and no wrong decisive output. Under undercoverage, the fractions satisfying $M\le r$ are 52.42\%, 62.79\%, and 73.42\% for $r=0,1,2$; no wrong decisive output occurs on those subsets. Among events with $M>r$, wrong-decisive rates are 1.31\%, 0.67\%, and 0.47\%, respectively. This links observed failures to the theorem premise without estimating real-world premise frequency.
@@ -395,17 +396,18 @@ CRSF~\cite{CRSF} (2026) & Up to 261 sensors & Reported online phases $\sim$0.8--
 We pin ZKLP to commit \texttt{e8e3215...62c4} and run its first ZKLP32 vector on the same GitHub Actions Ubuntu runner as a fresh $(n,d)=(3,2)$ subset benchmark. Both use Groth16/BN254 and ten proofs after setup; ZKLP uses a gnark v0.9.1-based fork and ours v0.14.0. The comparison is therefore descriptive, not library- or security-equivalent.
 
 \begin{table}[htbp]
-\centering\small
-\caption{Same-runner reproduction against the pinned ZKLP implementation. Median times are over ten proofs after one setup. The relations and gnark versions differ, so the table is descriptive rather than a speed ranking.}
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Same-runner ZKLP reproduction. Ten proofs after setup; relations and gnark versions differ.}
 \label{tab:zklp-repro}
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.24\linewidth}rrrrr@{}}
+\begin{tabular}{lrrrrr}
 \toprule
-Implementation & Constraints & Prove p50 & Verify p50 & Proof bytes & Public bytes\\
+Implementation & Constraints & Prove & Verify & Proof B & Public B\\
 \midrule
 ZKLP32 pinned smoke & 19,467 & 515.53 & 1.739 & 196 & 140\\
 This work, subset $(3,2)$ & 32,474 & 645.14 & 1.547 & 164 & 556\\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 
 ZKLP certifies hidden point geometry; our row additionally verifies three signed uncertainty boxes, roster/context binding, threshold support, and the robust decision, explaining the larger public witness and circuit. ZKLP's repository also contains an older m6i.xlarge artifact with 21,878 constraints and 270.03~ms median proving time, while the pinned code compiles to 19,467 constraints here. We treat this as version/environment drift, not a performance trend.
