@@ -1,6 +1,6 @@
-# Paper A — author-review manuscript and reproducible evidence
+# Paper A — JISA manuscript and reproducible evidence
 
-Updated 2026-09-23. Target is now **Journal of Information Security and Applications (JISA)**, research article, initial submission. The manuscript has been reframed around privacy-preserving security certification, authenticated uncertainty, and zero-knowledge verification. **Author declarations and final submission checks remain unresolved.**
+Updated 2026-09-27. Target: **Journal of Information Security and Applications (JISA)**, Research Article. The manuscript is framed around privacy-preserving security certification, authenticated uncertainty, Byzantine evidence, and zero-knowledge verification. Formatting, bibliography, reproducibility, and source-package checks are automated in CI; final author approval and any live Editorial Manager prompts remain outside the repository.
 
 Open `paper_a.pdf` for the manuscript, `research_audit_zh.md` for the original internal
 assessment, and `revision_response_zh.md` for the current response and unresolved
@@ -28,15 +28,18 @@ items. `paper_a.tex` and `references.bib` are the editable sources. The old
 - A resource-bounded, compile-only sweep: 32 complete signed-box circuit
   configurations, 27 completed and five stopped at the sampled RSS limit.
   These measurements do not include setup or proof generation at larger sizes.
+- A pinned reproduction of the public ZKLP implementation at commit
+  `e8e321524982ddd9dddea37db6fa352529db62c4`, plus a same-runner subset
+  benchmark of this work and a source-bounded 2024--2026 quantitative context table.
 
-The last compiled pre-JISA PDF had 45 pages and passed 132 local artifact checks. The JISA branch changes manuscript framing and must be recompiled and re-audited before submission. Its revised bibliography contains 25 cited entries: 22 scholarly works and three data/software/documentation resources. Seventeen of the 20 scholarly works are from 2022–2026; three original
+The JISA branch is compiled in GitHub Actions on every manuscript change and exports a flat Editorial Manager source package. Its bibliography currently contains 26 cited entries: 23 scholarly works and three data/software/documentation resources. Twenty of the 23 scholarly works are from 2022–2026; three original
 method papers and the exact pinned dataset snapshot are the necessary older
 sources. The current bibliography remains technically relevant, but the JISA revision should be rechecked for venue-specific literature positioning before submission. Current
 selection, recency exceptions and source-access notes are in
 `evidence/literature_recency_20260917.md`; the earlier search record is preserved
 in `evidence/literature_update_20260915.md`. Author
-confirmation items are in `submission_confirmations_zh.md`; the unsent cover
-letter is `cover_letter_draft.md`. These checks do not constitute submission approval.
+confirmation items are in `submission_confirmations_zh.md`; the prepared cover
+letter is `cover_letter.md`. These checks do not constitute editor or publisher approval.
 
 The 2026-09-22/23 full recheck is documented in
 `evidence/manuscript_recheck_20260923_zh.md`. The additional reproducibility audit
@@ -54,8 +57,12 @@ worksheet. The style audit describes the preceding version; its hashes are
 historical, not a claim that the subsequent disclosure edits left captions unchanged.
 
 Table 1 compares eight related systems and the present prototype in
-three functional groups. Row-level evidence and interpretation boundaries are in
-`evidence/comparison_table_20260917.md`.
+three functional groups. The evaluation section additionally gives a quantitative
+2024--2026 context table and a pinned same-runner ZKLP reproduction. Row-level
+evidence and interpretation boundaries are in `evidence/comparison_table_20260917.md`;
+raw comparison records are `experiments/zklp_same_runner.json`,
+`experiments/ours_same_runner_subset_n3_d2.json`, and
+`experiments/recent_work_comparison.json`.
 
 The experiment uses a native subset oracle for geometry decisions. The semantic
 output label `robust_depth` is historical; it does not indicate that the ZK depth
@@ -153,14 +160,14 @@ A missing issuer causes abort.
 
 The JISA branch now uses the current Elsevier `elsarticle` submission structure with numeric references. Template provenance and unresolved journal-specific points are recorded in `venue_template_jisa/COMPLIANCE.md`. The previous bundled 3.4 class has been upgraded to the maintained 3.4c body aligned with the CTAN 3.5 (2026-01-09) release metadata. The manuscript selects `preprint,review,12pt` with line numbers; it does not try to emulate Elsevier's final production layout.
 
-Run `python3 export_latex.py` after a fresh LaTeX/BibTeX compilation to create `paper_a_jisa_latex_draft.zip`. The exporter refuses to package the manuscript if the two newly added JISA references are missing from `paper_a.bbl`. The exporter flattens figure paths and includes
+Run `python3 export_latex.py` after a fresh LaTeX/BibTeX compilation to create `paper_a_jisa_submission.zip`. The exporter refuses to package the manuscript if the two newly added JISA references are missing from `paper_a.bbl`. The exporter flattens figure paths and includes
 the class, bibliography style and required figures, without experiment raw data.
-The ZIP retains the draft banner and unresolved declaration status. It is
-not an approved submission. The main manuscript remains `paper_a.tex`.
+The ZIP contains only neutral submission-source metadata and no internal draft banner.
+The main manuscript remains `paper_a.tex`.
 
-JISA is the current target venue. Its current Guide for Authors and declaration requirements must be checked again at final submission because publisher instructions can change. Author order, affiliation, correspondence and funding were previously supplied by the user; contributions, sponsor roles, conflicts, final AI declaration, data/code release arrangement and all-author final approval remain unresolved. No submission, upload, or external manuscript disclosure occurred.
+JISA is the current target venue. Its live Guide for Authors and Editorial Manager prompts should still be checked at upload because publisher instructions can change. Author order, affiliation, correspondence, funding, CRediT roles, AI-use disclosure, and data/code availability are represented in the current manuscript or repository records. The manuscript intentionally contains no competing-interest section at the author's request; any portal-level declaration should follow the live submission form. No external manuscript submission is performed by this repository.
 
-GitHub Actions build: `.github/workflows/jisa-build.yml` recompiles the JISA manuscript, checks the new JISA bibliography entries, and exports the flat Editorial Manager source package.
+GitHub Actions build: `.github/workflows/jisa-build.yml` regenerates semantic diagnostics and the backend-cost figure, reruns the Go prototype and point-ZK baseline, pins and reruns ZKLP on the same runner, rebuilds the recent-work comparison record, recompiles LaTeX/BibTeX, and exports the flat Editorial Manager source package.
 
 ## JISA-specific security diagnostics
 
