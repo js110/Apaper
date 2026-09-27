@@ -255,7 +255,7 @@ jobs:
             paper_a/paper_a.pdf
             paper_a/paper_a.bbl
             paper_a/paper_a.log
-            paper_a/paper_a_jisa_latex_draft.zip
+            paper_a/paper_a_jisa_submission.zip
             paper_a/experiments/semantic_results_jisa_r0.json
             paper_a/experiments/semantic_results_jisa_r1.json
             paper_a/experiments/semantic_results_jisa_r2.json
