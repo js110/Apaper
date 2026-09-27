@@ -61,26 +61,24 @@ def main():
     ):
         files[name] = (ROOT / name).read_bytes()
 
-    draft_readme = """Author-review JISA source package.
+    package_readme = """JISA LaTeX source package.
 Target: Journal of Information Security and Applications (JISA).
 Publisher template: Elsevier elsarticle numeric submission layout; CTAN 3.5 baseline.
-All files are flattened because Elsevier Editorial Manager does not accept LaTeX subfolders.
-JISA Guide for Authors returned HTTP 403 during the 2026-09-23 check; current Elsevier LaTeX instructions were used.
-Author order, affiliation, corresponding author/email and funding were supplied by the user.
+All source files are flattened to one directory for Editorial Manager.
 AI-use and data/code statements are included in the manuscript.
 Compile: latexmk -pdf -interaction=nonstopmode -halt-on-error paper_a.tex
 Highlights follow Elsevier's 3--5 bullet, <=85-character guidance.
-No private experiment data, private keys, or reviewer letters are included.
+No private experiment data, private keys, or reviewer correspondence are included.
 """
-    files["DRAFT_README.txt"] = draft_readme.encode()
+    files["README.txt"] = package_readme.encode()
 
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}
     files["MANIFEST.json"] = json.dumps(
-        {"files": hashes, "submission_ready": False},
+        {"files": hashes, "target_journal": "Journal of Information Security and Applications"},
         indent=2,
     ).encode()
 
-    output = ROOT / "paper_a_jisa_latex_draft.zip"
+    output = ROOT / "paper_a_jisa_submission.zip"
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for name, data in files.items():
             archive.writestr(name, data)
@@ -89,7 +87,7 @@ No private experiment data, private keys, or reviewer letters are included.
         assert archive.testzip() is None
         assert all("/" not in name for name in archive.namelist())
 
-    print(f"{output}: {len(files)} flat files; author approval pending")
+    print(f"{output}: {len(files)} flat submission-source files")
 
 
 if __name__ == "__main__":
