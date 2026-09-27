@@ -268,7 +268,7 @@ The same randomized observations are re-evaluated at $r=1$ and $r=2$, giving 194
 UrbanNav-HK-Medium-Urban-1 supplies 787 reference states over 786~s~\cite{UrbanNav}. We convert the trajectory to a local integer frame and fix the policy at the per-axis 20th/80th percentiles, leaving 169 inside states. Thirty evidence realizations use four simulated honest sources with 8--20~m spatial and 1--3~s temporal radii, bounded correlated error, and one policy-aware Byzantine source; a second mode multiplies the common bias by four. Thus the path is measured, but the evidence is simulated and supports no between-route or real-calibration claim.
 \section{Security and performance evaluation}
 \subsection{Adversarial protocol validation}
-Before evaluating decision availability, we test whether the implemented proof and gateway fail closed under adversarial mutations of the authenticated statement. Table~\ref{tab:security-validation} summarizes the regression cases. These tests validate the implemented binding and replay logic; they do not replace the cryptographic assumptions stated in Section 5 or establish physical correctness of issuer observations.
+Table~\ref{tab:security-validation} summarizes fail-closed regression tests for the proof/gateway path. They validate implementation-level binding and replay handling, not physical evidence accuracy.
 
 \begin{table}[htbp]
 \centering\small
@@ -278,19 +278,17 @@ Before evaluating decision availability, we test whether the implemented proof a
 \toprule
 Threat & Enforced relation & Observed prototype behavior\\
 \midrule
-Evidence tampering & Issuer signature covers box bounds, issuer slot, and shared context & Modified signed bounds are rejected\\
-Decision substitution & Public decision code is constrained by the in-circuit geometry & All unequal proof/code combinations are rejected\\
-Task/report substitution & Context binds task configuration, report digest, threshold, roster, challenge, and expiry & Report replacement, threshold substitution, and cross-challenge reuse are rejected\\
-Challenge replay & Random nonce, expiry check, and atomic consume-after-verification & Unknown/expired nonces fail; in an eight-copy concurrent replay exactly one copy succeeds\\
-Roster manipulation & Ordered issuer keys, pairwise key inequality, and configured trust-domain labels & Duplicate public keys and duplicate configured trust-domain labels are rejected\\
-Missing evidence & The relation requires the complete configured roster & Missing evidence aborts the protocol rather than becoming an ``inconsistent'' certified decision\\
+Evidence tampering & Signed bounds, issuer slot, context & Modified bounds rejected\\
+Decision substitution & In-circuit decision relation & All unequal proof/code pairs rejected\\
+Task/report substitution & Task, report, threshold, roster, challenge, expiry binding & Replacement/substitution attempts rejected\\
+Challenge replay & Expiry plus atomic consume-after-verify & Unknown/expired nonces fail; one of eight racing copies succeeds\\
+Roster manipulation & Ordered distinct keys and trust-domain labels & Duplicate keys/labels rejected\\
+Missing evidence & Complete configured roster required & Protocol aborts rather than certifying inconsistency\\
 \bottomrule
 \end{tabularx}
 \end{table}
 \subsection{Conditional correctness and availability}
-With calibrated errors and no more than one Byzantine source, the robust rule made no observed misclassifications across the 12 synthetic conditions. Because these conditions are generated to satisfy the stated coverage and fault assumptions, the zero-error result is primarily an implementation and semantic-consistency check rather than an empirical estimate of deployment accuracy. Equal weighting of these preselected conditions gives mean decisive coverage of 87.52\%, compared with 75.63\% for the fixed-margin baseline; the averages do not describe a deployment population.
-
-The correlated, radius-four, one-Byzantine condition in Table~\ref{tab:semantic} shows where the decisions differ. Robust classification reached 85.04\% decisive coverage, against 75.67\% for the fixed margin. The median-point baseline, used here as a representative single-point claim rather than a matched ZK implementation, decided every event, but its false acceptance and false rejection rates were 2.10\% and 15.29\%.
+Across the 12 calibrated conditions within the stated fault budget, the robust rule shows no observed misclassification and 87.52\% mean decisive coverage versus 75.63\% for fixed margin; this is a consistency check under generated assumptions, not a deployment error estimate. In the focus condition of Table~\ref{tab:semantic}, robust coverage is 85.04\% versus 75.67\% for fixed margin, while the always-decisive median point incurs 2.10\% false acceptance and 15.29\% false rejection.
 
 \begin{table}[htbp]
 \centering\small
@@ -305,10 +303,10 @@ Robust set&0&0&14.96&0&85.04\\\bottomrule
 \end{tabular}
 \end{table}
 
-The nominal 95\% seed-level intervals are 83.39--86.70\% for robust decisive coverage and 74.06--77.27\% for the fixed margin. Pairing the same 30 seeds in a bootstrap with 10,000 resamples and random seed 20260905 gives a difference of 9.38 percentage points, with a percentile 95\% interval of 8.25--10.54 points. This exploratory estimate is conditional on the chosen workload. The all-source intersection often becomes empty under the constructed attack; its remaining decisive outcomes are wrong. That frequency is specific to this attack and workload.
+A paired 10,000-resample bootstrap over the same 30 seeds gives a robust-minus-fixed-margin decisive-coverage difference of 9.38 percentage points (95\% percentile interval 8.25--10.54). The estimate is conditional on this workload.
 
 \paragraph{Direct assumption diagnostic}
-Because the generator retains source roles and the true event, we can test the physical premise of Proposition~\ref{prop:soundness} rather than infer it from an error label. In the calibrated correlated focus condition ($n=5$, radius four, one Byzantine source), all 2,400 events have $M=0$; hence $M\leq r$ for $r=0,1,2$, and no wrong decisive output is observed. In the undercovered version of the same condition, the miss-count histogram is $M=0,1,2,3,4$ for 1,258, 249, 255, 283, and 355 events, respectively. At $r=0$, only 52.42\% of events satisfy $M\leq r$; the robust classifier has zero wrong decisive outputs on that subset, while the conditional wrong-decisive rate is 1.31\% among the 47.58\% with $M>r$. Raising $r$ to one and two increases the premise-satisfying fraction to 62.79\% and 73.42\%; the observed wrong-decisive rate remains zero whenever $M\leq r$, and falls to 0.67\% and 0.47\% within the remaining $M>r$ subsets. These matched diagnostics connect the empirical failures directly to the coverage premise; they do not estimate how often that premise holds in a real deployment.
+The generator records $M$, the number of honest boxes missing the truth. In the calibrated focus condition all 2,400 events have $M=0$ and no wrong decisive output. Under undercoverage, the fractions satisfying $M\le r$ are 52.42\%, 62.79\%, and 73.42\% for $r=0,1,2$; no wrong decisive output occurs on those subsets. Among events with $M>r$, wrong-decisive rates are 1.31\%, 0.67\%, and 0.47\%, respectively. This links observed failures to the theorem premise without estimating real-world premise frequency.
 
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/availability.pdf}
@@ -316,7 +314,7 @@ Because the generator retains source roles and the true event, we can test the p
 \end{figure}
 
 \subsection{Stress tests outside the security assumptions}
-The conditional guarantee should fail visibly when its premises are violated. Table~\ref{tab:assumption-stress} isolates two such cases from the synthetic study. Undercovered evidence can violate the honest-coverage premise and produces wrong decisive outputs without evidence failure. Increasing the actual Byzantine count to two while the verifier budgets only one violates the fault premise and produces substantially larger errors. Thus the inconsistent output is not an assumption-violation detector; it is only the fourth value of the certified finite relation.
+Table~\ref{tab:assumption-stress} violates one premise at a time. Undercoverage yields wrong decisive outputs without inconsistency, while two actual Byzantine sources under a budget of one produce much larger error and evidence-failure rates. Thus ``inconsistent'' is not a general assumption-violation detector.
 
 \begin{table}[htbp]
 \centering\small
@@ -332,10 +330,10 @@ Two Byzantine sources; verifier budget $f=1$ & 11.62 & 60.86 & 83.33 & 16.67\\
 \end{tabularx}
 \end{table}
 
-The UrbanNav replay gives a similar comparison on a moving reference path. With nominal simulated evidence, robust decisive coverage was 93.27\%, against 81.94\% for fixed margin, with no observed error for either rule. Median-point classification had false acceptance and rejection rates of 0.29\% and 3.12\%. Amplifying the common bias raised the robust rates to 0.032\% and 0.493\%. The replay tests decision behavior under these simulated errors, not the validity of the assumed evidence calibration.
+On the UrbanNav path, nominal simulated evidence gives 93.27\% robust decisive coverage versus 81.94\% for fixed margin, with no observed error for either; the median point has 0.29\% false acceptance and 3.12\% false rejection. Fourfold common bias raises robust rates to 0.032\% and 0.493\%. These are simulated-evidence results, not calibration validation.
 
 \subsection{Effect of the honest-miscoverage budget}
-Table~\ref{tab:miscoverage} holds correlated errors, radius four, and one Byzantine source fixed while varying the honest-miscoverage budget. Increasing $r$ reduces decisive coverage from 85.04\% to 77.46\% under calibrated simulated evidence, without observed errors. Undercovered evidence gives a different tradeoff: false rejection falls from 3.41\% to 0.94\%, but decisive coverage also drops from 84.92\% to 78.50\%. Errors persist at $r=2$. Decreasing $k$ expands the feasible set and makes universal acceptance more conservative; it changes the decision rule, not the accuracy or calibration of the simulated evidence.
+Varying $r$ in Table~\ref{tab:miscoverage} lowers decisive coverage from 85.04\% to 77.46\% under calibrated evidence, with no observed errors. Undercoverage reduces false rejection from 3.41\% to 0.94\% but also reduces decisive coverage from 84.92\% to 78.50\%. Lower $k=n-f-r$ expands the feasible set and makes universal acceptance more conservative; it does not improve evidence calibration.
 \begin{table}[htbp]
 \centering\small
 \caption{Matched miscoverage-budget ablation. Mean seed-level percentages; $n=5,f=1$, radius four, one Byzantine source.}\label{tab:miscoverage}
@@ -350,14 +348,14 @@ Undercovered&2&0&0.94&78.50\\\bottomrule
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:budget} visualizes the availability--error tradeoff in Table~\ref{tab:miscoverage} without treating matched budgets as independent replications. The normal false-rejection interval can extend below zero; its full extent is displayed as an approximation artifact, not a negative physical error rate.
+Figure~\ref{fig:budget} visualizes the matched availability--error tradeoff; negative lower error-bar endpoints are normal-approximation artifacts.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/budget_tradeoff.pdf}
-\caption{Honest-miscoverage budget sensitivity at $n=5,f=1$, radius four, and one Byzantine source. (a) Decisive coverage for both error models. (b,c) Conditional false acceptance and rejection for undercovered evidence, on separate vertical scales; calibrated errors are zero for all three budgets. Points are seed means and bars are normal 95\% intervals over the same 30 seeds at each budget.}\label{fig:budget}
+\caption{Honest-miscoverage sensitivity at $n=5,f=1$. Points are seed means; bars are normal 95\% intervals over the same 30 seeds. Calibrated FA/FR are zero for all budgets.}\label{fig:budget}
 \end{figure}
 
 \subsection{Hidden-point ZK lower bound}
-To separate generic location-privacy cost from authenticated-evidence semantics, Table~\ref{tab:point-zk} compiles a private point-in-policy circuit using the same Groth16 proof system over BN254. This intentionally weaker baseline contains no issuer signatures, uncertainty boxes, threshold fusion, Byzantine budget, or four-valued output. It is a lower bound on circuit work rather than a competing security protocol.
+Table~\ref{tab:point-zk} gives a deliberately weaker same-stack hidden-point lower bound with no signatures, uncertainty, threshold fusion, Byzantine budget, or four-valued output.
 
 \begin{table}[htbp]
 \centering\small
@@ -372,11 +370,11 @@ To separate generic location-privacy cost from authenticated-evidence semantics,
 \end{tabular}
 \end{table}
 
-The smallest full subset circuits use 32,474 constraints at $(n,d)=(3,2)$ and 35,248 at $(3,3)$, which are 79.6 and 57.6 times the corresponding point-predicate counts. At $(n,d)=(5,2)$ the full relation uses 53,528 constraints, 131.2 times the two-dimensional point lower bound. These ratios are not the cost of robustness alone: the full relation also includes $n$ in-circuit EdDSA verifications, roster checks, private-box range constraints, and four-valued geometry. Groth16 proof size remains 164 bytes in both cases.
+The smallest subset circuits use 32,474 constraints at $(3,2)$ and 35,248 at $(3,3)$, versus 408 and 612 for the point predicate. The difference includes signatures, roster/range checks, uncertainty fusion, and four-valued geometry; it is not attributable to robustness alone. Groth16 proof size remains 164 bytes.
 
 
 \subsection{Quantitative context against recent related systems}
-Cross-paper timing comparisons can be misleading when the certified relation, implementation stack, hardware, and communication model differ. We therefore use two levels of comparison. Table~\ref{tab:recent-context} reports only source-described evaluation scale and headline measurements for recent systems from 2024--2026. Table~\ref{tab:zklp-repro} then gives a narrower reproduction against ZKLP~\cite{ZKLP}, the closest recent work for which an open Groth16/BN254 location circuit is available.
+Table~\ref{tab:recent-context} gives source-reported 2024--2026 context without ranking heterogeneous systems. Table~\ref{tab:zklp-repro} then reproduces the closest open Groth16/BN254 location implementation, ZKLP~\cite{ZKLP}, on the same runner.
 
 \begin{table}[htbp]
 \centering\footnotesize
@@ -386,16 +384,16 @@ Cross-paper timing comparisons can be misleading when the certified relation, im
 \toprule
 Work & Evaluation scale & Source-reported result and comparison boundary\\
 \midrule
-BFT-PoLoc~\cite{BFTPoLoc} (2024) & Internet-delay geolocation with up to 450 challengers & With 450 challengers, about 45\% of honest targets have uncertainty below 100~km and about 95\% below 1000~km. It estimates a feasible location region under Byzantine delay evidence; it does not provide a zero-knowledge witness-hiding circuit.\\
-PG~\cite{PG} (2024) & Cloud deployment with 261 sensors; cyber-physical deployment with 19 resource-constrained sensors & Demonstrates private Byzantine-tolerant sensor fusion with guaranteed output delivery. Its garbled-circuit distributed protocol and fusion output are not runtime-equivalent to a portable location-policy SNARK.\\
-ZKLP~\cite{ZKLP} (2025) & Floating-point SNARK location/proximity proofs & The paper reports a proximity proof in about 0.26~s and verification throughput of about 470 peers/s. Its relation proves hidden point geometry rather than authenticated threshold-supported uncertainty.\\
-Vehicle ZK-PoL~\cite{VehiclePolicy} (2025) & Trajectories of 200, 3,600, and 43,800 points; Raspberry Pi/phone/PC provers & The 43,800-point examples require roughly 36~min for the EV-subsidy policy and 59~min for highway taxation. These are trajectory-wide interactive proofs rather than one-event noninteractive certificates.\\
-CRSF~\cite{CRSF} (2026) & Google Cloud evaluation of five fusion circuits with up to 261 sensors & Largest tested instances report total online phase times on the order of one second (about 0.8--1.55~s across reported cases). CRSF targets collusion-resilient garbled-circuit sensor fusion and Byzantine participation agreement, not location-policy certification.\\
+BFT-PoLoc~\cite{BFTPoLoc} (2024) & Up to 450 challengers & At 450 challengers, $\sim$45\% below 100~km and $\sim$95\% below 1000~km uncertainty; Byzantine geolocation, no ZK.\\
+PG~\cite{PG} (2024) & 261 cloud / 19 constrained sensors & Private Byzantine sensor fusion with guaranteed delivery; distributed GC protocol.\\
+ZKLP~\cite{ZKLP} (2025) & Floating-point location SNARK & Proximity proof $\sim$0.26~s; $\sim$470 peers/s verification; hidden-point geometry.\\
+Vehicle ZK-PoL~\cite{VehiclePolicy} (2025) & Up to 43,800 trajectory points & $\sim$36~min EV-subsidy and $\sim$59~min highway proof; trajectory-wide interactive setting.\\
+CRSF~\cite{CRSF} (2026) & Up to 261 sensors & Reported online phases $\sim$0.8--1.55~s; collusion-resilient GC fusion, not policy certification.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-For the reproducible comparison, we pin the public ZKLP repository to commit \texttt{e8e321524982ddd9dddea37db6fa352529db62c4} and execute the first upstream ZKLP32 test vector on the same GitHub Actions Ubuntu runner used for a fresh $(n,d)=(3,2)$ subset benchmark of our implementation. Both runs use Groth16 over BN254 and perform ten proofs after one setup. ZKLP uses its upstream gnark fork based on v0.9.1, whereas our implementation uses gnark v0.14.0. Consequently, Table~\ref{tab:zklp-repro} is a same-environment descriptive reproduction, not a security-equivalent or library-normalized benchmark.
+We pin ZKLP to commit \texttt{e8e3215...62c4} and run its first ZKLP32 vector on the same GitHub Actions Ubuntu runner as a fresh $(n,d)=(3,2)$ subset benchmark. Both use Groth16/BN254 and ten proofs after setup; ZKLP uses a gnark v0.9.1-based fork and ours v0.14.0. The comparison is therefore descriptive, not library- or security-equivalent.
 
 \begin{table}[htbp]
 \centering\small
@@ -411,11 +409,11 @@ This work, subset $(3,2)$ & 32,474 & 645.14 & 1.547 & 164 & 556\\
 \end{tabularx}
 \end{table}
 
-The comparison shows the expected structural tradeoff rather than a winner. The ZKLP circuit certifies one hidden geometric location relation. Our row additionally verifies three signed uncertainty boxes, roster/context binding, threshold support, and the four-valued robust decision. The public witness is therefore larger, while Groth16 proof size remains constant for the instantiated circuits. A further reproducibility detail is that ZKLP's repository currently stores an older m6i.xlarge benchmark artifact with 21,878 constraints and a 270.03~ms median proving time over 137 recorded rows, whereas the pinned current code compiles to 19,467 constraints in our smoke run. We do not interpret that historical artifact/current-code difference as a performance change; it demonstrates why exact source revisions and execution environments must accompany cross-paper measurements.
+ZKLP certifies hidden point geometry; our row additionally verifies three signed uncertainty boxes, roster/context binding, threshold support, and the robust decision, explaining the larger public witness and circuit. ZKLP's repository also contains an older m6i.xlarge artifact with 21,878 constraints and 270.03~ms median proving time, while the pinned code compiles to 19,467 constraints here. We treat this as version/environment drift, not a performance trend.
 
 
 \subsection{Real proof costs}
-Table~\ref{tab:crypto} reports measured proving and verification quantiles. Serialized proofs contain 164 bytes for all tested shapes. Serialized public witnesses add 556--748 bytes, including roster keys; packet headers, report payloads, and transport are additional. Constant proof size does not mean constant report size or constant verification cost in the number of public inputs.
+Table~\ref{tab:crypto} reports proof costs. Proofs are 164 bytes for every tested shape; public witnesses are 556--748 bytes, excluding report payload and transport.
 
 \begin{table}[htbp]
 \centering\small
@@ -434,9 +432,7 @@ $(4,3)$&510,362&38.34&1090.95&1212.54&1.093&1.506\\\bottomrule
 \centering\includegraphics[width=\linewidth]{figures/backend_costs.pdf}
 \caption{Matched circuit sizes and measured proving costs for both backends on the Apple M1 workstation. Right: small filled markers show all 30 timings per shape and backend (300 in total); larger markers denote medians and bars span sample p5--p95, not confidence intervals. Horizontal offsets separate observations without changing their values. Backend batches were not interleaved.}\label{fig:scaling}
 \end{figure}
-At $n=4$, moving from two to three dimensions raises depth-backend constraints from 97,493 to 510,362; the largest depth case takes about 1.09~s to prove at the median. The subset circuits in Table~\ref{tab:subset} are smaller in every tested $k=n-1$ case. For $(n,d)=(4,3)$, subset enumeration needs 46,737 constraints and a median proving time of 234.93~ms. Proof and public-witness sizes are the same for both backends.
-
-Constraint counts are deterministic for these circuit shapes. Timing ratios have a narrower interpretation because the backends ran in separate batches on the same workstation, without randomized interleaving or thermal controls. They are descriptive comparisons, not controlled causal estimates or evidence of suitability for safety-critical control loops. Deployment would also require a trusted-setup lifecycle; the local benchmark ceremony is only an experimental setup.
+For $(n,d)=(4,3)$, the depth backend uses 510,362 constraints and 1.09~s median proving time, versus 46,737 constraints and 234.93~ms for subset enumeration. Subset is smaller in every tested $k=n-1$ case. Batches were measured separately, so timing ratios are descriptive; deployment also requires a trusted setup.
 
 \begin{table}[htbp]
 \centering\small
@@ -452,12 +448,10 @@ $(4,3)$&46,737&234.93&1.038\\\bottomrule
 \end{table}
 
 \subsection{Circuit growth and resource boundaries}
-Figure~\ref{fig:compilegrowth} and Table~\ref{tab:compilegrowth} report the compilation sweep. Twenty-seven configurations completed and five stopped at the sampled RSS threshold; none timed out. Six overlapping configurations reproduce the earlier constraint counts exactly. At $n=16,d=2$, depth requires 3,509,645 constraints, while subset enumeration uses 181,194 at $k=15$ and 308,978 at $k=14$. Balanced subset selection grows faster: $n=12,d=3,k=6$ requires 962,018 constraints, compared with 147,506 at $k=11$.
-
-The $n=16,k=8$ subset runs hit the resource threshold in both dimensions, as do three-dimensional depth runs at $n=8,12,16$. More resources might allow those configurations to compile; their constraint counts remain unobserved here. Among cases completed by both backends, no constraint-count crossover occurs. The censored runs support no further ordering.
+Of 32 compilation cases, 27 complete and five hit the sampled RSS limit. At $n=16,d=2$, depth uses 3,509,645 constraints versus 181,194 for subset $k=15$ and 308,978 for $k=14$; balanced subsets grow faster (962,018 at $n=12,d=3,k=6$). Resource-limited counts remain unobserved, and completed overlapping cases show no constraint-count crossover.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/compile_scalability.pdf}
-\caption{Measured complete-circuit constraint counts on a logarithmic vertical scale. Subset budgets are $b=n-k$. Missing points denote resource-limited runs listed in Table~\ref{tab:compilegrowth}, not zero constraints; lines are visual guides between measured grid points. At $n=4$, $b=2$ and $k=n/2$ coincide. The sweep measures compilation, not proving latency.}\label{fig:compilegrowth}
+\caption{Complete-circuit constraint counts. Missing points are resource-limited runs, not zeros; lines only guide the eye. The sweep measures compilation, not proving latency.}\label{fig:compilegrowth}
 \end{figure}
 \begin{table}[htbp]
 \centering\small
