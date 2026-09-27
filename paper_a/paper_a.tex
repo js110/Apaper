@@ -44,7 +44,7 @@ The main contributions are:
  \item We define robust spacetime-compliance semantics for signed uncertainty boxes under explicit Byzantine and honest-miscoverage budgets. The four-valued decision prevents vacuous acceptance and yields a conditional soundness statement that separates cryptographic validity from physical coverage assumptions.
  \item We give two exact finite-domain realizations of the relation: lower-corner maximum-depth reachability and threshold-subset enumeration. Both circuits verify issuer signatures in Groth16 and bind the private boxes to the public policy, roster, threshold, report context, challenge, and expiry.
  \item We implement a task-authorized gateway that reconstructs trusted public inputs, rejects roster/key inconsistencies, verifies the proof, and atomically consumes a challenge after successful verification. The resulting protocol addresses witness tampering, cross-task/report substitution, and same-challenge replay within the stated local model.
- \item We evaluate semantics and implementation separately. The study includes 64,800 synthetic observations, matched analyses across miscoverage budgets, a 787-state UrbanNav reference-trajectory replay with simulated evidence, 300 measured Groth16 proofs across two backends, and a resource-bounded compilation sweep. These experiments validate the implemented security relation and its cost; they are not presented as field calibration of real multisource vehicular positioning.
+ \item We evaluate semantics and implementation separately. The study includes 64,800 synthetic observations, matched analyses across miscoverage budgets, a 787-state UrbanNav reference-trajectory replay with simulated evidence, 300 measured Groth16 proofs across two backends, a resource-bounded compilation sweep, and a pinned same-runner reproduction of the closest open-source ZK location baseline. These experiments validate the implemented security relation and its cost; they are not presented as field calibration of real multisource vehicular positioning.
 \end{itemize}
 
 Figure~\ref{fig:architecture} summarizes the evidence-to-proof boundary. The verifier learns the public task inputs and the classification, while the signed uncertainty boxes and their signatures remain private witnesses.
@@ -266,7 +266,7 @@ The proposition assumes honest issuers associate their boxes with the same physi
 \section{Implementation and experimental design}
 The ZK prototype uses Go 1.25.6, gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Groth2016}, and gnark's twisted-Edwards EdDSA with MiMC~\cite{MiMC2016}. This EdDSA instantiation differs from Ed25519. Keys and signatures use real cryptographic randomness, and the benchmark runs compilation, setup, witness construction, proving, and verification without placeholder cryptography. BN254 is an implementation choice for this prototype and benchmark, not a claim of post-quantum security or a prescribed long-term deployment parameter. The robust compliance relation is curve-agnostic at the protocol level; replacing the proof/signature instantiation to meet a deployment's security policy would require new setup material and new performance measurements.
 
-The evaluation is organized around four questions: \textbf{RQ1}, does the implemented proof/gateway reject statement tampering and replay; \textbf{RQ2}, how much decisive coverage is retained by robust semantics relative to point and margin baselines when the stated assumptions hold or fail; \textbf{RQ3}, how does the honest-miscoverage budget change the availability--error tradeoff; and \textbf{RQ4}, what proof, verification, and circuit-growth costs arise for the two exact backends, and how much larger is the authenticated robust relation than a bare hidden-point membership predicate?
+The evaluation is organized around five questions: \textbf{RQ1}, does the implemented proof/gateway reject statement tampering and replay; \textbf{RQ2}, how much decisive coverage is retained by robust semantics relative to point and margin baselines when the stated assumptions hold or fail; \textbf{RQ3}, how does the honest-miscoverage budget change the availability--error tradeoff; \textbf{RQ4}, what proof, verification, and circuit-growth costs arise for the two exact backends, and how much larger is the authenticated robust relation than a bare hidden-point membership predicate; and \textbf{RQ5}, how does the closest reproducible recent ZK-location implementation behave on the same execution environment, without conflating different relations, library versions, or historical hardware?
 
 \paragraph{AI-assisted coding disclosure}
 OpenAI Codex was used as a coding assistant for portions of analysis/plotting code and repository-level checks. Reported measurements, simulation outputs, and plotted values were produced from the executable code and saved experimental records; generative AI was not used to fabricate or alter experimental result values. The resulting code paths were exercised by the reproducibility tests and artifact audits reported in this study.
@@ -410,6 +410,46 @@ To separate generic location-privacy cost from authenticated-evidence semantics,
 \end{table}
 
 The smallest full subset circuits use 32,474 constraints at $(n,d)=(3,2)$ and 35,248 at $(3,3)$, which are 79.6 and 57.6 times the corresponding point-predicate counts. At $(n,d)=(5,2)$ the full relation uses 53,528 constraints, 131.2 times the two-dimensional point lower bound. These ratios are not the cost of robustness alone: the full relation also includes $n$ in-circuit EdDSA verifications, roster checks, private-box range constraints, and four-valued geometry. Groth16 proof size remains 164 bytes in both cases.
+
+
+\subsection{Quantitative context against recent related systems}
+Cross-paper timing comparisons can be misleading when the certified relation, implementation stack, hardware, and communication model differ. We therefore use two levels of comparison. Table~\ref{tab:recent-context} reports only source-described evaluation scale and headline measurements for recent systems from 2024--2026. Table~\ref{tab:zklp-repro} then gives a narrower reproduction against ZKLP~\cite{ZKLP}, the closest recent work for which an open Groth16/BN254 location circuit is available.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Quantitative context from recent related systems. Values are source-reported and are not normalized into a performance ranking because the certified objects, hardware, and protocols differ.}
+\label{tab:recent-context}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Work & Evaluation scale & Source-reported result and comparison boundary\\
+\midrule
+BFT-PoLoc~\cite{BFTPoLoc} (2024) & Internet-delay geolocation with up to 450 challengers & With 450 challengers, about 45\% of honest targets have uncertainty below 100~km and about 95\% below 1000~km. It estimates a feasible location region under Byzantine delay evidence; it does not provide a zero-knowledge witness-hiding circuit.\\
+PG~\cite{PG} (2024) & Cloud deployment with 261 sensors; cyber-physical deployment with 19 resource-constrained sensors & Demonstrates private Byzantine-tolerant sensor fusion with guaranteed output delivery. Its garbled-circuit distributed protocol and fusion output are not runtime-equivalent to a portable location-policy SNARK.\\
+ZKLP~\cite{ZKLP} (2025) & Floating-point SNARK location/proximity proofs & The paper reports a proximity proof in about 0.26~s and verification throughput of about 470 peers/s. Its relation proves hidden point geometry rather than authenticated threshold-supported uncertainty.\\
+Vehicle ZK-PoL~\cite{VehiclePolicy} (2025) & Trajectories of 200, 3,600, and 43,800 points; Raspberry Pi/phone/PC provers & The 43,800-point examples require roughly 36~min for the EV-subsidy policy and 59~min for highway taxation. These are trajectory-wide interactive proofs rather than one-event noninteractive certificates.\\
+CRSF~\cite{CRSF} (2026) & Google Cloud evaluation of five fusion circuits with up to 261 sensors & Largest tested instances report total online phase times on the order of one second (about 0.8--1.55~s across reported cases). CRSF targets collusion-resilient garbled-circuit sensor fusion and Byzantine participation agreement, not location-policy certification.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For the reproducible comparison, we pin the public ZKLP repository to commit \texttt{e8e321524982ddd9dddea37db6fa352529db62c4} and execute the first upstream ZKLP32 test vector on the same GitHub Actions Ubuntu runner used for a fresh $(n,d)=(3,2)$ subset benchmark of our implementation. Both runs use Groth16 over BN254 and perform ten proofs after one setup. ZKLP uses its upstream gnark fork based on v0.9.1, whereas our implementation uses gnark v0.14.0. Consequently, Table~\ref{tab:zklp-repro} is a same-environment descriptive reproduction, not a security-equivalent or library-normalized benchmark.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Same-runner reproduction against the pinned ZKLP implementation. Median times are over ten proofs after one setup. The relations and gnark versions differ, so the table is descriptive rather than a speed ranking.}
+\label{tab:zklp-repro}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.24\linewidth}rrrrr@{}}
+\toprule
+Implementation & Constraints & Prove p50 & Verify p50 & Proof bytes & Public bytes\\
+\midrule
+ZKLP32 pinned smoke & 19,467 & 515.53 & 1.739 & 196 & 140\\
+This work, subset $(3,2)$ & 32,474 & 645.14 & 1.547 & 164 & 556\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The comparison shows the expected structural tradeoff rather than a winner. The ZKLP circuit certifies one hidden geometric location relation. Our row additionally verifies three signed uncertainty boxes, roster/context binding, threshold support, and the four-valued robust decision. The public witness is therefore larger, while Groth16 proof size remains constant for the instantiated circuits. A further reproducibility detail is that ZKLP's repository currently stores an older m6i.xlarge benchmark artifact with 21,878 constraints and a 270.03~ms median proving time over 137 recorded rows, whereas the pinned current code compiles to 19,467 constraints in our smoke run. We do not interpret that historical artifact/current-code difference as a performance change; it demonstrates why exact source revisions and execution environments must accompany cross-paper measurements.
+
 
 \subsection{Real proof costs}
 Table~\ref{tab:crypto} reports measured proving and verification quantiles. Serialized proofs contain 164 bytes for all tested shapes. Serialized public witnesses add 556--748 bytes, including roster keys; packet headers, report payloads, and transport are additional. Constant proof size does not mean constant report size or constant verification cost in the number of public inputs.
