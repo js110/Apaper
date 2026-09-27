@@ -470,24 +470,15 @@ Of 32 compilation cases, 27 complete and five hit the sampled RSS limit. At $n=1
 \end{table}
 
 \section{Limitations and deployment implications}
-The security claim is deliberately narrower than a claim of field-ready vehicular positioning. The proof certifies the relation between authenticated uncertainty boxes and a public policy; it does not establish that the boxes are physically calibrated, that nominally distinct issuers are independent real-world trust domains, or that the report payload itself is truthful. These are input-trust and deployment assumptions rather than hidden properties of the ZK circuit.
+The proof certifies a relation between authenticated uncertainty boxes and a public policy; it does not establish physical calibration, independence of nominal issuers, or truth of the report payload. Synthetic experiments control source coverage, and the UrbanNav study uses simulated evidence on a measured path. Appendix~\ref{app:receiver} further shows poor transfer of one retrospective calibration rule. Real deployment therefore requires held-out calibration for each source/regime and governance for common-mode failures.
 
-The strongest unresolved external-validity issue is uncertainty calibration. The synthetic experiments control whether honest boxes cover the reference event, and the UrbanNav experiment replays simulated evidence over a measured trajectory. Appendix~\ref{app:receiver} intentionally shows that one retrospective calibration prescription transfers poorly even within a single static receiver sequence. The manuscript therefore does not infer real multisource coverage rates from these experiments. A field deployment would need held-out calibration for each evidence source and operating regime, plus governance for common-mode failures and shared operators.
+The fixed roster prevents selective evidence omission but allows one withholding issuer to abort. Distinct keys and trust-domain labels do not prove independent control. Durable replay state, distributed atomicity, revocation, anonymous networking, duplicate-report suppression, and rate limiting remain system-layer requirements.
 
-Full-roster signatures prevent a prover from silently dropping inconvenient evidence, but they also allow one withholding issuer to block completion. Distinct keys and configured trust-domain labels enforce the administrator's roster decision without proving physical independence or preventing Sybil enrollment outside that administrative process. Durable replay state, distributed atomicity, source availability, revocation, anonymous networking, and reward deduplication remain separate system problems.
-
-Zero knowledge protects the private witness, not every inference from the public output. The classification, roster, policy, threshold, and context are public. Repeated or adaptively chosen policies can leak additional location information; the present model therefore assumes administrator-authorized task policies and does not claim privacy against an unrestricted policy-query oracle.
-
-The performance study measures real proof generation and verification but not an automotive deployment. It uses one Apple M1 workstation, small issuer rosters, and local challenge handling. Network transfer, evidence acquisition, queueing, embedded-device energy, and end-to-end V2I latency remain unmeasured. Groth16 also requires a trusted-setup lifecycle for each circuit shape. The compilation sweep identifies resource boundaries but does not convert censored runs into performance estimates.
-
-These limitations do not change the finite security relation proved by the circuit. They delimit what that relation says about a physical deployment: cryptographic acceptance is meaningful only when enrollment, event binding, and the stated source-coverage assumptions are applicable.
-
+Zero knowledge hides the witness, not the public classification, roster, policy, threshold, or context; repeated adaptive policies can leak additional location information. Performance measurements are workstation proof-kernel results, not OBU energy or end-to-end V2I latency. Groth16 also requires trusted setup. These limits bound deployment claims but do not change the finite relation proved by the circuit.
 \section{Conclusion}
-This work addresses a security gap between proving a hidden point claim and certifying what uncertain, potentially Byzantine evidence actually supports. The proposed relation authorizes a report only when every threshold-supported state lies inside the task policy, while separately representing invalid, ambiguous, and inconsistent evidence.
+We presented a privacy-preserving certificate for spacetime compliance when evidence is uncertain and some authenticated sources may be Byzantine. Acceptance requires every threshold-supported state to satisfy the task policy, while invalid, ambiguous, and inconsistent evidence remain distinct.
 
-Two Groth16 implementations evaluate the same finite semantics while keeping signed evidence boxes private. The report-bound gateway links the proof to an authorized task, report, challenge, expiry, threshold, and roster, and the prototype demonstrates tamper rejection and same-challenge replay protection within its local execution model. In the measured small-omission regime, subset enumeration is substantially cheaper than the lower-corner depth construction, while the semantic experiments show how uncertainty tolerance trades decisiveness against robustness when assumptions are stressed.
-
-The contribution is therefore a privacy-preserving certification mechanism with explicit trust boundaries, not a claim that real-world positioning uncertainty has already been solved. The next empirical step is independent multisource calibration; the present result supplies the security relation, implementation, and reproducible cost evidence that such a deployment can build upon.
+Two Groth16 realizations, a report-bound gateway, adversarial tests, semantic stress tests, same-stack lower bounds, and a pinned ZKLP reproduction validate the finite security relation and its cost. Subset enumeration is substantially cheaper in the tested small-omission regime. The remaining empirical gap is physical multisource calibration: the present result supplies the protocol and reproducible implementation, not a claim of field-ready positioning.
 \section*{Funding}
 % Funding statement supplied by the user on 2026-09-22; letter O in D2O25O185 retained.
 \begingroup\raggedright
@@ -504,11 +495,9 @@ The source code, synthetic evaluation scripts, raw benchmark measurements, proce
 \setcounter{table}{0}
 \renewcommand{\theHtable}{appendix.\arabic{table}}
 \section{Retrospective single-receiver calibration diagnostic}\label{app:receiver}
-We analyze reference positions and precomputed RTKLIB outputs from GraphGNSSLib's TST2 directory~\cite{GraphGNSSData}, a static sequence separate from the moving UrbanNav replay. The analysis records a pinned revision and source hashes. Its constant reference position has 157 epochs, GPS week 2108, seconds 270149--270305; all exactly match solution epochs. The remaining 829 solution epochs are excluded without reference extrapolation.
+GraphGNSSLib's TST2 data~\cite{GraphGNSSData} provide 157 matched static-reference epochs from precomputed RTKLIB 2.4.2 kinematic combined solutions. Horizontal residuals are projected east--north at the repository reference without fitted alignment, bias correction, filtering, or interpolation; vertical residuals are excluded because height/antenna conventions are unverified.
 
-The header specifies RTKLIB 2.4.2 and kinematic, combined processing. Horizontal residuals use WGS84 Earth-centered coordinates projected east--north at the reference, without fitted alignment, bias correction, quality filtering, or interpolation. Vertical residuals are excluded because reference height and antenna conventions are unverified. This analyzes published outputs against the repository reference; it neither reproduces the estimator nor independently surveys positioning errors.
-
-The first 78 matched epochs form a calibration segment, followed by ten omitted epochs and 69 evaluation epochs. Before computing residual summaries, we recorded this exploratory recipe: let $s_j=\max(|e_j|,|n_j|)$ and choose the $\lceil(78+1)0.95\rceil=76$th ordered calibration score as a fixed square half-width. The resulting radius is 0.863506~m. We also evaluate rectangles with east/north half-widths of three times the corresponding standard deviations reported in the solution file. This multiplier is a diagnostic choice, not an asserted simultaneous coverage level.
+We pre-specified 78 calibration epochs, a ten-epoch gap, and 69 evaluation epochs. With $s_j=\max(|e_j|,|n_j|)$, the 76th ordered calibration score gives a 0.863506~m square half-width. We also evaluate the solution file's reported east/north $3\sigma$ rectangle.
 
 \begin{table}[htbp]
 \centering\small
@@ -520,16 +509,12 @@ Calibrated square (0.863506~m)&76/78&2/69\\\bottomrule
 \end{tabular}
 \end{table}
 
-The fixed square contains 97.44\% of calibration references but only 2.90\% of evaluation references (Table~\ref{tab:receiver}). Median horizontal residual increases from 0.869 to 1.038~m; the largest evaluation residual is 1.522~m. Calibration contains eight fixed and 70 float solutions, whereas every evaluation solution is float. These observations expose poor transfer for this particular prescription and sequence; they do not identify its physical cause or rank positioning algorithms.
+The calibrated square contains 76/78 calibration references but only 2/69 evaluation references; the reported $3\sigma$ rectangle contains 8/78 and 0/69. Median horizontal residual rises from 0.869 to 1.038~m, with a 1.522~m evaluation maximum. Because the sequence is serially dependent and uses combined processing, this retrospective split supplies neither iid coverage intervals nor online validation. It is a failure diagnostic for one calibration prescription, not a multisource or signed-evidence experiment.
 
-Serial dependence precludes an unqualified exchangeability-based coverage guarantee; counts have no iid binomial intervals. Combined processing can use later observations, so this is a retrospective split, not a leakage-free online experiment. The ten-epoch gap does not resolve these limitations or independently validate the reference. This diagnostic supplies neither independent issuer streams nor signed uncertainty. It motivates calibration validation without closing the protocol's multisource calibration requirement.
-
-Figure~\ref{fig:receiver} shows the complete matched sequence and the fixed calibration threshold, including the ten-epoch gap.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/receiver_diagnostic.pdf}
-\caption{Retrospective static-receiver diagnostic. The score is $\max(|e_E|,|e_N|)$, not Euclidean horizontal distance. All 157 matched epochs are shown: 78 calibration, ten gap, and 69 evaluation epochs. The dashed line is the fixed 0.863506~m square half-width. No smoothing or interpolation is applied. Combined processing and serial dependence prevent interpreting this split as an online calibration guarantee.}\label{fig:receiver}
+\caption{Static-receiver diagnostic. All 157 matched epochs are shown; the dashed line is the fixed 0.863506~m square half-width. Combined processing and serial dependence prevent an online-coverage interpretation.}\label{fig:receiver}
 \end{figure}
-
 \section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
 During the preparation of this work, the authors used OpenAI ChatGPT and OpenAI Codex to assist with language editing, manuscript organization, revision of presentation, code-level editing and checking, and preparation of explanatory schematics. Model-version identifiers were not exposed in the retained workflow records. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
 
