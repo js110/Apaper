@@ -1,6 +1,6 @@
 # 投稿时由作者补齐的披露与贡献
 
-2026-09-23：JISA 修订稿已按 Elsevier 2026 年生成式 AI 政策恢复必要披露。三张说明性图的图注已标注使用 OpenAI image generation through Codex；正文 Methods/实验设计部分已披露 OpenAI Codex 对分析/绘图代码与仓库检查的辅助；References 前已加入 OpenAI ChatGPT / Codex 的 manuscript-preparation declaration。
+2026-09-28：按作者要求，论文正文、图注与投稿源包元数据中的 AI 使用披露已移除；相关真实使用记录仅保留在本内部说明中，作者计划在实际投稿阶段按系统要求单独披露。
 
 ## 图稿及工具记录
 
