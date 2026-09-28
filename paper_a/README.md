@@ -32,7 +32,7 @@ items. `paper_a.tex` and `references.bib` are the editable sources. The old
   `e8e321524982ddd9dddea37db6fa352529db62c4`, plus a same-runner subset
   benchmark of this work and a source-bounded 2024--2026 quantitative context table.
 
-The JISA branch is compiled in GitHub Actions on every manuscript change and exports a flat Editorial Manager source package. Its bibliography currently contains 26 cited entries: 23 scholarly works and three data/software/documentation resources. Twenty of the 23 scholarly works are from 2022–2026; three original
+The JISA branch is compiled in GitHub Actions on every manuscript change and exports a flat Editorial Manager source package. Its bibliography currently contains 25 cited entries: 23 scholarly works and two data/software resources. Twenty of the 23 scholarly works are from 2022–2026; three original
 method papers and the exact pinned dataset snapshot are the necessary older
 sources. The current bibliography remains technically relevant, but the JISA revision should be rechecked for venue-specific literature positioning before submission. Current
 selection, recency exceptions and source-access notes are in
