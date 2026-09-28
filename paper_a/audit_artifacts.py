@@ -43,7 +43,7 @@ def main():
     keys=set(re.findall(r'@\w+\{([^,]+),',bibliography))
     check('all cited keys exist',citations<=keys)
     check('no unused bibliography entries', keys==citations)
-    resource_keys={'gnark','GraphGNSSData','SemaphoreDocs'}
+    resource_keys={'gnark','GraphGNSSData'}
     check('at least 20 cited scholarly works excluding software and documentation',len(citations-resource_keys)>=20)
     venue_keys={'Shen2024','Ghani2025','Mdee2022','Sultana2024','Wang2025ZKAuth'}
     check('five selected Vehicular Communications articles cited',venue_keys<=citations)
