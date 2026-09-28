@@ -65,7 +65,7 @@ def main():
 Target: Journal of Information Security and Applications (JISA).
 Publisher template: Elsevier elsarticle numeric submission layout; CTAN 3.5 baseline.
 All source files are flattened to one directory for Editorial Manager.
-AI-use and data/code statements are included in the manuscript.
+Data/code availability information is included in the manuscript.
 Compile: latexmk -pdf -interaction=nonstopmode -halt-on-error paper_a.tex
 Highlights follow Elsevier's 3--5 bullet, <=85-character guidance.
 No private experiment data, private keys, or reviewer correspondence are included.
