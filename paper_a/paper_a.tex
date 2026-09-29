@@ -105,7 +105,7 @@ The reference event is $z^\star=(x,y,t)$, or generally a point in
 \begin{equation}
  \Omega=\prod_{a=1}^{d}[L_a,H_a]\cap\mathbb{Z}^d.
 \end{equation}
-A public policy is an integer box $P\subseteq\Omega$, and issuer $i$ signs an inclusive integer uncertainty box $U_i\subseteq\Omega$ under a common context $c$. Coordinates share a public frame, epoch, units, and quantization rule; the prototype uses unsigned 16-bit bounds. Exactness therefore refers to this finite model, not to unquantized physical space.
+A public policy is an integer box $P\subseteq\Omega$, and issuer $i$ signs an inclusive integer uncertainty box $U_i\subseteq\Omega$ under a common context $c$. Coordinates share a public frame, epoch, units, and quantization rule; the evaluated circuit configurations use unsigned 16-bit bounds. Exactness therefore refers to this finite model, not to unquantized physical space.
 
 Signatures authenticate submitted bounds but not their physical accuracy. We assume at most $f$ Byzantine issuers and at most $r$ additional honest boxes that miss $z^\star$; honest errors may be dependent. The counted unit is an enrolled authority, not merely a public key, so multiple keys or estimates under common control do not create independent trust domains~\cite{Zhang2025Sybil}. A missing roster signature aborts the protocol rather than producing an ``inconsistent'' decision.
 
