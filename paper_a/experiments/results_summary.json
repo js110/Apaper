@@ -1,7 +1,7 @@
 {
   "stated_assumption_conditions": 12,
-  "robust_false_accept_mean_across_conditions": 0.0,
-  "robust_false_reject_mean_across_conditions": 0.0,
+  "robust_false_accept_mean_across_conditions": 0,
+  "robust_false_reject_mean_across_conditions": 0,
   "robust_decisive_coverage_mean_across_conditions": 0.8751736111111111,
   "fixed_margin_decisive_coverage_mean_across_conditions": 0.7563194444444444,
   "focus_condition": "calibrated_correlated__radius_4__byz_1",
@@ -20,21 +20,21 @@
         "defined_seeds": 30
       },
       "ambiguous_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "decisive_coverage": {
-        "mean": 1.0,
-        "ci95_low": 1.0,
-        "ci95_high": 1.0,
+        "mean": 1,
+        "ci95_low": 1,
+        "ci95_high": 1,
         "defined_seeds": 30
       },
       "decisive_accuracy": {
@@ -58,21 +58,21 @@
         "defined_seeds": 30
       },
       "ambiguous_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "decisive_coverage": {
-        "mean": 1.0,
-        "ci95_low": 1.0,
-        "ci95_high": 1.0,
+        "mean": 1,
+        "ci95_low": 1,
+        "ci95_high": 1,
         "defined_seeds": 30
       },
       "decisive_accuracy": {
@@ -84,15 +84,15 @@
     },
     "fixed_margin": {
       "false_accept_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "false_reject_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "ambiguous_rate": {
@@ -102,9 +102,9 @@
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "decisive_coverage": {
@@ -114,9 +114,9 @@
         "defined_seeds": 30
       },
       "decisive_accuracy": {
-        "mean": 1.0,
-        "ci95_low": 1.0,
-        "ci95_high": 1.0,
+        "mean": 1,
+        "ci95_low": 1,
+        "ci95_high": 1,
         "defined_seeds": 30
       }
     },
@@ -134,9 +134,9 @@
         "defined_seeds": 30
       },
       "ambiguous_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
@@ -152,23 +152,23 @@
         "defined_seeds": 30
       },
       "decisive_accuracy": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       }
     },
     "robust_depth": {
       "false_accept_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "false_reject_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "ambiguous_rate": {
@@ -178,9 +178,9 @@
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "decisive_coverage": {
@@ -190,9 +190,9 @@
         "defined_seeds": 30
       },
       "decisive_accuracy": {
-        "mean": 1.0,
-        "ci95_low": 1.0,
-        "ci95_high": 1.0,
+        "mean": 1,
+        "ci95_low": 1,
+        "ci95_high": 1,
         "defined_seeds": 30
       }
     }
@@ -218,9 +218,9 @@
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "decisive_coverage": {
@@ -250,9 +250,9 @@
         "defined_seeds": 30
       },
       "ambiguous_rate": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       },
       "evidence_failure_rate": {
@@ -268,9 +268,9 @@
         "defined_seeds": 30
       },
       "decisive_accuracy": {
-        "mean": 0.0,
-        "ci95_low": 0.0,
-        "ci95_high": 0.0,
+        "mean": 0,
+        "ci95_low": 0,
+        "ci95_high": 0,
         "defined_seeds": 30
       }
     }
@@ -434,5 +434,12 @@
       "proof_bytes": 164,
       "public_witness_bytes": 684
     }
-  ]
+  ],
+  "focus_seed_cluster_wrong_decisive": {
+    "clusters": 30,
+    "clusters_with_any_wrong_decisive": 0,
+    "one_sided_exact_upper95_if_zero": 0.09503385285530419,
+    "estimand": "probability that an identically generated seed cluster contains at least one wrong decisive event",
+    "note": "Synthetic-generator bound; not a field error-rate bound."
+  }
 }

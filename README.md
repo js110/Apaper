@@ -1,6 +1,6 @@
 # Paper A — Robust Spacetime Compliance
 
-Research manuscript and prototype for **Zero-Knowledge Certification of Robust
+Public research repository for **Zero-Knowledge Certification of Robust
 Spacetime Compliance under Byzantine Evidence for Vehicular Crowdsensing**.
 Target journal: *Journal of Information Security and Applications (JISA)*,
 Elsevier.
@@ -28,14 +28,12 @@ cd prototype/zkdepth
 go test ./...
 ```
 
-Go dependencies are pinned in `go.mod`/`go.sum`. Experiment and plotting scripts
-use NumPy and Matplotlib; see the paper-level guide for the individual workflows.
+Go dependencies are pinned in `go.mod`/`go.sum`. The manuscript CI pins Python 3.13 and the direct NumPy/Matplotlib versions in `paper_a/requirements.txt`; see the paper-level guide for the individual workflows.
 
 Third-party raw UrbanNav and GraphGNSSLib files are intentionally excluded while
 redistribution permissions remain unverified. Restore them from the original
 sources and verify the hashes described in `paper_a/README.md` before running
-the receiver/replay experiments or full artifact audit. Historical successful
-audit reports describe the original local environment, not a clean-clone run.
+the receiver/replay experiments or full artifact audit. GitHub Actions now exercises the core manuscript, semantic, Go, baseline, bibliography, and export path from a clean checkout. Historical full scientific audits that require excluded third-party raw files still describe the original local environment rather than a self-contained clean-clone reproduction.
 The DOI metadata helper also requires the separately installed citation-management
 skill parser; it is not needed to compile the paper or run the prototype tests.
 
