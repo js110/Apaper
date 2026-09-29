@@ -175,7 +175,7 @@ If the maximum overlap depth in $Q$ is positive, some maximizer belongs to $A_1\
 \end{lemma}
 \begin{proof}
 Choose a maximum-depth point $z$ and all boxes covering it. Their intersections with $Q$ have a common intersection. Its lower corner $v$ is formed by taking the greatest lower endpoint on each axis, hence $v_a\in A_a$. Every selected box contains $v$, so its depth is at least that of $z$ and therefore maximal.\end{proof}
-The circuit considers $n^d$ candidates, including duplicates, with coordinate $v_a=\max(\ell_{j_a a},Q^-_a)$. It tests query membership and coverage by every evidence box. Candidates associated with boxes not intersecting the query cannot cause false reachability because all membership comparisons are evaluated. Reachability is the OR of all candidate tests with depth at least $k$.
+Lemma~\ref{lem:corner} reduces exact reachability to finitely many lower-corner candidates. The circuit considers $n^d$ candidates, including duplicates, with coordinate $v_a=\max(\ell_{j_a a},Q^-_a)$. It tests query membership and coverage by every evidence box. Candidates associated with boxes not intersecting the query cannot cause false reachability because all membership comparisons are evaluated. Reachability is the OR of all candidate tests with depth at least $k$.
 
 The integer complement $\Omega\setminus P$ is the union of at most $2d$ slabs. The low slab for axis $a$ ends at $p^-_a-1$ and the high slab begins at $p^+_a+1$. Other coordinates span the domain. Slabs can overlap. A slab beyond the domain boundary is inactive, with a safe selected endpoint before comparisons. The circuit computes $I$ over $P$ and $O$ over these slabs, then constrains the public code to
 \begin{equation}
@@ -320,7 +320,7 @@ Robust set&0&0&14.96&0&85.04\\\bottomrule
 
 A paired 10,000-resample bootstrap gives a 9.38-percentage-point robust-minus-fixed-margin coverage difference (95\% bootstrap percentile interval 8.25--10.54), conditional on this workload.
 
-To connect the empirical outcomes directly to the soundness premise, the generator records $M$, the number of honest boxes missing the truth. In the calibrated focus condition all 2,400 events have $M=0$ and no wrong decisive output. Under undercoverage, the fractions satisfying $M\le r$ are 52.42\%, 62.79\%, and 73.42\% for $r=0,1,2$; no wrong decisive output occurs on those subsets. Among events with $M>r$, wrong-decisive rates are 1.31\%, 0.67\%, and 0.47\%, respectively. This links observed failures to the theorem premise without estimating real-world premise frequency.
+To connect the empirical outcomes directly to the soundness premise, the generator records $M$, the number of honest boxes missing the truth. In the calibrated focus condition all 2,400 events have $M=0$ and no wrong decisive output. Under undercoverage, the fractions satisfying $M\le r$ are 52.42\%, 62.79\%, and 73.42\% for $r=0,1,2$; no wrong decisive output occurs on those subsets. Among events with $M>r$, wrong-decisive rates are 1.31\%, 0.67\%, and 0.47\%, respectively. This links observed failures to the theorem premise without estimating real-world premise frequency. Figure~\ref{fig:availability} visualizes the corresponding decisive-coverage behavior across uncertainty radii for the calibrated correlated setting.
 
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/availability.pdf}
@@ -428,7 +428,7 @@ Table~\ref{tab:point-zk} first establishes a deliberately weaker same-stack lowe
 The smallest subset circuits use 32,474 constraints at $(3,2)$ and 35,248 at $(3,3)$, versus 408 and 612 for the point predicate. The difference includes signatures, roster/range checks, uncertainty fusion, and four-valued geometry; it is not attributable to robustness alone. Groth16 proof size remains 164 bytes.
 
 
-Table~\ref{tab:crypto} reports proof costs. Proofs are 164 bytes for every tested shape; public witnesses are 556--748 bytes, excluding report payload and transport.
+Table~\ref{tab:crypto} reports lower-corner proof costs, while Figure~\ref{fig:scaling} compares both backends over the matched shapes. Proofs are 164 bytes for every tested shape; public witnesses are 556--748 bytes, excluding report payload and transport.
 
 \begin{table}[htbp]
 \centering\small
@@ -447,7 +447,7 @@ $(4,3)$&510,362&38.34&1090.95&1212.54&1.093&1.506\\\bottomrule
 \centering\includegraphics[width=\linewidth]{figures/backend_costs.pdf}
 \caption{Matched circuit sizes and measured proving costs for both backends on the Apple M1 workstation. Right: small filled markers show all 30 timings per shape and backend (300 in total); larger markers denote medians and bars span sample p5--p95, not confidence intervals. Horizontal offsets separate observations without changing their values. Backend batches were not interleaved.}\label{fig:scaling}
 \end{figure}
-For $(n,d)=(4,3)$, the depth backend uses 510,362 constraints and 1.09~s median proving time, versus 46,737 constraints and 234.93~ms for subset enumeration. Subset is smaller in every tested $k=n-1$ case. Batches were measured separately, so timing ratios are descriptive; deployment also requires a trusted setup.
+Table~\ref{tab:subset} gives the matched subset measurements. For $(n,d)=(4,3)$, the depth backend uses 510,362 constraints and 1.09~s median proving time, versus 46,737 constraints and 234.93~ms for subset enumeration. Subset is smaller in every tested $k=n-1$ case. Batches were measured separately, so timing ratios are descriptive; deployment also requires a trusted setup.
 
 \begin{table}[htbp]
 \centering\small
@@ -463,7 +463,7 @@ $(4,3)$&46,737&234.93&1.038\\\bottomrule
 \end{table}
 
 
-Of 32 compilation cases, 27 complete and five hit the sampled RSS limit. At $n=16,d=2$, depth uses 3,509,645 constraints versus 181,194 for subset $k=15$ and 308,978 for $k=14$; balanced subsets grow faster (962,018 at $n=12,d=3,k=6$). Resource-limited counts remain unobserved, and completed overlapping cases show no constraint-count crossover.
+Figure~\ref{fig:compilegrowth} and Table~\ref{tab:compilegrowth} summarize the resource-bounded compilation sweep. Of 32 cases, 27 complete and five hit the sampled RSS limit. At $n=16,d=2$, depth uses 3,509,645 constraints versus 181,194 for subset $k=15$ and 308,978 for $k=14$; balanced subsets grow faster (962,018 at $n=12,d=3,k=6$). Resource-limited counts remain unobserved, and completed overlapping cases show no constraint-count crossover.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/compile_scalability.pdf}
 \caption{Complete-circuit constraint counts. Missing points are resource-limited runs, not zeros; lines only guide the eye. The sweep measures compilation, not proving latency.}\label{fig:compilegrowth}
@@ -517,7 +517,7 @@ The source code, synthetic evaluation scripts, raw benchmark measurements, proce
 \section{Retrospective single-receiver calibration diagnostic}\label{app:receiver}
 GraphGNSSLib's TST2 data~\cite{GraphGNSSData} provide 157 matched static-reference epochs from precomputed RTKLIB 2.4.2 kinematic combined solutions. Horizontal residuals are projected east--north at the repository reference without fitted alignment, bias correction, filtering, or interpolation; vertical residuals are excluded because height/antenna conventions are unverified.
 
-We pre-specified 78 calibration epochs, a ten-epoch gap, and 69 evaluation epochs. With $s_j=\max(|e_j|,|n_j|)$, the 76th ordered calibration score gives a 0.863506~m square half-width. We also evaluate the solution file's reported east/north $3\sigma$ rectangle.
+We pre-specified 78 calibration epochs, a ten-epoch gap, and 69 evaluation epochs. With $s_j=\max(|e_j|,|n_j|)$, the 76th ordered calibration score gives a 0.863506~m square half-width. We also evaluate the solution file's reported east/north $3\sigma$ rectangle. Table~\ref{tab:receiver} reports the resulting containment counts.
 
 \begin{table}[htbp]
 \centering\small
@@ -529,7 +529,7 @@ Calibrated square (0.863506~m)&76/78&2/69\\\bottomrule
 \end{tabular}
 \end{table}
 
-The calibrated square contains 76/78 calibration references but only 2/69 evaluation references; the reported $3\sigma$ rectangle contains 8/78 and 0/69. Median horizontal residual rises from 0.869 to 1.038~m, with a 1.522~m evaluation maximum. Because the sequence is serially dependent and uses combined processing, this retrospective split supplies neither iid coverage intervals nor online validation. It is a failure diagnostic for one calibration prescription, not a multisource or signed-evidence experiment.
+The calibrated square contains 76/78 calibration references but only 2/69 evaluation references; the reported $3\sigma$ rectangle contains 8/78 and 0/69. Median horizontal residual rises from 0.869 to 1.038~m, with a 1.522~m evaluation maximum. Because the sequence is serially dependent and uses combined processing, this retrospective split supplies neither iid coverage intervals nor online validation. It is a failure diagnostic for one calibration prescription, not a multisource or signed-evidence experiment. Figure~\ref{fig:receiver} shows the residual sequence and the fixed calibration threshold.
 
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/receiver_diagnostic.pdf}
