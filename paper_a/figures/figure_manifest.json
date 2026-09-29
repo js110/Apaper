@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-06",
-  "journal": "Vehicular Communications",
-  "phase": "initial submission draft",
-  "journal_specific_figure_rules": "unverified: official guide returned 403",
+  "date": "2026-09-29",
+  "journal": "Journal of Information Security and Applications",
+  "phase": "pre-submission revision",
+  "journal_specific_figure_rules": "Tracked in venue_template_jisa/COMPLIANCE.md; final live submission checks remain author-side.",
   "sources": {
     "experiments/semantic_results.json": "b5df84fa1d24effd0c5866acefeb7d146d3b14912897061b903e6ed391993666",
     "experiments/zkdepth_n3_d2_formal.json": "2e417a8852959f1c6430621ed12e06dd41566989858118230918a609e08f487f",
@@ -32,7 +32,7 @@
     {
       "name": "backend_costs",
       "description": "Five matched circuit shapes. Subset uses fewer constraints and lower proving times in the measured small-fault regime. All 300 timing observations are shown.",
-      "transformations": "Constraints divided by 1000. Raw 30 proof times per shape/backend, filled markers show medians; whiskers are 5th\u201395th sample percentiles, NOT confidence intervals. No connecting lines across distinct shapes; all raw timings retained. Backend batches were separate, not randomized interleaved comparisons.",
+      "transformations": "Constraints divided by 1000. Raw 30 proof times per shape/backend, filled markers show medians; whiskers are 5th–95th sample percentiles, NOT confidence intervals. No connecting lines across distinct shapes; all raw timings retained. Backend batches were separate, not randomized interleaved comparisons.",
       "width_inches": 6.1,
       "height_inches": 3.15,
       "source_data_table": "backend_costs_data.csv"
