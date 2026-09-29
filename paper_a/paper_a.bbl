@@ -56,10 +56,10 @@ C.~Jin, C.~Yin, M.~van Dijk, S.~Duan, F.~Massacci, M.~K. Reiter, H.~Zhang,
 
 \bibitem{CRSF}
 C.~Yin, H.~Tian, Z.~Yang, H.~Zhang, F.~Massacci, C.~Jin,
-  \href{https://arxiv.org/abs/2609.01096v1}{{CRSF}: Collusion-resilient
+  \href{https://arxiv.org/abs/2609.01096v3}{{CRSF}: Collusion-resilient
   privacy-preserving sensor fusion with byzantine-robust participation},
-  preprint, arXiv:2609.01096v1 (2026).
-\newline\urlprefix\url{https://arxiv.org/abs/2609.01096v1}
+  arXiv:2609.01096v3 (2026).
+\newline\urlprefix\url{https://arxiv.org/abs/2609.01096v3}
 
 \bibitem{Cheng2023}
 Y.~Cheng, J.~Ma, Z.~Liu, L.~Wang, Z.~Ying, X.~Chen, Efficient anonymous
