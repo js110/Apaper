@@ -73,6 +73,15 @@ def main() -> None:
         if key.startswith(("calibrated_independent", "calibrated_correlated"))
         and key.endswith(("byz_0", "byz_1"))
     ]
+    focus_seed_counts = semantic["seed_counts"][focus_key]["robust_depth"]
+    wrong_seed_count = sum(
+        (row["false_accept"] + row["false_reject"]) > 0
+        for row in focus_seed_counts
+    )
+    zero_error_cluster_upper95 = (
+        1.0 - 0.05 ** (1.0 / len(focus_seed_counts))
+        if wrong_seed_count == 0 else None
+    )
     summary = {
         "stated_assumption_conditions": len(stated_keys),
         "robust_false_accept_mean_across_conditions": float(np.mean([
@@ -88,6 +97,13 @@ def main() -> None:
             aggregate[key]["fixed_margin"]["decisive_coverage"]["mean"] for key in stated_keys
         ])),
         "focus_condition": focus_key,
+        "focus_seed_cluster_wrong_decisive": {
+            "clusters": len(focus_seed_counts),
+            "clusters_with_any_wrong_decisive": wrong_seed_count,
+            "one_sided_exact_upper95_if_zero": zero_error_cluster_upper95,
+            "estimand": "probability that an identically generated seed cluster contains at least one wrong decisive event",
+            "note": "Synthetic-generator bound; not a field error-rate bound.",
+        },
         "focus": aggregate[focus_key],
         "negative_controls": {
             "undercoverage": aggregate["undercovered_correlated__radius_4__byz_1"]["robust_depth"],
