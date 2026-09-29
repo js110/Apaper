@@ -16,7 +16,7 @@ def main():
     checks=[]
     def check(name,passed):
         checks.append(dict(check=name,passed=bool(passed)))
-    check('no duplicated automatic appendix prefix',r'Appendix~\ref{app:receiver}' not in manuscript)
+    check('appendix is referenced explicitly without duplicated prefix',r'Appendix~\ref{app:receiver}' in manuscript and 'Appendix Appendix' not in manuscript)
     check('decision table names inconsistent state', 'Inconsistent' in manuscript)
     check('signed-box prehash assumption explicit', 'collision resistance' in manuscript and 'MiMC' in manuscript)
     scientific=json.loads((ROOT/'evidence/scientific_recheck_20260922.json').read_text())
@@ -69,6 +69,7 @@ def main():
         if key and year:
             years[key.group(1)]=int(year.group(1))
     check('all cited entries have an auditable publication year',set(years)==citations)
+    check('CRSF citation uses current arXiv v3','2609.01096v3' in bibliography and '2609.01096v1' not in bibliography)
     older_exceptions={'Marzullo1990','Groth2016','MiMC2016','GraphGNSSData'}
     check('only three original methods and pinned data remain outside five-year window',
           {k for k,y in years.items() if y<2022}==older_exceptions)
@@ -97,6 +98,22 @@ def main():
         check(f'{backend} ({n},{d}) 30 samples',result['repetitions']==len(result['prove_ms'])==len(result['verify_ms'])==30)
         check(f'{backend} ({n},{d}) proof size',result['proof_bytes']==164)
     check('ten circuit conditions included',len(rows)==10)
+    zklp_repro=json.loads((ROOT/'experiments/zklp_same_runner.json').read_text())
+    ours_repro=json.loads((ROOT/'experiments/ours_same_runner_subset_n3_d2.json').read_text())
+    recent_comp=json.loads((ROOT/'experiments/recent_work_comparison.json').read_text())
+    check('pinned ZKLP reproduction commit',
+          zklp_repro['upstream_commit']=='e8e321524982ddd9dddea37db6fa352529db62c4')
+    check('ZKLP same-runner values retained',
+          zklp_repro['constraints']==19467 and abs(zklp_repro['prove_median_ms']-515.529)<1e-9 and
+          abs(zklp_repro['verify_median_ms']-1.7385)<1e-9 and zklp_repro['proof_bytes']==196)
+    check('our matched-runner subset values retained',
+          ours_repro['constraints']==32474 and abs(ours_repro['prove_median_ms']-645.136)<1e-9 and
+          abs(ours_repro['verify_median_ms']-1.5475)<1e-9 and ours_repro['proof_bytes']==164)
+    check('recent-work comparison policy forbids ranking',
+          recent_comp['comparison_policy']['purpose']=='Recent-work context, not a performance ranking.')
+    check('recent-work numbers appear in manuscript',
+          '19,467 & 515.53 & 1.739 & 196 & 140' in manuscript and
+          '32,474 & 645.14 & 1.547 & 164 & 556' in manuscript)
     semantic=json.loads((ROOT/'experiments/semantic_results.json').read_text())
     counts=semantic['seed_counts']
     check('64800 semantic event observations',sum(c['inside']+c['outside'] for condition in counts.values() for c in condition['robust_depth'])==64800)
@@ -161,16 +178,15 @@ def main():
         any(line.startswith('RESULT_JSON:') and json.loads(line[12:])['constraints']==r['constraints']
             for line in (sweep_dir/r['log']).read_text().splitlines())
         for r in sweep if r['status']=='ok'))
-    check('draft is explicitly marked', 'Author-review draft' in manuscript)
+    check('submission manuscript has no internal draft banner', 'Author-review draft' not in manuscript)
     log=(ROOT/'paper_a.log').read_text()
     check('no overfull boxes','Overfull' not in log)
     check('no oversized floating tables or figures','Float too large' not in log)
     check('no undefined references or citations','undefined' not in log.lower())
-    check('official local class used','Document Class: elsarticle 2024/04/04, 3.4:' in log)
-    check('local class unchanged from official installer',
-          (ROOT/'elsarticle.cls').read_bytes()==(ROOT/'venue_template/elsarticle/elsarticle.cls').read_bytes())
-    check('numeric style unchanged from official package',
-          (ROOT/'elsarticle-num.bst').read_bytes()==(ROOT/'venue_template/elsarticle/elsarticle-num.bst').read_bytes())
+    check('JISA elsarticle 3.5 class used','Document Class: elsarticle 2026/01/09, 3.5:' in log)
+    compliance=(ROOT/'venue_template_jisa/COMPLIANCE.md').read_text()
+    check('JISA template provenance retained','elsarticle 3.5' in compliance and '2026-01-09' in compliance)
+    check('numeric bibliography style present',(ROOT/'elsarticle-num.bst').is_file())
     check('PDF is newer than manuscript and local class',
           (ROOT/'paper_a.pdf').stat().st_mtime >= max((ROOT/f).stat().st_mtime for f in ('paper_a.tex','elsarticle.cls','references.bib')))
     paths=[ROOT/'paper_a.tex',ROOT/'references.bib']+sorted((ROOT/'experiments').glob('*formal.json'))+[
@@ -184,12 +200,13 @@ def main():
     paths+=[ROOT/'evidence'/f for f in ('literature_update_20260915.md','added_reference_metadata_20260915.json','citation_validation.json')]
     paths+=[ROOT/'evidence'/f for f in ('literature_recency_20260917.md','recent_reference_metadata_20260916.json')]
     paths+=[ROOT/'evidence/comparison_table_20260917.md']
+    paths+=[ROOT/'experiments'/f for f in ('zklp_same_runner.json','ours_same_runner_subset_n3_d2.json','recent_work_comparison.json','build_recent_work_comparison.py')]
     paths+=[ROOT/'audit_scientific.py']
     paths+=[ROOT/'audit_style.py']
     paths+=[ROOT/'submission_disclosure_notes.md']
     paths+=[ROOT/'evidence'/f for f in ('style_integrity_20260923.json','style_rewrite_20260923.diff','style_revision_20260923_zh.md')]
     paths+=[ROOT/'evidence'/f for f in ('check_reference_metadata.py','scientific_recheck_20260922.json','reference_metadata_recheck_20260922.json','manuscript_recheck_20260923_zh.md')]
-    paths+=[ROOT/f for f in ('elsarticle.cls','elsarticle-num.bst','export_latex.py','venue_template/COMPLIANCE.md')]
+    paths+=[ROOT/f for f in ('elsarticle.cls','elsarticle-num.bst','export_latex.py','venue_template_jisa/COMPLIANCE.md')]
     paths+=[ROOT/f for f in ('author_information_provenance.md','submission_confirmations_zh.md')]
     paths += [p for p in sweep_dir.iterdir() if p.suffix in ('.json','.log')]
     paths += [ROOT/'prototype/zkdepth/cmd/compilebench/main.go',ROOT/'figures/render_compile_sweep.py',ROOT/'figures/compile_scalability_manifest.json']

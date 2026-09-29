@@ -6,7 +6,7 @@
 %%
 %% elsarticle.dtx  (with options: `class')
 %% 
-%% Copyright 2007-2024 Elsevier Ltd
+%% Copyright 2007-2026 Elsevier Ltd
 %% 
 %% This file is part of the 'Elsarticle Bundle'.
 %% -------------------------------------------
@@ -21,12 +21,13 @@
 %% The list of all files belonging to the 'Elsarticle Bundle' is
 %% given in the file `manifest.txt'.
 %% 
+
 %%
 %%
 %%
  \def\RCSfile{elsarticle}%
- \def\RCSversion{3.4}%
- \def\RCSdate{2024/04/04}%
+ \def\RCSversion{3.5}%
+ \def\RCSdate{2026/01/09}%
  \def\@shortjnl{\relax}
  \def\@journal{Elsevier Ltd}
  \def\@company{Elsevier Ltd}
@@ -242,7 +243,7 @@
 \let\authorsep\@empty
 \let\prelimauthorsep\@empty
 \let\sep\@empty
-\newcounter{author}
+\newcounter{elsarticle@author}
 \def\author{\@ifnextchar[{\@@author}{\@author}}
 
 \newtoks\@eadauthor
@@ -1039,10 +1040,10 @@
          \else%
          \ifx\@elsarticlemyfooteralign\@elsarticlemyfooteralignright%
            {}\hfill\@elsarticlemyfooter%
-         \else%
-               Preprint submitted to \ifx\@journal\@empty%
-                 Elsevier%
-            \else\@journal\fi\hfill\@date\fi%
+%% Removed the preprint submitted line as per the instruction
+%% received on 22 Oct 2024 from Arun Shanmugam (ELS) with the
+%% subject line "FW: Preprint sentence in EM submissions"
+         \fi%
          \fi%
          \fi%
          \fi%
@@ -1261,8 +1262,6 @@
   footskip=12pt,
   footnotesep=24pt plus 2pt minus 12pt,
  }
- \global\let\bibfont=\footnotesize
- \global\bibsep=0pt
  \if@twocolumn\global\@twocolumnfalse\fi
 \else\ifnum\jtype=3
  \RequirePackage{geometry}
@@ -1278,8 +1277,6 @@
   footnotesep=24pt plus 2pt minus 12pt,
   columnsep=2pc
  }
- \global\let\bibfont=\footnotesize
- \global\bibsep=0pt
  \if@twocolumn\input{fleqn.clo}\fi
 \else\ifnum\jtype=5
  \RequirePackage{geometry}
@@ -1295,8 +1292,6 @@
   footnotesep=24pt plus 2pt minus 12pt,
   columnsep=18pt
  }%
- \global\let\bibfont=\footnotesize
- \global\bibsep=0pt
  \input{fleqn.clo}
  \global\@twocolumntrue
 %%

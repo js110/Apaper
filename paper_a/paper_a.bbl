@@ -5,6 +5,21 @@
 \expandafter\ifx\csname href\endcsname\relax
   \def\href#1#2{#2} \def\path#1{#1}\fi
 
+\bibitem{ZKLP}
+J.~Ernstberger, C.~Zhang, L.~Ciprian, P.~Jovanovic, S.~Steinhorst,
+  Zero-knowledge location privacy via accurate floating-point {SNARKs}, in:
+  IEEE Symposium on Security and Privacy, 2025, pp. 3440--3459.
+\newblock \href {https://doi.org/10.1109/SP61157.2025.00057}
+  {\path{doi:10.1109/SP61157.2025.00057}}.
+
+\bibitem{VehiclePolicy}
+D.~Bogdanov, E.~Brito, A.~Jaakson, P.~Laud, R.-M. Rebane, Zero-knowledge
+  proof-of-location protocols for vehicle subsidies and taxation compliance,
+  in: Availability, Reliability and Security, Vol. 15998 of Lecture Notes in
+  Computer Science, Springer, 2025, pp. 343--360.
+\newblock \href {https://doi.org/10.1007/978-3-032-00642-4_20}
+  {\path{doi:10.1007/978-3-032-00642-4_20}}.
+
 \bibitem{Suhag2023}
 D.~Suhag, V.~Jha, A comprehensive survey on mobile crowdsensing systems,
   Journal of Systems Architecture 142 (2023) 102952.
@@ -41,10 +56,10 @@ C.~Jin, C.~Yin, M.~van Dijk, S.~Duan, F.~Massacci, M.~K. Reiter, H.~Zhang,
 
 \bibitem{CRSF}
 C.~Yin, H.~Tian, Z.~Yang, H.~Zhang, F.~Massacci, C.~Jin,
-  \href{https://arxiv.org/abs/2609.01096v1}{{CRSF}: Collusion-resilient
+  \href{https://arxiv.org/abs/2609.01096v3}{{CRSF}: Collusion-resilient
   privacy-preserving sensor fusion with byzantine-robust participation},
-  preprint, arXiv:2609.01096v1 (2026).
-\newline\urlprefix\url{https://arxiv.org/abs/2609.01096v1}
+  arXiv:2609.01096v3 (2026).
+\newline\urlprefix\url{https://arxiv.org/abs/2609.01096v3}
 
 \bibitem{Cheng2023}
 Y.~Cheng, J.~Ma, Z.~Liu, L.~Wang, Z.~Ying, X.~Chen, Efficient anonymous
@@ -74,6 +89,28 @@ R.~Sultana, J.~Grover, M.~Tripathi, Cooperative approach for data-centric and
   (2024) 100855.
 \newblock \href {https://doi.org/10.1016/j.vehcom.2024.100855}
   {\path{doi:10.1016/j.vehcom.2024.100855}}.
+
+\bibitem{Imam2025JISA}
+A.~Y. Imam, F.~Li, Efficient lightweight anonymous authentication scheme with
+  certificateless aggregation for {VANETs}, Journal of Information Security and
+  Applications 91 (2025) 104053.
+\newblock \href {https://doi.org/10.1016/j.jisa.2025.104053}
+  {\path{doi:10.1016/j.jisa.2025.104053}}.
+
+\bibitem{Wang2025JISA}
+X.~Wang, P.~Zeng, G.~Liu, K.-C. Li, Y.~Liu, B.~Hu, F.~Palmieri, A
+  privacy-preserving certificate-less aggregate signature scheme with
+  detectable invalid signatures for {VANETs}, Journal of Information Security
+  and Applications 89 (2025) 104001.
+\newblock \href {https://doi.org/10.1016/j.jisa.2025.104001}
+  {\path{doi:10.1016/j.jisa.2025.104001}}.
+
+\bibitem{Reinhart2026ADSC}
+J.~Reinhart, E.-O. Blass, B.~Annigh{\"o}fer, {SNARKs} for stateful computations
+  on authenticated data, Journal of Information Security and Applications 99
+  (2026) 104444.
+\newblock \href {https://doi.org/10.1016/j.jisa.2026.104444}
+  {\path{doi:10.1016/j.jisa.2026.104444}}.
 
 \bibitem{Mdee2022}
 A.~P. Mdee, M.~M. Saad, M.~Khan, M.~T.~R. Khan, D.~Kim, Impacts of
@@ -109,21 +146,6 @@ S.~Wang, Q.~Huang, R.~Yan, J.~Ma, X.~Xie, A privacy-enhanced authentication
   Communications 56 (2025) 100976.
 \newblock \href {https://doi.org/10.1016/j.vehcom.2025.100976}
   {\path{doi:10.1016/j.vehcom.2025.100976}}.
-
-\bibitem{ZKLP}
-J.~Ernstberger, C.~Zhang, L.~Ciprian, P.~Jovanovic, S.~Steinhorst,
-  Zero-knowledge location privacy via accurate floating-point {SNARKs}, in:
-  IEEE Symposium on Security and Privacy, 2025, pp. 3440--3459.
-\newblock \href {https://doi.org/10.1109/SP61157.2025.00057}
-  {\path{doi:10.1109/SP61157.2025.00057}}.
-
-\bibitem{VehiclePolicy}
-D.~Bogdanov, E.~Brito, A.~Jaakson, P.~Laud, R.-M. Rebane, Zero-knowledge
-  proof-of-location protocols for vehicle subsidies and taxation compliance,
-  in: Availability, Reliability and Security, Vol. 15998 of Lecture Notes in
-  Computer Science, Springer, 2025, pp. 343--360.
-\newblock \href {https://doi.org/10.1007/978-3-032-00642-4_20}
-  {\path{doi:10.1007/978-3-032-00642-4_20}}.
 
 \bibitem{SemaphoreDocs}
 {Privacy and Scaling Explorations}, What is semaphore?,

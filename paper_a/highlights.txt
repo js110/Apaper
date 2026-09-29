@@ -1,5 +1,5 @@
-Draft highlights for author review:
-- Four outcomes separate robust compliance, ambiguity, and evidence inconsistency.
-- Private signed boxes are checked in two real zero-knowledge circuit backends.
-- Matched measurements favor subset enumeration at the tested fault budgets.
-- Trajectory replay exposes the dependence of correctness on evidence calibration.
+- Robust certification rejects point claims unsupported by signed uncertainty
+- Zero-knowledge proofs bind private evidence to task, report, roster, and challenge
+- Four-valued semantics separate compliance, violation, ambiguity, and inconsistency
+- Pinned ZKLP reproduction contextualizes authenticated robust proof costs
+- Security guarantees separate cryptography from physical calibration

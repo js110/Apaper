@@ -1,27 +1,79 @@
 {
-  "checked_date": "2026-09-05",
+  "checked_date": "2026-09-29",
   "reviewer": "AI-assisted local research audit",
   "human_verification": "pending for all records",
   "scope": "Core related-work positioning only; not an exhaustive novelty review",
   "sources": [
-    {"key":"Marzullo1990","url":"https://doi.org/10.1145/128733.128735","status":"metadata previously located; primary full-text verification remains pending","supports":"Classical fault-tolerant uncertain-sensor fusion; not a new contribution of Paper A"},
-    {"key":"BFTPoLoc","url":"https://arxiv.org/abs/2403.13230v2","status":"author arXiv record opened","locator":"abstract and version record","supports":"Byzantine-resistant geometric location inference from Internet delays; no benchmark replication claimed"},
-    {"key":"PG","url":"https://ir.cwi.nl/pub/34722","status":"author institutional publication record opened","locator":"abstract and citation metadata","supports":"Privacy-preserving Byzantine sensor fusion, malicious-sensor/server model and output delivery; original system not reimplemented"},
-    {"key":"CRSF","url":"https://arxiv.org/abs/2609.01096v1","status":"author preprint record opened; submitted 2026-09-01","locator":"abstract","supports":"Collusion resilience and Byzantine participation agreement; explicitly a preprint"},
-    {"key":"ZKLP","url":"https://discovery.ucl.ac.uk/id/eprint/10211442/","status":"author institutional record opened","locator":"abstract and bibliographic metadata","supports":"Private geometric predicates and accurate floating-point SNARKs"},
-    {"key":"VehiclePolicy","url":"https://link.springer.com/chapter/10.1007/978-3-032-00642-4_20","status":"publisher chapter opened","locator":"abstract, section 2.2 and authors","supports":"Vehicle location-policy verification over signed claims"},
-    {"key":"UrbanNav","url":"https://github.com/IPNL-POLYU/UrbanNavDataset","status":"official dataset documentation opened; reference file downloaded","locator":"Hong Kong dataset, Medium Urban 1 Ground Truth link; related publications","supports":"Reference trajectory provenance; does not support claims of measured multisource error calibration"},
-    {"key":"gnark","url":"https://github.com/Consensys/gnark/tree/v0.14.0","status":"local dependency go.mod and go.sum checked","locator":"prototype/zkdepth/go.mod and go.sum","supports":"Implementation dependency version"},
-    {"key":"GraphGNSSData","url":"https://github.com/weisongwen/GraphGNSSLib/tree/e9e4c6a4ded5dc7f2813265a76a56b280f714a3f/global_fusion/dataset/gps_solution_TST2","status":"author repository, evaluation code, complete reference CSV and POS header/data inspected locally","locator":"groundTruth_TST.csv; rtklibResult.pos; README section 4; global_fusion/src/evo/evaluate_gps_solution.cpp","supports":"Published static single-receiver output provenance only; derived residuals recorded in receiver_calibration.json; no independent reference validation, online evaluation or data redistribution permission claimed"}
+    {
+      "key": "Marzullo1990",
+      "url": "https://doi.org/10.1145/128733.128735",
+      "status": "metadata previously located; primary full-text verification remains pending",
+      "supports": "Classical fault-tolerant uncertain-sensor fusion; not a new contribution of Paper A"
+    },
+    {
+      "key": "BFTPoLoc",
+      "url": "https://arxiv.org/abs/2403.13230v2",
+      "status": "author arXiv record opened",
+      "locator": "abstract and version record",
+      "supports": "Byzantine-resistant geometric location inference from Internet delays; no benchmark replication claimed"
+    },
+    {
+      "key": "PG",
+      "url": "https://ir.cwi.nl/pub/34722",
+      "status": "author institutional publication record opened",
+      "locator": "abstract and citation metadata",
+      "supports": "Privacy-preserving Byzantine sensor fusion, malicious-sensor/server model and output delivery; original system not reimplemented"
+    },
+    {
+      "key": "CRSF",
+      "url": "https://arxiv.org/abs/2609.01096v3",
+      "status": "current arXiv record opened; submitted 2026-09-01 and revised 2026-09-12",
+      "locator": "abstract, version history, and evaluation summary",
+      "supports": "Collusion resilience, Byzantine participation agreement, explicit abort/liveness, Google Cloud evaluation up to 261 sensors, and total measured phase time around one second at the largest tested instances"
+    },
+    {
+      "key": "ZKLP",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10211442/",
+      "status": "author institutional record opened",
+      "locator": "abstract and bibliographic metadata",
+      "supports": "Private geometric predicates and accurate floating-point SNARKs"
+    },
+    {
+      "key": "VehiclePolicy",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-00642-4_20",
+      "status": "publisher chapter opened",
+      "locator": "abstract, section 2.2 and authors",
+      "supports": "Vehicle location-policy verification over signed claims"
+    },
+    {
+      "key": "UrbanNav",
+      "url": "https://github.com/IPNL-POLYU/UrbanNavDataset",
+      "status": "official dataset documentation opened; reference file downloaded",
+      "locator": "Hong Kong dataset, Medium Urban 1 Ground Truth link; related publications",
+      "supports": "Reference trajectory provenance; does not support claims of measured multisource error calibration"
+    },
+    {
+      "key": "gnark",
+      "url": "https://github.com/Consensys/gnark/tree/v0.14.0",
+      "status": "local dependency go.mod and go.sum checked",
+      "locator": "prototype/zkdepth/go.mod and go.sum",
+      "supports": "Implementation dependency version"
+    },
+    {
+      "key": "GraphGNSSData",
+      "url": "https://github.com/weisongwen/GraphGNSSLib/tree/e9e4c6a4ded5dc7f2813265a76a56b280f714a3f/global_fusion/dataset/gps_solution_TST2",
+      "status": "author repository, evaluation code, complete reference CSV and POS header/data inspected locally",
+      "locator": "groundTruth_TST.csv; rtklibResult.pos; README section 4; global_fusion/src/evo/evaluate_gps_solution.cpp",
+      "supports": "Published static single-receiver output provenance only; derived residuals recorded in receiver_calibration.json; no independent reference validation, online evaluation or data redistribution permission claimed"
+    }
   ],
   "venue": {
-    "name":"Vehicular Communications",
-    "article_type":"Original Research Article",
-    "stage":"initial submission",
-    "instructions_url":"https://www.sciencedirect.com/journal/vehicular-communications/publish/guide-for-authors",
-    "access_result":"HTTP 403 on 2026-09-05; exact current journal-specific rules not verified",
-    "draft_class":"publisher-linked official elsarticle 3.4, locally generated unchanged, preprint/review 12pt and optional line numbers; numeric bibliography",
-    "publisher_instructions":"https://www.elsevier.com/researcher/author/policies-and-guidelines/latex-instructions",
-    "template_record":"venue_template/COMPLIANCE.md; journal-specific limits and anonymity remain unverified"
+    "name": "Journal of Information Security and Applications",
+    "abbreviation": "JISA",
+    "article_type": "Research Article",
+    "stage": "pre-submission revision",
+    "access_result": "Journal-specific formatting notes are tracked in venue_template_jisa/COMPLIANCE.md; live Editorial Manager prompts still require final author-side checking.",
+    "draft_class": "Elsevier elsarticle numeric review layout; local JISA compliance notes record template provenance.",
+    "template_record": "venue_template_jisa/COMPLIANCE.md"
   }
 }
