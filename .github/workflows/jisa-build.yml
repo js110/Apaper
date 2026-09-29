@@ -6,7 +6,7 @@ concurrency:
 
 on:
   push:
-    branches: [jisa-revision]
+    branches: [jisa-revision, main]
     paths:
       - 'paper_a/**'
       - '.github/workflows/jisa-build.yml'
