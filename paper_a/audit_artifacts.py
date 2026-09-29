@@ -21,7 +21,7 @@ def main():
     check('signed-box prehash assumption explicit', 'collision resistance' in manuscript and 'MiMC' in manuscript)
     check('composed conditional acceptance bound present', r'\\label{prop:composition}' in manuscript and 'varepsilon_{\\mathrm{ctx}}' in manuscript)
     check('privacy boundary covers report guessing', 'low-entropy or enumerable space' in manuscript and r'\\label{tab:privacy-boundary}' in manuscript)
-    check('public repository availability statement current', 'publicly available in the project repository' in manuscript and 'Repository access is currently restricted' not in manuscript)
+    check('canonical code and manuscript repositories separated', 'https://github.com/js110/ZCRSC-PAPER' in manuscript and 'https://github.com/js110/Apaper' in manuscript and 'Repository access is currently restricted' not in manuscript)
     check('point baseline table populated and sourced', '2 & 408 & 164 & 268' in manuscript and '3 & 612 & 164 & 396' in manuscript and 'point\\_baseline.go' in manuscript)
     summary=json.loads((ROOT/'experiments/results_summary.json').read_text())
     cluster=summary['focus_seed_cluster_wrong_decisive']
