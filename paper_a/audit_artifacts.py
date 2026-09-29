@@ -16,7 +16,7 @@ def main():
     checks=[]
     def check(name,passed):
         checks.append(dict(check=name,passed=bool(passed)))
-    check('no duplicated automatic appendix prefix',r'Appendix~\ref{app:receiver}' not in manuscript)
+    check('appendix is referenced explicitly without duplicated prefix',r'Appendix~\ref{app:receiver}' in manuscript and 'Appendix Appendix' not in manuscript)
     check('decision table names inconsistent state', 'Inconsistent' in manuscript)
     check('signed-box prehash assumption explicit', 'collision resistance' in manuscript and 'MiMC' in manuscript)
     scientific=json.loads((ROOT/'evidence/scientific_recheck_20260922.json').read_text())
@@ -43,7 +43,7 @@ def main():
     keys=set(re.findall(r'@\w+\{([^,]+),',bibliography))
     check('all cited keys exist',citations<=keys)
     check('no unused bibliography entries', keys==citations)
-    resource_keys={'gnark','GraphGNSSData'}
+    resource_keys={'gnark','GraphGNSSData','SemaphoreDocs'}
     check('at least 20 cited scholarly works excluding software and documentation',len(citations-resource_keys)>=20)
     venue_keys={'Shen2024','Ghani2025','Mdee2022','Sultana2024','Wang2025ZKAuth'}
     check('five selected Vehicular Communications articles cited',venue_keys<=citations)
@@ -69,6 +69,7 @@ def main():
         if key and year:
             years[key.group(1)]=int(year.group(1))
     check('all cited entries have an auditable publication year',set(years)==citations)
+    check('CRSF citation uses current arXiv v3','2609.01096v3' in bibliography and '2609.01096v1' not in bibliography)
     older_exceptions={'Marzullo1990','Groth2016','MiMC2016','GraphGNSSData'}
     check('only three original methods and pinned data remain outside five-year window',
           {k for k,y in years.items() if y<2022}==older_exceptions)
