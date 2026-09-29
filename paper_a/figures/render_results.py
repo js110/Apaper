@@ -223,8 +223,8 @@ def main():
         receiver()
     assert all(hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest
                for path,digest in SOURCES.items()), 'Source changed while plotting'
-    manifest=dict(date='2026-09-06',journal='Vehicular Communications',phase='initial submission draft',
-                  journal_specific_figure_rules='unverified: official guide returned 403',
+    manifest=dict(date='2026-09-29',journal='Journal of Information Security and Applications',phase='pre-submission revision',
+                  journal_specific_figure_rules='tracked in venue_template_jisa/COMPLIANCE.md; final portal checks remain author-side',
                   sources=SOURCES,figures=FIGURES,matplotlib=matplotlib.__version__,numpy=np.__version__,
                   script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   raster_dpi=600,vector_formats=['pdf','svg'],grayscale_support='redundant markers and line styles; manual review required')
