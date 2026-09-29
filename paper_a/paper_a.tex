@@ -84,7 +84,7 @@ BCS-LPP~\cite{Shen2024}\newline(2024)&Sensing locations&Geohash; order-preservin
 \multicolumn{4}{@{}l}{\textit{Robust inference and private sensor fusion}}\\[1pt]
 BFT-PoLoc~\cite{BFTPoLoc}\newline(2024)$^{\dagger}$&IP-address location&Internet delays; Byzantine-resistant geometry&Distance estimates and multilateration; privacy not assessed here\\[2pt]
 PG~\cite{PG}\newline(2024)&Sensor fusion&Malicious sensors and aggregation servers&Private inputs and fusion result; guaranteed output delivery\\[2pt]
-CRSF~\cite{CRSF}\newline(2026)&Fusion and participation&Sensor--server collusion; agreement on submissions&Private fusion; explicit abort and liveness guarantees\\
+CRSF~\cite{CRSF}\newline(2026)$^{\dagger}CRSF~\cite{CRSF}\newline(2026)&Fusion and participation&Sensor--server collusion; agreement on submissions&Private fusion; explicit abort and liveness guarantees\\Fusion and participation&Sensor--server collusion; agreement on submissions&Private fusion; explicit abort and liveness guarantees\\
 \midrule
 \multicolumn{4}{@{}l}{\textit{Zero-knowledge geometry and policy certification}}\\[1pt]
 ZKLP~\cite{ZKLP}\newline(2025)&Region membership; proximity&Private coordinates; floating-point geometry&Hidden coordinates; zero-knowledge geometric proofs\\[2pt]
@@ -93,7 +93,7 @@ Vehicle policy~\cite{VehiclePolicy}\newline(2025)&Territorial driving requiremen
 \bottomrule
 \end{tabularx}
 \par\vspace{4pt}\raggedright
-$^{\dagger}$Cited from the current arXiv preprint. MAC: message authentication code. Privacy guarantees depend on each protocol's public outputs. Our four decisions are valid, invalid, ambiguous, and inconsistent; missing signatures instead cause protocol abort.
+$^{\dagger}$BFT-PoLoc and CRSF are cited from their current arXiv versions. MAC: message authentication code. Privacy guarantees depend on each protocol's public outputs. Our four decisions are valid, invalid, ambiguous, and inconsistent; missing signatures instead cause protocol abort.
 \end{table}
 
 Table~\ref{tab:related-work} therefore reflects a gap between two mature lines of work: privacy-preserving policy verification usually starts from a hidden point or trajectory, while Byzantine fusion usually ends with a fused result. The framework developed next connects these ends by making the robust evidence relation itself the statement proved in zero knowledge. Generic secure computation could evaluate the same finite function; our contribution lies in the signed-box relation, report binding, exact circuit realizations, and explicit separation between cryptographic and physical assumptions.
@@ -256,7 +256,7 @@ Taken together, Propositions~\ref{prop:soundness} and~\ref{prop:gateway} separat
 \subsection{Resistance to protocol attacks}
 Evidence tampering changes the signed-box message and therefore fails in-circuit signature verification. Report, task, roster, threshold, challenge, or expiry substitution changes the reconstructed context, so a proof created for one statement cannot be transplanted to another without breaking the assumed signature, hash, or proof primitives. Successful verification consumes the challenge atomically, which prevents same-challenge replay within one gateway instance; unknown or expired challenges fail before authorization. Missing roster evidence is treated as protocol abort rather than reinterpreted as an inconsistent-but-certified event.
 
-Policy-aware collusion does not require a new geometric safety margin while the stated fault and coverage assumptions hold: regardless of how Byzantine boxes are chosen, $z^\star\in\F$ prevents an outside true event from yielding $\F\subseteq P$. The adversary can nevertheless reduce decisiveness or withhold signatures. Once the budget or coverage event fails, no fixed policy margin restores a distribution-free guarantee. The synthetic attacks already choose boxes using the true state and policy, rather than only adding random drift.
+Policy-aware collusion does not require a new geometric safety margin while the stated fault and coverage assumptions hold: regardless of how Byzantine boxes are chosen, $z^\star\in\F$ prevents an outside true event from yielding $\F\subseteq P$. The adversary can nevertheless reduce decisiveness or withhold signatures. Once the fault budget or coverage premise fails, the theorem no longer supplies a distribution-free correctness guarantee; any margin-based guarantee would require additional assumptions. The synthetic attacks already choose boxes using the true state and policy, rather than only adding random drift.
 
 These mechanisms address integrity and replay, not availability. A Byzantine issuer can still withhold its signature, and a client can submit invalid proofs until a live challenge expires. Rate limiting, durable replay state, distributed atomicity, revocation, and partial-roster operation therefore remain system-layer concerns rather than properties derived from the circuit.
 
