@@ -32,7 +32,7 @@ items. `paper_a.tex` and `references.bib` are the editable sources. The old
   `e8e321524982ddd9dddea37db6fa352529db62c4`, plus a same-runner subset
   benchmark of this work and a source-bounded 2024--2026 quantitative context table.
 
-The JISA branch is compiled in GitHub Actions on every manuscript change and exports a flat Editorial Manager source package. Its bibliography currently contains 25 cited entries: 23 scholarly works and two data/software resources. Twenty of the 23 scholarly works are from 2022–2026; three original
+The canonical `main` branch is compiled in GitHub Actions on manuscript changes and exports a flat Editorial Manager source package. Its bibliography currently contains 25 cited entries: 23 scholarly works and two data/software resources. Twenty of the 23 scholarly works are from 2022–2026; three original
 method papers and the exact pinned dataset snapshot are the necessary older
 sources. The current bibliography remains technically relevant, but the JISA revision should be rechecked for venue-specific literature positioning before submission. Current
 selection, recency exceptions and source-access notes are in
@@ -165,7 +165,7 @@ the class, bibliography style and required figures, without experiment raw data.
 The ZIP contains only neutral submission-source metadata and no internal draft banner.
 The main manuscript remains `paper_a.tex`.
 
-JISA is the current target venue. Its live Guide for Authors and Editorial Manager prompts should still be checked at upload because publisher instructions can change. Author order, affiliation, correspondence, funding, CRediT roles, AI-use disclosure, and data/code availability are represented in the current manuscript or repository records. The manuscript intentionally contains no competing-interest section at the author's request; any portal-level declaration should follow the live submission form. No external manuscript submission is performed by this repository.
+JISA is the current target venue and `main` is the canonical manuscript branch. Its live Guide for Authors and Editorial Manager prompts should still be checked at upload because publisher instructions can change. Author order, affiliation, correspondence, funding, CRediT roles, AI-use disclosure, and data/code availability are represented in the current manuscript or repository records. The manuscript intentionally contains no competing-interest section at the author's request; any portal-level declaration should follow the live submission form. No external manuscript submission is performed by this repository.
 
 GitHub Actions build: `.github/workflows/jisa-build.yml` regenerates semantic diagnostics and the backend-cost figure, reruns the Go prototype and point-ZK baseline, pins and reruns ZKLP on the same runner, rebuilds the recent-work comparison record, recompiles LaTeX/BibTeX, and exports the flat Editorial Manager source package.
 
