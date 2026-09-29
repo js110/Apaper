@@ -488,13 +488,13 @@ Across the measured small-omission regime, subset enumeration is consistently ch
 
 \subsection{Discussion and limitations}
 
-The evaluation supports the finite relation and its implementation, but it deliberately stops short of claiming a field-ready positioning system. A proof can certify how authenticated uncertainty boxes relate to a policy; it cannot establish that those boxes are well calibrated, that nominal issuers are operationally independent, or that the report payload itself is true. The synthetic study controls source coverage by construction, while UrbanNav supplies a measured path with simulated evidence. \ref{app:receiver} reinforces this distinction by showing that one retrospective calibration rule transfers poorly to a held-out segment. Real deployment therefore requires source- and regime-specific calibration together with governance for common-mode failures.
+The evaluation supports the finite relation and its implementation, but it deliberately stops short of claiming a field-ready positioning system. A proof can certify how authenticated uncertainty boxes relate to a policy; it cannot establish that those boxes are well calibrated, that nominal issuers are operationally independent, or that the report payload itself is true. The synthetic study controls source coverage by construction, while UrbanNav supplies a measured path with simulated evidence. Appendix~\ref{app:receiver} reinforces this distinction by showing that one retrospective calibration rule transfers poorly to a held-out segment. Real deployment therefore requires source- and regime-specific calibration together with governance for common-mode failures.
 
 The fixed roster prevents selective evidence omission but allows one withholding issuer to abort. Distinct keys and trust-domain labels do not prove independent control. Durable replay state, distributed atomicity, revocation, anonymous networking, duplicate-report suppression, and rate limiting remain system-layer requirements.
 
 Zero knowledge hides the witness, not the public classification, roster, policy, threshold, or context; repeated adaptive policies can leak additional location information. Performance measurements are workstation proof-kernel results, not OBU energy or end-to-end V2I latency. Groth16 also requires trusted setup. These limits bound deployment claims but do not change the finite relation proved by the circuit.
 
-Accordingly, the zero-error calibrated simulations should be read as conditional consistency results, whereas \ref{app:receiver} illustrates how the physical coverage premise can fail to transfer even within one recorded sequence.
+Accordingly, the zero-error calibrated simulations should be read as conditional consistency results, whereas Appendix~\ref{app:receiver} illustrates how the physical coverage premise can fail to transfer even within one recorded sequence.
 \section{Conclusion}
 This work reframes private spacetime verification around the evidence that supports a claim rather than around a single hidden coordinate. By retaining threshold-supported uncertainty and exposing valid, invalid, ambiguous, and inconsistent outcomes, the proposed relation avoids turning either convenient point selection or brittle all-source intersection into an authorization rule.
 
@@ -509,7 +509,7 @@ This work was supported in part by the Heilongjiang Provincial University Teache
 Lili He: Supervision. Sheng Jiang: Methodology, Software, Investigation. Linghui Lyu: Writing -- original draft. Lei Zhang: Supervision.
 
 \section*{Data and code availability}
-The source code, synthetic evaluation scripts, raw benchmark measurements, processed experimental artifacts, and trajectory-replay records supporting this study are available in the public project repository on the \texttt{jisa-revision} branch at \url{https://github.com/js110/Apaper/tree/jisa-revision}. Third-party datasets used in the study, including UrbanNav and GraphGNSSLib data, remain available from their original sources cited in this article and are not redistributed by the authors.
+The source code, synthetic evaluation scripts, raw benchmark measurements, processed experimental artifacts, and trajectory-replay records supporting this study are archived in the project repository at \url{https://github.com/js110/Apaper/tree/main}. Repository access is currently restricted; access can be provided to editors and reviewers during peer review. Third-party datasets used in the study, including UrbanNav and GraphGNSSLib data, remain available from their original sources cited in this article and are not redistributed by the authors.
 
 \appendix
 \setcounter{table}{0}
