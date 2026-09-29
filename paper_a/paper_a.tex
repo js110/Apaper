@@ -310,6 +310,8 @@ The experiments follow the same distinction. We first ask whether the implementa
 \subsection{Implementation and experimental setup}
 The prototype is implemented in Go 1.25.6 with gnark 0.14.0~\cite{gnark}, BN254, Groth16~\cite{Groth2016}, and gnark's native twisted-Edwards EdDSA/MiMC primitives~\cite{MiMC2016}. The circuit selects \texttt{tedwards.BN254}; this construction is not Ed25519. Keys, signatures, setup, proving, and verification are all executed by the cryptographic implementation rather than emulated. BN254 is used to obtain reproducible prototype measurements; it is not presented as a post-quantum or long-term deployment choice.
 
+The canonical implementation and experiment repository is publicly available at \url{https://github.com/js110/ZCRSC-PAPER}. Source paths cited below, including \texttt{prototype/} and \texttt{experiments/}, are relative to that repository root.
+
 The evaluation mirrors the two-layer argument of Section~\ref{sec:security}. Protocol tests attack the statement that the proof is supposed to bind; semantic experiments vary the quality of the evidence that makes that statement meaningful in the physical world. A third group of measurements then asks what it costs to prove the resulting relation. This organization keeps security failures, model failures, and performance costs analytically distinct rather than folding them into a single aggregate benchmark.
 
 Proof benchmarks run on an eight-core Apple M1 Mac mini with 16~GB memory. Each circuit shape is set up once and then proved 30 times using a fixed signed witness. Reported proving times exclude compilation, evidence acquisition, networking, queueing, and energy. A deliberately weaker same-stack point-in-policy circuit provides a structural lower bound for generic hidden-point proving without issuer authentication or robust evidence semantics.
@@ -551,7 +553,7 @@ This work was supported in part by the Heilongjiang Provincial University Teache
 Lili He: Supervision. Sheng Jiang: Methodology, Software, Investigation. Linghui Lyu: Writing -- original draft. Lei Zhang: Supervision.
 
 \section*{Data and code availability}
-The source code, synthetic evaluation scripts, raw benchmark measurements, processed experimental artifacts, and trajectory-replay records supporting this study are publicly available in the project repository at \url{https://github.com/js110/Apaper/tree/main}. Third-party datasets used in the study, including UrbanNav and GraphGNSSLib data, remain available from their original sources cited in this article and are not redistributed by the authors because redistribution permission has not been established.
+The canonical source code, synthetic evaluation scripts, benchmark records, processed experimental artifacts, and trajectory-replay result records supporting this study are publicly available at \url{https://github.com/js110/ZCRSC-PAPER}. The manuscript source and submission materials are maintained separately at \url{https://github.com/js110/Apaper}. Third-party datasets used in the study, including UrbanNav and GraphGNSSLib data, remain available from their original sources cited in this article and are not redistributed by the authors because redistribution permission has not been established.
 
 \appendix
 \setcounter{table}{0}
