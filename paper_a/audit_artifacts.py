@@ -19,6 +19,13 @@ def main():
     check('appendix is referenced explicitly without duplicated prefix',r'Appendix~\ref{app:receiver}' in manuscript and 'Appendix Appendix' not in manuscript)
     check('decision table names inconsistent state', 'Inconsistent' in manuscript)
     check('signed-box prehash assumption explicit', 'collision resistance' in manuscript and 'MiMC' in manuscript)
+    check('composed conditional acceptance bound present', r'\\label{prop:composition}' in manuscript and 'varepsilon_{\\mathrm{ctx}}' in manuscript)
+    check('privacy boundary covers report guessing', 'low-entropy or enumerable space' in manuscript and r'\\label{tab:privacy-boundary}' in manuscript)
+    check('public repository availability statement current', 'publicly available in the project repository' in manuscript and 'Repository access is currently restricted' not in manuscript)
+    check('point baseline table populated and sourced', '2 & 408 & 164 & 268' in manuscript and '3 & 612 & 164 & 396' in manuscript and 'point\\_baseline.go' in manuscript)
+    summary=json.loads((ROOT/'experiments/results_summary.json').read_text())
+    cluster=summary['focus_seed_cluster_wrong_decisive']
+    check('focus zero-error cluster bound recorded', cluster['clusters']==30 and cluster['clusters_with_any_wrong_decisive']==0 and abs(cluster['one_sided_exact_upper95_if_zero']-0.09503385285530419)<1e-15)
     scientific=json.loads((ROOT/'evidence/scientific_recheck_20260922.json').read_text())
     check('scientific regeneration audit passes',scientific['full_regeneration'] and scientific['passed']==scientific['total']==29)
     metadata=json.loads((ROOT/'evidence/reference_metadata_recheck_20260922.json').read_text())['records']
