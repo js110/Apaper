@@ -31,3 +31,16 @@ paper_a/evidence/layout/
 paper_a/reviewer_assessment_20260906_zh.md
 paper_a/research_audit_zh.md
 paper_a/revision_response_zh.md
+
+# Regenerable exploratory outputs excluded from the canonical artifact set
+paper_a/experiments/zkdepth_n3_d2.json
+paper_a/experiments/zkdepth_n3_d3.json
+paper_a/experiments/zkdepth_n4_d2.json
+paper_a/experiments/zkdepth_n4_d3.json
+paper_a/experiments/zkdepth_n5_d2.json
+paper_a/experiments/availability_radius.pdf
+paper_a/experiments/availability_radius.png
+paper_a/experiments/semantic_focus.pdf
+paper_a/experiments/semantic_focus.png
+paper_a/experiments/zk_scaling.pdf
+paper_a/experiments/zk_scaling.png
