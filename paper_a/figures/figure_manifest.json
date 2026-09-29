@@ -56,7 +56,7 @@
   ],
   "matplotlib": "3.10.9",
   "numpy": "2.4.1",
-  "script_sha256": "e577ecda033ee7b3ae8b4be5fd8b8e9ec6c11b4adddb576e06bd9e1e2e3c23d1",
+  "script_sha256": "ad31c7ddf429ac8b844f57c61ec79b865a6dfa6061f281dde635114c4ebd4b92",
   "raster_dpi": 600,
   "vector_formats": [
     "pdf",
