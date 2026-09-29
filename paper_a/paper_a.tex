@@ -153,7 +153,7 @@ An administrator configures a task and its verifying key. The gateway snapshots 
  c=\operatorname{OS2IP}\left(\operatorname{SHA256}(\operatorname{Encode}(v,T,\nu,e,\operatorname{SHA256}(R)))\right)\bmod q,
 \end{equation}
 \begin{sloppypar}
-where $T$ is the configured task, $R$ the report bytes, $\nu$ the nonce, $e$ the expiry, and $q$ the BN254 scalar-field modulus. The prototype serializes a fixed-order, map-free Go JSON structure containing version, task, challenge, and the lowercase hexadecimal SHA-256 report digest; issuer key byte arrays use Go's base64 JSON encoding. This deterministic prototype encoding is language-bound, so cross-language deployments should reproduce the exact bytes or replace it with a separately specified canonical encoding. SHA-256 reduction binds context; it is not encryption.
+where $\operatorname{OS2IP}$ denotes octet-string-to-integer conversion, $T$ is the configured task, $R$ the report bytes, $\nu$ the nonce, $e$ the expiry, and $q$ the BN254 scalar-field modulus. The prototype serializes a fixed-order, map-free Go JSON structure containing version, task, challenge, and the lowercase hexadecimal SHA-256 report digest; issuer key byte arrays use Go's base64 JSON encoding. This deterministic prototype encoding is language-bound, so cross-language deployments should reproduce the exact bytes or replace it with a separately specified canonical encoding. SHA-256 reduction binds context; it is not encryption.
 \end{sloppypar}
 
 At submission the gateway checks the nonce and expiry, reconstructs the trusted public witness, verifies the proof, and accepts only the valid class. Successful verification atomically consumes the nonce; an eight-way replay test therefore admits one copy. Failed proofs leave the challenge reusable until expiry, enabling benign retries but also invalid-proof CPU exhaustion, so deployment requires rate limiting. Fresh challenges can still carry duplicate reports, and restart persistence or distributed atomicity is not implemented.
@@ -272,7 +272,7 @@ The evaluation mirrors the two-layer argument of Section~\ref{sec:security}. Pro
 
 Proof benchmarks run on an eight-core Apple M1 Mac mini with 16~GB memory. Each circuit shape is set up once and then proved 30 times using a fixed signed witness. Reported proving times exclude compilation, evidence acquisition, networking, queueing, and energy. A deliberately weaker same-stack point-in-policy circuit provides a structural lower bound for generic hidden-point proving without issuer authentication or robust evidence semantics.
 
-To characterize circuit growth independently of proving latency, we compile signed-box R1CS instances for $n\in\{4,8,12,16\}$ and $d\in\{2,3\}$, using subset thresholds $k=n-1$, $n-2$, and $n/2$ together with one depth circuit per shape. The 32 seeded invocations use a 30~s timeout, a sampled 3~GiB RSS limit, and a 2500~MiB Go soft-memory target; resource-limited runs retain no estimated constraint counts.
+To characterize circuit growth independently of proving latency, we compile signed-box rank-1 constraint system (R1CS) instances for $n\in\{4,8,12,16\}$ and $d\in\{2,3\}$, using subset thresholds $k=n-1$, $n-2$, and $n/2$ together with one depth circuit per shape. The 32 seeded invocations use a 30~s timeout, a sampled 3~GiB resident-set-size (RSS) limit, and a 2500~MiB Go soft-memory target; resource-limited runs retain no estimated constraint counts.
 
 The semantic study uses the domain $[0,63]^3$ and policy $[18,45]^3$ with five sources, Byzantine budget $f=1$, and baseline honest-miscoverage budget $r=0$. Twenty-seven conditions cross radii $\{2,4,6\}$, actual Byzantine counts $\{0,1,2\}$, and independent-calibrated, correlated-calibrated, or undercovered errors. Thirty seeds with 80 events each yield 64,800 base observations, 75\% of them near one policy face. Honest radii range from half the condition maximum to that maximum; Byzantine boxes are policy-aware rather than random. We compare the robust rule with a median point claim, majority-center voting, a fixed maximum-radius margin, and all-source intersection. Randomized equivalence checks independently verify the native subset classifier against depth-based and exhaustive formulations.
 
@@ -324,7 +324,7 @@ To connect the empirical outcomes directly to the soundness premise, the generat
 
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/availability.pdf}
-\caption{Decisive coverage for calibrated correlated errors and one Byzantine source. Error bars are normal 95\% intervals over 30 simulation seeds. The horizontal scale is quantized units, with no physical-unit calibration in this synthetic experiment.}\label{fig:availability}
+\caption{Decisive coverage for calibrated correlated errors and one Byzantine source. Error bars are normal-approximation 95\% intervals over 30 seed-level rates. The horizontal scale is quantized units, with no physical-unit calibration in this synthetic experiment.}\label{fig:availability}
 \end{figure}
 
 \subsection{Ablation and stress tests}
@@ -365,7 +365,7 @@ Undercovered&2&0&0.94&78.50\\\bottomrule
 Figure~\ref{fig:budget} visualizes the matched availability--error tradeoff; negative lower error-bar endpoints are normal-approximation artifacts.
 \begin{figure}[htbp]
 \centering\includegraphics[width=\linewidth]{figures/budget_tradeoff.pdf}
-\caption{Honest-miscoverage sensitivity at $n=5,f=1$. Points are seed means; bars are normal 95\% intervals over the same 30 seeds. Calibrated FA/FR are zero for all budgets.}\label{fig:budget}
+\caption{Honest-miscoverage sensitivity at $n=5,f=1$. Points are seed means; bars are normal-approximation 95\% intervals over the same 30 seed-level rates. Calibrated FA/FR are zero for all budgets.}\label{fig:budget}
 \end{figure}
 
 \subsection{Comparison with recent work}
@@ -380,15 +380,15 @@ Table~\ref{tab:recent-context} gives source-reported 2024--2026 context without 
 Work & Evaluation scale & Source-reported result and comparison boundary\\
 \midrule
 BFT-PoLoc~\cite{BFTPoLoc} (2024) & Up to 450 challengers & At 450 challengers, $\sim$45\% below 100~km and $\sim$95\% below 1000~km uncertainty; Byzantine geolocation, no ZK.\\
-PG~\cite{PG} (2024) & 261 cloud / 19 constrained sensors & Private Byzantine sensor fusion with guaranteed delivery; distributed GC protocol.\\
+PG~\cite{PG} (2024) & 261 cloud / 19 constrained sensors & Private Byzantine sensor fusion with guaranteed delivery; distributed garbled-circuit protocol.\\
 ZKLP~\cite{ZKLP} (2025) & Floating-point location SNARK & Proximity proof $\sim$0.26~s; $\sim$470 peers/s verification; hidden-point geometry.\\
 Vehicle ZK-PoL~\cite{VehiclePolicy} (2025) & Up to 43,800 trajectory points & $\sim$36~min EV-subsidy and $\sim$59~min highway proof; trajectory-wide interactive setting.\\
-CRSF~\cite{CRSF} (2026) & Up to 261 sensors & At the largest tested instances, total measured phase time remains around one second; collusion-resilient GC fusion, not policy certification.\\
+CRSF~\cite{CRSF} (2026) & Up to 261 sensors & At the largest tested instances, total measured phase time remains around one second; collusion-resilient garbled-circuit fusion, not policy certification.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-We pin ZKLP to commit \texttt{e8e3215...62c4} and run its first ZKLP32 vector on the same GitHub Actions Ubuntu runner as a fresh $(n,d)=(3,2)$ subset benchmark. Both use Groth16/BN254 and ten proofs after setup; ZKLP uses a gnark v0.9.1-based fork and ours v0.14.0. The comparison is therefore descriptive, not library- or security-equivalent.
+We pin ZKLP to commit \texttt{e8e321524982} and run its first ZKLP32 vector on the same GitHub Actions Ubuntu runner as a fresh $(n,d)=(3,2)$ subset benchmark. Both use Groth16/BN254 and ten proofs after setup; ZKLP uses a gnark v0.9.1-based fork and ours v0.14.0. The comparison is therefore descriptive, not library- or security-equivalent.
 
 \begin{table}[htbp]
 \centering\scriptsize
@@ -432,7 +432,7 @@ Table~\ref{tab:crypto} reports lower-corner proof costs, while Figure~\ref{fig:s
 
 \begin{table}[htbp]
 \centering\small
-\caption{Measured lower-corner Groth16 costs. Times are milliseconds except setup (seconds). Each row uses 30 proofs after one setup.}\label{tab:crypto}
+\caption{Measured lower-corner Groth16 costs. Times are milliseconds except setup (seconds); p50 is the sample median and p95 the sample 95th percentile. Each row uses 30 proofs after one setup.}\label{tab:crypto}
 \begin{tabular}{rrrrrrr}
 \toprule $(n,d)$&Constraints&Setup&Prove p50&Prove p95&Verify p50&Verify p95\\\midrule
 $(3,2)$&55,987&3.64&213.12&244.83&1.033&1.350\\
