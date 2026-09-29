@@ -255,7 +255,28 @@ Assume an authorized task/key configuration, correct gateway execution with a tr
 Verification uses public inputs reconstructed from the authorized task and the submitted report bytes. A sound accepted proof supplies correctly signed boxes for that context and the valid output. Replacing an honest issuer's signed box or its bound transcript while reusing a signature requires a prehash/transcript collision or a successful signature/proof forgery. The finite relation establishes a nonempty feasible set contained in the authorized policy. Proposition~\ref{prop:soundness} places the bound event in that set. The nonce store additionally prevents reuse of the same challenge after successful verification within that gateway instance.\end{proof}
 The proposition assumes honest issuers associate their boxes with the same physical event and report context. It does not establish that the report content accurately describes the event. Its probabilistic physical failure term can be bounded by~\eqref{eq:calibration} only when the stated calibration assumptions are applicable.
 
-Taken together, Propositions~\ref{prop:soundness} and~\ref{prop:gateway} separate the guarantee into two layers. Cryptographic verification binds the proof to authenticated evidence and context; the source-coverage premise connects that certified evidence relation to the physical event. A failure of calibration therefore weakens the physical conclusion without turning a forged or substituted transcript into a valid proof.
+To make the cryptographic boundary explicit, let $\mathsf{Acc}$ denote gateway acceptance, $\mathsf{Cov}$ the event that the Byzantine and honest-miscoverage budgets of Proposition~\ref{prop:soundness} hold, and $\mathsf{Comp}$ the event that the bound reference event lies in the configured policy. Let $\varepsilon_{\mathrm{snark}}$, $\varepsilon_{\mathrm{sig}}$, $\varepsilon_{\mathrm{MiMC}}$, and $\varepsilon_{\mathrm{ctx}}$ upper-bound, for the concrete adversary resources under consideration, violation of Groth16 soundness/knowledge soundness, aggregate required-signature unforgeability, collision resistance of the MiMC signed-box prehash, and collision/binding failure of the deterministic $\operatorname{Encode}\rightarrow\operatorname{SHA256}\rightarrow\mathbb F_q$ context map. Let $\varepsilon_{\mathrm{state}}$ denote freshness-state failure.
+
+\begin{proposition}[Composed conditional acceptance bound]\label{prop:composition}
+Under the trusted task/roster/clock assumptions and the definitions above,
+\begin{equation}
+ \Pr[\mathsf{Acc}\wedge\mathsf{Cov}\wedge\neg\mathsf{Comp}]
+ \leq
+ \varepsilon_{\mathrm{snark}}+
+ \varepsilon_{\mathrm{sig}}+
+ \varepsilon_{\mathrm{MiMC}}+
+ \varepsilon_{\mathrm{ctx}}+
+ \varepsilon_{\mathrm{state}}.
+\end{equation}
+In the modeled single-process gateway, atomic challenge consumption makes $\varepsilon_{\mathrm{state}}=0$ for same-instance replay; restart and multi-instance state are outside that model.
+\end{proposition}
+\begin{proof}
+Assume none of the listed primitive or state failures occurs. Proof verification then implies a satisfying witness for the configured public statement; signature and context binding associate that witness with the authorized keys, report context, roster, threshold, challenge, and expiry. A valid classification establishes nonempty $\F\subseteq P$. On $\mathsf{Cov}$, Proposition~\ref{prop:soundness} gives $z^\star\in\F$, hence $z^\star\in P$, contradicting $\neg\mathsf{Comp}$. Therefore the bad event implies at least one listed failure, and the displayed inequality follows by a union bound.
+\end{proof}
+
+The implementation parameters are a 256-bit challenge nonce, SHA-256 for report/transcript hashing, Groth16 over BN254, and gnark's BN254 twisted-Edwards EdDSA with MiMC. We report these concrete choices rather than collapse heterogeneous assumptions into a single bit-security number; the implementation and library stack are not re-proved cryptographically in this work.
+
+Taken together, Propositions~\ref{prop:soundness}--\ref{prop:composition} separate the guarantee into two layers. Cryptographic verification binds the proof to authenticated evidence and context; the source-coverage premise connects that certified evidence relation to the physical event. A failure of calibration therefore weakens the physical conclusion without turning a forged or substituted transcript into a valid proof.
 
 \subsection{Resistance to protocol attacks}
 Evidence tampering changes the signed-box message and therefore fails in-circuit signature verification. Report, task, roster, threshold, challenge, or expiry substitution changes the reconstructed context, so a proof created for one statement cannot be transplanted to another without breaking the assumed signature, hash, or proof primitives. Successful verification consumes the challenge atomically, which prevents same-challenge replay within one gateway instance; unknown or expired challenges fail before authorization. Missing roster evidence is treated as protocol abort rather than reinterpreted as an inconsistent-but-certified event.
@@ -265,7 +286,24 @@ Policy-aware collusion does not require a new geometric safety margin while the 
 These mechanisms address integrity and replay, not availability. A Byzantine issuer can still withhold its signature, and a client can submit invalid proofs until a live challenge expires. Rate limiting, durable replay state, distributed atomicity, revocation, and partial-roster operation therefore remain system-layer concerns rather than properties derived from the circuit.
 
 \subsection{Privacy and leakage}
-Zero knowledge hides box coordinates and signatures, but not the public roster, domain, policy, threshold, context, or classification. The privacy claim is therefore limited to the configured witness. In particular, repeated fine-grained policy queries can narrow the event location through the public classifications, so unrestricted adaptive querying, anonymous networking, private roster membership, and unlinkable incentives remain outside the present design.
+Zero knowledge hides the private box coordinates and signatures from the verifier, but it does not hide every object associated with a report. In the implemented flow the gateway receives the report bytes $R$ in order to reconstruct the trusted public statement. The public context $c$ is a deterministic function of $\operatorname{SHA256}(R)$ and other task/challenge fields, so it is a binding value rather than an encryption mechanism or a hiding commitment. If $R$ is drawn from a low-entropy or enumerable space and the remaining context fields are known, a party that observes $c$ can test candidate reports offline by recomputing the map. We therefore make no report-content confidentiality claim against the gateway or against an observer who can enumerate candidate reports.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Protocol-level privacy boundary. Application transport can reveal more; transport encryption and anonymous networking are outside this layer.}\label{tab:privacy-boundary}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.39\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Role & Visible in the protocol model & Not hidden by the ZK claim\\
+\midrule
+Issuer & Its own measurement/box, signing-key operation, and report-bound context & Its own evidence; any report material supplied by the host application\\
+Vehicle/prover & Report and collected boxes/signatures needed to form the witness & Witness secrecy from the prover itself is not a goal\\
+Gateway/verifier & Report bytes, task/domain/policy, threshold, roster, challenge/expiry, public context, proof, and classification & Report content, policy, roster, and classification\\
+Public-transcript observer & Any exposed public statement/proof/classification and transport metadata & Linkability of public fields; candidate-report testing when the report space is guessable\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The public four-valued classification is itself an explicit leakage channel. A sequence of $q$ independently exposed four-valued answers has at most $4^q$ possible transcripts, i.e., at most $2q$ bits of output entropy; structured spatial queries can nevertheless use those bits efficiently to refine a location. This counting bound is not a privacy guarantee. The present design therefore assumes administrator-authorized, challenge-bound policies and does not claim privacy against unrestricted adaptive querying, anonymous-network protection, hidden roster membership, or unlinkable incentives. A deployment that needs those properties must add query authorization/rate or budget controls and a transport/identity layer outside the circuit.
 \section{Experimental Evaluation}
 The experiments follow the same distinction. We first ask whether the implementation enforces the intended statement under active protocol manipulation. We then study how the robust semantics behave as the coverage and Byzantine assumptions are satisfied or violated. Finally, we quantify the cost of proving the stronger authenticated-evidence relation and place that cost beside recent location-privacy systems without turning heterogeneous protocols into a speed ranking.
 
