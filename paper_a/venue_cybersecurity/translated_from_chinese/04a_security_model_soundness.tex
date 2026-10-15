@@ -1,0 +1,50 @@
+\section{Security Analysis}\label{sec:security}
+The preceding section defined the robust compliance relation and its realization in a zero-knowledge circuit. This section addresses what gateway acceptance can establish. Two related but distinct layers must be considered. Signatures, context binding, and zero-knowledge proofs constrain the origin of the submitted evidence, its association with a task, and the correctness of the computed relation. Inferring the position of the physical event from that evidence additionally requires coverage by honest sources. We specify the threat model, establish conditional soundness, and examine protocol attacks and information leakage.
+
+\subsection{Threat model and security objectives}
+We treat the vehicle and its communication network as untrusted. A computationally bounded adversary may intercept, modify, reorder, or replay reports, proofs, decision codes, and challenge parameters. It may use the legitimate private keys of compromised issuers to construct deceptive, policy-aware uncertainty regions. Honest issuers protect their signing keys and bind their observations to the intended event and task context. The gateway's authorized task configuration, verifying key, issuer roster, and clock are assumed trusted; signatures, hashes, and proof systems satisfy the stated computational security assumptions.
+
+An issuer identity is a logically authorized unit defined by enrollment and trust-domain configuration. The gateway can detect repeated keys or trust-domain identifiers, but this check alone does not establish independence of real institutions or confer Sybil-resistant registration. Likewise, an authenticated signature does not imply physical measurement accuracy. Witness confidentiality is primarily defined against the protocol verifier: zero knowledge does not disclose private spacetime boxes and their signatures, but it does not hide an issuer's measurements from that issuer or conceal the business report and network metadata.
+
+We examine six properties: evidence authenticity, context integrity, conditional acceptance soundness, witness confidentiality, challenge freshness, and fail-closed behavior. Table~\ref{tab:security-properties} links each to its assumptions and implemented checks. Source availability, physical sensor calibration, Sybil-resistant enrollment, anonymous transport, cross-task unlinkability, and privacy under unrestricted adaptive policy queries are beyond the present proof relation.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Security properties, prerequisites, and validation.}\label{tab:security-properties}
+\begin{tabularx}{\linewidth}{@{}p{0.20\linewidth}p{0.30\linewidth}X@{}}\toprule
+Property & Assumptions & Mechanism or observation\\\midrule
+Evidence authenticity & Honest keys uncompromised outside the Byzantine allowance; signature unforgeability & In-circuit EdDSA/MiMC verification; modified signed bounds rejected\\
+Context integrity & Trusted task configuration; signed-message and context mappings satisfy collision/binding assumptions & Binding to task, report, roster, threshold, nonce and expiry; tested substitutions rejected\\
+Conditional acceptance soundness & Sound proof system; at most $f$ Byzantine issuers and $r$ honest misses & Four-valued relation, Propositions~\ref{prop:soundness}--\ref{prop:composition}, and synthetic checks tagged by $M\le r$\\
+Witness confidentiality & Zero knowledge of the instantiated proof system; explicit public-output leakage & Box endpoints and signatures remain private witness values; other disclosure is summarized in Table~\ref{tab:privacy-boundary}\\
+Freshness & Trusted clock; atomic challenge updates in one gateway instance & Expiry checks and atomic marking after successful verification; one accepted among eight concurrent replays\\
+Fail-closed behavior & Correct gateway procedure and complete configured roster & Missing/malformed evidence, mismatched codes, unknown/expired challenges, or duplicated roster entries abort or are rejected\\\bottomrule
+\end{tabularx}\end{table}
+
+The principal limitation is that a valid cryptographic proof does not imply an accurate physical measurement. A compliance decision about the true event follows only when enough honest observations actually cover that event.
+
+\subsection{Correctness and conditional soundness}
+\begin{proposition}[Conditional evidence soundness]\label{prop:soundness}
+Suppose at most $f$ of the $n$ enrolled issuers are Byzantine, and at most $r$ boxes submitted by honest issuers fail to cover the same true reference state $z^\star$. With $k=n-f-r$, we have $z^\star\in\mathcal F_k$. Consequently, a Valid decision entails $z^\star\in P$, and an Invalid decision entails $z^\star\notin P$.
+\end{proposition}
+\begin{proof}
+At least $n-f-r=k$ honest boxes contain $z^\star$. By the definition of the feasible set in~\eqref{eq:feasible}, its coverage depth is at least $k$, so $z^\star\in\mathcal F_k$. A Valid decision requires $\varnothing\ne\mathcal F_k\subseteq P$, implying $z^\star\in P$. An Invalid decision requires $\mathcal F_k\cap P=\varnothing$, implying $z^\star\notin P$.
+\end{proof}
+This is the standard threshold-containment argument under the explicit fault and coverage assumptions, not a new interval-fusion theorem. If the additional inequality $n>2f+r$ holds, then $k>f$, so every threshold-supported state has at least one honest supporter. That stronger condition is not needed to show that the true state belongs to $\mathcal F_k$. Neither conclusion makes every feasible state the true state or guarantees that a signed physical error bound is properly calibrated.
+
+To quantify potential failure of the coverage premise, let $\mathcal H$ be the set of honest issuers, and let $M$ count honest boxes that miss $z^\star$. For the stated operating population, suppose issuer $i\in\mathcal H$ has a marginal miss probability at most $\alpha_i$. Even without independence between sources,
+\begin{equation}\label{eq:calibration}
+\Pr(M>r)\le \min\!\left\{1,\frac{\sum_{i\in\mathcal H}\alpha_i}{r+1}\right\}.
+\end{equation}
+Indeed, $\mathbb E[M]\le\sum_{i\in\mathcal H}\alpha_i$, and $M>r$ implies $M\ge r+1$; the bound follows from Markov's inequality for a nonnegative integer-valued variable. This generally loose bound allows dependent errors but supplies no missing calibration measurements. Adaptive choice of tasks or policies requires applicable conditional calibration or a joint bound; marginal failure rates estimated on unrelated samples cannot be used without justification. A Poisson--binomial tail may be sharper if independent Bernoulli misses are justified, but shared positioning bias commonly invalidates that assumption.
+
+Moving from authenticated evidence to gateway acceptance also requires computational security. Under knowledge soundness of the instantiated Groth16 proof system, an accepted proof implies at least one witness assignment satisfying the circuit's signature, range, and geometric constraints. Signature unforgeability for authorized keys, the required binding properties of the MiMC signed-message prehash and context mapping, and correct reconstruction of public inputs associate that witness with authenticated evidence for the designated task and report. The witness need not be unique, and the existence of its signatures does not authenticate the physical truth of the measurements.
+
+Groth16 additionally requires a circuit-specific trusted setup. Exposure of trapdoor values that must remain secret can compromise knowledge soundness. The setup used in our benchmarks serves only the experiment. Deployment requires appropriate parameter generation, potentially with multiple independent participants, or a different proof-system setup model followed by renewed security and performance evaluation.
+
+\begin{proposition}[Gateway acceptance under physical coverage]\label{prop:gateway}
+Assume the task and keys are authorized; the gateway procedure and clock are trustworthy; honest-issuer signatures are unforgeable; the proof system is knowledge sound; and the MiMC message prehash and context mapping satisfy the required collision and binding properties. If the gateway accepts a report and the fault and coverage conditions of Proposition~\ref{prop:soundness} hold, then its report-bound reference event satisfies the configured policy $P$, except in the event of a stated cryptographic failure.
+\end{proposition}
+\begin{proof}
+The gateway reconstructs the public statement from its trusted task snapshot and the received report bytes. It accepts only a verified proof with decision code Valid. Under the stated assumptions, verification establishes the existence of signed boxes satisfying that statement. Substitution of an honest issuer's box or its context while retaining authentication would require a failure of the relevant signature, digest binding, or proof-system guarantee. The valid classification enforces $\varnothing\ne\mathcal F_k\subseteq P$. Under the physical coverage premise, Proposition~\ref{prop:soundness} gives $z^\star\in\mathcal F_k$, hence $z^\star\in P$.
+\end{proof}
+The proposition concerns the location of the reference event bound to the report, not the truth of every factual claim in the report payload. It also assumes that honest issuers generated their evidence for the same event and context. Equation~\eqref{eq:calibration} can be used to discuss physical-premise failure only when its calibration assumptions apply; this prototype has not established a field-calibrated guarantee for real multisource vehicular evidence.

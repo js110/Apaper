@@ -1,0 +1,34 @@
+\subsection{Zero-knowledge circuit construction}
+To certify a four-valued decision without revealing the original observations, the circuit checks signatures, coordinate bounds, and context consistency while determining whether threshold-supported states exist on either side of the policy boundary. We implement two geometric backends: lower-corner maximum-depth reachability and threshold-subset enumeration. Their signature-verification and public-output constraints are shared; they differ in how threshold reachability is calculated.
+
+\subsubsection{Lower-corner maximum-depth reachability}
+For a query box $Q\subseteq\Omega$, first clip every evidence box $U_i$ to $Q$. For each axis $a$, let $A_a$ contain the lower endpoints of the nonempty clipped boxes. The following lemma reduces maximum-depth search over the entire query region to a finite candidate set.
+
+\begin{lemma}[Lower-corner maximum-depth reachability]\label{lem:corner}
+If the maximum overlap depth inside $Q$ is positive, then some point attaining that depth belongs to $A_1\times\cdots\times A_d$.
+\end{lemma}
+\begin{proof}
+Choose a point $z\in Q$ with maximum depth and let $\mathcal S$ be the collection of clipped boxes containing $z$. Their intersection is nonempty. For each axis $a$, define $v_a$ as the greatest lower endpoint of the boxes in $\mathcal S$. This endpoint belongs to $A_a$. Because $z$ belongs to every box in $\mathcal S$, the greatest lower endpoint on any axis cannot exceed the smallest corresponding upper endpoint. Hence $v=(v_1,\ldots,v_d)$ lies in every box in $\mathcal S$ and has depth at least $|\mathcal S|$, the maximum depth attained by $z$. By maximality, its depth is exactly the same. Thus $v$ is a maximum-depth point in the stated candidate set.
+\end{proof}
+
+By the lemma, the circuit enumerates at most $n^d$ lower-corner combinations, including duplicates, and checks both membership in $Q$ and coverage by the signed evidence boxes. A point with coverage at least $k$ exists in $Q$ if and only if an enumerated candidate meets that threshold. A candidate contributed by an interval not intersecting $Q$ cannot automatically be treated as valid: the necessary membership tests still apply.
+
+When $P$ is an axis-aligned integer box, $\Omega\setminus P$ is the union of at most $2d$ axial slabs. Along axis $a$, a lower slab ends at $p_a^- -1$ and an upper slab starts at $p_a^+ +1$; all other axes span the discrete domain. Slabs lying outside $\Omega$ are inactive. The circuit calculates $I$ from reachability in $P$ and $O$ from the disjunction of reachability over complement slabs. It then constrains the public decision code to
+\begin{equation}\label{eq:decisioncode}
+\delta=(1-I)O+2IO+3(1-I)(1-O).
+\end{equation}
+For Boolean $I$ and $O$, this expression is exactly the coding in Table~\ref{tab:decisions}. Further constraints check the coordinate bit width, ordering of lower and upper endpoints, and containment of boxes and policy within $\Omega$. EdDSA/MiMC signatures are verified inside the circuit, and issuer public keys are compared for pairwise distinctness using their actual encoded elliptic-curve representations, rather than treating a public key as a single scalar.
+
+\subsubsection{Threshold-subset enumeration and computational cost}
+An alternative representation of the robust feasible set is
+\begin{equation}\label{eq:subset}
+\mathcal F_k=\bigcup_{\substack{S\subseteq[n]\\ |S|=k}}
+\left(\bigcap_{i\in S}U_i\right),\qquad [n]=\{1,\ldots,n\}.
+\end{equation}
+The intersection of $k$ axis-aligned integer boxes is another box or the empty set. Its lower and upper endpoints are calculated by coordinatewise maxima and minima, making it possible to test nonemptiness, intersection with $P$, and existence of states outside $P$. Both the native reference implementation and the second circuit backend use this exact identity, with principal geometric work $O\!\left(\binom nk kd\right)$.
+
+The advantages of the backends depend on the parameters. For fixed dimension, lower-corner reachability requires approximately $O((2d+1)d n^{d+1})$ geometric comparisons, in addition to signatures and $O(n^2)$ pairwise key-distinctness checks. Because $k$ is not fixed during circuit compilation, the same circuit shape can accept an admissible threshold as a public input. In contrast, subset enumeration fixes $k$ at compile time and constrains it against the public threshold. If the omission allowance $b=n-k=f+r$ is a small constant, its geometric work is $O(n^{b+1}d)$; when $k$ approaches $n/2$, the number of subsets instead grows combinatorially. These bounds characterize the geometric operations rather than the full cryptographic R1CS.
+
+For example, at $(n,d,k)=(5,3,4)$, subset enumeration checks only $\binom54=5$ intersections, whereas lower-corner reachability checks up to $5^3=125$ candidates per query region. For an approximate comparison of parameter trends, define work proxies $W_D=(2d+1)d n^{d+1}$ and $W_S=\binom nk kd$. At $(20,3,19)$ they equal $3{,}360{,}000$ and $1{,}140$; when the threshold decreases to $10$, $W_D$ stays fixed while $W_S$ rises to $5{,}542{,}680$. These proxies count different types of operations and omit implementation constants, so their ordering cannot be interpreted as measured R1CS counts or proving time. The current experiments support subset enumeration only in the tested small-omission regime, not as a universal optimum.
+
+Both circuits implement the same four-valued relation but trade threshold flexibility against geometric complexity. The prototype selects the backend explicitly; it does not switch between them automatically. The next section analyzes the security guarantee under the stated cryptographic and physical coverage premises.

@@ -1,0 +1,42 @@
+% New translation authored from the final approved Chinese manuscript.
+% The previous English manuscript is NOT used as prose source.
+% Springer Nature sn-jnl / Cybersecurity double-anonymous manuscript.
+\documentclass[referee,lineno,pdflatex,sn-basic,Numbered]{sn-jnl}
+\usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,tabularx}
+\usepackage{url}
+\emergencystretch=2em
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title[Robust spacetime certification]{Zero-Knowledge Certification of Robust Spacetime Compliance under Byzantine Evidence for Vehicular Crowdsensing}
+\author[1]{\fnm{Anonymous} \sur{Authors}}
+\affil[1]{\orgname{Withheld for double-anonymous review}}
+\abstract{In vehicular crowdsensing, a location-privacy mechanism may need to establish compliance with a spatial policy without revealing a vehicle's coordinates. Yet positioning errors, environmental effects, and synchronization uncertainty often leave only interval-valued spacetime observations. Even authenticated sources may share systematic bias or behave in a Byzantine manner. We propose a privacy-preserving compliance certification method based on signed spacetime uncertainty evidence. Given an upper bound $f$ on Byzantine issuers and an allowance $r$ for honest issuers whose intervals miss the true event, the method constructs the feasible set of states supported by at least $k=n-f-r$ issuers. A report is accepted only when this set is nonempty and wholly contained in the authorized region. The resulting decision distinguishes valid, invalid, ambiguous, and inconsistent evidence. We implement two Groth16/BN254 circuits that verify EdDSA/MiMC signatures and bind the proof to the task, issuer roster, report, threshold, challenge nonce, and expiry. Gateway tests reject tampering, context substitution, expired challenges, and cross-challenge replay; only one of eight concurrent copies of a valid request is accepted within a single gateway instance. Across 12 synthetic conditions satisfying the configured fault and coverage assumptions, mean decisive coverage is 87.52\%, compared with 75.63\% for a fixed-margin baseline. Tested subset circuits produce 164-byte proofs with median proving times of 163--255 ms on an Apple M1. The implementation is an evidence-certification layer, not a complete vehicular crowdsensing platform; its physical interpretation still depends on trusted issuer enrollment and effective sensor calibration.}
+\keywords{Zero-knowledge proofs, Location privacy, Vehicular crowdsensing, Byzantine evidence, Robust evidence fusion, Spacetime compliance certification}
+\maketitle
+\input{translated_from_chinese/01_introduction.tex}
+\input{translated_from_chinese/02_related_work.tex}
+\input{translated_from_chinese/03a_system_model.tex}
+\input{translated_from_chinese/03b_decisions.tex}
+\input{translated_from_chinese/03c_protocol.tex}
+\input{translated_from_chinese/03d_circuits.tex}
+\input{translated_from_chinese/04a_security_model_soundness.tex}
+\input{translated_from_chinese/04b_security_protocol_privacy.tex}
+\input{translated_from_chinese/05a_setup_and_protocol_tests.tex}
+\input{translated_from_chinese/05b_robustness_and_ablation.tex}
+\input{translated_from_chinese/05c_comparison_and_performance.tex}
+\input{translated_from_chinese/05d_discussion_conclusion.tex}
+\section*{Declarations}
+\subsection*{Availability of data and materials}
+The implementation code, synthetic experiments, and reproducibility records are available in the research repository. Identifying repository links are withheld in this double-anonymous review copy and should be supplied separately through a nonidentifying mechanism acceptable to the editor. The UrbanNav and GraphGNSSLib source data must be obtained from their cited providers.
+\subsection*{Competing interests}
+To be confirmed by all authors before submission; the reviewing manuscript must be updated to meet the journal's declaration policy.
+\subsection*{Funding}
+Withheld from the anonymous reviewing manuscript; complete funder details are provided in the author information version and require documentary verification.
+\subsection*{Authors' contributions}
+Withheld for double-anonymous review; listed separately in the author information version.
+\subsection*{Acknowledgements}
+No acknowledgement statement has been supplied for this draft.
+\input{translated_from_chinese/06_appendix.tex}
+\bibliography{references}
+\end{document}
