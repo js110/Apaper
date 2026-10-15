@@ -1,0 +1,36 @@
+name: Cybersecurity manuscript build
+on:
+  push:
+    branches: [main, cybersecurity-submission-20261015]
+    paths:
+      - "paper_a/venue_cybersecurity/**"
+      - ".github/workflows/cybersecurity_build.yml"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Springer Nature review copy
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: manuscript_review.tex
+          working_directory: paper_a/venue_cybersecurity
+          latexmk_use_xelatex: false
+          args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
+      - name: Check output and package editable sources
+        run: |
+          set -eu
+          cd paper_a/venue_cybersecurity
+          test -s manuscript_review.pdf
+          if grep -E "(undefined references|undefined citations)" manuscript_review.log; then
+            echo "Unresolved references or citations"; exit 1
+          fi
+          zip -q -r cybersecurity_submission_sources.zip manuscript_review.tex manuscript_with_authors.tex sn-jnl.cls sn-basic.bst references.bib figures README.md SUBMISSION_CHECKLIST.md cover_letter_draft.md TEMPLATE_SOURCE.txt
+      - name: Upload review PDF and editable submission sources
+        uses: actions/upload-artifact@v4
+        with:
+          name: cybersecurity-review-pdf-and-sources
+          path: |
+            paper_a/venue_cybersecurity/manuscript_review.pdf
+            paper_a/venue_cybersecurity/cybersecurity_submission_sources.zip
