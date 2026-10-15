@@ -11,6 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Download official Springer Nature LaTeX package
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 --output /tmp/sn-official.zip 'https://cms-resources.apps.public.k8s.springernature.io/springer-cms/rest/v1/content/18782940/data/v12'
+          unzip -q /tmp/sn-official.zip -d /tmp/sn-official
+          SRC_CLASS="$(find /tmp/sn-official -name sn-jnl.cls -type f | head -1)"
+          SRC_BST="$(find /tmp/sn-official -name sn-basic.bst -type f | head -1)"
+          test -n "$SRC_CLASS" && test -n "$SRC_BST"
+          cp "$SRC_CLASS" paper_a/venue_cybersecurity/sn-jnl.cls
+          cp "$SRC_BST" paper_a/venue_cybersecurity/sn-basic.bst
+          echo "Official class: $SRC_CLASS"
+          sha256sum paper_a/venue_cybersecurity/sn-jnl.cls paper_a/venue_cybersecurity/sn-basic.bst
       - name: Compile Springer Nature review copy
         uses: xu-cheng/latex-action@v3
         with:
