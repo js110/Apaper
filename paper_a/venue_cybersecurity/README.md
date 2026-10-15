@@ -1,22 +1,32 @@
-# Cybersecurity submission — Springer Nature sn-jnl
+# Cybersecurity submission — freshly translated from approved Chinese manuscript
 
-This directory contains a Research-article conversion of the Apaper manuscript, using the Springer Nature authoring class and numbered basic references.
+This folder contains a **new English translation**, authored from the final revised Chinese six-chapter manuscript rather than by editing the former JISA English prose. The source file SHA-256 and section mapping are recorded in [TRANSLATION_SOURCE.md](TRANSLATION_SOURCE.md).
 
-- `manuscript_review.tex` — **double-anonymous review manuscript**. Use this for peer review, after completing the checks below. Identifying public repository links are intentionally withheld here.
-- `manuscript_with_authors.tex` — **unblinded copy**, for author audit only. Do not upload this file as the anonymous reviewer manuscript.
-- `sn-jnl.cls`, `sn-basic.bst`, `references.bib` and `figures/` — LaTeX dependencies.
-- `cover_letter_draft.md` and `SUBMISSION_CHECKLIST.md` — editable material not intended as anonymous paper text.
+The journal's double-anonymous peer-review model requires distinct manuscripts and identified author metadata.
 
-## Build
+## Files
 
-Run from this directory: `latexmk -pdf -interaction=nonstopmode -halt-on-error manuscript_review.tex` (BibTeX is run when needed).
+- `manuscript_review.tex` — anonymous reviewer manuscript. This is the manuscript to compile/upload for review after completing the checklist.
+- `manuscript_with_authors.tex` — same newly translated body, unblinded for author audit.
+- `title_page.tex` — separate identified title page; do **not** send this file as part of the anonymous reviewing manuscript.
+- `translated_from_chinese/` — all English sections and tables, compiled via `\\input` from the two main documents.
+- `references.bib`, `sn-jnl.cls`, `sn-basic.bst` — bibliography and Springer Nature format dependencies.
+- `cover_letter_draft.md`, `SUBMISSION_CHECKLIST.md` — separate author-facing materials.
 
-## Template provenance
+## Official template and reproducible build
 
-The Springer Nature template is the official submission format recommended by the journal, while this copy of its class and bibliography style is taken from a third-party public mirror (RasmussenLab/paper_template). Verify that the files match the current *official* Springer Nature package before submission: https://www.springernature.com/gp/authors/campaigns/latex-author-support (December 2024 ZIP, official source).
+The GitHub Actions workflow [Cybersecurity manuscript build](../../.github/workflows/cybersecurity_build.yml) **downloads the official Springer Nature LaTeX ZIP** from the publisher and places the official class and bibliography style into this directory for the CI build. A legacy public-mirror copy of the files is also checked in; the CI step overwrites it. For manual compilation, replace these with the official class/BST first:
 
-The journal specifically requests double line spacing, line/page numbers, a 150–250-word abstract, 3–10 keywords, and separate title-page metadata under double-anonymous review.
+https://www.springernature.com/gp/authors/campaigns/latex-author-support
 
-## Important
+From `paper_a/venue_cybersecurity`, run
 
-This package is an editorially converted draft, **not confirmation of a fully compliant submission**. In particular, all coauthor contact details, competing-interest declarations, funding roles, mandatory disclosure of LLM use under the journal policy, and a truly anonymized reproducibility link must be finalized by the authors. Do not assert approvals that have not been obtained.
+```bash
+latexmk -pdf -interaction=nonstopmode -halt-on-error manuscript_review.tex
+```
+
+The figure paths begin with `../figures/` and expect the folder layout from the parent `paper_a/` directory. The generated CI artifact packages the full LaTeX source tree with the corresponding images preserving this layout.
+
+## Editorial checks remaining
+
+Complete all items in `SUBMISSION_CHECKLIST.md` before manually submitting. Source translation and successful TeX compilation do not establish acceptance of authorship, grant identifiers, conflict declarations, AI-assistance disclosures, ethical/reproducibility requirements, or the anonymization of public research code.
