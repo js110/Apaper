@@ -32,13 +32,40 @@ jobs:
           args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
       - name: Check output and package editable sources
         run: |
-          set -eu
+          set -euo pipefail
           cd paper_a/venue_cybersecurity
           test -s manuscript_review.pdf
           if grep -E "(undefined references|undefined citations)" manuscript_review.log; then
             echo "Unresolved references or citations"; exit 1
           fi
-          zip -q -r cybersecurity_submission_sources.zip manuscript_review.tex manuscript_with_authors.tex sn-jnl.cls sn-basic.bst references.bib figures README.md SUBMISSION_CHECKLIST.md cover_letter_draft.md TEMPLATE_SOURCE.txt
+          if command -v pdftotext >/dev/null; then
+            pdftotext manuscript_review.pdf /tmp/cybersecurity-review.txt
+            if grep -E "(Lili He|Sheng Jiang|Shuang Chen|Lei Zhang|Linghui Lyu|github.com/js110)" /tmp/cybersecurity-review.txt; then
+              echo "Double-anonymous manuscript leaked identifying text"; exit 1
+            fi
+          fi
+          # Preserve relative ../figures references for a portable ZIP extracted under paper_a/.
+          cd ..
+          zip -q -r venue_cybersecurity/cybersecurity_submission_sources.zip \
+            venue_cybersecurity/manuscript_review.tex \
+            venue_cybersecurity/manuscript_with_authors.tex \
+            venue_cybersecurity/title_page.tex \
+            venue_cybersecurity/sn-jnl.cls \
+            venue_cybersecurity/sn-basic.bst \
+            venue_cybersecurity/references.bib \
+            venue_cybersecurity/translated_from_chinese \
+            venue_cybersecurity/README.md \
+            venue_cybersecurity/SUBMISSION_CHECKLIST.md \
+            venue_cybersecurity/cover_letter_draft.md \
+            venue_cybersecurity/TEMPLATE_SOURCE.txt \
+            figures/system_architecture.png \
+            figures/decision_counterexample.png \
+            figures/protocol_sequence.png \
+            figures/availability.png \
+            figures/budget_tradeoff.png \
+            figures/backend_costs.png \
+            figures/compile_scalability.png \
+            figures/receiver_diagnostic.png
       - name: Upload review PDF and editable submission sources
         uses: actions/upload-artifact@v4
         with:
