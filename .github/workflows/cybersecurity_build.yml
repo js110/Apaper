@@ -26,7 +26,10 @@ jobs:
       - name: Compile Springer Nature review copy
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: manuscript_review.tex
+          root_file: |
+            manuscript_review.tex
+            manuscript_with_authors.tex
+            title_page.tex
           working_directory: paper_a/venue_cybersecurity
           latexmk_use_xelatex: false
           args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
@@ -35,6 +38,8 @@ jobs:
           set -euo pipefail
           cd paper_a/venue_cybersecurity
           test -s manuscript_review.pdf
+          test -s manuscript_with_authors.pdf
+          test -s title_page.pdf
           if grep -E "(undefined references|undefined citations)" manuscript_review.log; then
             echo "Unresolved references or citations"; exit 1
           fi
@@ -58,6 +63,7 @@ jobs:
             venue_cybersecurity/SUBMISSION_CHECKLIST.md \
             venue_cybersecurity/cover_letter_draft.md \
             venue_cybersecurity/TEMPLATE_SOURCE.txt \
+            venue_cybersecurity/TRANSLATION_SOURCE.md \
             figures/system_architecture.png \
             figures/decision_counterexample.png \
             figures/protocol_sequence.png \
@@ -72,4 +78,6 @@ jobs:
           name: cybersecurity-review-pdf-and-sources
           path: |
             paper_a/venue_cybersecurity/manuscript_review.pdf
+            paper_a/venue_cybersecurity/manuscript_with_authors.pdf
+            paper_a/venue_cybersecurity/title_page.pdf
             paper_a/venue_cybersecurity/cybersecurity_submission_sources.zip
