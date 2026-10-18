@@ -1,0 +1,6 @@
+Highlights
+
+* Signed uncertainty intervals support private vehicle location compliance proofs.
+* Byzantine and sensor-miscoverage budgets define robust feasible states.
+* Groth16 certificates bind evidence, reports, tasks, and challenge context.
+* Synthetic experiments compare decisive coverage and proof-generation cost.

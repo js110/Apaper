@@ -1,5 +1,0 @@
-Official Springer Nature LaTeX author-support package (December 2024):
-https://cms-resources.apps.public.k8s.springernature.io/springer-cms/rest/v1/content/18782940/data/v12
-https://www.springernature.com/gp/authors/campaigns/latex-author-support
-
-The checked-in sn-jnl.cls and sn-basic.bst were copied through GitHub's public mirror RasmussenLab/paper_template. This is not proof the two mirror files are byte-for-byte identical to the current official ZIP; verify and replace as needed.

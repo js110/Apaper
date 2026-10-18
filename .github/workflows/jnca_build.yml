@@ -1,0 +1,45 @@
+name: JNCA manuscript build
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Elsevier JNCA manuscript
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: manuscript.tex
+          working_directory: paper_a/venue_jnca
+          latexmk_use_xelatex: false
+          args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error
+      - name: Check references and build independent source archive
+        run: |
+          set -euo pipefail
+          cd paper_a/venue_jnca
+          test -s manuscript.pdf
+          test -s manuscript.bbl
+          if grep -Ei 'undefined references|undefined citations|Citation.*undefined|Reference.*undefined' manuscript.log; then
+            echo 'Unresolved citation or cross-reference'; exit 1
+          fi
+          cp "$(kpsewhich elsarticle.cls)" ./elsarticle.cls
+          cp "$(kpsewhich elsarticle-harv.bst)" ./elsarticle-harv.bst
+          zip -q -j JNCA_LaTeX_Sources.zip manuscript.tex references.bib elsarticle.cls elsarticle-harv.bst *.png \
+            01_introduction.tex 02_related_work.tex 03a_system_model.tex 03b_decisions.tex \
+            03c_protocol.tex 03d_circuits.tex 04a_security_model_soundness.tex \
+            04b_security_protocol_privacy.tex 05a_setup_and_protocol_tests.tex \
+            05b_robustness_and_ablation.tex 05c_comparison_and_performance.tex \
+            05d_discussion_conclusion.tex 06_appendix.tex
+          unzip -t JNCA_LaTeX_Sources.zip | tail -1
+      - name: Upload manuscript and sources
+        uses: actions/upload-artifact@v4
+        with:
+          name: JNCA-submission-manuscript
+          path: |
+            paper_a/venue_jnca/manuscript.pdf
+            paper_a/venue_jnca/JNCA_LaTeX_Sources.zip
+            paper_a/venue_jnca/Cover_Letter.txt
+            paper_a/venue_jnca/Highlights.txt

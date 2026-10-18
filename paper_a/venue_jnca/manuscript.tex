@@ -1,0 +1,50 @@
+% JNCA manuscript based on Elsevier's officially recommended elsarticle class.
+% The scientific text is carried over from the previously revised English manuscript.
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+\journal{Journal of Network and Computer Applications}
+\usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,tabularx}
+\usepackage{url}
+\emergencystretch=2em
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\begin{frontmatter}
+\title{Zero-Knowledge Certification of Robust Spacetime Compliance under Byzantine Evidence for Vehicular Crowdsensing}
+\author[univ]{Lili He}
+\author[univ]{Sheng Jiang}
+\author[univ]{Shuang Chen}
+\author[univ]{Lei Zhang\corref{cor1}}
+\cortext[cor1]{Corresponding author.}
+\ead{8213662@163.com}
+\address[univ]{College of Information and Electronic Technology, Jiamusi University, Jiamusi 154007, China}
+\begin{abstract}
+In vehicular crowdsensing, a location-privacy mechanism may need to establish compliance with a spatial policy without revealing a vehicle's coordinates. Yet positioning errors, environmental effects, and synchronization uncertainty often leave only interval-valued spacetime observations. Even authenticated sources may share systematic bias or behave in a Byzantine manner. We propose a privacy-preserving compliance certification method based on signed spacetime uncertainty evidence. Given an upper bound $f$ on Byzantine issuers and an allowance $r$ for honest issuers whose intervals miss the true event, the method constructs the feasible set of states supported by at least $k=n-f-r$ issuers. A report is accepted only when this set is nonempty and wholly contained in the authorized region. The resulting decision distinguishes valid, invalid, ambiguous, and inconsistent evidence. We implement two Groth16/BN254 circuits that verify EdDSA/MiMC signatures and bind the proof to the task, issuer roster, report, threshold, challenge nonce, and expiry. Gateway tests reject tampering, context substitution, expired challenges, and cross-challenge replay; only one of eight concurrent copies of a valid request is accepted within a single gateway instance. Across 12 synthetic conditions satisfying the configured fault and coverage assumptions, mean decisive coverage is 87.52\%, compared with 75.63\% for a fixed-margin baseline. Tested subset circuits produce 164-byte proofs with median proving times of 163--255 ms on an Apple M1. The implementation is an evidence-certification layer, not a complete vehicular crowdsensing platform; its physical interpretation still depends on trusted issuer enrollment and effective sensor calibration.
+\end{abstract}
+\begin{keyword}
+Zero-knowledge proofs \sep Location privacy \sep Vehicular crowdsensing \sep Byzantine evidence \sep Robust evidence fusion \sep Spacetime compliance certification
+\end{keyword}
+\end{frontmatter}
+\input{01_introduction.tex}
+\input{02_related_work.tex}
+\input{03a_system_model.tex}
+\input{03b_decisions.tex}
+\input{03c_protocol.tex}
+\input{03d_circuits.tex}
+\input{04a_security_model_soundness.tex}
+\input{04b_security_protocol_privacy.tex}
+\input{05a_setup_and_protocol_tests.tex}
+\input{05b_robustness_and_ablation.tex}
+\input{05c_comparison_and_performance.tex}
+\input{05d_discussion_conclusion.tex}
+
+\section*{Data and code availability}
+The proof prototype, synthetic evaluations, benchmark logs, and reproducibility records are hosted in the separate code and experiments repository at \url{https://github.com/js110/ZCRSC-PAPER}. Generated evaluation data can be reproduced using the provided scripts. The third-party UrbanNav and GraphGNSSLib data are not redistributed by the authors and should be obtained from the original providers.
+\section*{Funding}
+This study received partial support from the Heilongjiang Provincial University Teacher Scientific Research Business Fee (2018-KYYWF0941), the Heilongjiang Provincial Natural Science Foundation Joint Fund Cultivation Project (PL2024F002), the National Foreign Expert Key Support Project (D2O25O185), and the Heilongjiang Provincial Undergraduate University Excellent Young Teacher Fundamental Research Support Plan (YQJH2024239).
+\section*{CRediT authorship contribution statement}
+Lili He: Supervision. Sheng Jiang: Methodology, Software, Investigation, Formal analysis. Shuang Chen: Writing -- original draft. Lei Zhang: Supervision, Corresponding author.
+
+\input{06_appendix.tex}
+\bibliographystyle{elsarticle-harv}
+\bibliography{references}
+\end{document}

@@ -1,0 +1,17 @@
+Dear Editor-in-Chief,
+
+Please consider our manuscript entitled “Zero-Knowledge Certification of Robust Spacetime Compliance under Byzantine Evidence for Vehicular Crowdsensing” for publication as a Research Article in the Journal of Network and Computer Applications.
+
+The manuscript addresses privacy-preserving policy certification in vehicular crowdsensing networks when signed spacetime measurements are uncertain and some evidence issuers may be Byzantine. Rather than validating a single hidden coordinate, the proposed zero-knowledge relation certifies compliance of the entire threshold-supported feasible set. The protocol also binds cryptographic verification to the task, issuer roster, report, challenge, and expiry. Security regression tests and controlled experiments characterize the resulting correctness boundary and computational overhead.
+
+We believe the work is relevant to JNCA's readership in vehicular and IoT networks, privacy-preserving network services, and verifiable security mechanisms. The manuscript explicitly states its conditional physical-coverage assumptions and does not claim a real-world multi-issuer vehicle deployment.
+
+The separate source-code and experiments repository is available at https://github.com/js110/ZCRSC-PAPER .
+
+Thank you for considering this work.
+
+Sincerely,
+Lei Zhang
+Corresponding author
+College of Information and Electronic Technology, Jiamusi University
+Email: 8213662@163.com
