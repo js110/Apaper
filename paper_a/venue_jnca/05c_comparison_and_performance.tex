@@ -1,5 +1,5 @@
 \subsection{Comparison with recent related work}
-Table 9 contextualizes our system alongside recent privacy-preserving localization and Byzantine-tolerant fusion schemes (2024--2026). Because these systems target distinct cryptographic relations and interaction models, Table 9 highlights their methodological scope alongside reported performance.
+Table~\ref{tab:recent-context} contextualizes our system alongside recent privacy-preserving localization and Byzantine-tolerant fusion schemes (2024--2026). Because these systems target distinct cryptographic relations and interaction models, Table~\ref{tab:recent-context} highlights their methodological scope alongside reported performance.
 
 
 
@@ -7,15 +7,15 @@ Table 9 contextualizes our system alongside recent privacy-preserving localizati
 \caption{Selected quantitative findings from recent systems and the boundaries of comparison. Values are reported by the cited sources.}\label{tab:recent-context}
 \begin{tabularx}{\linewidth}{@{}p{0.17\linewidth}p{0.24\linewidth}X@{}}\toprule
 Method&Evaluation scale&Reported outcome and methodological boundary\\\midrule
-BFT-PoLoc~\citep{BFTPoLoc}&Up to 450 challengers&At 450 challengers, roughly 45\% of localization uncertainty was below 100 km and 95\% below 1000 km; Byzantine network localization rather than a zero-knowledge policy proof\\
-PG~\citep{PG}&261 cloud nodes; 19 constrained sensors&Private Byzantine-tolerant fusion using distributed garbled circuits, with an output-delivery guarantee\\
-ZKLP~\citep{ZKLP}&Floating-point location SNARK&Proximity proof about 0.26 s and verification throughput about 470 peers/s; geometric properties of a hidden point\\
-Vehicle ZK-PoL~\citep{VehiclePolicy}&Up to 43,800 trajectory points&Electric-vehicle subsidy and highway compliance proofs about 36 min and 59 min; interactive, trajectory-scale setting\\
-CRSF~\citep{CRSF}&Up to 261 sensors&Approximately one second for the measured phases at the largest instance; collusion-resistant private fusion rather than a policy certificate\\\bottomrule
+BFT-PoLoc (2024)~\citep{BFTPoLoc}&Up to 450 challengers&At 450 challengers, roughly 45\% of localization uncertainty was below 100 km and 95\% below 1000 km; Byzantine network localization rather than a zero-knowledge policy proof\\
+PG (2024)~\citep{PG}&261 cloud nodes; 19 constrained sensors&Private Byzantine-tolerant fusion using distributed garbled circuits, with an output-delivery guarantee\\
+ZKLP (2025)~\citep{ZKLP}&Floating-point location SNARK&Proximity proof about 0.26 s and verification throughput about 470 peers/s; geometric properties of a hidden point\\
+Vehicle ZK-PoL (2025)~\citep{VehiclePolicy}&Up to 43,800 trajectory points&Electric-vehicle subsidy and highway compliance proofs about 36 min and 59 min; interactive, trajectory-scale setting\\
+CRSF (2026)~\citep{CRSF}&Up to 261 sensors&Approximately one second for the measured phases at the largest instance; collusion-resistant private fusion rather than a policy certificate\\\bottomrule
 \end{tabularx}
 \end{table}
 
-To provide a direct hardware-normalized reference, we executed the open-source ZKLP implementation (Ernstberger et al.~\citep{ZKLP}, pinned at commit \texttt{e8e321524982} using \texttt{gnark} v0.9.1) and our $(n, d) = (3, 2)$ subset circuit (\texttt{gnark} v0.14.0) on the same GitHub Actions Ubuntu runner over 10 post-setup Groth16/BN254 runs. As shown in Table 10, ZKLP32 compiles to 19,467 constraints with a 515.53 ms median proving time for single-point floating-point proximity. Our $(3, 2)$ subset circuit requires 32,474 constraints and 645.14 ms median proving time, reflecting the additional in-circuit overhead of verifying three EdDSA/MiMC signatures, roster distinctness, context binding, and set-level four-valued reachability while maintaining a compact 164-byte proof and 1.547 ms verification time.
+To provide a direct hardware-normalized reference, we executed the open-source ZKLP implementation (\citet{ZKLP}, pinned at commit \texttt{e8e321524982} using \texttt{gnark} v0.9.1) and our $(n, d) = (3, 2)$ subset circuit (\texttt{gnark} v0.14.0) on the same GitHub Actions Ubuntu runner over 10 post-setup Groth16/BN254 runs. As shown in Table~\ref{tab:zklp-repro}, ZKLP32 compiles to 19,467 constraints with a 515.53 ms median proving time for single-point floating-point proximity. Our $(3, 2)$ subset circuit requires 32,474 constraints and 645.14 ms median proving time, reflecting the additional in-circuit overhead of verifying three EdDSA/MiMC signatures, roster distinctness, context binding, and set-level four-valued reachability while maintaining a compact 164-byte proof and 1.547 ms verification time.
 
 \begin{table}[htbp]\centering\footnotesize
 \caption{Fixed-version ZKLP reproduction and subset circuit on the same runner (sample medians over ten post-setup proofs).}\label{tab:zklp-repro}
@@ -27,9 +27,9 @@ Our subset $(3,2)$&32,474&645.14&1.547&164&556\\\bottomrule
 \end{tabularx}
 \end{table}
 
-\subsection{Cryptographic performance and circuit scalability}
+\subsection{Cryptographic performance and circuit scalability}\label{sec:crypto-perf}
 \subsubsection{Structural reference using a simplified relation}
-Table 11 reports the baseline overhead of a simplified hidden-point membership circuit on the same Groth16/BN254 stack, which checks only whether a single 16-bit coordinate point lies within $P$. It requires just 408 constraints in 2D and 612 constraints in 3D. In contrast, our full $(3, 2)$ and $(3, 3)$ subset circuits require 32,474 and 35,248 constraints, respectively, demonstrating that in-circuit EdDSA/MiMC signature verification, roster distinctness checks, and context binding dominate the base constraint count in small configurations. Across all configurations, the Groth16 proof size remains constant at 164 bytes.
+Table~\ref{tab:point-zk} reports the baseline overhead of a simplified hidden-point membership circuit on the same Groth16/BN254 stack, which checks only whether a single 16-bit coordinate point lies within $P$. It requires just 408 constraints in 2D and 612 constraints in 3D. In contrast, our full $(3, 2)$ and $(3, 3)$ subset circuits require 32,474 and 35,248 constraints, respectively, demonstrating that in-circuit EdDSA/MiMC signature verification, roster distinctness checks, and context binding dominate the base constraint count in small configurations. Across all configurations, the Groth16 proof size remains constant at 164 bytes.
 
 \begin{table}[htbp]\centering\small
 \caption{Simplified hidden-point membership circuit with 16-bit bounds under Groth16/BN254.}\label{tab:point-zk}
@@ -41,29 +41,32 @@ Dimension $d$&R1CS constraints&Proof (B)&Public witness (B)\\\midrule
 \end{table}
 
 \subsubsection{Measured costs of the two geometric backends}
-Tables 12 and 13 and Figure 6 compare the lower-corner reachability and threshold-subset enumeration ($k = n - 1$) backends on the Apple M1 platform, where public witness sizes range from 556 to 748 bytes. Subset enumeration yields substantially smaller circuits and faster proving times across all tested small-omission configurations. Notably, at $(n, d) = (4, 3)$, lower-corner reachability requires 510,362 constraints and a median proving time of 1090.95 ms, whereas the subset backend requires only 46,737 constraints and 234.93 ms (a $4.64\times$ reduction in median proving latency), while verification remains near 1 ms for both backends.
+Tables~\ref{tab:crypto} and~\ref{tab:subset} and Figure~\ref{fig:scaling} compare the lower-corner reachability and threshold-subset enumeration ($k = n - 1$) backends primarily on the Apple M1 platform, where public witness sizes range from 556 to 748 bytes. Subset enumeration yields substantially smaller circuits and faster proving times across all tested small-omission configurations. Notably, at $(n, d) = (4, 3)$, lower-corner reachability requires 510,362 constraints and a median proving time of 1090.95 ms, whereas the subset backend requires only 46,737 constraints and 234.93 ms (a $4.64\times$ reduction in median proving latency), while verification remains near 1 ms for both backends.
 
-\begin{table}[htbp]\centering\small
-\caption{Lower-corner Groth16 measurements. Setup is in seconds; all other times are in milliseconds.}\label{tab:crypto}
-\begin{tabular}{rrrrrrr}\toprule
-$(n,d)$&Constraints&Setup&Prove p50&Prove p95&Verify p50&Verify p95\\\midrule
-$(3,2)$&55,987&3.64&213.12&244.83&1.033&1.350\\
-$(4,2)$&97,493&7.47&360.74&427.17&1.081&1.514\\
-$(5,2)$&158,781&11.56&574.69&700.49&1.073&1.212\\
-$(3,3)$&185,229&13.84&548.33&707.35&1.067&1.412\\
-$(4,3)$&510,362&38.34&1090.95&1212.54&1.093&1.506\\\bottomrule
+\begin{table}[htbp]\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Lower-corner Groth16 measurements on the Apple M1; setup in seconds, proving and verification in milliseconds; proof and public witness in bytes.}\label{tab:crypto}
+\begin{tabular}{rrrrrrrrr}\toprule
+$(n,d)$&Constraints&Setup&Pr p50&Pr p95&Ve p50&Ve p95&Proof&Witness\\\midrule
+$(3,2)$&55,987&3.64&213.12&244.83&1.033&1.350&164&556\\
+$(4,2)$&97,493&7.47&360.74&427.17&1.081&1.514&164&620\\
+$(5,2)$&158,781&11.56&574.69&700.49&1.073&1.212&164&684\\
+$(3,3)$&185,229&13.84&548.33&707.35&1.067&1.412&164&684\\
+$(4,3)$&510,362&38.34&1090.95&1212.54&1.093&1.506&164&748\\\bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]\centering\small
-\caption{Threshold-subset Groth16 measurements for $k=n-1$ (times in milliseconds).}\label{tab:subset}
-\begin{tabular}{rrrr}\toprule
-$(n,d)$&Constraints&Prove p50&Verify p50\\\midrule
-$(3,2)$&32,474&163.42&1.028\\
-$(4,2)$&42,918&225.79&1.038\\
-$(5,2)$&53,528&254.66&1.051\\
-$(3,3)$&35,248&206.34&1.059\\
-$(4,3)$&46,737&234.93&1.038\\\bottomrule
+\begin{table}[htbp]\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Threshold-subset Groth16 measurements with $k=n-1$: Apple M1 unless marked ($\dagger$, GitHub Actions linux/amd64). Setup in seconds, time in milliseconds, sizes in bytes.}\label{tab:subset}
+\begin{tabular}{rrrrrrrrr}\toprule
+$(n,d)$&Constraints&Setup&Pr p50&Pr p95&Ve p50&Ve p95&Proof&Witness\\\midrule
+$(3,2)$&32,474&1.93&163.42&168.89&1.028&1.193&164&556\\
+$(4,2)$&42,918&2.83&225.79&234.12&1.038&1.377&164&620\\
+$(5,2)$&53,528&3.04&254.66&266.86&1.051&1.343&164&684\\
+$(3,3)$&35,248&2.23&206.34&218.98&1.059&1.296&164&684\\
+$(4,3)$&46,737&2.71&234.93&248.10&1.038&1.235&164&748\\
+$(8,2)^\dagger$&86,354&10.85&902.09&927.00&1.237&1.438&164&876\\\bottomrule
 \end{tabular}
 \end{table}
 
@@ -73,7 +76,10 @@ $(4,3)$&46,737&234.93&1.038\\\bottomrule
 \end{figure}
 
 \subsubsection{Resource-limited compilation scalability}
-Table 14 and Figure 7 summarize the 32 resource-bounded R1CS compilation runs across $n \in \{4, 8, 12, 16\}$ and $d \in \{2, 3\}$, where 27 runs completed within the 3 GiB RSS / 30 s budget and 5 reached the resource limit (RL). At $(d, n) = (2, 16)$, lower-corner reachability generates 3,509,645 constraints, compared with only 181,194 ($b = 1$) and 308,978 ($b = 2$) for the subset backend. In 3D ($d = 3$), lower-corner reachability exceeds the 3 GiB compilation limit for $n \ge 8$, whereas subset enumeration with $b \in \{1, 2\}$ scales smoothly up to $n = 16$ (203,793 and 395,417 constraints). Conversely, when the omission budget grows to $k = n/2$, combinatorial subset growth becomes apparent, reaching 962,018 constraints at $(d, n, k) = (3, 12, 6)$. These results confirm that threshold-subset enumeration is highly advantageous for small fault and miscoverage budgets ($b = f + r \ll n$), while lower-corner reachability provides threshold flexibility for small issuer rosters.
+Table~\ref{tab:compilegrowth} and Figure~\ref{fig:compilegrowth} summarize the 32 resource-bounded R1CS compilation runs across $n \in \{4, 8, 12, 16\}$ and $d \in \{2, 3\}$, where 27 runs completed within the 3 GiB RSS / 30 s budget and 5 reached the resource limit (RL). At $(d, n) = (2, 16)$, lower-corner reachability generates 3,509,645 constraints, compared with only 181,194 ($b = 1$) and 308,978 ($b = 2$) for the subset backend. A full end-to-end n=8 subset proof experiment is reported separately below. In 3D ($d = 3$), lower-corner reachability exceeds the 3 GiB compilation limit for $n \ge 8$, whereas subset enumeration with $b \in \{1, 2\}$ compiles within the stated resource budget up to $n = 16$ (203,793 and 395,417 constraints). Conversely, when the omission budget grows to $k = n/2$, combinatorial subset growth becomes apparent, reaching 962,018 constraints at $(d, n, k) = (3, 12, 6)$. These compilation results indicate that threshold-subset enumeration has a substantially smaller constraint footprint for small fault and miscoverage budgets ($b = f + r \ll n$), while lower-corner reachability provides threshold flexibility for small issuer rosters.
+
+
+\paragraph{Independent eight-issuer proving run.} To distinguish R1CS compilation from actual cryptographic execution, we performed 30 post-setup proofs with $n=8$, $d=2$, and omission budget $b=1$ using the full subset circuit on a GitHub Actions \texttt{linux/amd64} runner (Go 1.25.0, gnark 0.14.0). The circuit contains 86,354 constraints, setup took 10.852 s, proving p50/p95 were 902.089/926.998 ms, verification p50/p95 were 1.237/1.438 ms, the proof was 164 bytes, and the public witness occupied 876 bytes. These are 30 real Groth16 proof and verification executions, not a compile-only estimate, and their hardware environment differs from the Apple M1 results in Tables~\ref{tab:crypto}--\ref{tab:subset}. The pinned workflow and machine-readable record are available via the experimental repository and its archived CI run.
 
 \begin{table}[htbp]\centering\small
 \caption{Resource-limited R1CS compilation sweep with complete signature and geometric constraints. \texttt{RL} indicates termination before a count was obtained.}\label{tab:compilegrowth}

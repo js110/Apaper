@@ -1,5 +1,5 @@
 \subsection{Four-valued robust spacetime compliance}
-For uncertain evidence from several sources, membership of one selected point in the authorized region does not suffice to certify the event. We instead impose a set-level requirement: compliance is accepted only if every threshold-supported possible state belongs to the policy and at least one such state exists. Unlike an intersection of all source intervals, this rule prevents anomalous or Byzantine intervals from skewing or emptying the feasible support.
+For uncertain evidence from several sources, membership of one selected point in the authorized region does not suffice to certify the event. We instead impose a set-level requirement: compliance is accepted only if every threshold-supported possible state belongs to the policy and at least one such state exists. Unlike an intersection of all source intervals, this rule does not allow up to $f$ Byzantine intervals to erase the true state from threshold support when the coverage premise holds; such intervals may nonetheless enlarge the feasible set and reduce decisiveness.
 
 For $1 \le k = n - f - r \le n$, the robust feasible set is
 
@@ -13,7 +13,7 @@ Here $\mathbf{1}[\cdot]$ is the indicator function. Define reachability inside a
 \[I = \mathbf{1}[\mathcal{F}_k \cap P \neq \emptyset], \quad O = \mathbf{1}[\mathcal{F}_k \cap (\Omega \setminus P) \neq \emptyset].\]
 
 
-The pair $(I, O)$ defines the four mutually exclusive outcomes in Table 2. Only a Valid classification authorizes acceptance following successful proof verification.
+The pair $(I, O)$ defines the four mutually exclusive outcomes in Table~\ref{tab:decisions}. Only a Valid classification authorizes acceptance following successful proof verification.
 
 
 
@@ -36,5 +36,5 @@ Figure~\ref{fig:counterexample} illustrates how full-source intersection and poi
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=\linewidth]{decision_counterexample.png}
-\caption{Comparison of three decision rules applied to the same signed evidence over inclusive integer intervals with $(n, f, r, k) = (3, 1, 0, 2)$. Point selection and all-source intersection falsely accept the noncompliant true state $z^* = -1$, whereas threshold support correctly yields an Ambiguous decision.}\label{fig:counterexample}
+\caption{Comparison of three decision rules applied to the same signed evidence over inclusive integer intervals with $(n, f, r, k) = (3, 1, 0, 2)$. Point selection and all-source intersection falsely accept the noncompliant true state $z^* = -1$, whereas threshold support correctly yields an Ambiguous decision. This schematic was redrawn with AI-assisted plotting code (OpenAI ChatGPT, GPT-6); numerical and logical labels require author verification before submission.}\label{fig:counterexample}
 \end{figure}
