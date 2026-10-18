@@ -1,0 +1,16 @@
+\subsection{Discussion and system limitations}
+While our evaluation demonstrates the soundness and efficiency of zero-knowledge spacetime compliance over finite domains, several system-level considerations govern its deployment in vehicular networks:
+\begin{enumerate}
+\item \textbf{Physical calibration and common-mode bias.} Cryptographic proofs guarantee computation integrity over authenticated intervals but cannot verify whether those intervals physically enclose the true event $z^*$. As illustrated by the retrospective single-receiver GNSS diagnostic in Appendix A, a static uncertainty envelope calibrated on an initial time segment (covering 76/78 epochs) covered only 2/69 epochs in a subsequent segment due to temporal drift. Practical deployments therefore require online sensor calibration, conservative quantization envelopes, and cross-provider diversity to mitigate correlated multipath or clock biases.
+
+
+\item \textbf{Roster availability and gateway state management.} Requiring signatures from a fixed roster of $n$ issuers prevents provers from selectively dropping unfavorable observations, but allows a single unreachable or non-responsive issuer to cause a protocol abort. Extending the circuit with Merkle-tree roster commitments to support dynamic $n$-of-$N$ active issuer subsets, alongside distributed nonce persistence, rate limiting, and report deduplication across replicated gateways, is a natural direction for production V2X infrastructures.
+
+
+\item \textbf{Privacy scope and hardware profiling.} Zero-knowledge proofs conceal the signed spacetime intervals from the gateway, but do not encrypt the report payload $R$ or prevent location inference under unrestricted adaptive policy queries. Finally, our benchmarks measure Groth16 proving latencies on an Apple M1 workstation; deploying the prover on resource-constrained automotive on-board units (OBUs) will require profiling energy consumption, V2I communication latency, and multi-party trusted setup ceremonies (or transparent SNARK backends).
+\end{enumerate}
+
+\section{Conclusion}
+We have presented a zero-knowledge spacetime compliance certification framework for vehicular crowdsensing under measurement uncertainty and Byzantine evidence. Rather than certifying a single concealed coordinate, our method constructs the robust feasible set of states supported by at least $k = n - f - r$ signed uncertainty intervals and evaluates a four-valued compliance rule (Valid, Invalid, Ambiguous, and Inconsistent), accepting reports only when the feasible set is nonempty and wholly contained within the authorized policy.
+
+We realized this relation in two exact Groth16/BN254 circuit backends---lower-corner reachability and threshold-subset enumeration---paired with a challenge-bound verification gateway. Across 12 calibrated synthetic conditions satisfying the fault and coverage budgets, the robust rule eliminated false decisive classifications while improving mean decisive coverage to 87.52\% over a fixed-margin baseline (75.63\%). For small omission budgets, the subset backend achieves 164-byte proofs and 163--255 ms median proving times on an Apple M1. Future work will investigate online uncertainty calibration across heterogeneous vehicular sensors, dynamic threshold roster commitments, and end-to-end evaluation on embedded automotive hardware.

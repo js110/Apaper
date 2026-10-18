@@ -1,5 +1,0 @@
-- Robust certification rejects point claims unsupported by signed uncertainty
-- Zero-knowledge proofs bind private evidence to task, report, roster, and challenge
-- Four-valued semantics separate compliance, violation, ambiguity, and inconsistency
-- Pinned ZKLP reproduction contextualizes authenticated robust proof costs
-- Security guarantees separate cryptography from physical calibration

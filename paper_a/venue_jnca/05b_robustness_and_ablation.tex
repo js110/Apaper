@@ -1,0 +1,60 @@
+\subsection{Robustness and baseline comparison}
+Across the 12 synthetic conditions where the actual Byzantine count and honest coverage satisfy the configured budgets ($f$ and $r$), the robust feasible-set rule achieved zero wrong decisive classifications (0\% FA and 0\% FR) with a mean decisive coverage of 87.52\%, outperforming the fixed-margin baseline (75.63\%) by 11.89 percentage points.
+
+
+
+Table~\ref{tab:semantic} details the focus condition (correlated calibrated errors, maximum radius 4, and one Byzantine issuer). The robust rule achieves 85.04\% decisive coverage with zero errors, whereas the fixed-margin rule reaches 75.67\%. Point-estimation baselines (median point and majority center) classify 100\% of events but suffer from 2.10\% FA and 15.29\%--16.30\% FR due to boundary uncertainty. All-source intersection fails on 87.63\% of events and still incurs 8.64\% FA and 47.55\% FR when a Byzantine interval manipulates the remaining overlap. Using a 10,000-resample paired bootstrap across the 30 seed groups, the robust rule improves decisive coverage over fixed margins by 9.38 percentage points (95\% CI: $[8.25, 10.54]$ percentage points).
+
+
+
+\begin{table}[htbp]\centering\small
+\caption{Focus-condition classification results: means over 30 seeds of 80 events each (percent). FA/FR use outside/inside denominators; the other columns use all events.}\label{tab:semantic}
+\begin{tabular}{lrrrrr}\toprule
+Method&FA&FR&Amb.&Failure&Decisive\\\midrule
+Median point claim&2.10&15.29&0&0&100\\
+Majority center&2.10&16.30&0&0&100\\
+Fixed maximum-radius margin&0&0&24.33&0&75.67\\
+All-source intersection&8.64&47.55&0&87.63&12.38\\
+Robust feasible set&0&0&14.96&0&85.04\\\bottomrule
+\end{tabular}\end{table}
+
+Grouping events by the actual honest-miscoverage count $M$ directly validates Proposition 1. In the focus condition, all 2,400 events satisfy $M = 0 \le r$ with zero wrong decisive outcomes (yielding a one-sided 95\% exact binomial upper bound of 9.50\% on the seed-group failure probability across the 30 independent seeds). Under the undercovered error model, the proportion of events satisfying $M \le r$ increases from 52.42\% ($r = 0$) to 62.79\% ($r = 1$) and 73.42\% ($r = 2$). Across all three settings, events satisfying $M \le r$ incurred strictly zero wrong decisive classifications, whereas premise violations ($M > r$) resulted in wrong-decisive rates of 1.31\%, 0.67\%, and 0.47\%, respectively.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{availability.png}
+\caption{Decisive coverage versus maximum uncertainty radius (in quantized units) under correlated calibrated errors with one Byzantine issuer. Error bars denote 95\% confidence intervals across 30 seeds.}\label{fig:availability}
+\end{figure}
+
+\subsection{Ablation and out-of-budget stress tests}
+Table 7 evaluates system behavior when external assumptions are violated. Under honest-source undercoverage ($M > r$) with one Byzantine issuer, the robust rule experiences 0.23\% FA and 3.41\% FR. When two Byzantine issuers attack a verifier configured for $f = 1$, evidence failure rises to 83.33\% and conditional FA/FR reach 11.62\% and 60.86\%, confirming that the Inconsistent state ($\mathcal{F}_k = \emptyset$) reflects empty threshold support rather than serving as a universal detector for out-of-budget collusion.
+
+
+
+\begin{table}[htbp]\centering\small
+\caption{Stress conditions violating source assumptions: means over 30 seeds (percent).}\label{tab:assumption-stress}
+\begin{tabularx}{\linewidth}{@{}Xrrrr@{}}\toprule
+Condition&FA&FR&Evidence failure&Decisive\\\midrule
+Honest undercoverage; Byzantine count within budget&0.23&3.41&0&84.92\\
+Two actual Byzantine issuers with verifier budget $f=1$&11.62&60.86&83.33&16.67\\\bottomrule
+\end{tabularx}\end{table}
+
+Table~\ref{tab:miscoverage} and Figure~\ref{fig:budget} show the paired ablation over the honest-miscoverage budget $r \in \{0, 1, 2\}$ for $n = 5, f = 1$. Because increasing $r$ lowers the support threshold $k = n - f - r$ and expands $\mathcal{F}_k$, it trades decisive coverage for stronger protection against uncalibrated honest misses. Under calibrated evidence, increasing $r$ from 0 to 2 reduces decisive coverage from 85.04\% to 77.46\% while maintaining zero errors. Under undercovered evidence, raising $r$ from 0 to 2 eliminates FA (from 0.23\% to 0\%) and reduces FR from 3.41\% to 0.94\%, with decisive coverage shifting from 84.92\% to 78.50\%.
+
+Trajectory replay over the measured UrbanNav path corroborates these findings. Under nominal simulated errors, the robust rule achieves 93.27\% decisive coverage with zero errors, outperforming fixed margins (81.94\%) and avoiding the errors of the median-point baseline (0.29\% FA, 3.12\% FR). Under the $4\times$ common-mode bias stress test, the robust rule maintains low error rates of 0.032\% FA and 0.493\% FR.
+
+\begin{table}[htbp]\centering\small
+\caption{Paired ablation over honest-miscoverage allowance ($n=5$, $f=1$, maximum radius four, one Byzantine issuer; percent).}\label{tab:miscoverage}
+\begin{tabular}{lrrrr}\toprule
+Error model&$r$&FA&FR&Decisive coverage\\\midrule
+Calibrated&0&0&0&85.04\\
+Calibrated&1&0&0&81.25\\
+Calibrated&2&0&0&77.46\\
+Undercovered&0&0.23&3.41&84.92\\
+Undercovered&1&0&1.79&81.67\\
+Undercovered&2&0&0.94&78.50\\\bottomrule
+\end{tabular}\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{budget_tradeoff.png}
+\caption{Paired ablation over the honest-miscoverage allowance $r$ for $n = 5, f = 1$: (a) decisive coverage, (b) conditional false acceptance, and (c) conditional false rejection. Points represent means and error bars indicate normal-approximation 95\% confidence intervals across 30 seeds.}\label{fig:budget}
+\end{figure}

@@ -1,0 +1,26 @@
+\section{Proposed Framework}
+We design a report-bound zero-knowledge compliance method for multisource spacetime observations subject to measurement uncertainty and Byzantine failures. Instead of first collapsing these observations into a single estimated location, the method retains their intervals and evaluates compliance against every possible state reaching a support threshold. The workflow constructs a robust feasible set from signed evidence, determines its relationship to the authorized policy, and proves the resulting decision. We first establish the system model and decision semantics, and then describe the binding protocol and proof circuits.
+
+\subsection{System model and assumptions}
+For a reference event associated with a sensing report, write the true spacetime state as $z^* = (x, y, t)$. We represent space and time in a $d$-dimensional discrete domain,
+
+
+\begin{equation}\label{eq:domain}
+\Omega = \left(\prod_{a=1}^{d} [L_a, H_a]\right) \cap \mathbb{Z}^d.
+\end{equation}
+
+
+The interval $[L_a, H_a]$ bounds coordinate $a$. An authorized spacetime policy is a public integer box $P \subseteq \Omega$. Each enrolled evidence issuer $i$ (e.g., an independent roadside unit (RSU), cellular base station, or local positioning beacon) signs an inclusive axis-aligned integer box $U_i \subseteq \Omega$ concerning the same reference event, under a common context $c$. All sources use a common coordinate reference system, time base, measurement units, and conservative quantization rule, where continuous uncertainty regions are mapped to all intersecting integer cells. In the prototype, interval endpoints are encoded as unsigned 16-bit integers, and out-of-range coordinates are rejected prior to circuit execution.
+
+The system comprises evidence issuers, a vehicle acting as prover, and a verification gateway. The host crowdsensing application supplies the authorized task, raw report bytes, fixed roster of $n$ issuers, and calibration settings. The vehicle collects the signed evidence for a report and produces a zero-knowledge proof of its four-valued classification. The gateway verifies the proof under its trusted task configuration and returns a decision.
+
+We assume that among the $n$ enrolled issuers, at most $f$ are Byzantine and may submit arbitrary signed intervals. Up to $r$ further intervals from honest issuers may fail to cover the true state $z^*$, allowing for potentially correlated measurement errors. The gateway enforces roster distinctness by rejecting repeated public keys and trust-domain labels, while organizational independence and Sybil-resistant enrollment are enforced at the registration layer. All $n$ roster members must provide valid signatures for a task; missing or invalid signatures cause the protocol to abort rather than yielding a certified inconsistent decision, making the module suited for delay-tolerant task certification.
+
+Let $l_{ia}$ and $u_{ia}$ be the lower and upper endpoints of $U_i$ in coordinate $a$. The signed message digest is
+
+\begin{equation}\label{eq:signedbox}
+m_i = \mathrm{MiMC}(c, i, l_{i1}, u_{i1}, \dots, l_{id}, u_{id}).
+\end{equation}
+
+
+The circuit verifies an EdDSA signature on this digest. Its public statement includes $c$, $\Omega$, $P$, the support threshold $k$, the decision code, and the ordered issuer public keys. The shared context $c$ binds the task, coordinate conventions, policy, threshold, issuer roster, report digest, challenge nonce, and expiry, which the gateway reconstructs directly from its trusted configuration. While cryptographic verification guarantees source authenticity and set-level computation over the quantized domain $\Omega$, inferring physical compliance of $z^*$ relies on the upstream premise that at least $k$ honest uncertainty envelopes physically cover the event.

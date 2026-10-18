@@ -1,0 +1,34 @@
+\begin{proposition}[Composed conditional acceptance bound]\label{prop:composition}
+Under a trusted task configuration, roster, and gateway clock, the probability of false acceptance under valid physical coverage satisfies
+
+\begin{equation}\label{eq:composed}
+\Pr[\mathsf{Acc} \wedge \mathsf{Cov} \wedge \neg\mathsf{Comp}] \le \epsilon_{\mathrm{snark}} + \epsilon_{\mathrm{sig}} + \epsilon_{\mathrm{MiMC}} + \epsilon_{\mathrm{ctx}} + \epsilon_{\mathrm{state}}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+If none of the five cryptographic or state-enforcement failure events occurs, an accepted proof ensures $\emptyset \neq \mathcal{F}_k \subseteq P$ for the authentic task and report context. Under $\mathsf{Cov}$, Proposition 1 implies $z^* \in \mathcal{F}_k \subseteq P$ ($\mathsf{Comp}$). Thus, $\mathsf{Acc} \wedge \mathsf{Cov} \wedge \neg\mathsf{Comp}$ implies at least one failure event, and the union bound gives (8).
+\end{proof}
+
+In a single-process gateway with atomic nonce consumption, replay of an already accepted challenge has $\epsilon_{\mathrm{state}} = 0$. The prototype instantiates these primitives with 256-bit nonces, SHA-256 context hashing, Groth16 over BN254, and gnark's twisted-Edwards BN254 EdDSA/MiMC implementation.
+
+\subsection{Resistance to protocol attacks}
+\textbf{Evidence tampering and context substitution.} Modifying any endpoint of a signed region $U_i$ alters its MiMC digest in (2), causing in-circuit EdDSA verification to fail unless the adversary forges an honest issuer's signature. Similarly, substituting the task, report bytes, roster, threshold, challenge nonce, or expiry alters the public context $c$ reconstructed by the gateway, invalidating proofs generated for prior statements. Missing signatures, duplicated roster keys, or mismatched decision codes trigger immediate gateway rejection or protocol abort rather than producing a certified Inconsistent outcome.
+
+\textbf{Challenge replay.} The gateway mitigates replay attacks by verifying challenge existence and expiry prior to proof checking and atomically marking the nonce as consumed upon Valid acceptance. Consequently, concurrent submissions of an identical valid request succeed at most once within the gateway instance. Because failed verifications do not consume unexpired nonces, legitimate provers can retry after transient errors, while deployment-level rate limiting can be applied to throttle repeated invalid submissions.
+
+\textbf{Policy-aware Byzantine intervals.} Compromised issuers may craft intervals strategically using full knowledge of the public policy $P$. Provided the fault and miscoverage budgets ($f$ and $r$) hold, Proposition 1 ensures $z^* \in \mathcal{F}_k$ regardless of adversarial box placement. Thus, a noncompliant event ($z^* \notin P$) cannot yield $\mathcal{F}_k \subseteq P$ (Valid), and a compliant event ($z^* \in P$) cannot yield $\mathcal{F}_k \cap P = \emptyset$ (Invalid). Strategic Byzantine boxes can at most expand $\mathcal{F}_k$ across the boundary to induce an Ambiguous outcome or withhold signatures to force an abort, but cannot induce a wrong decisive classification.
+
+\subsection{Privacy boundary and information leakage}
+Zero-knowledge proofs allow the gateway to verify the four-valued compliance relation without learning the private witness (the signed intervals $U_i$ and their signatures). Table 4 delineates the visibility boundaries across protocol roles. Because the gateway receives the plaintext report $R$ to reconstruct the deterministic binding context $c$, $c$ acts as an integrity commitment rather than a hiding commitment; for low-entropy reports, an external observer who knows the task and challenge parameters could mount an offline dictionary test against $c$.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Visibility and leakage boundaries for protocol participants.}\label{tab:privacy-boundary}
+\begin{tabularx}{\linewidth}{@{}p{0.19\linewidth}p{0.37\linewidth}X@{}}\toprule
+Role & Visible within the protocol model & Not concealed by the ZK guarantee\\\midrule
+Evidence issuer & Its own observation and region, signing operation, and report-bound context & Its own evidence and any report data supplied by the host application\\
+Vehicle/prover & Report, regions, and signatures required to build the witness & Secrecy of the witness from the prover itself is not an objective\\
+Gateway/verifier & Report bytes, task/domain, policy, threshold, roster, nonce/expiry, public context, proof, classification & Report content, public policy, issuer identities, classification\\
+Public transcript observer & Exposed statement, proof, classification, and transport metadata & Linkability of public fields and offline candidate tests for low-entropy reports\\\bottomrule
+\end{tabularx}\end{table}
+
+Furthermore, the public four-valued classification $\delta \in \{0, 1, 2, 3\}$ inherently reveals up to $\log_2 4 = 2$ bits of information per query (or at most $2q$ bits across $q$ queries) regarding the relationship between $\mathcal{F}_k$ and $P$. While a single task-bound check preserves witness confidentiality within the authorized region, unrestricted adaptive policy queries could progressively narrow the candidate location space, motivating query-authorization and rate-control policies in multi-query applications.

@@ -1,0 +1,40 @@
+\subsection{Four-valued robust spacetime compliance}
+For uncertain evidence from several sources, membership of one selected point in the authorized region does not suffice to certify the event. We instead impose a set-level requirement: compliance is accepted only if every threshold-supported possible state belongs to the policy and at least one such state exists. Unlike an intersection of all source intervals, this rule prevents anomalous or Byzantine intervals from skewing or emptying the feasible support.
+
+For $1 \le k = n - f - r \le n$, the robust feasible set is
+
+\begin{equation}\label{eq:feasible}
+\mathcal{F}_k = \left\{ z \in \Omega : \sum_{i=1}^{n} \mathbf{1}[z \in U_i] \ge k \right\}.
+\end{equation}
+
+
+Here $\mathbf{1}[\cdot]$ is the indicator function. Define reachability inside and outside the policy by
+
+\[I = \mathbf{1}[\mathcal{F}_k \cap P \neq \emptyset], \quad O = \mathbf{1}[\mathcal{F}_k \cap (\Omega \setminus P) \neq \emptyset].\]
+
+
+The pair $(I, O)$ defines the four mutually exclusive outcomes in Table 2. Only a Valid classification authorizes acceptance following successful proof verification.
+
+
+
+\begin{table}[htbp]\centering\small
+\caption{Four-valued robust spacetime compliance.}\label{tab:decisions}
+\begin{tabularx}{\linewidth}{@{}ccclX@{}}\toprule
+$I$ & $O$ & $\delta$ & Outcome & Feasible-set condition\\\midrule
+1&0&0&Valid&$\mathcal F_k\ne\varnothing$ and $\mathcal F_k\subseteq P$\\
+0&1&1&Invalid&$\mathcal F_k\ne\varnothing$ and $\mathcal F_k\cap P=\varnothing$\\
+1&1&2&Ambiguous&Supported states occur inside and outside $P$\\
+0&0&3&Inconsistent&$\mathcal F_k=\varnothing$\\\bottomrule
+\end{tabularx}
+\end{table}
+
+Inconsistent evidence ($\mathcal{F}_k = \emptyset$) is a well-defined semantic decision computed from a complete set of authenticated signatures, distinct from protocol aborts caused by missing signatures, invalid proofs, or expired nonces. Requiring $\mathcal{F}_k \neq \emptyset$ explicitly avoids vacuous acceptance ($\emptyset \subseteq P$) when observations fail to reach consensus.
+
+
+
+Figure~\ref{fig:counterexample} illustrates how full-source intersection and point selection diverge from threshold support. Consider $\Omega = [-4, 8] \cap \mathbb{Z}$, $P = [0, 8] \cap \mathbb{Z}$, $n = 3$, $f = 1$, $r = 0$, and $k = 2$. Both honest intervals contain the true noncompliant state $z^* = -1$. A Byzantine issuer submits $U_3 = [2, 4]$, excluding $z^*$ while leaving the three-way intersection equal to $[2, 4] \cap \mathbb{Z} \subseteq P$. Point selection or all-source intersection would falsely accept the report, whereas the threshold-supported set $\mathcal{F}_2 = [-2, 4] \cap \mathbb{Z}$ spans the policy boundary and yields an Ambiguous decision.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{decision_counterexample.png}
+\caption{Comparison of three decision rules applied to the same signed evidence over inclusive integer intervals with $(n, f, r, k) = (3, 1, 0, 2)$. Point selection and all-source intersection falsely accept the noncompliant true state $z^* = -1$, whereas threshold support correctly yields an Ambiguous decision.}\label{fig:counterexample}
+\end{figure}

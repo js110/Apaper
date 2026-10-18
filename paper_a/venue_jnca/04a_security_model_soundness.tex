@@ -1,0 +1,47 @@
+\section{Security Analysis}\label{sec:security}
+The preceding section defined the robust compliance relation and its realization in a zero-knowledge circuit. This section addresses what gateway acceptance can establish. Two related but distinct layers must be considered. Signatures, context binding, and zero-knowledge proofs constrain the origin of the submitted evidence, its association with a task, and the correctness of the computed relation. Inferring the position of the physical event from that evidence additionally requires coverage by honest sources. We specify the threat model, establish conditional soundness, and examine protocol attacks and information leakage.
+
+\subsection{Threat model and security objectives}
+We treat the vehicle and its communication network as untrusted. A computationally bounded adversary may intercept, modify, reorder, or replay reports, proofs, decision codes, and challenge parameters, and may use the private keys of up to $f$ compromised issuers to sign deceptive, policy-aware uncertainty regions. Honest issuers protect their signing keys and bind their observations to the intended event and task context. The gateway's task configuration, verifying key, issuer roster, and clock are trusted, and the underlying signature, hash, and proof primitives satisfy standard computational security assumptions.
+
+We analyze six core security properties---evidence authenticity, context integrity, conditional acceptance soundness, witness confidentiality, challenge freshness, and fail-closed behavior---summarized in Table 3. Here, witness confidentiality protects the private spacetime boxes and signatures from the verifier and external observers, while the business report payload $R$ and task metadata remain visible to the gateway.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Security properties, prerequisites, and validation.}\label{tab:security-properties}
+\begin{tabularx}{\linewidth}{@{}p{0.20\linewidth}p{0.30\linewidth}X@{}}\toprule
+Property & Assumptions & Mechanism or observation\\\midrule
+Evidence authenticity & Honest keys uncompromised outside the Byzantine allowance; signature unforgeability & In-circuit EdDSA/MiMC verification; modified signed bounds rejected\\
+Context integrity & Trusted task configuration; signed-message and context mappings satisfy collision/binding assumptions & Binding to task, report, roster, threshold, nonce and expiry; tested substitutions rejected\\
+Conditional acceptance soundness & Sound proof system; at most $f$ Byzantine issuers and $r$ honest misses & Four-valued relation, Propositions~\ref{prop:soundness}--\ref{prop:composition}, and synthetic checks tagged by $M\le r$\\
+Witness confidentiality & Zero knowledge of the instantiated proof system; explicit public-output leakage & Box endpoints and signatures remain private witness values; other disclosure is summarized in Table~\ref{tab:privacy-boundary}\\
+Freshness & Trusted clock; atomic challenge updates in one gateway instance & Expiry checks and atomic marking after successful verification; one accepted among eight concurrent replays\\
+Fail-closed behavior & Correct gateway procedure and complete configured roster & Missing/malformed evidence, mismatched codes, unknown/expired challenges, or duplicated roster entries abort or are rejected\\\bottomrule
+\end{tabularx}\end{table}
+
+\subsection{Correctness and conditional soundness}
+\begin{proposition}[Conditional evidence soundness]\label{prop:soundness}
+Suppose at most $f$ of the $n$ enrolled issuers are Byzantine, and at most $r$ boxes submitted by honest issuers fail to cover the true reference state $z^*$. With $k = n - f - r$, we have $z^* \in \mathcal{F}_k$. Consequently, a Valid decision entails $z^* \in P$, and an Invalid decision entails $z^* \notin P$.
+\end{proposition}
+\begin{proof}
+At least $n - f - r = k$ honest boxes contain $z^*$. By the definition of the feasible set in (3), its coverage depth at $z^*$ is at least $k$, so $z^* \in \mathcal{F}_k$. A Valid decision requires $\emptyset \neq \mathcal{F}_k \subseteq P$, implying $z^* \in P$, whereas an Invalid decision requires $\mathcal{F}_k \cap P = \emptyset$, implying $z^* \notin P$.
+\end{proof}
+
+If the stronger condition $n > 2f + r$ holds, then $k > f$, ensuring that every state in $\mathcal{F}_k$ is supported by at least one honest issuer; however, $k = n - f - r \ge 1$ suffices to guarantee $z^* \in \mathcal{F}_k$.
+
+To quantify the probability that honest miscoverage exceeds the allowance $r$, let $\mathcal{H}$ denote the set of honest issuers, and let $M$ count the honest boxes that miss $z^*$. If each honest issuer $i \in \mathcal{H}$ has marginal miss probability at most $\alpha_i$, Markov's inequality yields a distribution-free upper bound that holds even under arbitrarily correlated errors:
+
+
+\begin{equation}\label{eq:calibration}
+\Pr(M > r) = \Pr(M \ge r + 1) \le \min\left\{ 1, \frac{\sum_{i \in \mathcal{H}} \alpha_i}{r + 1} \right\}.
+\end{equation}
+
+Transitioning from set-level semantics to gateway acceptance incorporates cryptographic soundness. Under the knowledge soundness of Groth16 (given a secure circuit-specific setup), an accepted proof guarantees the existence of a witness satisfying all signature, range, and geometric constraints. Combined with EdDSA unforgeability and the collision/binding resistance of the MiMC prehash and context mapping, this witness must correspond to authenticated intervals bound to the designated task and report.
+
+\begin{proposition}[Gateway acceptance under physical coverage]\label{prop:gateway}
+Assume an authorized task configuration and roster, a trustworthy gateway procedure and clock, unforgeable honest-issuer signatures, a knowledge-sound proof system, and collision-resistant MiMC and context bindings. If the gateway accepts a report and the fault and coverage premises of Proposition 1 hold, then the report-bound reference event $z^*$ satisfies $z^* \in P$, up to negligible cryptographic failure probabilities.
+\end{proposition}
+\begin{proof}
+The gateway reconstructs the public statement from its trusted task snapshot and received report bytes, accepting only a verified proof with decision code Valid. By knowledge soundness, signature unforgeability, and context binding, verification guarantees the existence of authenticated boxes satisfying $\emptyset \neq \mathcal{F}_k \subseteq P$ for the current context. Under the physical coverage premise, Proposition 1 yields $z^* \in \mathcal{F}_k \subseteq P$.
+\end{proof}
+
+To formalize the composition of cryptographic and physical premises, let $\mathsf{Acc}$ denote gateway acceptance, $\mathsf{Cov}$ denote the event that the Byzantine ($f$) and honest-miscoverage ($r$) budgets hold, and $\mathsf{Comp}$ denote $z^* \in P$. For a given adversary and security parameter, let $\epsilon_{\mathrm{snark}}, \epsilon_{\mathrm{sig}}, \epsilon_{\mathrm{MiMC}}, \epsilon_{\mathrm{ctx}}$, and $\epsilon_{\mathrm{state}}$ upper-bound the failure probabilities of proof knowledge soundness, signature unforgeability, MiMC prehash binding, context binding, and challenge-state enforcement, respectively.

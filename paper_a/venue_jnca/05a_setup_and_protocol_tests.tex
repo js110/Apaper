@@ -1,0 +1,32 @@
+\section{Experimental Evaluation}
+We evaluate the proposed evidence-certification framework across three dimensions: protocol security regressions, four-valued decision semantics under synthetic and trajectory-replay workloads, and Groth16 cryptographic performance across both circuit backends.
+
+\subsection{Implementation and experimental setup}
+\subsubsection{Cryptographic implementation and test environment}
+The prototype is implemented in Go 1.25.6 using \texttt{gnark} v0.14.0 ~\citep{gnark}, Groth16 over BN254 ~\citep{Groth2016}, and \texttt{gnark}'s twisted-Edwards BN254 EdDSA and MiMC primitives for in-circuit signature verification ~\citep{MiMC2016}. Key generation, signing, setup, proving, and verification all execute full cryptographic operations. The source code and benchmark scripts are organized under \texttt{prototype/} and \texttt{experiments/} in our open-source repository.
+
+Proof benchmarks were conducted on a Mac mini equipped with an 8-core Apple M1 processor and 16 GB of RAM. For each circuit configuration, we performed one setup followed by 30 proof generation and verification trials over a valid signed witness, measuring pure proving and verification kernel latencies. As a structural reference for baseline geometric overhead, we also implemented a simplified hidden-point region-membership circuit on the same \texttt{gnark}/Groth16/BN254 stack (omitting issuer signatures, threshold fusion, and four-valued logic).
+
+To evaluate circuit scalability separately from proving latency, we compiled full signed-evidence R1CS instances across issuer counts $n \in \{4, 8, 12, 16\}$ and dimensions $d \in \{2, 3\}$. For each $(n, d)$ pair, we tested subset enumeration with $k = n - 1$, $k = n - 2$, and $k = n/2$, alongside lower-corner reachability (32 compilations in total), enforcing a 30 s timeout, a 3 GiB resident set size (RSS) cap, and a 2500 MiB Go soft memory target.
+
+\subsubsection{Synthetic evidence and trajectory replay}
+The semantic evaluation uses the 3D integer domain $\Omega = [0, 63]^3$ and policy $P = [18, 45]^3$ with $n = 5$ issuers, Byzantine budget $f = 1$, and baseline miscoverage allowance $r = 0$. We cross maximum uncertainty radii $\{2, 4, 6\}$, actual Byzantine counts $\{0, 1, 2\}$, and three error models (independent calibrated, correlated calibrated, and undercovered) to form 27 conditions. Each condition runs 30 random seeds with 80 events per seed (64,800 base observations), placing 75\% of events near policy boundaries. Byzantine issuers select intervals adversarially using the true state $z^*$ and policy $P$.
+
+We compare the robust feasible-set rule against four baselines: median point claim, majority-center voting, fixed maximum-radius margin, and all-source intersection. False acceptance (FA) and false rejection (FR) are computed over truly noncompliant and truly compliant events, respectively, while decisive coverage measures the fraction of all events classified as Valid or Invalid. Because the circuit backends and the native reference classifier are mathematically identical over $\Omega$ (verified via randomized equivalence tests), the large-scale semantic sweeps execute the native classifier directly, while Groth16 proving costs are benchmarked in Section 5.6. Each event logs the number $M$ of honest intervals missing $z^*$ to track satisfaction of Proposition 1's premise ($M \le r$), and all 64,800 observations are re-evaluated across $r \in \{0, 1, 2\}$ in paired ablation tests.
+
+To evaluate realistic vehicle kinematics, we extract 787 measured reference states (spanning 786 s) from the UrbanNav-HK-Medium-Urban-1 dataset ~\citep{UrbanNav}. In a local integer frame, a percentile-defined policy $P$ encloses 169 states. Across 30 replay seeds, we simulate four honest sources with bounded correlated errors and one policy-aware Byzantine source along the measured trajectory, plus a stress regime that quadruples the common-mode bias.
+
+\subsection{Protocol-security regression tests}
+Table 5 summarizes the adversarial regression tests executed against the end-to-end proof and gateway pipeline across mutated evidence bounds, decision codes, task contexts, rosters, and challenge nonces. The results confirm that tampering with signed interval endpoints or transplanting proofs across tasks and reports causes immediate verification failure, and missing roster signatures reliably abort the protocol rather than misreporting semantic inconsistency. Furthermore, under eight-way concurrent replay of an identical valid request, atomic state updates ensure that exactly one submission succeeds.
+
+\begin{table}[htbp]\centering\small
+\caption{Adversarial regression tests of proof generation and gateway verification.}\label{tab:security-validation}
+\begin{tabularx}{\linewidth}{@{}p{0.22\linewidth}p{0.35\linewidth}X@{}}\toprule
+Attack & Enforced constraint & Observed prototype response\\\midrule
+Evidence-bound tampering & Signed interval endpoints, issuer slot, context & Altered signed bounds were rejected\\
+Decision substitution & Agreement between four-valued circuit output and public decision code & Tested mismatched proof/code pairs were rejected\\
+Task or report substitution & Binding to task, report, threshold, roster, nonce and expiry & Tested cross-context substitutions were rejected\\
+Challenge replay & Expiry and atomic state update after successful verification & Unknown or expired nonces were rejected; one of eight concurrent copies succeeded\\
+Roster manipulation & Distinct ordered keys and trust-domain labels & Duplicated keys or labels were rejected\\
+Missing issuer evidence & Complete evidence from the provisioned roster is required & Protocol aborted rather than certifying inconsistency\\\bottomrule
+\end{tabularx}\end{table}
