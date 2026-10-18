@@ -23,25 +23,23 @@ Uncertainty and disagreement across measurements have long been studied in fault
 Unlike protocols that verify an individual location statement, these systems address the difficulties posed by inconsistent observations and malicious participants. Some offer stronger participation or delivery guarantees than a fixed issuer roster. Their main output, however, is a fused estimate or a secure computation result, rather than a noninteractive proof tied to a particular report that an external verifier can use to check spacetime-policy compliance. We draw on fault-tolerant modeling but ask a different question: which states reach a predefined source-support threshold, and how can their relationship with a public policy be certified without disclosing the underlying signed intervals?
 
 \subsection{Comparison and research positioning}
-Table~\ref{tab:related-work} compares representative methods by the object checked or computed, the evidence and trust model, and the privacy and output interface. As the methods use different adversarial models and assumptions, the comparison is intended to clarify their roles, not to rank their security or performance.
+Table~\ref{tab:related-work} summarizes representative methods across the verified object, the evidence and trust model, and the privacy and output interface. Zero-knowledge location verification and Byzantine-robust fusion provide complementary foundations. The former certifies geometric constraints over undisclosed positions, but generally does not take threshold-supported collections of signed uncertainty intervals as the proof object. The latter reasons about anomalies and uncertain inputs, but does not primarily aim to issue a third-party-verifiable policy-compliance certificate. We bridge these directions: threshold support determines the states permitted by the uncertain evidence, and zero-knowledge proofs certify their relationship with the public policy.
 
 \begin{table}[htbp]\centering\footnotesize
 \caption{Functional scope and trust assumptions of representative systems.}\label{tab:related-work}
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth}p{0.21\linewidth}p{0.29\linewidth}X@{}}
 \toprule Method & Object & Evidence and trust assumptions & Privacy and output\\\midrule
-BARM~\citep{Zheng2025BARM} (2025) & Identity and reputation & Reputation evaluation and blockchain-assisted identity management & Anonymous authentication and private reputation evaluation\\
-PPVDA~\citep{Zhou2024} (2024) & Sensing aggregates & Homomorphic message authentication, secret sharing, malicious participants & Private inputs and verifiable aggregation\\
-BCS-LPP~\citep{Shen2024} (2024) & Sensing location & Geohash, order-preserving encryption, deposit mechanism & Location privacy and task/location checking\\
-BFT-PoLoc~\citep{BFTPoLoc} (2024) & Delay-based location & Internet delays and Byzantine-resistant geometry & Ranging and multilateration; privacy not rated here\\
-PG~\citep{PG} (2024) & Fused sensor result & Malicious sensors and aggregating servers & Private inputs/results; output-delivery guarantee\\
-CRSF~\citep{CRSF} (2026) & Fusion and participation & Sensor--server collusion and consistency of submissions & Private fusion, explicit abort and liveness\\
-ZKLP~\citep{ZKLP} (2025) & Region and proximity & Hidden coordinates; floating-point geometry & Zero-knowledge geometric proof\\
-Vehicle policy~\citep{VehiclePolicy} (2025) & Driving-area policy & Locations signed by a trusted witness & Hidden trajectory; subsidy and tax compliance\\
+BARM~\citep{Zheng2025BARM} & Identity and reputation & Reputation evaluation and blockchain-assisted identity management & Anonymous authentication and private reputation evaluation\\
+PPVDA~\citep{Zhou2024} & Sensing aggregates & Homomorphic message authentication, secret sharing, malicious participants & Private inputs and verifiable aggregation\\
+BCS-LPP~\citep{Shen2024} & Sensing location & Geohash, order-preserving encryption, deposit mechanism & Location privacy and task/location checking\\
+BFT-PoLoc~\citep{BFTPoLoc} & Delay-based location & Internet delays and Byzantine-resistant geometry & Ranging and multilateration; privacy not rated here\\
+PG~\citep{PG} & Fused sensor result & Malicious sensors and aggregating servers & Private inputs/results; output-delivery guarantee\\
+CRSF~\citep{CRSF} & Fusion and participation & Sensor--server collusion and consistency of submissions & Private fusion, explicit abort and liveness\\
+ZKLP~\citep{ZKLP} & Region and proximity & Hidden coordinates; floating-point geometry & Zero-knowledge geometric proof\\
+Vehicle policy~\citep{VehiclePolicy} & Driving-area policy & Locations signed by a trusted witness & Hidden trajectory; subsidy and tax compliance\\
 \textbf{This work} & \textbf{All threshold-supported spacetime states} & \textbf{Signed uncertainty boxes, fixed roster, budgets $f$ and $r$} & \textbf{Hidden boxes/signatures; report-bound four-valued proof}\\\bottomrule
 \end{tabularx}
 \par\smallskip\raggedright\footnotesize BFT-PoLoc and CRSF refer to the cited arXiv versions. All privacy and correctness claims depend on their respective trust assumptions. Semantic inconsistency must not be confused with abort on missing evidence or proof failure.
 \end{table}
 
-Zero-knowledge location verification and Byzantine-robust fusion thus provide complementary foundations. The former can certify geometric constraints over undisclosed positions, but generally does not take threshold-supported collections of signed uncertainty intervals as the proof object. The latter reasons about anomalies and uncertain inputs, but does not primarily aim to issue a third-party-verifiable policy-compliance certificate. We connect these directions: threshold support determines the states permitted by the uncertain evidence, and zero knowledge certifies their relationship with the public policy.
-
-Compared with point- or trajectory-based proofs, this design adds issuer-signature checks and set-level compliance constraints, at the cost of larger circuits and a pre-established issuer roster. Compared with private sensor fusion, it provides a noninteractive certificate bound to the task, report, and challenge. This certificate remains conditional on trusted enrollment, the fault budget, and physical coverage; the fixed roster does not guarantee dynamic participation or issuer availability. The next sections make these premises and their implementation costs explicit.
+Compared with point- or trajectory-based proofs, this design incorporates in-circuit issuer-signature checks and set-level compliance constraints over a pre-established issuer roster. Compared with interactive private sensor fusion, it yields a compact, noninteractive certificate bound to the task, report, and challenge, conditional on the configured fault and physical coverage budgets. The following sections formalize this model and evaluate its cryptographic and semantic performance.

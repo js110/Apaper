@@ -25,9 +25,8 @@ jobs:
           if grep -Ei 'undefined references|undefined citations|Citation.*undefined|Reference.*undefined' manuscript.log; then
             echo 'Unresolved citation or cross-reference'; exit 1
           fi
-          cp "$(kpsewhich elsarticle.cls)" ./elsarticle.cls
-          cp "$(kpsewhich elsarticle-harv.bst)" ./elsarticle-harv.bst
-          zip -q -j JNCA_LaTeX_Sources.zip manuscript.tex references.bib elsarticle.cls elsarticle-harv.bst *.png \
+          # The standard elsarticle TeX package is provided by TeX Live during compilation.
+          zip -q -j JNCA_LaTeX_Sources.zip manuscript.tex references.bib *.png \
             01_introduction.tex 02_related_work.tex 03a_system_model.tex 03b_decisions.tex \
             03c_protocol.tex 03d_circuits.tex 04a_security_model_soundness.tex \
             04b_security_protocol_privacy.tex 05a_setup_and_protocol_tests.tex \
