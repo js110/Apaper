@@ -15,7 +15,9 @@ Each issuer signs the digest $m_i$ in (2) containing $c$ and its interval bounds
 
 Upon successful verification, the gateway atomically marks $\nu$ as consumed within its active instance. Failed proof verifications leave an unexpired challenge open for legitimate retries.
 
+\paragraph{Availability and task outcomes.} The current all-roster rule deliberately fails closed when an issuer is unavailable: after the collection deadline, the vehicle cannot obtain a certificate for that challenge and must request a fresh challenge and signed observations rather than silently dropping the missing issuer. A verified Valid result admits the report; an Invalid result rejects it under the configured policy. Ambiguous is returned for host-side resensing, a revised authorized task, or manual review, while Inconsistent triggers evidence-quality diagnosis and recollection. In all non-Valid cases the gateway does not accept the report. A future $n$-of-$N$ dynamic-roster extension could use authenticated subset-selection and threshold parameters, but this is not implemented or measured by the current fixed-roster prototype.
+
 \begin{figure}[htbp]\centering
 \includegraphics[width=\linewidth]{protocol_sequence.png}
-\caption{Report-bound challenge-response and verification workflow. Upon successful proof verification, the gateway atomically marks the nonce as consumed, whereas failed attempts leave the challenge open for retries until expiry.}\label{fig:sequence}
+\caption{Report-bound challenge-response and verification workflow. Upon successful proof verification, the gateway atomically marks the nonce as consumed, whereas failed attempts leave the challenge open for retries until expiry. This schematic was redrawn with AI-assisted plotting code (OpenAI ChatGPT, GPT-6); numerical and logical labels require author verification before submission.}\label{fig:sequence}
 \end{figure}
