@@ -43,7 +43,7 @@ def correct_labels(path, name):
         label(771,568,285,68,['Compute four-valued','decision'],25)
         label(771,664,285,44,'Generate Groth16 proof',23)
         label(690,738,370,56,['Public outputs:','report, decision, proof'],23,False,PALE)
-        for y,s in [(395,'Trusted task snapshot'),(462,'Check nonce and expiry'),(528,'Reconstruct public inputs'),(594,'Verify proof'),(661,'Consume accepted nonce')]:
+        for y,s in [(395,'Trusted task snapshot'),(462,'Check nonce and expiry'),(528,'Reconstruct public inputs'),(594,'Verify proof'),(661,'Consume verified nonce')]:
             label(1355,y,280,44,s,23)
         label(1350,728,282,78,['Valid → accept report;','otherwise reject / hold'],23,False,TEAL)
         label(1085,299,144,30,'nonce + expiry',18,False,'white','middle')
@@ -92,11 +92,11 @@ def correct_labels(path, name):
         label(1163,450,291,98,['Compute decision δ from','threshold-supported set Fₖ','','Generate Groth16 proof π'],20,False,PALE)
         label(709,468,272,56,['Submit report','Report R, decision δ, proof π'],21,False,PALE)
         label(660,548,326,33,'Verify and process',25,True,PALE)
-        for y,s in [(587,'Check nonce exists and is unexpired'),(628,'Reconstruct public inputs'),(668,'Verify proof and decision'),(708,'If verified and δ = Valid: accept report'),(748,'Atomically mark nonce as consumed')]:
+        for y,s in [(587,'Check nonce exists and is unexpired'),(628,'Reconstruct public inputs'),(668,'Verify proof and decision'),(708,'Accept report only if δ = Valid'),(748,'Consume nonce after verified proof')]:
             label(692,y,292,30,s,16)
         label(151,808,183,40,'Failure case',26,True,'#fff4f4')
         label(385,807,1230,42,'Unknown / expired nonce, substituted context, invalid proof, or mismatched decision → reject or abort',21,False,'#fff4f4')
-        label(1097,879,548,45,['A failed proof does not consume the challenge.','A successful and accepted submission atomically consumes the nonce.'],17,False,PALE)
+        label(1097,879,548,45,['A failed proof does not consume the challenge.','A verified submission atomically consumes the nonce.'],17,False,PALE)
     # Reset number badges as precise circles and native glyphs.
     badges={'system_architecture':[(654,504,'1'),(654,591,'2'),(654,680,'3')], 'decision_counterexample':[(65,155,'1'),(65,495,'2'),(65,743,'3')], 'protocol_sequence':[(165,143,'1'),(635,185,'2'),(1065,210,'3'),(1087,352,'4'),(1060,428,'5'),(666,486,'6'),(627,563,'7')]}
     for x,y,n in badges[name]:

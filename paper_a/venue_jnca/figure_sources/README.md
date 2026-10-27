@@ -12,6 +12,8 @@ a raster image. Traced icons retain the generated artwork's shape imperfections;
 vectorization cannot recover detail absent from the generated input. Text and
 mathematical labels were reset to native Times New Roman text. Figure 2's plots
 were reconstructed on one exact common coordinate scale to correct model drift.
+The protocol labels reflect the gateway implementation: a verified decision consumes
+the nonce, while the report is accepted only when that decision is Valid.
 
 ## Prompt set
 
