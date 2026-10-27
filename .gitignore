@@ -9,3 +9,9 @@
 *.spl
 *.pdf
 *.zip
+
+# Vector artwork consumed by the manuscript
+!paper_a/venue_jnca/system_architecture.pdf
+!paper_a/venue_jnca/decision_counterexample.pdf
+!paper_a/venue_jnca/protocol_sequence.pdf
+__pycache__/

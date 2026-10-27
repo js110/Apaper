@@ -1,8 +1,7 @@
 """Rebuild the risk-coverage plot.
 
-Figures 1--3 (system_architecture.png, decision_counterexample.png, and
-protocol_sequence.png) are supplied artwork maintained directly as PNGs.
-Preserve those files rather than regenerating the superseded schematics.
+Figures 1--3 use model-assisted SVG/PDF artwork rebuilt separately by
+vectorize_model_figures.py. Original supplied PNGs are retained as references.
 """
 from pathlib import Path
 import matplotlib
@@ -24,4 +23,4 @@ for name,coverage,risk in D:
              arrowprops={'arrowstyle':'-','color':'0.45','lw':.8})
 ax.set_xlim(0,112);ax.set_ylim(-5,105);ax.set_xlabel('Decisive coverage (%)');ax.set_ylabel('Wrong among decisive decisions (%)');ax.grid(alpha=.2)
 fig.tight_layout();fig.savefig(p/'risk_coverage.png',dpi=600);fig.savefig(p/'risk_coverage.svg');plt.close(fig)
-print('Rebuilt risk_coverage; preserved supplied Figures 1--3.')
+print('Rebuilt risk_coverage; preserved vector Figures 1--3.')

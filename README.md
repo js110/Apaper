@@ -11,3 +11,5 @@ Only the active submission's English LaTeX chapters, eight figures, bibliography
 Build: `cd paper_a/venue_jnca && latexmk -pdf -interaction=nonstopmode -halt-on-error manuscript.tex`. Requires standard TeX Live with elsarticle.cls, elsarticle-harv.bst and mathematics/graphics packages. CI produces manuscript.pdf and a submission source ZIP. Compiling the source ZIP requires the standard Elsevier elsarticle TeX Live package.
 
 Before actual submission, independently confirm the corresponding author's email, funder grant identifiers (including ambiguous characters in D2O25O185), author approval and required publication declarations.
+
+Figures 1–3 use vector PDF artwork with companion SVG files. Image-model redraws, exact-label corrections and reproducible tracing instructions are documented in [figure_sources/README.md](paper_a/venue_jnca/figure_sources/README.md). The submission source archive includes all three required figure PDFs.
