@@ -1,0 +1,315 @@
+{
+  "source": "Crossref works API",
+  "retrieved": "2026-11-05",
+  "records": [
+    {
+      "doi": "10.1109/jiot.2024.3350023",
+      "title": "Efficient Certificateless Blind Signature Scheme With Conditional Revocation for Mobile Crowdsensing Within Smart City",
+      "authors": [
+        "Shuanggen Liu",
+        "Zhifeng Wan",
+        "Yixin Yuan",
+        "Qiyue Dong",
+        "Baozhu Yang",
+        "Fei Hao"
+      ],
+      "journal": "IEEE Internet of Things Journal",
+      "volume": "11",
+      "issue": "9",
+      "page_or_article": "15985-15997",
+      "published_print": {
+        "date-parts": [
+          [
+            2024,
+            5,
+            1
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/tits.2024.3488741",
+      "title": "CALRA: Practical Conditional Anonymous and Leakage-Resilient Authentication Scheme for Vehicular Crowdsensing Communication",
+      "authors": [
+        "Jianru Xiao",
+        "Yilong Ren",
+        "Jiewei Du",
+        "Yanan Zhao",
+        "Saru Kumari",
+        "Mohammed J. F. Alenazi",
+        "Haiyang Yu"
+      ],
+      "journal": "IEEE Transactions on Intelligent Transportation Systems",
+      "volume": "26",
+      "issue": "1",
+      "page_or_article": "1273-1285",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            1
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/jiot.2025.3552447",
+      "title": "BARM: Blockchain-Assisted Anonymous Authentication and Reputation Management for Mobile Crowdsensing in Internet of Vehicles",
+      "authors": [
+        "Lu Zheng",
+        "Tao Feng",
+        "Zilong Xie",
+        "Xiaomin Li",
+        "Chunhua Su"
+      ],
+      "journal": "IEEE Internet of Things Journal",
+      "volume": "12",
+      "issue": "12",
+      "page_or_article": "22463-22477",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            6,
+            15
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/tmc.2025.3602659",
+      "title": "Enabling Reliable and Anonymous Data Collection for Fog-Assisted Mobile Crowdsensing With Malicious User Detection",
+      "authors": [
+        "Mingyang Song",
+        "Zhongyun Hua",
+        "Yifeng Zheng",
+        "Rushi Lan",
+        "Qing Liao",
+        "Guoai Xu"
+      ],
+      "journal": "IEEE Transactions on Mobile Computing",
+      "volume": "25",
+      "issue": "1",
+      "page_or_article": "1414-1430",
+      "published_print": {
+        "date-parts": [
+          [
+            2026,
+            1
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1016/j.ins.2025.122110",
+      "title": "REAPP: A low-cost and accurate reputation evaluation based anonymous privacy preserving scheme in mobile crowdsourcing",
+      "authors": [
+        "Zeyuan Li",
+        "Yinghao Yao",
+        "Anfeng Liu",
+        "Neal N. Xiong",
+        "Shaobo Zhang",
+        "Athanasios V. Vasilakos"
+      ],
+      "journal": "Information Sciences",
+      "volume": "712",
+      "issue": null,
+      "page_or_article": "122110",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            9
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/tmc.2025.3564404",
+      "title": "Location and Reward Privacy-Preserving Based Secure Task Allocation in Mobile Crowdsensing",
+      "authors": [
+        "Zhetao Li",
+        "Weifan Shi",
+        "Young-June Choi",
+        "Hiroo Sekiya",
+        "Qingyong Deng"
+      ],
+      "journal": "IEEE Transactions on Mobile Computing",
+      "volume": "24",
+      "issue": "10",
+      "page_or_article": "9951-9964",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            10
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/tmc.2026.3665505",
+      "title": "C-PRISM: A Comprehensive Privacy-Preserving and Behavioral-Incentive Mechanism for Sustainable Mobile Crowdsensing",
+      "authors": [
+        "Jing Bai",
+        "Mande Xie",
+        "Houbing Song",
+        "Mianxiong Dong",
+        "Tian Wang",
+        "Anfeng Liu"
+      ],
+      "journal": "IEEE Transactions on Mobile Computing",
+      "volume": "25",
+      "issue": "7",
+      "page_or_article": "10619-10635",
+      "published_print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/tvt.2025.3587756",
+      "title": "Authentication Framework With Enhanced Privacy and Batch Verifiable Message Sharing in VANETs",
+      "authors": [
+        "Sujash Naskar",
+        "Carlo Brunetta",
+        "Tingting Zhang",
+        "Gerhard Hancke",
+        "Mikael Gidlund"
+      ],
+      "journal": "IEEE Transactions on Vehicular Technology",
+      "volume": "74",
+      "issue": "12",
+      "page_or_article": "18556-18571",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            12
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/jiot.2026.3675232",
+      "title": "An Edge-Assisted Private Set Intersection Scheme for Privacy-Preserving Vehicular Crowdsensing",
+      "authors": [
+        "Xinrui Zhang",
+        "Pincan Zhao",
+        "Rongxing Lu",
+        "Suprio Ray"
+      ],
+      "journal": "IEEE Internet of Things Journal",
+      "volume": "13",
+      "issue": "11",
+      "page_or_article": "24725-24737",
+      "published_print": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            1
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1016/j.jnca.2023.103811",
+      "title": "BLIND: A privacy preserving truth discovery system for mobile crowdsensing",
+      "authors": [
+        "Vincenzo Agate",
+        "Pierluca Ferraro",
+        "Giuseppe Lo Re",
+        "Sajal K. Das"
+      ],
+      "journal": "Journal of Network and Computer Applications",
+      "volume": "223",
+      "issue": null,
+      "page_or_article": "103811",
+      "published_print": {
+        "date-parts": [
+          [
+            2024,
+            3
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1016/j.vehcom.2025.100976",
+      "title": "A privacy-enhanced authentication scheme for VANETs based on blockchain and zero-knowledge proof",
+      "authors": [
+        "Shangping Wang",
+        "Qi Huang",
+        "Ruoxin Yan",
+        "Juanjuan Ma",
+        "Xiaoling Xie"
+      ],
+      "journal": "Vehicular Communications",
+      "volume": "56",
+      "issue": null,
+      "page_or_article": "100976",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            12
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    },
+    {
+      "doi": "10.1109/jsac.2025.3560038",
+      "title": "CPDZ: A Credibility-Aware and Privacy-Preserving Data Collection Scheme With Zero-Trust in Next-Generation Crowdsensing Networks",
+      "authors": [
+        "Jianheng Tang",
+        "Kejia Fan",
+        "Shihao Yang",
+        "Anfeng Liu",
+        "Neal N. Xiong",
+        "Houbing Herbert Song",
+        "Victor C. M. Leung"
+      ],
+      "journal": "IEEE Journal on Selected Areas in Communications",
+      "volume": "43",
+      "issue": "6",
+      "page_or_article": "2183-2199",
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            6
+          ]
+        ]
+      },
+      "published_online": null,
+      "type": "journal-article"
+    }
+  ]
+}

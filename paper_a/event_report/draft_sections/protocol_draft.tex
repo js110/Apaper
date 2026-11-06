@@ -1,0 +1,65 @@
+% WORKING DRAFT. The relation below describes the present research prototype;
+% proof construction, validation and measurement must be reconciled with the
+% final implementation before this section is included in a submitted paper.
+\section{System Model and Problem Formulation}
+\label{sec:model}
+
+We consider a vehicular crowdsensing task in which each accepted report must be associated with an authorised participant and a spatiotemporal event satisfying the task policy. The decision is made for an individual submitted report. A registration authority issues participant credentials and authorises event-evidence issuers. A participant prepares a report, obtains an issuer-signed event receipt, and constructs a zero-knowledge proof. A gateway verifies the proof and maintains task-specific acceptance state. The gateway obtains task parameters and the authority's public key from authenticated configuration.
+
+For a task identifier $\mathsf{id}$, let the policy $P=(\boldsymbol{\ell},\boldsymbol{u})$ be an axis-aligned box over integer coordinates $(x,y,t)$. An event is eligible when $\ell_j\leq z_j\leq u_j$ for each coordinate of $\boldsymbol z=(x,y,t)$. The representation and physical meaning of the coordinates are fixed by the application. The prototype uses unsigned 32-bit coordinates and inclusive bounds; the first two coordinates are planar grid coordinates and the third is a time value. Mapping a road network or geographic region into these coordinates is an application-level preprocessing step. In particular, a rectangular policy represents only the area actually encoded by its bounds.
+
+The authority is trusted to enrol authorised participants and issuers and to protect its signing key. An authorised event issuer is assumed to follow the observation procedure used to assign the signed event coordinates. Participants and the communication network may be adversarial: an attacker may substitute reports or receipts, attempt to change task parameters, submit a proof under a different credential, or replay an earlier submission. The gateway is trusted to use the configured task and authority, a trustworthy clock, and its acceptance state. An issuer's signature authenticates the issuer's assertion about an event and the associated report context; the correctness of the asserted physical event depends on the issuer's observation procedure. Report-content integrity does not by itself establish the physical truth of a sensed value.
+
+The intended acceptance condition is: (i) an enrolled participant secret and an authorised issuer support the same receipt; (ii) the signed event satisfies the configured policy; (iii) the receipt refers to the current task, challenge and submitted report bytes; and (iv) the participant secret has not already been used to produce an accepted report for this task. Condition~(iv) is per credential. Its interpretation as a per-person or per-vehicle rule additionally depends on the enrolment policy and on participants not sharing their secrets.
+
+\section{Report-Bound Spatiotemporal Proof}
+\label{sec:protocol}
+
+\subsection{Public context and credentials}
+\label{sec:context}
+
+Let $\mathbb F$ denote the circuit field, and let $H$ be the field hash used by the circuit. Domain labels distinguish hashes with different purposes. For clarity, let $H_d(v_1,\ldots,v_k)=H(d,v_1,\ldots,v_k)$. The authority has public verification key $A$. A participant selects a nonzero secret $s$ from a high-entropy distribution and receives an authority signature $\sigma_A$ on $H_{101}(s)$. An event issuer has a verification key $W=(W_x,W_y)$ and an authority signature $\sigma_W$ on $H_{102}(W_x,W_y)$. The participant secret, both signatures and the issuer key are private witnesses in the proof. Issuance itself is not a blind-issuance protocol in the prototype.
+
+The gateway issues a fresh challenge $q=(n,e)$ containing a random nonce $n$ and expiry time $e$. For task record $T=(\mathsf{id},\boldsymbol{\ell},\boldsymbol u)$ and submitted byte string $R$, both parties derive
+\begin{align}
+ u&=\mathsf{TaskField}(\mathsf{id}),\\
+ c&=\mathsf{ContextField}(T,q,R),
+\end{align}
+where the prototype uses SHA-256, domain-separated task encoding, a JSON encoding of the task and challenge, and a SHA-256 digest of the exact submitted bytes; the resulting digests are reduced to field elements. The verifier reconstructs $u$ and $c$ from its own task record, its issued challenge and the bytes it receives. Hence neither a participant-selected task policy nor a participant-supplied digest is accepted as the verifier's configuration. Task identifiers must not be reused for a different policy within the same deduplication domain.
+
+The participant computes a context-dependent holder value $h=H_{103}(s,c)$ and presents it to the issuer as part of the receipt request. Following its event-observation procedure, the issuer signs
+\begin{equation}
+ m=H_{104}(c,h,x,y,t), \qquad \sigma_E=\mathsf{Sign}_{W}(m).
+ \label{eq:receipt}
+\end{equation}
+Thus the signed message contains a context-specific value derived from the participant secret as well as the event coordinates. The issuer must receive enough authenticated task and challenge information to apply its own issuance rules. This signing interface does not by itself prevent a collaborating participant and issuer from making an incorrect event assertion.
+
+\subsection{Proof relation}
+\label{sec:relation}
+
+The public instance is $(A,u,c,N,\boldsymbol{\ell},\boldsymbol u)$, where $N$ is the participant's task-scoped tag. The private witness contains $(s,\sigma_A,W,\sigma_W,\sigma_E,x,y,t)$. The proof states that these values satisfy
+\begin{align}
+ &s\ne 0, \quad \mathsf{Verify}_A(\sigma_A,H_{101}(s))=1,\label{eq:cred}\\
+ &\mathsf{Verify}_A(\sigma_W,H_{102}(W_x,W_y))=1,\label{eq:issuer}\\
+ &\mathsf{Verify}_W\!\left(\sigma_E,H_{104}(c,H_{103}(s,c),x,y,t)\right)=1,\label{eq:event}\\
+ &N=H_{105}(s,u),\label{eq:nullifier}\\
+ &0\leq \ell_j\leq z_j\leq u_j<2^{32},\quad j\in\{1,2,3\}.
+ \label{eq:policy}
+\end{align}
+The encoded signing keys must satisfy the curve and subgroup requirements of the signature implementation. Equations~\eqref{eq:cred}--\eqref{eq:event} use the same participant secret and context in the credential and event checks. Equation~\eqref{eq:nullifier} uses that secret again for duplicate detection, and Eq.~\eqref{eq:policy} checks the private event against public task bounds. The circuit range-constrains both event coordinates and policy endpoints before comparison, so the arithmetic comparison represents the stated unsigned integer relation.
+
+The participant submits $(N,\pi,R,n)$, where $\pi$ is a proof for the public instance. In the research prototype, the signature scheme is EdDSA on the BN254 twisted-Edwards curve, $H$ is MiMC as implemented by the selected cryptographic library, and the proof system is Groth16 over BN254. Its circuit-specific setup and verification key are generated before report verification. The resulting proof verifies the specified relation under the proof-system, hash and signature assumptions; the use of these established components is not itself a new cryptographic primitive.
+
+\subsection{Gateway acceptance}
+\label{sec:acceptance}
+
+On submission, the gateway looks up the unconsumed challenge by nonce and checks it against its clock. It reconstructs the public statement from the configured authority, task, stored challenge, received report bytes and submitted tag. The gateway accepts only if the challenge is current, $N$ has not already been accepted for this task, and proof verification succeeds. A successful acceptance consumes the challenge and records $N$. These state changes are performed under a single lock in the experimental gateway; failed proof verification does not consume an unexpired challenge. This state is in memory and applies to one gateway instance.
+
+Because $N$ depends on the task identifier rather than on the challenge, changing a challenge does not by itself create a new tag for the same credential and task. The rule prevents acceptance of a second contribution with the same computed tag in that gateway state; it does not establish one contribution per physical vehicle if multiple credentials are issued or a credential secret is shared. A fresh challenge associates the receipt with the current submission but does not alone show that the underlying sensor measurement was newly captured~\cite{Birkholz2023RATS}.
+
+\subsection{Interpretation of binding and privacy}
+\label{sec:interpretation}
+
+The gateway's reconstruction of $c$ and Eq.~\eqref{eq:event} connect the received byte string to the signed event. Replacing those bytes while retaining the same proof changes the reconstructed context, except in the event of a relevant hash collision. Similarly, using a copied receipt with a different secret requires satisfying the holder equality and the credential and receipt checks for that secret. These are conditional statements about the stated relation and trusted configuration, not claims that sensor data are inherently truthful or that voluntary sharing and real-time relay are impossible.
+
+The proof keeps the participant secret, credential, event coordinates and issuer key out of its public witness. The gateway still sees task parameters, challenge, tag, proof, received report bytes and communication metadata. The tag is intentionally stable within a task. Any claim that tags from different tasks cannot be linked requires an appropriate keyed-hash assumption for $H_{105}(s,\cdot)$ as well as consideration of the other visible fields; it cannot be established solely by observing different tag values in a finite test. The prototype's context digest is computed from the submitted bytes without a secret salt. Confidential report delivery therefore requires an appropriately authenticated encrypted transport or encryption of the submitted payload, with key management specified separately.

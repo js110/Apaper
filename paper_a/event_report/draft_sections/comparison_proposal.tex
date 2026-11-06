@@ -1,0 +1,34 @@
+% Proposed addition to Related Work; intended for insertion before the
+% system-model section. Uses the existing booktabs and tabularx packages.
+%
+% Evidence for each row:
+% Ni et al.: published author version, abstract (BBS+, proxy re-encryption,
+% task allocation and credit management), Section 3.3 (greedy-user tracing),
+% Section 5.4 (report identifiers, slot and double-report tag):
+% https://uwaterloo.ca/scholar/sites/ca.scholar/files/sshen/files/93.pdf
+% TST-Audit: author-supplied Ad Hoc Networks PDF, Sections 3.1--3.2 and Eq. (1),
+% microproof interface and report record, grid/epoch nullifier and MST.
+% Bogdanov et al.: Sections 2.2, 3 and 5, signed location claims and ZK
+% trajectory-policy computations: https://doi.org/10.1007/978-3-032-00642-4_20
+% Brito et al.: Sections IV--VI, multiple witnesses and policy-bound evidence;
+% https://arxiv.org/html/2603.27883v1 . Published version is cited in the bib.
+% Proposed: manuscript.tex Sections 3--5, four explicitly implemented variants.
+
+The studies in Table~\ref{tab:comparison-context} share important ingredients, but they organize them around different verification objects. In particular, SPOON already combines anonymous reporting and double-report identification, while TST-Audit already specifies a credential-linked, grid--epoch-scoped microproof. Thus, anonymity or a scoped tag alone is not a distinguishing contribution here. Bogdanov et al. already use signed location claims in privacy-preserving vehicle-policy verification, and Brito et al. examine content provenance using independent witnesses. The contribution evaluated in this paper is the specific report-acceptance relation that ties a credential secret, an issuer-signed event and the received report envelope to a task-scoped tag, together with its executable extensions and controlled substitution tests. This characterization does not imply that an alternative instantiation of an earlier interface cannot provide a similar relation.
+
+\begin{table*}[t]
+\centering\small
+\caption{Comparison of the reported research objects and mechanisms. Entries summarize the cited descriptions; they do not assert that an unlisted feature is absent.}\label{tab:comparison-context}
+\begin{tabularx}{\textwidth}{@{}p{.14\textwidth}p{.22\textwidth}p{.29\textwidth}X@{}}
+\toprule
+Work & Main verification or service object & Explicit mechanisms in the cited work & Relation to the focus of this paper \\\midrule
+SPOON~\citep{Ni2020SPOON} & Private task allocation and selection of mobile sensing reports & Location- and credit-based recruitment; anonymous credentials; encrypted reporting; identification of users submitting multiple reports for a task in a reporting period & The present evaluation targets a specified receipt--holder--envelope relation for one task report, rather than task recruitment or credit-based selection. \\
+TST-Audit~\citep{He2026TSTAudit} & Auditable aggregate grid--epoch coverage & A pluggable microproof for hidden event location and time, credential validity and grid--epoch uniqueness; folding and Merkle-sum-tree coverage commitments & The present acceptance object is an individual task report with an explicit signed event and submitted-envelope binding; TST-Audit's interface permits different concrete microproof instantiations. \\
+Bogdanov et al.~\citep{Bogdanov2025VehiclePolicy} & Vehicle travel compliance for subsidies and taxation & A trusted witness device signs location claims; zero-knowledge computations check trajectory-dependent geographic conditions & The present relation checks one issuer-asserted event and report with a task-scoped acceptance tag, instead of computing a distance or territorial fraction over a trajectory. \\
+Brito et al.~\citep{Brito2026ContentProvenance} & Physical-event and content-provenance evidence & A witnessing zone combines distance bounds, independent witness decisions, commitments and a quorum-signed evidence object & The present prototype evaluates a single certified issuer's assertion and a private report-acceptance relation under its issuer-trust assumption; witness quorum and contextual sensing are the cited work's emphasis. \\
+This paper & Acceptance of an individual task report & One proof links the credential, issuer receipt, task tag and received envelope; optional region, identity-encryption and active-set checks are implemented & The evaluation isolates receipt transfer in a controlled ablation and measures proof operations for four implemented relations. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The controlled bearer-receipt comparison in Section~\ref{sec:evaluation} removes only the holder term from the receipt in an otherwise matched test relation. It isolates the effect of that equality for the specified attacker's knowledge and does not reproduce or claim an attack against any work in Table~\ref{tab:comparison-context}. The local timing measurements likewise describe this paper's implemented relations; the cited publications do not constitute a same-workload performance baseline in these experiments.
