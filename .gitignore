@@ -22,6 +22,8 @@
 # Experiment logs cited by the Chinese draft (project sources)
 !paper_a/event_report/experiments/context_hiding_candidate.log
 !paper_a/event_report/experiments/context_linkability.log
+!paper_a/event_report/experiments/context_hiding_extensions.log
+!paper_a/event_report/experiments/protocol_comparison.log
 
 .DS_Store
 __pycache__/

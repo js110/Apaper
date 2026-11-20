@@ -132,5 +132,43 @@
   "png_dpi": 400,
   "pdf_fonttype": 42,
   "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig9_hidden_extensions": {
+  "caption_zh": "图 11 上下文隐藏构造扩展到全部四个电路：约束数与证明生成时间。",
+  "raw_data": [
+   "experiments/context_hiding_extensions.log",
+   "experiments/benchmark.log",
+   "experiments/region_benchmark.log",
+   "experiments/accountability_benchmark.log",
+   "experiments/revocation_benchmark.log"
+  ],
+  "transformations": [
+   "ns→ms；均值与样本标准差 ddof=1；约束数取 VARIANT 行整数；差值由共享减隐藏算得"
+  ],
+  "uncertainty": "样本标准差，n=30；约束数为确定性计数",
+  "encoding_notes": "零基线分组柱；每柱直接标注数值；(a) 数值标签竖排以免重叠；颜色非唯一线索（图例＋位置＋标签）",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig10_protocol_comparison": {
+  "caption_zh": "图 12 同一任务下三臂对照：受理延迟、提交通信量与签发者可见输入。",
+  "raw_data": [
+   "experiments/protocol_comparison.log"
+  ],
+  "transformations": [
+   "ns→ms；均值与样本标准差 ddof=1；字节数取日志恒定整数；签发者输入取 STRUCTURE 行"
+  ],
+  "uncertainty": "样本标准差，n=30；字节数为确定性计数",
+  "encoding_notes": "零基线柱状/堆叠条；每柱直接标注数值；(c) 下方文字注明各臂签发者实际可见字段，颜色非唯一线索",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
  }
 }

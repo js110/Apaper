@@ -179,6 +179,69 @@ data["categorical"]["context_hiding"] = {
 data["categorical"]["linkability"] = {
     "source": "context_linkability.log", "joined": 2, "total": 2}
 
+
+def variant_sections(name, section_prefix):
+    """Parse 'VARIANT x k=v...' / 'ARM x k=v...' sections followed by CSV blocks."""
+    lines = (EXP / name).read_text().splitlines()
+    out = {}
+    current = None
+    cols = None
+    rows = []
+    results = []
+    for line in lines:
+        m = re.match(rf"{section_prefix} (\w+) (.*)", line)
+        if m:
+            if current is not None and cols is not None:
+                out[current]["columns"] = cols
+                out[current]["rows"] = rows
+            current = m.group(1)
+            out[current] = {k: int(v) for k, v in re.findall(r"(\w+)=(\d+)", m.group(2))}
+            cols, rows = None, []
+            continue
+        if line.startswith("sample,"):
+            if current is not None and cols is not None:
+                out[current]["columns"] = cols
+                out[current]["rows"] = rows
+            cols = line.split(",")
+            rows = []
+            continue
+        if line.startswith("RESULT "):
+            results.append(line)
+            continue
+        if cols is not None and current is not None:
+            f = line.split(",")
+            if len(f) == len(cols) and (f[0].isdigit() or f[0] == "warmup"):
+                if f[0].isdigit():
+                    rows.append({c: int(v) for c, v in zip(cols, f)})
+    if current is not None and cols is not None:
+        out[current]["columns"] = cols
+        out[current]["rows"] = rows
+    for k, v in out.items():
+        assert len(v["rows"]) == 30, (name, k, len(v["rows"]))
+        for c in v["columns"][1:]:
+            vals = [r[c] for r in v["rows"]]
+            if c.endswith("_ns"):
+                v[c] = summary(ms(vals))
+                v[c + "_raw_ms"] = ms(vals)
+            else:
+                v[c] = sorted(set(vals))
+    return out, results
+
+
+hidden, hidden_results = variant_sections("context_hiding_extensions.log", "VARIANT")
+data["hidden_extensions"] = hidden
+data["hidden_extensions_results"] = hidden_results
+data["provenance"]["context_hiding_extensions.log"] = meta("context_hiding_extensions.log")["source_sha256"]
+
+comparison, comparison_results = variant_sections("protocol_comparison.log", "ARM")
+data["protocol_comparison"] = comparison
+data["protocol_comparison_results"] = comparison_results
+data["protocol_comparison_structure"] = {
+    k: int(v) for k, v in re.findall(
+        r"STRUCTURE arm=(\w+) issuer_input_bytes=(\d+)",
+        (EXP / "protocol_comparison.log").read_text())}
+data["provenance"]["protocol_comparison.log"] = meta("protocol_comparison.log")["source_sha256"]
+
 (OUT / "measurements.json").write_text(
     json.dumps(data, ensure_ascii=False, indent=1))
 
@@ -262,6 +325,34 @@ print(f"  约束增长 = {(c8['meta']['constraints'] - c4['meta']['constraints']
 print(f"  生成时间增长 = {(c8['prove_ms']['mean'] - c4['prove_ms']['mean']) / c4['prove_ms']['mean'] * 100:.2f}%")
 print(f"  证明占通信量 = {164 / 1482 * 100:.2f}%")
 print(f"  信封占通信量 = {1158 / 1482 * 100:.2f}%")
+
+print("\n=== §5.7 隐藏上下文扩展（context_hiding_extensions.log, n=30）===")
+for k in ("rectangle", "region", "accountability", "active"):
+    h = data["hidden_extensions"][k]
+    print(f"  {k:15s} shared={h['shared_constraints']:,} hidden={h['hidden_constraints']:,} "
+          f"delta={h['shared_constraints'] - h['hidden_constraints']}")
+    if "prove_ns" in h:
+        print(f"  {'':15s} prove={fmt(h['prove_ns'])} ms", end="")
+        if "verify_ns" in h:
+            print(f" verify={fmt(h['verify_ns'], 3)} ms", end="")
+        if "total_to_accept_ns" in h:
+            print(f" total_to_accept={fmt(h['total_to_accept_ns'])} ms", end="")
+        print()
+for line in data["hidden_extensions_results"]:
+    print(" ", line)
+
+print("\n=== §5.8 三臂对照（protocol_comparison.log, n=30, 同一会话）===")
+for k in ("shared_active", "hidden_active", "trusted_baseline"):
+    c = data["protocol_comparison"][k]
+    print(f"  {k:16s} constraints={c['constraints']:,} total_to_accept={fmt(c['total_to_accept_ns'])} ms "
+          f"component_sum={c['component_sum_bytes']} B")
+    if "prove_ns" in c:
+        print(f"  {'':16s} prove={fmt(c['prove_ns'])} ms gateway={fmt(c['gateway_verify_decrypt_dedup_ns'], 3)} ms")
+    else:
+        print(f"  {'':16s} issuer_verify_and_sign={fmt(c['issuer_verify_and_sign_ns'], 3)} ms "
+              f"gateway_verify_dedup={fmt(c['gateway_verify_dedup_ns'], 3)} ms request_bytes={c['request_bytes']}")
+for line in data["protocol_comparison_results"]:
+    print(" ", line)
 
 print("\nALL MATCH" if ok else "\n*** MISMATCH — 必须先查清再绘图 ***")
 print("wrote", OUT / "measurements.json")

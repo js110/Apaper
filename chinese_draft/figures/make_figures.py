@@ -555,11 +555,197 @@ def fig8():
            "零基线堆叠条与分组柱；大段直接标注字节数，小段数值在图例给出，颜色非唯一线索")
 
 
+# ------------------------------------------- 图9 隐藏构造扩展到全部电路
+def fig9():
+    H = D["hidden_extensions"]
+    keys = ["rectangle", "region", "accountability", "active"]
+    shared_con = [H[k]["shared_constraints"] for k in keys]
+    hidden_con = [H[k]["hidden_constraints"] for k in keys]
+    shared_pm = [D["circuits"][k]["prove_ms"]["mean"] for k in keys]
+    shared_ps = [D["circuits"][k]["prove_ms"]["sd"] for k in keys]
+    hidden_pm = [H[k]["prove_ns"]["mean"] for k in keys]
+    hidden_ps = [H[k]["prove_ns"]["sd"] for k in keys]
+
+    fig, axes = plt.subplots(1, 2, figsize=(W, 78 * MM), layout="constrained",
+                             gridspec_kw=dict(wspace=0.26))
+    reserve_bottom(fig, 0.115)
+    x = np.arange(4)
+    w = 0.36
+
+    ax = axes[0]
+    ax.bar(x - w / 2, shared_con, width=w, color=ORANGE, edgecolor="white",
+           linewidth=0.8, zorder=2, label="共享上下文")
+    ax.bar(x + w / 2, hidden_con, width=w, color=BLUE, edgecolor="white",
+           linewidth=0.8, zorder=2, label="隐藏上下文")
+    for i in range(4):
+        ax.text(i - w / 2, shared_con[i] + 1500, f"{shared_con[i]:,}",
+                ha="center", va="bottom", fontsize=7.6, fontweight="bold",
+                color="#9A6B00", rotation=90)
+        ax.text(i + w / 2, hidden_con[i] + 1500, f"{hidden_con[i]:,}",
+                ha="center", va="bottom", fontsize=7.6, fontweight="bold",
+                color=BLUE, rotation=90)
+    ax.set_ylim(0, 88000)
+    ax.set_xlim(-0.62, 3.62)
+    ax.set_xticks(x, CIRC_SHORT)
+    ax.set_ylabel("R1CS 约束数（条）")
+    ax.set_title("(a) 四个电路的约束数", loc="left")
+    ax.yaxis.set_major_formatter(lambda v, p: f"{int(v):,}")
+    ax.legend(frameon=False, loc="upper left", fontsize=8.5)
+    ax.grid(axis="x", visible=False)
+    ax.text(0.985, 0.50, "每个电路均 −330 条", transform=ax.transAxes,
+            fontsize=8.6, color=VERM, fontweight="bold", ha="right",
+            rotation=90, va="center")
+
+    ax = axes[1]
+    ax.bar(x - w / 2, shared_pm, width=w, color=ORANGE, edgecolor="white",
+           linewidth=0.8, zorder=2, label="共享上下文")
+    ax.bar(x + w / 2, hidden_pm, width=w, color=BLUE, edgecolor="white",
+           linewidth=0.8, zorder=2, label="隐藏上下文")
+    ax.errorbar(x - w / 2, shared_pm, yerr=shared_ps, fmt="none", ecolor=INK,
+                elinewidth=1.0, capsize=3.0, capthick=1.0, zorder=4)
+    ax.errorbar(x + w / 2, hidden_pm, yerr=hidden_ps, fmt="none", ecolor=INK,
+                elinewidth=1.0, capsize=3.0, capthick=1.0, zorder=4)
+    for i in range(4):
+        ax.text(i - w / 2, shared_pm[i] + shared_ps[i] + 40,
+                f"{shared_pm[i]:.1f}", ha="center", va="bottom",
+                fontsize=7.8, fontweight="bold", color="#9A6B00")
+        ax.text(i + w / 2, hidden_pm[i] + hidden_ps[i] + 18,
+                f"{hidden_pm[i]:.1f}", ha="center", va="bottom",
+                fontsize=7.8, fontweight="bold", color=BLUE)
+        raw_jitter(ax, i + w / 2, H[keys[i]]["prove_ns_raw_ms"], CIRC_MARK[i], 0.10)
+    ax.set_ylim(0, 560)
+    ax.set_xlim(-0.62, 3.62)
+    ax.set_xticks(x, CIRC_SHORT)
+    ax.set_ylabel("证明生成时间 (ms)")
+    ax.set_title("(b) 证明生成时间", loc="left")
+    ax.legend(frameon=False, loc="upper left", fontsize=8.5)
+    ax.grid(axis="x", visible=False)
+
+    footnote(fig, "共享上下文数值取自 benchmark.log（同机、独立会话）；隐藏上下文取自 context_hiding_extensions.log。\n"
+                  "矩形隐藏版同 benchmark.log 用固定见证法，扩展隐藏版逐次新鲜见证；误差棒为样本标准差（n=30，一次预热后），灰点为隐藏版原始测量。")
+    export(fig, "fig9_hidden_extensions",
+           "图 11 上下文隐藏构造扩展到全部四个电路：约束数与证明生成时间。",
+           ["experiments/context_hiding_extensions.log",
+            "experiments/benchmark.log", "experiments/region_benchmark.log",
+            "experiments/accountability_benchmark.log",
+            "experiments/revocation_benchmark.log"],
+           ["ns→ms；均值与样本标准差 ddof=1；约束数取 VARIANT 行整数；差值由共享减隐藏算得"],
+           "样本标准差，n=30；约束数为确定性计数",
+           "零基线分组柱；每柱直接标注数值；(a) 数值标签竖排以免重叠；颜色非唯一线索（图例＋位置＋标签）")
+
+
+# ------------------------------------------- 图10 三臂同任务对照
+def fig10():
+    C = D["protocol_comparison"]
+    S = D["protocol_comparison_structure"]
+    base = C["trusted_baseline"]
+    arms = ["shared_active", "hidden_active", "trusted_baseline"]
+    labels = ["共享上下文\n活跃版", "隐藏上下文\n活跃版", "可信签发\n基线"]
+    cols = [ORANGE, BLUE, GREEN]
+    tm = [C[a]["total_to_accept_ns"]["mean"] for a in arms]
+    ts = [C[a]["total_to_accept_ns"]["sd"] for a in arms]
+
+    fig = plt.figure(figsize=(W, 86 * MM))
+    ax_a = fig.add_axes([0.065, 0.40, 0.27, 0.46])
+    ax_b = fig.add_axes([0.415, 0.40, 0.27, 0.46])
+    ax_c = fig.add_axes([0.775, 0.40, 0.21, 0.46])
+
+    ax = ax_a
+    x = np.arange(3)
+    ax.bar(x, tm, width=0.58, color=cols, edgecolor="white", linewidth=0.8, zorder=2)
+    ax.errorbar(x, tm, yerr=ts, fmt="none", ecolor=INK, elinewidth=1.0,
+                capsize=3.5, capthick=1.0, zorder=4)
+    for i, a in enumerate(arms):
+        raw_jitter(ax, i, C[a]["total_to_accept_ns_raw_ms"], "o", 0.13)
+        nd = 3 if a == "trusted_baseline" else 2
+        ax.text(i, tm[i] + ts[i] + 16, f"{tm[i]:.{nd}f}\n±{ts[i]:.{nd}f}",
+                ha="center", va="bottom", fontsize=7.8, fontweight="bold",
+                linespacing=1.15)
+    ax.set_ylim(0, 520)
+    ax.set_xlim(-0.62, 2.62)
+    ax.set_xticks(x, labels, fontsize=8)
+    ax.set_ylabel("挑战至受理总耗时 (ms)")
+    ax.set_title("(a) 受理延迟", loc="left")
+    ax.grid(axis="x", visible=False)
+
+    ax = ax_b
+    zk = C["shared_active"]
+    zk_parts = [("报告信封", zk["envelope_bytes"][0], BLUE),
+                ("证明/回执", zk["proof_bytes"][0], VERM),
+                ("挑战 nonce", zk["nonce_ascii_bytes"][0], GREEN),
+                ("任务标签", zk["nullifier_bytes"][0], ORANGE),
+                ("身份密文", zk["identity_cipher_bytes"][0], PURPLE)]
+    for i, a in enumerate(arms[:2]):
+        left = 0
+        for name, v, col in zk_parts:
+            ax.bar(i, v, bottom=left, width=0.52, color=col,
+                   edgecolor="white", linewidth=0.8, zorder=2)
+            if v >= 100:
+                ax.text(i, left + v / 2, f"{v:,}", ha="center", va="center",
+                        color="white", fontsize=7.8, fontweight="bold", zorder=3)
+            left += v
+        ax.text(i, left + 34, f"{left:,}", ha="center", va="bottom",
+                fontsize=8.4, fontweight="bold")
+    left = 0
+    base_parts = [("报告明文", base["plaintext_bytes"][0], BLUE),
+                  ("证明/回执", base["receipt_bytes"][0], VERM),
+                  ("挑战 nonce", base["nonce_ascii_bytes"][0], GREEN)]
+    for name, v, col in base_parts:
+        ax.bar(2, v, bottom=left, width=0.52, color=col,
+               edgecolor="white", linewidth=0.8, zorder=2)
+        if v >= 100:
+            ax.text(2, left + v / 2, f"{v:,}", ha="center", va="center",
+                    color="white", fontsize=7.8, fontweight="bold", zorder=3)
+        left += v
+    ax.text(2, left + 34, f"{left:,}", ha="center", va="bottom",
+            fontsize=8.4, fontweight="bold")
+    ax.set_ylim(0, 1720)
+    ax.set_xlim(-0.62, 2.62)
+    ax.set_xticks(x, labels, fontsize=8)
+    ax.set_ylabel("网关提交分量合计 (B)")
+    ax.set_title("(b) 提交通信量", loc="left")
+    ax.grid(axis="x", visible=False)
+
+    ax = ax_c
+    iv = [S["shared_active"], S["hidden_active"], base["request_bytes"][0]]
+    ax.bar(x, iv, width=0.58, color=cols, edgecolor="white", linewidth=0.8, zorder=2)
+    notes = ["上下文＋持有人\n＋事件", "持有人＋事件", "身份密钥＋全文\n＋事件"]
+    for i, v in enumerate(iv):
+        ax.text(i, v + 7, str(v), ha="center", va="bottom",
+                fontsize=8.4, fontweight="bold")
+        ax.text(i, -62, notes[i], ha="center", va="top", fontsize=7.2,
+                color=GREY, linespacing=1.2)
+    ax.set_ylim(0, 268)
+    ax.set_xlim(-0.62, 2.62)
+    ax.set_xticks(x, labels, fontsize=8)
+    ax.set_ylabel("签发者请求分量 (B)")
+    ax.set_title("(c) 签发者可见输入", loc="left")
+    ax.grid(axis="x", visible=False)
+
+    handles = [Rectangle((0, 0), 1, 1, facecolor=c, edgecolor="white")
+               for _, _, c in zk_parts]
+    fig.legend(handles, ["报告信封/明文", "证明/签名回执", "挑战 nonce",
+                         "任务标签（仅 ZK 臂）", "身份密文（仅 ZK 臂）"],
+               frameon=False, loc="lower center", ncol=5,
+               bbox_to_anchor=(0.5, 0.10), fontsize=7.6,
+               handlelength=1.1, handleheight=0.9, columnspacing=1.4,
+               handletextpad=0.4)
+    footnote(fig, "三臂在同一进程、同一任务形状下顺序测量（protocol_comparison.log，n=30，一次预热后）；(b) 不含传输成帧。\n"
+                  f"基线回执 {base['receipt_bytes'][0]} B＝假名 32＋事件 12＋摘要 64＋签名 64；(c) 取 STRUCTURE 与 request_bytes 行（基线含报告全文）；误差棒为样本标准差。",
+             y=0.015)
+    export(fig, "fig10_protocol_comparison",
+           "图 12 同一任务下三臂对照：受理延迟、提交通信量与签发者可见输入。",
+           ["experiments/protocol_comparison.log"],
+           ["ns→ms；均值与样本标准差 ddof=1；字节数取日志恒定整数；签发者输入取 STRUCTURE 行"],
+           "样本标准差，n=30；字节数为确定性计数",
+           "零基线柱状/堆叠条；每柱直接标注数值；(c) 下方文字注明各臂签发者实际可见字段，颜色非唯一线索")
+
+
 if __name__ == "__main__":
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
         print("rendering:")
-        fig2(); fig3(); fig4(); fig5(); fig6(); fig7(); fig8()
+        fig2(); fig3(); fig4(); fig5(); fig6(); fig7(); fig8(); fig9(); fig10()
         glyph = [str(x.message) for x in w
                  if "missing from" in str(x.message).lower()
                  or "glyph" in str(x.message).lower()]
