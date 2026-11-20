@@ -184,9 +184,9 @@ def fig2():
 # ------------------------------------------------- 图3 上下文隐藏构造代价
 def fig3():
     items = [
-        ("无记名对照", 29173, "−660", GREEN, "s", "放行回执转移（图 4a）"),
-        ("上下文隐藏构造", 29503, "−330", BLUE, "o", "拒绝两类替换，签发者不再获得上下文"),
-        ("主关系", 29833, "基准", ORANGE, "^", "拒绝替换，但两侧共享确定性上下文"),
+        ("无记名对照", 29173, GREEN, "s", "放行回执转移（图 4a）"),
+        ("上下文隐藏构造", 29503, BLUE, "o", "拒绝两类替换，签发者不再获得上下文"),
+        ("主关系", 29833, ORANGE, "^", "拒绝替换，但两侧共享确定性上下文"),
     ]
     fig, ax = plt.subplots(figsize=(W, 66 * MM), layout="constrained")
     reserve_bottom(fig, 0.085)
@@ -196,15 +196,11 @@ def fig3():
     ax.axvline(29833, color=GREY, linestyle="--", linewidth=0.9, zorder=1)
     ax.text(30090, 2.50, "主关系基准 29,833", ha="right", va="top",
             fontsize=8, color=GREY)
-    for y, (name, val, delta, col, mk, note) in zip(ys, items):
+    for y, (name, val, col, mk, note) in zip(ys, items):
         ax.scatter([val], [y], s=100, color=col, marker=mk, zorder=4,
                    edgecolors="white", linewidths=0.9)
         ax.text(val, y + 0.17, f"{val:,}", ha="center", va="bottom",
                 fontsize=9.5, fontweight="bold", color=col,
-                bbox=dict(boxstyle="round,pad=0.14", facecolor="white",
-                          edgecolor="none"))
-        ax.text(val, y - 0.17, delta, ha="center", va="top", fontsize=8.5,
-                color=GREY,
                 bbox=dict(boxstyle="round,pad=0.14", facecolor="white",
                           edgecolor="none"))
         ax.text(28930, y - 0.40, note, ha="left", va="top", fontsize=8, color=GREY)
@@ -221,9 +217,9 @@ def fig3():
            ["experiments/ablation_cost.log",
             "experiments/context_hiding_candidate.log",
             "experiments/benchmark.log"],
-           ["约束数取日志 CIRCUIT/RESULT 行的整数值；差值由整数相减得到"],
+           ["约束数取日志 CIRCUIT/RESULT 行的整数值"],
            "约束数为确定性计数，无不确定度",
-           "点编码＋截断横轴已在图内与图注披露；每点附绝对值、差值与安全性后果")
+           "点编码＋截断横轴已在图内与图注披露；每点附绝对值与安全性后果")
 
 
 # ------------------------------------------------------- 图4 四电路开销

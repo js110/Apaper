@@ -25,10 +25,10 @@
    "experiments/benchmark.log"
   ],
   "transformations": [
-   "约束数取日志 CIRCUIT/RESULT 行的整数值；差值由整数相减得到"
+   "约束数取日志 CIRCUIT/RESULT 行的整数值"
   ],
   "uncertainty": "约束数为确定性计数，无不确定度",
-  "encoding_notes": "点编码＋截断横轴已在图内与图注披露；每点附绝对值、差值与安全性后果",
+  "encoding_notes": "点编码＋截断横轴已在图内与图注披露；每点附绝对值与安全性后果",
   "palette": "Okabe-Ito",
   "fonts": "Times New Roman + Songti SC fallback",
   "width_mm": 180,
