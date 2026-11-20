@@ -1,0 +1,136 @@
+{
+ "fig2_ablation": {
+  "caption_zh": "图 2 受控消融：各项绑定挡住的攻击。(a) 回执转移；(b) 上下文替换。",
+  "raw_data": [
+   "experiments/binding.log",
+   "experiments/context_ablation.log"
+  ],
+  "transformations": [
+   "逐字转录 RESULT 行的接受/拒绝判定，未做聚合或折算"
+  ],
+  "uncertainty": "分类结果，无不确定度；证据级别（R1CS / R1CS+Groth16）以 ◆ 标注",
+  "encoding_notes": "颜色非唯一线索：每格同时给出 √/× 符号与“接受/拒绝”文字",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig3_context_hiding_cost": {
+  "caption_zh": "图 3 三个矩形电路变体的约束数与安全性后果。",
+  "raw_data": [
+   "experiments/ablation_cost.log",
+   "experiments/context_hiding_candidate.log",
+   "experiments/benchmark.log"
+  ],
+  "transformations": [
+   "约束数取日志 CIRCUIT/RESULT 行的整数值；差值由整数相减得到"
+  ],
+  "uncertainty": "约束数为确定性计数，无不确定度",
+  "encoding_notes": "点编码＋截断横轴已在图内与图注披露；每点附绝对值、差值与安全性后果",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig4_circuit_cost": {
+  "caption_zh": "图 4 四个电路的规模与本地开销。",
+  "raw_data": [
+   "experiments/benchmark.log",
+   "experiments/region_benchmark.log",
+   "experiments/accountability_benchmark.log",
+   "experiments/revocation_benchmark.log"
+  ],
+  "transformations": [
+   "ns→ms（除以 1e6）；样本均值与样本标准差 ddof=1；约束数取 compile 行整数"
+  ],
+  "uncertainty": "样本标准差，n=30 次测量运行（1 次预热不计入）",
+  "encoding_notes": "柱状图零基线；原始 30 点叠加显示；每柱直接标注均值±标准差",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig5_per_run": {
+  "caption_zh": "图 5 四个电路各三十次本地证明生成与验证的逐次测量（虚线为中位数；(b) 纵轴自 0.7 ms 起，为点编码）。",
+  "raw_data": [
+   "experiments/benchmark.log",
+   "experiments/region_benchmark.log",
+   "experiments/accountability_benchmark.log",
+   "experiments/revocation_benchmark.log"
+  ],
+  "transformations": [
+   "ns→ms；逐次原值直接绘制，未平滑；中位数由 30 个原值算得"
+  ],
+  "uncertainty": "逐次原始观测，n=30；虚线为中位数（非均值）",
+  "encoding_notes": "四个序列用不同标记区分，颜色非唯一线索",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig6_region_scaling": {
+  "caption_zh": "图 6 区域树深度对约束数、证明生成与验证时间的影响。",
+  "raw_data": [
+   "experiments/region_scale_4.log",
+   "experiments/region_scale_6.log",
+   "experiments/region_scale_8.log"
+  ],
+  "transformations": [
+   "ns→ms；均值与样本标准差 ddof=1；增长率由两端均值/约束数相除算得"
+  ],
+  "uncertainty": "样本标准差，n=30；约束数为确定性计数",
+  "encoding_notes": "(a) 截断纵轴已披露；(b)(c) 零基线且分量程，避免把 ~1 ms 的验证画成不可见",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig7_accept_latency": {
+  "caption_zh": "图 7 同进程受理路径的耗时分解。",
+  "raw_data": [
+   "experiments/end_to_end.log"
+  ],
+  "transformations": [
+   "ns→ms；各分量取 30 次样本均值；其余合计 = 总均值 − 证明生成均值"
+  ],
+  "uncertainty": "样本标准差，n=30；(a) 标注总耗时的均值±标准差",
+  "encoding_notes": "(a) 零基线堆叠条；(b) 为零基线但量程不同的独立面板，尺度差异已在标题与图注披露",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig8_communication": {
+  "caption_zh": "图 8 单份提交的通信量构成与证明尺寸。",
+  "raw_data": [
+   "experiments/end_to_end.log",
+   "experiments/benchmark.log",
+   "experiments/region_benchmark.log",
+   "experiments/accountability_benchmark.log",
+   "experiments/revocation_benchmark.log"
+  ],
+  "transformations": [
+   "字节数取日志中 30 次运行恒定的整数值；占比由分量除以合计算得"
+  ],
+  "uncertainty": "确定性字节计数，30 次运行中取值恒定，无不确定度",
+  "encoding_notes": "零基线堆叠条与分组柱；大段直接标注字节数，小段数值在图例给出，颜色非唯一线索",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
+ }
+}

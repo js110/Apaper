@@ -1,0 +1,754 @@
+收稿日期:2 0 2 6  0 1  2 1 ;修回日期:2 0 2 6  0 4  1 6基金项目:国家自然科学基金资助项目( 6 2 2 0 3 2 0 1 ) ; 2 0 2 4年辽宁省属本科高校基本科
+研业务费专项资金资助项目( L J Z Z 2 1 2 4 1 0 1 5 4 0 2 5 ) ;辽宁省科技厅联合计划资助项目( 2 0 2 5 J H 2 / 1 0 1 8 0 0 2 3 1 )
+作者简介:龚关( 2 0 0 1 —) ,男,河南商丘人,硕士研究生, C C F会员,主要研究方向为差分隐私、隐私保护;李晓会( 1 9 7 8 —) ,女(通信作者) ,辽
+宁盘锦人,教授,博士,主要研究方向为网络安全、信任管理、隐私保护;张兴( 1 9 7 5 —) ,男,辽宁葫芦岛人,教授,博士,主要研究方向为网络体系架
+构与协议、信息安全等;兰洁( 1 9 8 2 —) ,女,吉林长春人,副教授,博士,主要研究方向为群体智能、神经网络控制.
+时空约束下兴趣区域驱动的本地差分
+隐私轨迹发布方法
+龚关a
+,李晓会a 
+,张兴b
+,兰洁c
+(辽宁工业大学a .电子与信息工程学院;b .智慧校园建设中心;c .理学院,辽宁锦州1 2 1 0 0 0 )
+摘要:针对轨迹发布中敏感停留语义泄露与扰动引发的形变与远跳问题,提出时空约束下兴趣区域驱动的本
+地差分隐私轨迹发布方法( S T  L D P A o I ) 。通过隐半马尔可夫模型进行显式持续时间建模,在终端侧检测停留点
+并构建兴趣区域;在兴趣区域约束下构造候选域并采用距离分层随机响应进行受限扰动,抑制轨迹形变与远跳;
+引入垫底项保证输出全支持。理论分析表明该方法满足本地差分隐私。在G e o L i f e与R o m eT a x i数据集上选取
+多种基线进行实验。结果表明:停留点检测的F 1  s c o r e相较S P D M  T S R分别提升4 . 1 4 %与9 . 2 0 %;在相同隐私
+预算下, D T WS的平均值相较L D P T P M  A o I分别降低1 6 . 6 1 %与1 5 . 5 0 %。该方法有效兼顾敏感停留语义保护与
+轨迹可用性,提升了轨迹数据的实用价值。
+关键词:停留点检测;兴趣区域;本地差分隐私;随机响应;轨迹发布
+中图分类号:T P 3 0 9 . 2文献标志码:A文章编号:1 0 0 1  3 6 9 5 ( 2 0 2 6 ) 1 1  0 2 8  3 4 2 0  0 7
+d o i :1 0 . 1 9 7 3 4 / j . i s s n . 1 0 0 1  3 6 9 5 . 2 0 2 6 . 0 1 . 0 0 7 5
+S p a t i o t e m p o r a l  c o n s t r a i n e dl o c a l d i f f e r e n t i a l p r i v a c yt r a j e c t o r y
+p u b l i s h i n gm e t h o df o r a r e a s o f i n t e r e s t
+G o n gG u a n a
+,L i X i a o h u i a 
+,Z h a n gX i n g b
+,L a nJ i e c
+( a .S c h o o l o f E l e c t r o n i c s &I n f o r m a t i o nE n g i n e e r i n g , b .S m a r t C a m p u s C o n s t r u c t i o nC e n t e r , c . C o l l e g e o f S c i e n c e , L i a o n i n gU n i v e r s i t y o f T e c h 
+n o l o g y ,J i n z h o uL i a o n i n g1 2 1 0 0 0 ,C h i n a )
+A b s t r a c t :T h i s p a p e r p r o p o s e da s p a t i o t e m p o r a l  c o n s t r a i n e dl o c a l d i f f e r e n t i a l p r i v a c y t r a j e c t o r y p u b l i s h i n g m e t h o df o r a r e a s o f
+i n t e r e s t ,t e r m e dS T  L D P A o I ,t o a d d r e s s s e n s i t i v e s t a y  s e m a n t i c s l e a k a g e a n dl o n g  r a n g e j u m pd e f o r m a t i o nc a u s e db y p e r t u r b a 
+t i o ni nt r a j e c t o r yp u b l i s h i n g .T h em e t h o du s e dah i d d e ns e m i  M a r k o vm o d e l w i t he x p l i c i t d u r a t i o nm o d e l i n g o nt h e c l i e n t s i d e
+t od e t e c t s t a y p o i n t s a n dc o n s t r u c t a r e a s o f i n t e  r e s t . U n d e r a r e a s  o f  i n t e r e s t c o n s t r a i n t s , i t c o n s t r u c t e da c a n d i d a t e d o m a i na n d
+a p p l i e dd i s t a n c e  s t r a t i f i e dr a n d o m i z e dr e s p o n s e f o r c o n s t r a i n e dp e r t u r b a t i o n ,s u p p r e s s i n g t r a j e c t o r y d e f o r m a t i o na n dl o n g  r a n g e
+j u m p s ,w i t ha f l o o r t e r mt o g u a r a n t e e f u l l o u t p u t s u p p o r t .T h e o r e t i c a l a n a l y s i s s h o wt h a t S T  L D P A o I s a t i s f i e s l o c a l d i f f e r e n t i a l
+p r i v a c y .E x p e r i m e n t s o n t h e G e o L i f e a n d R o m e T a x i d a t a s e t s w i t h m u l t i p l e b a s e l i n e s s h o wt h a t t h e F 1  s c o r e o f s t a y p o i n t d e t e c 
+t i o ni n c r e a s e b y 4 . 1 4 %a n d 9 . 2 0 %c o m p a r e dw i t h S P D M T S R . U n d e r t h e s a m e p r i v a c y b u d g e t , t h e a v e r a g e D T WS d e c r e a s e b y
+1 6 . 6 1 %a n d1 5 . 5 0 % c o m p a r e dw i t hL D P T P M  A o I .T h em e t h o de f f e c t i v e l yb a l a n c e st h ep r o t e c t i o no f s e n s i t i v es t a ys e m a n t i c s
+a n dt r a j e c t o r yu t i l i t y ,e n h a n c i n g t h e p r a c t i c a l v a l u eo f t r a j e c t o r yd a t a .
+K e yw o r d s :s t a y p o i n t d e t e c t i o n ;a r e a s o f i n t e r e s t ( A o I ) ;l o c a l d i f f e r e n t i a l p r i v a c y ;r a n d o m i z e dr e s p o n s e ;t r a j e c t o r yp u b l i 
+s h i n g
+0引言
+随着智能终端的普及和移动通信技术的发展,基于位置的
+网络服务( l o c a t i o n  b a s e dn e t w o r ks e r v i c e s , L B N S s ) 在导航、位置
+社交与个性化推荐等应用中得到广泛使用,显著提升了用户体
+验[ 1 ]
+。与此同时,服务提供方在响应请求过程中会持续收集
+用户位置与轨迹数据。由于轨迹数据具有显著的时空相关性
+与可再识别性,轨迹共享与数据挖掘可能使攻击者推断用户的
+居住地、工作地与兴趣偏好等敏感信息。因此,如何在发布轨
+迹数据的同时尽可能保留数据可用性并提供可证明的隐私保
+护,成为轨迹数据安全研究的重要问题[ 2 ]
+。
+现有轨迹隐私保护方法大体可分为轨迹泛化、轨迹抑制、
+轨迹加密与动态假名四类。轨迹泛化通常基于k  匿名思想,通
+过匿名区域替代精确位置以降低再识别风险[ 3 ]
+。Wa n g等
+人[ 4 ]
+提出面向空间轨迹k  匿名的轨迹匿名化方法,通过层次
+网格索引加速轨迹聚类与合并,实现在大规模数据上提升匿名
+化处理的可扩展性; D o m i n g o  F e r r e r等人[ 5 ]
+提出去中心化轨迹
+k  匿名化方法,通过隐私保护的交互机制生成满足k  匿名约束
+的轨迹数据,以弱化对中心化匿名服务器的依赖。尽管这类方
+法能够有效保护隐私,但往往会降低服务精度。轨迹抑制方法
+多在“ 可信第三方匿名服务器” 假设下工作,通过删除敏感位
+置与高频访问位置实现保护。B r a u e r等人[ 6 ]
+提出基于上下文
+的轨迹截断机制,以敏感地点为保护对象,在发布前根据上下
+文信息识别可能暴露敏感地点的轨迹片段,并对这些片段进行
+截断处理,从而降低从轨迹中反推出敏感位置的风险; L i n等
+人[ 7 ]
+从效率角度改进抑制类方法,设计基于图索引与剪枝策
+第4 3卷第1 1期
+2 0 2 6年1 1月
+计算机应用研究
+A p p l i c a t i o nR e s e a r c ho f C o m p u t e r s
+V o l  4 3N o  1 1
+N o v . 2 0 2 6略的全局抑制算法以减少不必要计算,从而提升在大规模轨迹
+数据上的处理效率。此类方法通过直接删减轨迹片段获得保
+护,易破坏轨迹结构信息。轨迹加密方法常利用密码技术在不
+暴露隐私的情况下完成检索。Z h a n g等人[ 8 ]
+提出一种性能可
+调的C P I R式位置服务查询方案,通过仅扫描部分数据子空间
+并配合索引优化来降低计算与通信开销,旨在不暴露查询意图
+的前提下提升检索效率。Y i等人[ 9 ]
+提出一种基于同态加密的
+隐私保护查询方案,使得相似度计算与检索可在密文域完成,
+从而在不暴露轨迹位置与查询内容的前提下提升查询效率。
+但此类基于密码学的检索机制通常需要较高的计算与通信开
+销,易产生性能瓶颈。动态假名技术以伪标识替代真实身份,
+V a a s等人[ 1 0 ]
+提出在M i x  z o n e s中引入诱饵车辆的换名方案,在
+车辆密度不足时通过生成虚拟轨迹混淆集合,从而降低换名保
+护对交通流量的依赖并提升不可链接性。但M i x  z o n e s的过度
+部署会显著损害服务质量。针对该问题, M e m o n等人[ 1 1 ]
+进一
+步给出面向路网的最优M i x  z o n e布局以降低开销并提升隐私
+保障。然而,动态假名方法对用户密度与混淆条件较为敏感,
+隐私效果对场景依赖较强。
+上述方法通常依赖一定的先验假设,有必要引入一种不依
+赖特定场景假设、能够给出形式化隐私保证的通用隐私保护框
+架。差分隐私( d i f f e r e n t i a l p r i v a c y , D P ) 由D w o r k等人[ 1 2 ]
+提出,
+其定义了严格的攻击模型并给出了可度量的隐私保护保证。
+在轨迹场景中, C h e n等人[ 1 3 ]
+较早将D P用于轨迹数据发布,通
+过加入拉普拉斯噪声实现基于噪声前缀树的差分隐私轨迹发
+布。为进一步弱化D P对可信数据收集方的依赖,本地差分隐
+私( l o c a l d i f f e r e n t i a l p r i v a c y , L D P ) [ 1 4 ]
+作为一种去中心化隐私模
+型被提出,其核心思想是由用户在终端侧先行随机化后再上传
+以获得隐私保证。D u等人[ 1 5 ]
+提出在本地差分隐私约束下对
+用户端轨迹进行扰动并生成可发布的合成轨迹,从而在去中心
+化场景中提供形式化隐私保证。近年的差分隐私轨迹发布研
+究逐步转向效用提升。S u n等人[ 1 6 ]
+从发布效用提升的角度出
+发,通过两层自适应网格离散化和多种轨迹统计特征建模提升
+发布数据可用性,但对轨迹连续性及局部空间约束的考虑仍较
+有限。
+轨迹数据在时空维度上具有显著相关性,相邻位置与时间
+戳的变化并非独立,若忽略这些时空因素易导致数据可用性不
+足[ 1 7 ]
+。对此, X i a o等人[ 1 8 ]
+引入时间因素,提出平面各向同性
+机制以提升连续发布的合理性;刘沛骞等人[ 1 9 ]
+构建历史轨迹
+结构并引入变阶马尔可夫模型刻画轨迹的时序依赖,在此约束
+下进行隐私预算分配并对位置点加噪发布; C h o n g等人[ 2 0 ]
+提
+出一种相关性感知的连续位置发布框架,通过将时空与用户相
+关性强度纳入机制设计,缓解相关数据场景下传统差分隐私的
+隐私保证退化的问题。
+此外,轨迹中的隐私风险并不均衡:并非所有位置都会泄
+露同等程度的隐私,也并非所有区域都需要同样强度的保护。
+因此,相较于一般过境位置,用户反复停留和反复到访的空间
+范围更容易承载居住地、工作地以及兴趣偏好等敏感语义。这
+类由稳定停留行为在空间上聚合形成、能够表征用户长期活动
+偏好的区域,通常可视为兴趣区域( A o I ) ,因而更应作为轨迹
+发布中的重点保护对象。G o n g等人[ 2 1 ]
+使用D B S C A N算法检
+测轨迹中的停留点,但其未考虑轨迹发布中的隐私泄露风险;
+X i a等人[ 2 2 ]
+提出基于停留点的差分隐私轨迹发布机制,通过对
+提取的停留点进行差分隐私扰动实现发布,但其保护主要集中
+于停留语义,对轨迹结构保持缺乏考虑; Z h a n g等人[ 2 3 ]
+进一步
+引入时空限制以区分停留点与移动点,但该方法主要侧重于停
+留点的检测与边界确定,而在以停留行为聚合形成的兴趣区域
+为重点保护对象的轨迹发布中,仍缺乏对轨迹连续性的显式
+约束。
+针对上述文献存在的问题,本文提出一种时空约束下兴趣
+区域驱动的本地差分隐私轨迹发布方法 ( s p a t i o t e m p o r a l 
+c o n s t r a i n e dl o c a ld i f f e r e n t i a lp r i v a c yf o ra r e a so fi n t e r e s t ,S T 
+L D P A o I ) ,具体贡献如下:
+a ) 提出兴趣区域驱动策略与本地差分隐私相结合的轨迹
+发布方法,将扰动限定在兴趣区域内,且用户在终端侧完成扰
+动,无须依赖可信第三方或中心化噪声注入。
+b ) 构建时空约束下的停留结构提取与兴趣区域生成方
+法,结合持续时间建模与空间范围约束稳定检测停留信息,为
+轨迹发布提供结构化依据。
+c ) 设计兴趣区域内满足 ε  L D P的受限扰动机制,基于候
+选域与距离分层随机化抑制形变与远跳,在隐私约束下提升效
+用稳定性。
+1相关工作
+1 . 1本地差分隐私
+如图1所示,在不可信第三方场景下,本地差分隐私通过
+在数据采集前由用户端对数据进行随机扰动,仅上传加噪结
+果,服务器基于扰动数据开展数据分析。该机制将隐私保护前
+移至本地,从而降低传输过程中的隐私泄露风险。
+图1本地差分隐私
+F i g . 1 L o c a l d i f f e r e n t i a l p r i v a c y
+定义1 ε  本地差分隐私[ 1 4 ]
+。设随机机制M的输入域为
+D o m ( M),输出域为R a n ( M) 。对任意两个不同输入x、x ′ ∈
+D o m ( M) 与任意输出y ∈R a n ( M) ,若满足
+P r [ M ( x ) =y ]
+P r [ M ( x ′ ) =y ]
+≤e ε
+( 1 )
+则称机制M满足 ε  本地差分隐私。其中: ε为隐私预算, ε越
+小表示隐私保护强度越高。
+性质1序列组合。对同一隐私主体的数据依次执行一
+组本地机制{ M1 , …, MK } ,若每个Mi分别满足 ε i  L D P ,则其联
+合发布过程满足( ∑
+k
+i = 1
+ε i )  L D P ,即
+P r [ ( M1 , …, Mk ) ( x ) =y ]
+P r [ ( M1 , …, Mk ) ( x ′ ) =y ]
+≤e
+∑
+k
+i = 1
+ε i
+( 2 )
+其中: y表示联合输出向量。本文在对同一用户的不同轨迹段
+依次执行本地随机化时,采用该性质对隐私预算进行分配并累
+计核算该用户的总体隐私开销。
+1 . 2隐半马尔可夫模型( h i d d e ns e m i  M a r k o vm o d e l , H S M M)
+在序列建模中,隐状态序列往往具有“ 成段持续” 的特征。
+H S M M[ 2 4 ]
+可视为对H M M的扩展:其潜在过程满足半马尔可夫
+性质,即状态转移不再仅由当前状态决定,还与已在该状态中
+持续的时间有关,从而能够显式刻画状态驻留时间分布,更适
+合描述具有明确持续时长的轨迹。
+设隐状态集合为S = { 1 , …, N } ,观测序列为O 1∶ T。H S M M
+通常由三类参数刻画: a ) 状态转移概率a i j = P ( s k + 1= j | s k= i ) ;
+b ) 发射概率b j ( o ) =P ( o t = o | s = j ) ; c ) 显式持续时间分布p j ( d ) =
+· 1 2 4 3 · 第1 1期龚关,等:时空约束下兴趣区域驱动的本地差分隐私轨迹发布方法P ( D= d | s = j ) 。其中: k表示段序号; t表示时间索引。与H M M
+依赖自环概率所诱导的几何驻留时间不同, H S M M允许对
+p j ( d ) 进行更一般的建模,因此在轨迹停留时长存在明显分布
+特征时,可直接对持续时间施加约束并提升轨迹边界稳定性。
+1 . 3 k  元随机响应( k  a r yr a n d o mi z e dr e s p o n s e , k  R R )
+随机响应( r a n d o m i z e dr e s p o n s e ) [ 2 5 ]
+最早由Wa r n e r提出,用
+于在引入随机噪声的同时保护个体回答的不可区分性。在本
+地差分隐私场景中,当用户数据取值属于大小为k的离散域
+X = { 1 , …, k } 时, k  R R [ 2 6 ]
+是最典型、也是理论分析中最常用的
+本地随机化机制之一,并在多类频率估计与多项分布估计中具
+有明确的隐私 效用性质。
+设输入为x ∈X ,输出为y ∈X。则k  R R的扰动规则定义为
+P r [ M( x ) =y ] =
+p y = x
+q y ≠x { ( 3 )
+其中:
+p =
+e ε
+e ε
++ k - 1
+, q =
+1
+e ε
++ k - 1
+( 4 )
+该机制满足 ε  L D P。直观上, ε越大,输出保持真实值的
+概率p越高,反之随机化程度越强。
+2兴趣区域驱动的本地差分隐私轨迹发布方法
+2 . 1设计思想
+针对轨迹发布中停留语义泄露与扰动形变问题,本文提出
+一种时空约束下兴趣区域驱动的本地差分隐私轨迹发布方法
+S T  L D P A o I ,其整体工作框架如图2所示。为了在轨迹扰动前
+获得稳定的停留结构并据此构建兴趣区域,需要预先实现对停
+留行为的稳定识别。基于这一考虑,方法整体遵循“ 先结构
+化、后扰动” 的设计范式:首先,终端对单条轨迹进行停留结构
+建模与检测,并通过显式持续时间建模刻画停留状态的连续性
+与稳定性,从而获得更可靠的停留点集合。其次,基于停留检
+测结果自动构建兴趣区域,并由兴趣区域确定需要重点保护的
+局部安全区域。随后,对轨迹点进行区域判定,仅对落入安全
+区域的点执行本地随机化发布:在安全区域内构造离散候选范
+围,并采用距离分层随机响应使输出更偏向局部近邻,以抑制
+跨区域跳转带来的形变累积;当候选范围受限时,通过垫底正
+则保证输出全支持。由此,该方法以“ 持续时间约束的停留结
+构” 和“ 安全区域受限的空间扰动” 共同形成时空约束机制,在
+满足本地差分隐私的前提下提升轨迹可用性并增强停留结构
+保持能力。
+图2 S T  L D P A o I工作框架
+F i g . 2 F r a m e w o r ko f S T  L D P A o I
+2 . 2算法实现
+2 . 2 . 1 S T  L D P A o I总体发布流程
+为便于说明停留结构提取、兴趣区域构建与轨迹发布之间
+的整体关系,先对本文方法的整体执行逻辑进行概括说明,具
+体步骤如算法1所示。
+算法1 S T  L D P A o I算法
+输入:原始轨迹T ;停留约束( d t m i n , r m a x ) ;隐私预算 ε 。
+输出:发布轨迹T 。
+1( S , A , R )=D u r  S P D ( T ) / / 算法2
+2T 
+= 
+3f o r e a c h( p t , τ t )∈ Td o
+4 i f S R∈ R∶ p t ∈S Rt h e n
+5 S R = 取满足p t ∈S R的区域
+6 L m= { q ∈S R| q满足候选规则}
+7 x = a r g m i n q ∈L m
+d ( p t , q )
+8 y = L D P  D S B R ( x , L m, ε , { r i } , β )/ / 算法3
+9 T 
+= T 
+∪ { ( y , τ t ) }
+1 0 e n di f
+1 1e n df o r
+1 2r e t u r nT 
+S T  L D P A o I算法给出端到端轨迹发布流程。算法首先调
+用D u r  S P D对原始轨迹进行停留检测与结构提取,得到停留点
+集合、兴趣区域集合以及由兴趣区域扩展形成的安全区域集
+合,并初始化发布轨迹为空(行1、2 ) 。在此基础上,算法按时
+间顺序遍历原始轨迹点,判断当前位置是否落入任一安全区
+域;若同时落入多个安全区域,则依据预设规则确定其唯一归
+属区域,以保证后续处理的一致性(行3 ~ 5 ) 。随后,算法在选
+定安全区域内依据候选规则构造离散候选域,并将当前位置映
+射为候选域中的最近候选点,从而把连续空间中的扰动问题转
+换为离散候选域上的本地随机化(行6、7 ) 。接着调用L D P 
+D S B R受限扰动机制生成扰动点,在满足本地差分隐私的同时
+抑制不合理远跳(行8、9 ) 。最后将扰动后的轨迹点写入发布
+轨迹,重复上述过程直至遍历结束并输出发布结果(行1 0 ~
+1 2 ) ,算法流程如图3所示。
+图3 S T  L D P A o I算法流程
+F i g . 3 F l o w c h a r t o f S T  L D P A o I a l g o r i t h m
+2 . 2 . 2停留结构提取与兴趣区域生成
+在轨迹发布前,兴趣区域的构建依赖对停留行为的稳定识
+别,为减少采样波动、短时低速移动及局部噪声对停留边界的
+干扰,本文采用H S M M对停留状态进行建模,并结合最小停留
+时长与段内空间半径约束对候选停留段进行筛选,具体步骤如
+算法2所示。
+算法2 D u r  S P D算法
+输入:用户轨迹T ;停留约束 ( d t m i n , r m a x ) 。
+输出:停留点集合S ;兴趣区域集合A ;安全区域集合R。
+1将T按时间排序并去重,删除异常速度点与时间戳不一致点
+2构造观测序列Z = { ( v t , Δ s t ) }
+3用H S M M解码得到状态序列Q t ∈ { s t a y , m o v e }
+4S = , t = 1
+5w h i l et ≤ | T | d o
+6 i f Q t = s t a y t h e n
+7 s e g = ( t ,m a x { t ′ ≥ t : i ∈[ t , t ′ ] , Q i = s t a y } )
+8 i f ( τ s e g . e - τ s e g . s ) ≥d t m i n a n dr a d ( s e g ) ≤r m a x t h e n
+9 S = S ∪{ p s e g }
+· 2 2 4 3 · 计算机应用研究第4 3卷1 0 e n di f
+1 1 t = s e g . e +1
+1 2 e l s e
+1 3 t = t +1
+1 4 e n di f
+1 5e n dw h i l e
+1 6P = { ( p s e g , d u r s e g ) | p s e g ∈S }
+1 7A = 对P执行密度聚类并过滤
+1 8R = { A o I ( a )向外缓冲得到S R | a ∈A }
+1 9r e t u r n( S , A , R )
+D u r  S P D算法用于从原始轨迹中检测停留点并生成兴趣
+区域与安全区域约束。算法首先对轨迹清洗后构造观测序列
+Z ,在H S M M框架下解码得到停留状态序列Q t (行1 ~ 4 ) 。随后
+将连续s t a y区间抽取为候选停留段s e g ,并通过最小停留时长
+d t m i n与段内空间半径约束r m a x过滤伪停留,由满足约束的停留
+段提取代表停留点p s e g ,形成停留点集合S (行6 ~ 1 4 ) 。最后由
+停留点及其持续时间构造集合P ,对P采用文献[ 2 1 ] 的
+D B S C A N方法进行密度聚类并结合访问次数与累计时长阈值
+筛选得到兴趣区域集合A ,再对兴趣区域进行缓冲扩展得到安
+全区域集合R (行1 6 ~ 1 8 ) ,作为下游隐私保护的区域接口。
+2 . 2 . 3候选域构造与受限扰动机制
+在获得兴趣区域后,需要在候选域内对轨迹点进行受限随
+机化,以抑制形变与远跳并保证输出全支持。其中,为避免候
+选域受限和近邻偏置导致部分候选输出概率过低,本文在受限
+扰动机制中引入垫底项,以概率 β在全候选域上进行均匀采
+样,以保证任意候选输出均具有非零概率;其余情况下执行距
+离分层随机响应。候选域内构造与受限扰动机制如算法3所示。
+算法3 L D P  D S B R算法
+输入:真实点x ;候选域L m;隐私预算 ε ;分层阈值{ r i } ;垫底概率 β 。
+输出:扰动点y。
+1按{ r i } 将L m分层得到{ S i } K
+i = 1 ,删除空层并重编号
+2i f r a n d ( )<βt h e n
+3在L m中均匀随机选取y , r e t u r ny
+4e n di f
+5令 α =
+e x p ( ε )
+e x p ( ε ) + K - 1
+6i f r a n d ( )<αt h e n
+7 s e l =1
+8e l s e
+9 s e l =U n i f o r m ( { 2 , 3 , …, K } )
+1 0e n di f
+1 1在S s e l中均匀随机选取y
+1 2r e t u r ny
+L D P  D S B R在候选域L m上进行距离分层随机化。以输入
+点x的距离为参照,按阈值{ r i } 将候选域划分为若干距离层并
+删除空层后重编号,使第1层对应最近的非空层(行1 ) 。接下
+来先以垫底概率 β在全候选域均匀采样保证全支持(行2 ~
+4 ) ;其余情况下在层索引上执行k  R R :以概率 α选择最近层,
+否则在其余层中均匀选择(行5 ~ 1 0 ) ,最后在选中层内得到扰
+动点y (行1 1、1 2 ) 。该设计使机制在保留近邻偏好的同时,仍
+对整个候选域保持完整输出支持,从而增强了受限候选域条件
+下的稳健性。
+2 . 3隐私与安全性分析
+本文考虑不可信数据收集方场景。服务端可观测用户上
+传的发布结果,但无法直接访问终端侧原始轨迹。攻击者可能
+尝试根据发布结果反推用户的真实位置、停留区域及其敏感活
+动语义。对于L D P  D S B R ,即使攻击者已知机制及参数,也无
+法仅凭一次输出高置信区分任意两个可能输入,其区分能力受
+隐私预算 ε 约束。
+定理1 L D P  D S B R方法满足 ε  本地差分隐私。
+证明记x , x ′ ∈L m为任意两种输入位置, y ∈L m为任意输
+出。L D P  D S B R的输出由两阶段生成:以概率 β在L m上均匀
+采样;以概率1 - β 先对层号执行K元随机响应得到层索引 ^ ι ,
+再在所选层内均匀采样得到输出y。因此,对任意y有
+P r [ M ( x ) =y ]
+P r [ M ( x ′ ) =y ]
+=
+β
+| L m|
++ ( 1 - β ) P r [ ^ ι = s ( y ) | x ] ·
+1
+| S s ( y )|
+β
+| L m|
++ ( 1 - β ) P r [ ^ ι = s ( y ) | x ′ ] ·
+1
+| S s ( y )|
+( 5 )
+其中: S ( y ) 表示y所属的层号。式( 5 ) 的最坏比值由层索引随
+机响应项主导,从而有
+P r [ M( x ) =y ]
+P r [ M ( x ′ ) =y ]
+≤
+P r [ ^ ι = s ( y ) | x ]
+P r [ ^ ι = s ( y ) | x ′ ]
+( 6 )
+又由于层索引采用标准K元随机响应,满足对任意层号i有
+P r [ ^ ι = i | x ]
+P r [ ^ ι = i | x ′ ]
+≤e ε
+( 7 )
+综上可得对任意输出y ∈L m,
+P r [ M ( x ) =y ]
+P r [ M( x ′ ) =y ]
+≤e ε
+( 8 )
+故L D P  D S B R满足 ε  L D P。证毕。
+由定理1可知, L D P  D S B R的单次调用满足 ε  L D P。在此
+基础上,可进一步考察S T  L D P A o I在安全区域内多次调用该
+机制时的总体隐私损失。
+定理2 S T  L D P A o I在安全区域内每次触发扰动的点满足
+ε  L D P ;若同一用户在安全区域内触发次数为m ,则总体隐私
+损失满足 ε t o t ≤m ε 。
+证明对满足p t ∈S R的点, S T  L D P A o I调用一次L D P 
+D S B R ,由定理1知该次调用满足 ε  L D P ;对同一用户在S R内
+的m次调用,按序列组合性质得 ε t o t ≤m ε 。证毕。
+对S T  L D P A o I而言,仅当轨迹位置落入安全区域并触发
+随机化时,才产生相应隐私开销。由定理2可知,在安全区域
+约束下,机制每次触发扰动均满足 ε  L D P ;若同一用户在多个
+时刻重复触发该机制,则总体隐私损失按序列组合性质累积。
+2 . 4复杂度分析
+2 . 4 . 1时间复杂度
+设单条轨迹的点数为N。本文方法的时间开销可作如下
+分析: a ) 算法1为整体发布流程,其主要开销包括调用算法2
+完成停留结构提取、兴趣区域生成与安全区域构建,以及按轨
+迹顺序逐点执行区域判定与扰动发布;在候选域规模受参数约
+束时,后者附加开销为O ( N ) 。b ) 算法2主要包括轨迹排序清
+洗、H S M M状态解码、候选停留段筛选以及兴趣区域与安全区
+域生成,其中排序预处理复杂度为O ( Nl o gN ) ,其余步骤随轨
+迹长度线性增长,因此算法2总体时间复杂度为O ( Nl o gN ) 。
+c ) 算法3在候选域内执行距离分层随机化,在候选域规模由网
+格分辨率与安全区域尺度约束、可视为常数量级时,单次扰动
+复杂度近似为O ( 1 ) 。因此,整体时间复杂度由算法2中的排
+序预处理主导,约为O ( Nl o gN ) 。
+2 . 4 . 2空间复杂度
+本文方法的空间开销可作如下分析: a ) 算法1作为整体发
+布流程,主要存储原始轨迹、发布轨迹以及区域判定过程中的
+中间变量,空间开销与轨迹点数N线性相关; b ) 算法2需要存
+储轨迹点序列、状态标记、候选停留段以及兴趣区域和安全区
+域等中间结果,其空间复杂度为O ( N ) ; c ) 算法3在候选域内
+进行距离分层随机化,主要涉及候选域及分层结果的临时存
+储。由于候选域规模在参数固定时可视为常数量级,且相关结
+果可按点生成并复用,所以附加空间开销较小。综上,本文方
+法总体空间复杂度仍约为O ( N ) 。
+· 3 2 4 3 · 第1 1期龚关,等:时空约束下兴趣区域驱动的本地差分隐私轨迹发布方法3实验结果与分析
+3 . 1实验设置
+本节实验在P y C h a r m开发平台使用P y t h o n语言编写,运
+行于Wi n d o w s 1 1操作系统;硬件环境为I n t e l i 9  1 3 9 0 0 H X处理
+器、N V I D I AR T X5 0 6 0G P U。
+数据集采用G e o L i f e与R o m eT a x i两类公开G P S轨迹开展
+对比实验。G e o L i f e为个人移动轨迹数据,覆盖1 8 2名用户,包
+含步行、骑行、驾车等多种出行方式,停留与断续现象较为明
+显; R o m eT a x i为罗马城市出租车轨迹,覆盖约3 2 0辆出租车,
+体现为道路网络约束下的连续机动出行,两数据集均以WG S 
+8 4经纬度与时间戳构成点序列。为保证可复现与规模可控,
+本文采用统一预处理:以用户为单位筛选轨迹段,对每个用户
+轨迹按时间去重并删除非法点;基于相邻点距离与时间差计算
+瞬时速度,超过1 8 0k m/ h的跳变在该处断开;以时间断裂阈值
+3 0m i n将序列切分为轨迹段。随后在各数据集主活动区域内
+进行网格化:以经纬度[ 1 %, 9 9 %] 分位数确定边界框,构建边
+长2 0 0m的正方形网格并将点映射为网格序列,统计访问网格
+数与网格跳转次数。有效轨迹段要求持续时间大于1 0m i n且
+满足最小空间覆盖,以剔除信息量不足或近似静止片段;有效
+用户要求有效轨迹段数大于1 0 ,筛选后的数据集关键参数如
+表1所示。
+表1数据集信息
+T a b . 1 D a t a s e t i n f o r m a t i o n
+数据集位置范围有效轨迹段
+G e o L i f e [ 1 1 6 . 2 0 ,1 1 6 . 6 0 ]×[ 3 9 . 7 5 ,4 0 . 1 0 ] 2 . 3×1 0 3
+R o m eT a x i [ 1 2 . 2 5 ,1 2 . 7 5 ]×[ 4 1 . 7 5 ,4 2 . 0 5 ] 1 . 6×1 0 3
+3 . 2实验结果
+3 . 2 . 1 D u r  S P D停留点检测性能
+本节分别在G e o L i f e与R o m eT a x i两个数据集上评估D u r 
+S P D在停留点检测任务中的性能。为定量评估停留点检测性
+能,采用p r e c i s i o n、r e c a l l与F 1  s c o r e作为评价指标。设统一时
+空阈值准则标注并经人工核验的停留点集为真值集合,算法输
+出为检测停留点集合。依据一致性校验所采用的匹配准则,将
+与真值成功匹配的停留点个数记为N C C S P ,算法检测到的停留
+点总数记为N D S P ,真值停留点总数记为T A N S P。则三项评价指
+标定义为
+p r e c i s i o n =
+N C C S P
+N D S P
+( 9 )
+r e c a l l =
+N C C S P
+T A N S P
+( 1 0 )
+F 1  s c o r e =
+2 × p r e c i s i o n × r e c a l l
+p r e c i s i o n + r e c a l l
+( 1 1 )
+其中: p r e c i s i o n衡量检测结果的准确性; r e c a l l衡量对真实停留
+点的覆盖能力; F 1  s c o r e为两者的调和平均,用于综合评价停
+留点检测效果。
+对比方法包含D B S C A N [ 2 1 ]
+、S E A B I G [ 2 7 ]
+、S T  D B S C A N [ 2 8 ]
+以
+及S P D M T S R [ 2 3 ]
+。如图4所示, D u r  S P D在G e o L i f e与R o m e
+T a x i上能够更好平衡p r e c i s i o n与r e c a l l ,因此在F 1  s c o r e上表
+现更为稳定。相较经典基线D B S C A N ,其F 1  s c o r e分别提升
+1 9 . 6 6 %与2 4 . 9 9 %;相较S P D M T S R提升4 . 1 4 %与9 . 2 0 %。这
+些结果表明, D u r  S P D的改进并非由单一指标拉动,而是源于
+整体检测质量的同步提升。
+造成上述结果的关键在于不同方法对停留“ 持续性” 与边
+界稳定性的刻画方式存在差异。D B S C A N基于密度聚类可聚
+合空间相近的停留点,方法简洁但对参数阈值与数据采样特征
+较为敏感; S T  D B S C A N依赖时空阈值规则进一步强化约束,但
+在采样稀疏、频率波动或短时低速移动较多时,停留边界往往
+更易出现偏移; S E A B I G侧重在点级融合运动状态证据进行停
+留判别,面对采样不稳定或低速噪声扰动时可能导致边界不
+稳; S P D M T S R侧重时空邻域内的停留区域识别具有一定优
+势,但采样频率变化较大时也可能出现边界漂移。相比之下,
+D u r  S P D通过H S M M对停留和移动的持续时间进行显式建模,
+并将持续性约束纳入状态推断过程,从而有效抑制短时低速移
+动引入的“ 伪停留” ,提升停留边界的一致性。
+图4停留点检测实验结果对比
+F i g . 4 C o m p a r i s o no f s t a yp o i n t d e t e c t i o nr e s u l t s
+3 . 2 . 2加噪轨迹效用对比
+本节分别在G e o L i f e与R o m eT a x i两个数据集上评估S T 
+L D P A o I的加噪轨迹效用,为选择合适的轨迹点进行保护,采用
+前文提出的D u r  S P D方法提取轨迹的A o I。为验证方法的适
+用性与优势,实验选取五种代表性基线进行对比:点级随机化
+机制S D D [ 2 9 ]
+、基于随机抽样的差分隐私方法T P R S D P [ 3 0 ]
+、局部
+随机响应机制L  S R R [ 3 1 ]
+、基于特征扰动的轨迹发布方法
+U d p T r a c e [ 1 6 ]
+以及在候选域内随机化的机制L D P T P M A o I [ 2 3 ]
+。
+评价指标采用动态时间规整( d y n a m i ct i m ew a r p i n g , D T W) 度量
+发布轨迹与原始轨迹在整体形状上的差异,并进一步引入归一
+化指标D T WS ( D T W s i m i l a r i t ym e a s u r e ) ,其定义为
+D T W S =
+D T W( T , T ′ )
+m a x { | T | , | T ′ | }
+( 1 2 )
+其中: T与T ′ 分别为原始轨迹与发布轨迹; | T | 与| T ′ | 表示对应
+轨迹的点数。D T WS越小表示两条轨迹越相似,对应整体形状
+保持效果越好。
+首先统计D u r  S P D处理后两类数据集的A o I数量分布,用
+以刻画轨迹停留结构的复杂度,并据此确定后续D T WS曲线对
+比的主要覆盖区间与抽样策略。A o I数量刻画了轨迹停留结
+构的复杂程度:不同A o I档位对应不同的活动链条长度与停留
+转换密度,从而对扰动机制在形状保持与稳定性方面形成分层
+次的挑战。
+由图5 ( a ) 可见, G e o L i f e数据集的A o I数量主要集中在4 ~
+9 ,且分布范围更宽,表明个体出行模式更为多样、停留结构相
+对复杂。相应地,后续G e o L i f e上的D T WS对比主要覆盖A o I
+为4 ~ 9的典型区间,并在各A o I档位内按统一规则组织样本,
+以保证不同方法在可比条件下评估。由图5 ( b ) 可见R o m e
+T a x i的A o I数量主要集中在3 ~ 6 ,分布更为集中且长尾较短,
+反映出租车轨迹受道路网络与运营模式约束更强,停留结构相
+对单一。基于该分布特征,后续R o m eT a x i的D T WS曲线对比
+聚焦A o I为3 ~ 6的主要区间,并同样在各档位内采用一致的
+统计方式,以客观反映隐私预算变化对轨迹效用的影响。
+在上述A o I分组设置下, G e o L i f e数据集在不同隐私预算
+序列下的D T WS对比结果如图6所示。整体而言,随着隐私预
+算增大,各方法D T WS均逐步下降,这是扰动幅度减弱带来的
+共同趋势。更能区分方法的是A o I档位变化:在A o I较低时,
+各方法曲线间距相对有限;当A o I提升到中高档后,基线方法
+(如S D D、T P R S D P ) 的D T WS水平整体上移幅度较大,说明在
+G e o L i f e这类停留结构较为复杂的数据中,常规随机化更容易
+破坏跨A o I的相对位置关系并累积为更明显的全局形状偏移。
+· 4 2 4 3 · 计算机应用研究第4 3卷L  S R R的D T WS整体低于S D D与T P R S D P ,表明局部随机响应
+能部分缓解扰动,但仍难避免跨A o I的形状偏移。U d p T r a c e的
+D T WS整体低于L  S R R而略高于L D P T P M A o I ,说明基于特征
+扰动的发布方式能够在一定程度上改善轨迹可用性,但在复杂
+停留结构下对轨迹连续性和形状保持的支持仍有限。相比之
+下, L D P T P M A o I引入A o I保护机制,使在各A o I档位下整体保
+持较低的D T WS ,而S T  L D P A o I表现最优且随隐私预算的变化
+更平滑,体现了在安全区域内限定候选域并进行距离分层随机
+响应能够有效抑制形变远跳,使发布轨迹在复杂停留结构下仍
+保持稳定的形状保真度。
+图5 A o I数量分布
+F i g . 5 A o I c o u n t d i s t r i b u t i o n
+图6 G e o L i f e数据集不同A o I下D T WS对比
+F i g . 6 D T WSc o m p a r i s o nu n d e r d i f f e r e n t A o I o nG e o L i f e
+对于R o m eT a x i数据集,在A o I为3 ~ 6的主要区间内的
+D T WS对比结果如图7所示。R o m eT a x i的误差更偏向局部路
+段连续性扰动而非跨区域形变放大。在此情况下, S T  L D P A o I
+仍在各A o I档位保持最低D T WS ,表明A o I约束下的候选域限
+制与分层随机化在路网一致性较强的场景中同样能够减少局
+部偏移的累积效应。
+为便于从数据集层面概括不同方法在预算区间内的总体
+表现,表2对主要A o I档位的D T WS结果进行宏平均,并在隐
+私预算序列上统计均值与标准差。其中,均值用于刻画方法在
+全预算区间内的整体形状失真水平,标准差反映其对隐私预算
+变化的敏感性与稳定性。结果显示, S T  L D P A o I平均D T WS最
+低且波动更小,说明通过A o I限定候选域并引入近邻偏好的分
+层扰动,可有效抑制不合理跳转,从而实现更稳定的形状保持
+效果。相较于基线L D P T P M A o I , S T  L D P A o I在G e o L i f e与
+R o m eT a x i上的平均D T WS分别降低1 6 . 6 1 %与1 5 . 5 0 %,表明
+该优势能够在不同轨迹结构与场景约束下稳定体现。
+图7 R o m eT a x i数据集不同A o I下D T WS对比
+F i g . 7 D T WSc o m p a r i s o nu n d e r d i f f e r e n t A o I o nR o m eT a x i
+表2各方法的D T WS均值与标准差
+T a b . 2 D T WS( m e a n±s t d . )o f m e t h o d s
+方法
+G e o L i f e R o m eT a x i
+m e a n s t d m e a n s t d
+S D D 0 . 5 3 89 0 . 0 8 92 0 . 5 5 14 0 . 0 8 48
+T P R S D P 0 . 4 0 79 0 . 0 6 69 0 . 4 4 51 0 . 0 6 87
+L  S R R 0 . 3 3 92 0 . 0 4 53 0 . 3 4 73 0 . 0 5 96
+U d p T r a c e 0 . 2 9 71 0 . 0 4 05 0 . 3 1 65 0 . 0 5 25
+L D P T P M A o I 0 . 2 7 76 0 . 0 3 29 0 . 2 8 59 0 . 0 4 59
+S T  L D P A o I 0 . 2 3 15 0 . 0 2 95 0 . 2 4 16 0 . 0 3 58
+4结束语
+围绕轨迹发布过程中的停留语义敏感性与随机扰动带来
+的形变远跳现象,本文提出了兴趣区域驱动的本地差分隐私轨
+迹发布方法S T  L D P A o I。该方法以终端侧对出行行为的结构
+化刻画为基础,将停留语义与活动范围抽象为兴趣区域,并在
+隐私机制中显式引入可达性约束,使扰动结果在满足本地差分
+隐私约束的同时,更符合真实移动的时空连续性,从而降低异
+常跳转对整体轨迹形态与下游分析的影响。实验结果表明,在
+满足隐私保护要求的前提下,所提方法在停留点检测性能与轨
+迹形状保持两个方面均优于对比基线模型,并在不同隐私预算
+下皆表现出更稳定的效用表现。未来可进一步面向更复杂的
+出行模式与场景约束,探索轨迹异质性问题,以提升隐私保护
+与轨迹效用的兼顾能力。
+参考文献:
+[ 1 ] J i a n gH o n g b o ,L i J i e ,Z h a oP i n g ,e t a l .L o c a t i o np r i v a c y  p r e s e r v i n g
+m e c h a n i s m s i nl o c a t i o n  b a s e ds e r v i c e s :ac o m p r e h e n s i v e s u r v e y [ J ] .
+A C MC o mp u t i n gS u r v e y s ,2 0 2 2 ,5 4 ( 1 ) :1  3 6 .
+[ 2 ] 张青云,张兴,李万杰,等.基于L B S系统的位置轨迹隐私保护
+技术综述 [ J ] .计算机应用研究,2 0 2 0 ,3 7 ( 1 2 ) :3 5 3 4  3 5 4 4 .
+( Z h a n gQ i n g y u n , Z h a n g X i n g , L i Wa n j i e , e t a l . O v e r v i e wo f l o c a t i o n
+t r a j e c t o r yp r i v a c yp r o t e c t i o nt e c h n o l o g yb a s e do nL B Ss y s t e m [ J ] .
+A p p l i c a t i o nR e s e a r c ho fC o mp u t e r s ,2 0 2 0 ,3 7( 1 2 ) :3 5 3 4 
+3 5 4 4 . )
+· 5 2 4 3 · 第1 1期龚关,等:时空约束下兴趣区域驱动的本地差分隐私轨迹发布方法[ 3 ] J i nF e n g m e i , H u a We n , F r a n c i a M , e t a l . As u r v e y a n de x p e r i m e n t a l
+s t u d yo np r i v a c y  p r e s e r v i n gt r a j e c t o r yd a t ap u b l i s h i n g[ J ] .I E E E
+T r a n so nK n o w l e d g ea n dD a t aE n g i n e e r i n g ,2 0 2 2 ,3 5( 6 ) :
+5 5 7 7  5 5 9 6 .
+[ 4 ] Wa n gY u e t i a n ,H u a We n ,J i nF e n g m e i ,e t a l .A ne f f i c i e n t a p p r o a c h
+f o r s p a t i a l t r a j e c t o r ya n o n y m i z a t i o n [ M] / /Z h a n gWe n j i e ,Z o uL e i ,
+M a a m a r Z ,e t a l .We bI n f o r m a t i o nS y s t e m s E n g i n e e r i n g  WI S E2 0 2 1 .
+C h a m :S p r i n g e r ,2 0 2 1 :5 7 5  5 9 0 .
+[ 5 ] D o m i n g o  F e r r e r J ,M a r t í n e zS ,S á n c h e zD .D e c e n t r a l i z e dk  a n o n y 
+m i z a t i o no f t r a j e c t o r i e sv i ap r i v a c y  p r e s e r v i n gt i t  f o r  t a t [ J ] .C o m
+p u t e r C o mmu n i c a t i o n s ,2 0 2 2 ,1 9 0 :5 7  6 8 .
+[ 6 ] B r a u e r A ,M  k i n e nV ,F o r s c hA ,e t a l .M y h o m e i s m y s e c r e t :c o n 
+c e a l i n g s e n s i t i v e l o c a t i o n s b y c o n t e x t  a w a r e t r a j e c t o r y t r u n c a t i o n[ J ] .
+I n t e r n a t i o n a lJ o u r n a lo fG e o g r a p h i c a lI n f o r ma t i o n S c i e n c e ,
+2 0 2 2 ,3 6 ( 1 2 ) :2 4 9 6  2 5 2 4 .
+[ 7 ] L i nC h e n y i .E f f i c i e n t s u p p r e s s i o na l g o r i t h m s f o r p r e s e r v i n gt r a j e c t o r y
+p r i v a c y [ J ] .I n f o r ma t i o nS c i e n c e s ,2 0 2 4 ,6 7 7 :1 2 0 8 3 7 .
+[ 8 ] Z h a n gJ i n g ,L iC h u a n w e n ,Wa n gB o t a o .A p e r f o r m a n c et u n a b l e
+C P I R  b a s e dp r i v a c y p r o t e c t i o nm e t h o df o r l o c a t i o nb a s e ds e r v i c e [ J ] .
+I n f o r ma t i o nS c i e n c e s ,2 0 2 2 ,5 8 9 :4 4 0  4 5 8 .
+[ 9 ] Y i K e l a i ,C h e nY u e f e n g ,S uY u c h e n , e t a l . T o w a r d s e f f i c i e n t p r i v a c y 
+p r e s e r v i n g t o p  kt r a j e c t o r ys i m i l a r i t yq u e r y[ C ] / /P r o co f t h e2 0 t h
+I n t e r n a t i o n a l C o n f e r e n c e o nM o b i l e A dh o c a n dS m a r t S y s t e m s .P i s c a 
+t a w a y ,N J :I E E EP r e s s ,2 0 2 3 :5 1 2  5 2 0 .
+[ 1 0 ]V a a s C ,K h o d a e i M,P a p a d i m i t r a t o s P , e t a l .N o w h e r e t o h i d e ? M i x 
+z o n e s f o r p r i v a t ep s e u d o n y mc h a n g eu s i n g c h a f f v e h i c l e s [ C ] / / P r o c
+o f I E E EV e h i c u l a rN e t w o r k i n gC o n f e r e n c e .P i s c a t a w a y ,N J :I E E E
+P r e s s ,2 0 1 8 :1  8 .
+[ 1 1 ]M e m o nI ,M i r z aHT ,A l i A r a i nQ ,e t a l .M u l t i p l em i xz o n e sd e 
+c o r r e l a t i o nt r a j e c t o r yp r i v a c ym o d e l f o r r o a dn e t w o r k[ J ] .T e l e c o m
+mu n i c a t i o nS y s t e ms ,2 0 1 9 ,7 0 ( 4 ) :5 5 7  5 8 2 .
+[ 1 2 ]D w o r kC .D i f f e r e n t i a l p r i v a c y i nn e ws e t t i n g s [ C ] / / P r o c o f t h e 2 1 s t
+A n n u a lA C M  S I A M S y m p o s i u m o nD i s c r e t eA l g o r i t h m s .P h i l a d e l 
+p h i a ,P A :S o c i e t yf o rI n d u s t r i a l a n dA p p l i e dM a t h e m a t i c s ,2 0 1 0 :
+1 7 4  1 8 3 .
+[ 1 3 ]C h e nR u i , F u n g BCM,D e s a i BC ,e t a l . D i f f e r e n t i a l l y p r i v a t e t r a n 
+s i t d a t ap u b l i c a t i o n :ac a s es t u d yo nt h eM o n t r e a l t r a n s p o r t a t i o ns y s 
+t e m[ C ] / / P r o co f t h e1 8 t hA C MS I G K D DI n t e r n a t i o n a l C o n f e r e n c e
+o nK n o w l e d g eD i s c o v e r ya n dD a t aM i n i n g .N e wY o r k :A C M P r e s s ,
+2 0 1 2 :2 1 3  2 2 1 .
+[ 1 4 ]叶青青,孟小峰,朱敏杰,等.本地化差分隐私研究综述 [ J ] .
+软件学报,2 0 1 8 ,2 9( 7 ) :1 9 8 1  2 0 0 5 .( Y eQ i n g q i n g ,M e n g
+X i a o f e n g ,Z h uM i n j i e , e t a l . S u r v e y o nl o c a l d i f f e r e n t i a l p r i v a c y [ J ] .
+J o u r n a l o f S o f t w a r e ,2 0 1 8 ,2 9 ( 7 ) :1 9 8 1  2 0 0 5 . )
+[ 1 5 ]D uY u n t a o ,H uY u j i a ,Z h a n g Z h i k u n ,e t a l .L D P T r a c e :l o c a l l yd i f 
+f e r e n t i a l l y p r i v a t et r a j e c t o r ys y n t h e s i s [ J ] .P r o co f t h eV L D BE n 
+d o w me n t ,2 0 2 3 ,1 6 ( 8 ) :1 8 9 7  1 9 0 9 .
+[ 1 6 ]S u nWe i ,Z h a o K u i ,L i a n g G a n g ,e t a l .U d p T r a c e :u t i l i t y  e n h a n c e d
+d i f f e r e n t i a l p r i v a c y s c h e m e f o r t r a j e c t o r y d a t a p u b l i s h i n g [ J ] .N e u r o 
+c o mp u t i n g ,2 0 2 5 ,6 4 9 :1 3 0 7 8 5 .
+[ 1 7 ]蒋伟进,王海娟,周为,等.基于自适应连续时间的群智感知轨
+迹隐私保护方案 [ J ] .电子学报,2 0 2 3 ,5 1 ( 1 0 ) :2 8 9 4  2 9 0 1 .
+( J i a n g We i j i n ,Wa n g H a i j u a n ,Z h o uWe i ,e t a l .T r a c kp r i v a c yp r o 
+t e c t i o ns c h e m eb a s e do na d a p t i v ec o n t i n u o u st i m ei nc r o w d s e n s i n g
+[ J ] .A c t aE l e c t r o n i c aS i n i c a ,2 0 2 3 ,5 1 ( 1 0 ) :2 8 9 4  2 9 0 1 . )
+[ 1 8 ]X i a oY o n g h u i ,X i o n g L i .P r o t e c t i n g l o c a t i o n s w i t hd i f f e r e n t i a l p r i v a c y
+u n d e r t e m p o r a l c o r r e l a t i o n s[ C ] / /P r o co f t h e2 2 n dA C M S I G S A C
+C o n f e r e n c eo nC o m p u t e ra n dC o m m u n i c a t i o n sS e c u r i t y .N e wY o r k :
+A C MP r e s s ,2 0 1 5 :1 2 9 8  1 3 0 9 .
+[ 1 9 ]刘沛骞,贾庆林,王辉,等.基于用户相关性的差分隐私轨迹隐
+私保护方案 [ J ] .计算机应用研究,2 0 2 4 ,4 1 ( 7 ) :2 1 8 9  2 1 9 4 .
+( L i uP e i q i a n ,J i a Q i n g l i n ,Wa n g H u i ,e t a l .D i f f e r e n t i a l p r i v a c y t r a 
+j e c t o r yp r i v a c yp r o t e c t i o ns c h e m eb a s e do nu s e rc o r r e l a t i o n[ J ] .
+A p p l i c a t i o n R e s e a r c h o fC o mp u t e r s ,2 0 2 4 ,4 1( 7 ) :2 1 8 9 
+2 1 9 4 . )
+[ 2 0 ]C h o n gKM ,M a l i pA .L o c a l D i f f e r e n t i a l P r i v a c yf o r c o r r e l a t e dl o c a 
+t i o nd a t ar e l e a s ei nI T S[ J ] .C o mp u t e rN e t w o r k s ,2 0 2 4 ,2 5 5 :
+1 1 0 8 3 0 .
+[ 2 1 ]G o n gL e i ,S a t oH ,Y a m a m o t o T ,e t a l .I d e n t i f i c a t i o no f a c t i v i t ys t o p
+l o c a t i o n s i nG P St r a j e c t o r i e s b yd e n s i t y  b a s e dc l u s t e r i n gm e t h o dc o m 
+b i n e dw i t hs u p p o r t v e c t o r m a c h i n e s [ J ] .J o u r n a l o f Mo d e r nT r a n s 
+p o r t a t i o n ,2 0 1 5 ,2 3 ( 3 ) :2 0 2  2 1 3 .
+[ 2 2 ]X i aY i n g ,L i nY a o ,Wa n gH a o .Ad i f f e r e n t i a l l yp r i v a t et r a j e c t o r y
+p u b l i s h i n gm e c h a n i s mb a s e do ns t a yp o i n t s [ M] / / V a i d y aJ ,Z h a n g
+X i a o ,L iJ i n .C y b e r s p a c eS a f e t ya n dS e c u r i t y .C h a m :S p r i n g e r ,
+2 0 1 9 :2 4 5  2 5 7 .
+[ 2 3 ]Z h a n gWe i q i ,X i e Z h e n z h e n ,V e r a V e n k a t a S a i AM,e t a l .Al o c a l
+d i f f e r e n t i a l p r i v a c y t r a j e c t o r y p r o t e c t i o nm e t h o db a s e do nt e m p o r a l a n d
+s p a t i a l r e s t r i c t i o n s f o r s t a y i n g d e t e c t i o n[ J ] .T s i n g h u aS c i e n c ea n d
+T e c h n o l o g y ,2 0 2 4 ,2 9 ( 2 ) :6 1 7  6 3 3 .
+[ 2 4 ]R u i z  S u a r e zS ,L e o s  B a r a j a sV ,M o r a l e sJM.H i d d e nM a r k o va n d
+s e m i  M a r k o v m o d e l s w h e na n dw h y a r e t h e s e m o d e l s u s e f u l f o r c l a s s i 
+f y i n g s t a t e s i nt i m e s e r i e s d a t a ?[ J ] .J o u r n a l o f A g r i c u l t u r a l ,B i o 
+l o g i c a l a n dE n v i r o n me n t a l S t a t i s t i c s ,2 0 2 2 ,2 7 ( 2 ) :3 3 9  3 6 3 .
+[ 2 5 ]Q i nL i k u n ,Wa n gN a n ,Q i uT i a n s h u o .As u r v e yo f l o c a l d i f f e r e n t i a l
+p r i v a c ya n di t sv a r i a n t s[ E B / O L ] .( 2 0 2 3  0 9  0 2 ) .h t t p s : / / a r x i v .
+o r g / a b s / 2 3 0 9 .0 0 8 6 1 .
+[ 2 6 ]Y a n g M e n g m e n g ,G u o T a o l i n ,Z h uT i a n q i n g ,e t a l .L o c a l d i f f e r e n t i a l
+p r i v a c ya n di t s a p p l i c a t i o n s : a c o m p r e h e n s i v e s u r v e y [ J ] .C o mp u t e r
+S t a n d a r d s&I n t e r f a c e s ,2 0 2 4 ,8 9 :1 0 3 8 2 7 .
+[ 2 7 ]Z h a n gWa n l o n g ,S u nL i t i n g ,Wa n gX i a n g ,e t a l .S E A B I G :ad e e p
+l e a r n i n g  b a s e dm e t h o df o r l o c a t i o np r e d i c t i o ni np e d e s t r i a ns e m a n t i c
+t r a j e c t o r i e s [ J ] .I E E EA c c e s s ,2 0 1 9 ,7 :1 0 9 0 5 4  1 0 9 0 6 2 .
+[ 2 8 ]陆剑锋,郭茂祖,张昱,等.基于时空约束密度聚类的停留点识
+别方法 [ J ] .智能系统学报, 2 0 2 0 , 1 5 ( 1 ) : 5 9  6 6 .( L uJ i a n f e n g ,
+G u oM a o z u ,Z h a n g Y u ,e t a l .S t a y p o i n t r e c o g n i t i o nm e t h o db a s e do n
+s p a t i o  t e m p o r a l c o n s t r a i n t d e n s i t yc l u s t e r i n g[ J ] .C A A I T r a n so n
+I n t e l l i g e n t S y s t e ms ,2 0 2 0 ,1 5 ( 1 ) :5 9  6 6 . )
+[ 2 9 ]J i a n g K a i f e n g , S h a o D o n g x u , B r e s s a nS , e t a l . P u b l i s h i n g t r a j e c t o r i e s
+w i t hd i f f e r e n t i a l p r i v a c yg u a r a n t e e s [ C ] / / P r o co f t h e2 5 t hI n t e r n a 
+t i o n a l C o n f e r e n c eo nS c i e n t i f i ca n dS t a t i s t i c a l D a t a b a s eM a n a g e m e n t .
+N e wY o r k :A C MP r e s s ,2 0 1 3 :1  1 2 .
+[ 3 0 ]M aT i n g h u a i ,S o n gF a g e n .A t r a j e c t o r yp r i v a c yp r o t e c t i o nm e t h o d
+b a s e do nr a n d o ms a m p l i n gd i f f e r e n t i a l p r i v a c y [ J ] .I S P R SI n t e r n a 
+t i o n a l J o u r n a l o f G e o  I n f o r ma t i o n ,2 0 2 1 ,1 0 ( 7 ) :4 5 4 .
+[ 3 1 ]Wa n g H a n ,H o n g H a n b i n ,X i o n g L i ,e t a l .L  S R R :l o c a l d i f f e r e n t i a l
+p r i v a c yf o r l o c a t i o n  b a s e ds e r v i c e s w i t hs t a i r c a s er a n d o m i z e dr e s p o n s e
+[ C ] / / P r o c o f A C MS I G S A CC o n f e r e n c e o nC o m p u t e r a n dC o m m u n i 
+c a t i o n s S e c u r i t y .N e wY o r k :A C MP r e s s ,2 0 2 2 :2 8 0 9  2 8 2 3 .
+· 6 2 4 3 · 计算机应用研究第4 3卷

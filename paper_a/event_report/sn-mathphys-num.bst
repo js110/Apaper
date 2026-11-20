@@ -401,7 +401,7 @@ FUNCTION {format.pub.address}
           if$ 
            "publisher" make.tag
           #1 bother =
-            {", \blocation{???}" *  }
+            'skip$
             'skip$
            if$
            output   

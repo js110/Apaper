@@ -1,0 +1,85 @@
+{
+ "zktrace": {
+  "doi": "10.1109/taes.2026.3738067",
+  "title": "ZK-Trace: Certified Collusion Tracing with Zero-Knowledge Credentials for Federated GNSS Interference Monitoring",
+  "year": 2026,
+  "cited": 0,
+  "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+  "abstract": "Federated global navigation satellite system (GNSS) monitoring distributes a proprietary classifier to partly trusted stations, any of which may leak its copy. ZK-Trace combines public identity marks, recipient-specific Tardos fingerprints, and zero-knowledge credential verification. The registry supports offline tracing without the leaker's cooperation. We establish conditional false-accusation bounds for arbitrary recovered bit patterns, a finite completeness bound under a hidden-bias residual channel, and a deterministic tracing-score bound for correlated feature-distillation errors. An interval-arithmetic checker makes the conditional bound executable and allocates a common budget across accusation and tamper decisions. Under innocent-row independence, the certificate-based evaluation uses a false-naming budget of 0.001 per investigation. It isolates all 160 single-owner copies and traces 712 of 720 two-owner mixtures without naming an innocent. Experiments use a simulated GNSS federation and CIFAR-10. Feature matching preserves the feature mark in 20/20 runs and cross-architecture transfer in 19/20, at copy-accuracy costs of 4.8 and 6.1 percentage points on GNSS and CIFAR-10. "
+ },
+ "zklp": {
+  "doi": "10.1109/sp61157.2025.00057",
+  "title": "Zero-Knowledge Location Privacy via Accurate Floating-Point SNARKs",
+  "year": 2025,
+  "cited": 18,
+  "venue": "IEEE Symposium on Security and Privacy (S&P)",
+  "abstract": "We introduce Zero-Knowledge Location Privacy (ZKLP), enabling users to prove to third parties that they are within a specified geographical region while not disclosing their exact location. ZKLP supports varying levels of granularity, allowing for customization depending on the use case. To realize ZKLP, we introduce the first set of Zero-Knowledge Proof (ZKP) circuits that are fully compliant to the IEEE 754 standard for floating-point arithmetic. Our results demonstrate that our floating point circuits amortize efficiently, requiring only 64 constraints per operation for 215single-precision floating-point multiplications. We utilize our floating point implementation to realize the ZKLP paradigm. In comparison to a baseline, we find that our optimized implementation has 15.9× less constraints utilizing single precision floating-point values, and 12.2× less constraints when utilizing double precision floating-point values. We demonstrate the practicability of ZKLP by building a protocol for privacy preserving peer-to-peer proximity testing - Alice can test if she is close to Bob by receiving a single message, without either party revealing any other information about their location"
+ },
+ "atrc": {
+  "doi": "10.1109/tvt.2023.3312547",
+  "title": "ATRC: An Anonymous Traceable and Revocable Credential System Using Blockchain for VANETs",
+  "year": 2023,
+  "cited": 24,
+  "venue": "IEEE Transactions on Vehicular Technology",
+  "abstract": "With the number of smart vehicle drivers increasing rapidly, privacy-preserving identity management methods in Vehicular Ad-hoc Networks (VANETs) become more imperative and receive much attention from researchers. Since identity leakage or a single point of failure may result in serious consequences in the VANET, the decentralized anonymous credential (DAC) could be a potential approach to construct a robust network. However, the supervision under decentrilized environment could be a necessary and troublesome in the VANETs. In this paper, we present an anonymous traceable and revocable credential system using blockchain, called ATRC, built over a generalized group signature. The underlying group signature not only meets the anonymity requirement but also makes the users master their identities. What's more, to tackle the privacy leakage in the revocation process, we employ the Merkle tree to construct a whitelist, which trades off the efficiency and the privacy. Finally, we gives the comparison and experiment performance to show our scheme holds lightweight on the user side and has fewer computation costs in the show and revocation phase."
+ },
+ "spoon": {
+  "doi": "10.1109/TMC.2019.2908638",
+  "title": "Enabling Strong Privacy Preservation and Accurate Task Allocation for Mobile Crowdsensing",
+  "year": 2019,
+  "cited": 203,
+  "venue": "IEEE Transactions on Mobile Computing",
+  "abstract": "Mobile crowdsensing engages a crowd of individuals to use their mobile devices to cooperatively collect data about social events and phenomena for customers with common interest. It can reduce the cost on sensor deployment and improve data quality with human intelligence. To enhance data trustworthiness, it is critical for the service provider to recruit mobile users based on their personal features, e.g., mobility pattern and reputation, but it leads to the privacy leakage of mobile users. Therefore, how to resolve the contradiction between user privacy and task allocation is challenging in mobile crowdsensing. In this paper, we propose SPOON, a strong privacy-preserving mobile crowdsensing scheme supporting accurate task allocation based on geographic information and credit points of mobile users. In SPOON, the service provider enables to recruit mobile users based on their locations, and select proper sensing reports according to their trust levels without invading user privacy. By utilizing proxy re-encryption and BBS+ signature, sensing tasks are protected and reports are anonymized to prevent privacy leakage. In addition, a privacy-preserving credit management mechanism is in"
+ },
+ "gtotp_pol": {
+  "doi": "10.1145/3485832.3488009",
+  "title": "Group Time-based One-time Passwords and its Application to Efficient Privacy-Preserving Proof of Location",
+  "year": 2021,
+  "cited": 16,
+  "venue": "Annual Computer Security Applications Conference",
+  "abstract": "Time-based One-Time Password (TOTP) provides a strong second factor for user authentication. In TOTP, a prover authenticates to a verifier by using the current time and a secret key to generate an authentication token (or password) which is valid for a short time period. Our goal is to extend TOTP to the group setting, and to provide both authentication and privacy. To this end, we introduce a new authentication scheme, called Group TOTP (GTOTP), that allows the prover to prove that it is a member of an authenticated group without revealing its identity. We propose a novel construction that transforms any asymmetric TOTP scheme into a GTOTP scheme. Our approach combines Merkle tree and Bloom filter to reduce the verifier’s states to constant sizes."
+ },
+ "softredact": {
+  "doi": "10.48550/arxiv.2608.07063",
+  "title": "Soft Redaction of Image Provenance via Zero-Knowledge Proofs",
+  "year": 2026,
+  "cited": 1,
+  "venue": "arXiv (Cornell University)",
+  "abstract": "Content provenance standards, such as C2PA, are increasingly used to attach signed records of origin, editing history, and rights to digital images. However, provenance transparency can conflict with privacy -- assertions that strengthen trust in an image may also reveal sensitive information about the creator or capture context. We propose soft redaction for image provenance: a mechanism that replaces sensitive provenance assertions with zero-knowledge proofs (ZKPs) of selected properties over hidden data. Our work focuses on distance proofs. We first show how location assertions can support proofs of proximity to a public reference point, using Chebyshev polynomial approximations within the ZKP proof circuit. We then extend the approach to L2 distance proofs over biometric embeddings, enabling privacy-preserving claims related to likeness to help enforce personality rights with images. Finally, we apply the same distance-proof construction to perceptual hashes (visual fingerprints), supporting an anti-spoofing use case in watermark-based recovery of stripped provenance metadata. Our results demonstrate that ZKPs over image provenance can provide practical soft-redaction capabilit"
+ },
+ "origo": {
+  "doi": "10.56553/popets-2025-0069",
+  "title": "ORIGO: Proving Provenance of Sensitive Data with Constant Communication",
+  "year": 2025,
+  "cited": 7,
+  "venue": "Proceedings on Privacy Enhancing Technologies",
+  "abstract": "Transport Layer Security (TLS) is foundational for safeguarding client-server communication. However, it does not extend integrity guarantees to third-party verification of data authenticity. If a client wants to present data obtained from a server, it cannot convince any other party that the data has not been tampered with. TLS oracles ensure data authenticity beyond the client-server TLS connection, such that clients can obtain data from a server and ensure provenance to any third party, without server-side modifications. Generally, a TLS oracle involves a third party, the verifier, in a TLS session to verify that the data obtained by the client is accurate. Existing protocols for TLS oracles are communication-heavy, as they rely on interactive protocols. We present ORIGO, a TLS oracle with constant communication. Similar to prior work, ORIGO introduces a third party in a TLS session, and provides a protocol to ensure the authenticity of data transmitted in a TLS session, without forfeiting its confidentiality. Compared to prior work, we rely on intricate details specific to TLS 1.3, which allow us to prove correct key derivation, authentication and encryption within a Zero Knowl"
+ },
+ "deco": {
+  "doi": "10.48550/arxiv.1909.00938",
+  "title": "DECO: Liberating Web Data Using Decentralized Oracles for TLS",
+  "year": 2020,
+  "cited": 162,
+  "venue": "ACM SIGSAC Conference on Computer and Communications Security (CCS)",
+  "abstract": "Thanks to the widespread deployment of TLS, users can access private data over channels with end-to-end confidentiality and integrity. What they cannot do, however, is prove to third parties the provenance of such data, i.e., that it genuinely came from a particular website. Existing approaches either introduce undesirable trust assumptions or require server-side modifications. Users' private data is thus locked up at its point of origin. Users cannot export data in an integrity-protected way to other applications without help and permission from the current data holder. We propose DECO (short for decentralized oracle) to address the above problems. DECO allows users to prove that a piece of data accessed via TLS came from a particular website and optionally prove statements about such data in zero-knowledge, keeping the data itself secret. DECO is the first such system that works without trusted hardware or server-side modifications. DECO can liberate private data from centralized web-service silos, making it accessible to a rich spectrum of applications. To demonstrate the power of DECO, we implement three applications that are hard to achieve without it: a private financial inst"
+ },
+ "dblp_pol": {
+  "error": "Expecting value: line 1 column 1 (char 0)"
+ },
+ "iacr": {
+  "url": "https://eprint.iacr.org/search?q=nullifier+location",
+  "ids": [
+   "2026/1503",
+   "2024/1073"
+  ],
+  "titles": []
+ },
+ "S2r1": {
+  "query": "zero-knowledge proof-of-location vehicle subsidies taxation",
+  "error": "HTTP Error 429: "
+ },
+ "S2r2": {
+  "query": "anonymous traceable revocable credential VANET blockchain",
+  "error": "HTTP Error 429: "
+ }
+}

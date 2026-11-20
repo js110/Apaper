@@ -1,0 +1,167 @@
+{
+ "G5": {
+  "query": "zero-knowledge proof crowdsensing nullifier duplicate report",
+  "url": "https://api.openalex.org/works?search=zero-knowledge%20proof%20crowdsensing%20nullifier%20duplicate%20report&per-page=6&mailto=research@example.org",
+  "count": 8,
+  "results": [
+   {
+    "doi": "https://doi.org/10.1109/access.2018.2822401",
+    "title": "Quality Management of Surveillance Multimedia Streams Via Federated SDN Controllers in Fiwi-Iot Integrated Deployment Environments",
+    "year": 2018,
+    "venue": "IEEE Access",
+    "cited_by": 27,
+    "abstract": "Traditionally, hybrid optical-wireless networks (Fiber-Wireless - FiWi domain) and last-mile Internet of Things edge networks (Edge IoT domain) have been considered independently, with no synergic management solutions. On the one hand, FiWi has primarily focused on high-bandwidth and low-latency access to cellular-equipped nodes. On the other hand, Edge IoT has mainly aimed at effective dispatching of sensor/actuator data among (possibly opportunistic) nodes, by using direct peer-to-peer and base station (BS)-assisted Internet communications. The paper originally proposes a model and an architecture that loosely federate FiWi and Edge IoT domains based on the interaction of FiWi and Edge IoT software defined networking controllers: the primary idea is that our federated controllers can seldom exchange monitoring data and control hints the one with the other, thus mutually enhancing their capability of end-to-end quality-aware packet management. To show the applicability and the effectiveness of the approach, our original proposal is applied to the notable example of multimedia stream provisioning from surveillance cameras deployed in the Edge IoT domain to both an infrastructure-side server and spontaneously interconnected mobile smartphones; our solution is able to tune the BS behavior of the FiWi domain and to reroute/prioritize traffic in the Edge IoT domain, with the final goal to reduce latency. In addition, the reported application case shows the capability of our solution of joint and coordinated exploitation of resources in FiWi and Edge IoT domains, with performance results that highlight its benefits in terms of efficiency and responsiveness."
+   },
+   {
+    "doi": "https://doi.org/10.20381/ruor-25061",
+    "title": "Context-Awareness for Adversarial and Defensive Machine Learning Methods in Cybersecurity",
+    "year": 2020,
+    "venue": "uO Research (University of Ottawa)",
+    "cited_by": 0,
+    "abstract": "Machine Learning has shown great promise when combined with large volumes of historical data and produces great results when combined with contextual properties. In the world of the Internet of Things, the extraction of information regarding context, or contextual information, is increasingly prominent with scientific advances. Combining such advancements with artificial intelligence is one of the themes in this thesis. Particularly, there are two major areas of interest: context-aware attacker modelling and context-aware defensive methods. Both areas use authentication methods to either infiltrate or protect digital systems. After a brief introduction in chapter 1, chapter 2 discusses the current extracted contextual information within cybersecurity studies, and how machine learning accomplishes a variety of cybersecurity goals. Chapter 3 introduces an attacker injection model, championing the adversarial methods. Then, chapter 4 extracts contextual data and provides an intelligent machine learning technique to mitigate anomalous behaviours. Chapter 5 explores the feasibility of adopting a similar defensive methodology in the cyber-physical domain, and future directions are presented in chapter 6. Particularly, we begin this thesis by explaining the need for further improvements in cybersecurity using contextual information and discuss its feasibility, now that ubiquitous sensors exist in our everyday lives. These sensors often show a high correlation with user identity in surprising combinations. Our first contribution lay within the domain of Mobile CrowdSensing (MCS). Despite its benefits, MCS requires proper security solutions to prevent various attacks, notably injection attacks. Our smart-injection model, SINAM, monitors data traffic in an online-learning manner, simulating an injection model with undetection rates of 99%. SINAM leverages contextual similarities within a given sensing campaign to mimic anomalous injections. On the flip-side, we investigate how contextual features can be utilized to improve authentication methods in an enterprise context. Also motivated by the emergence of omnipresent mobile devices, we expand the Spatio-temporal features of unfolding contexts by introducing three contextual metrics: document shareability, document valuation, and user cooperation. These metrics are vetted against modern machine learning techniques and achieved an average of 87% successful authentication attempts. Our third contribution aims to further improve such results but introducing a Smart Enterprise Access Control (SEAC) technique. Combining the new contextual metrics with SEAC achieved an authenticity precision of 99% and a recall of 97%. Finally, the last contribution is an introductory study on risk analysis and mitigation using context. Here, cyber-physical coupling metrics are created to extract a precise representation of unfolding contexts in the medical field. The presented consensus algorithm achieves initial system conveniences and security ratings of 88% and 97% with these news metrics. Even as a feasibility study, physical context extraction shows good promise in improving cybersecurity decisions. In short, machine learning is a powerful tool when coupled with contextual data and is applicable across many industries. Our contributions show how the engineering of contextual features, adversarial and defensive methods can produce applicable solutions in cybersecurity, despite minor shortcomings."
+   },
+   {
+    "doi": "https://doi.org/10.14778/3725688.3725715",
+    "title": "Infinite Stream Estimation under Personalized w -Event Privacy",
+    "year": 2025,
+    "venue": "Proceedings of the VLDB Endowment",
+    "cited_by": 2,
+    "abstract": "Streaming data collection is indispensable for stream data analysis, such as event monitoring. However, publishing these data directly leads to privacy leaks. w -event privacy is a valuable tool to protect individual privacy within a given time window while maintaining high accuracy in data collection. Most existing w -event privacy studies on infinite data stream only focus on homogeneous privacy requirements for all users. In this paper, we propose personalized w -event privacy protection that allows different users to have different privacy requirements in private data stream estimation. Specifically, we design a mechanism that allows users to maintain constant privacy requirements at each time slot, namely Personalized Window Size Mechanism (PWSM). Then, we propose two solutions to accurately estimate stream data statistics while achieving w -Event є -Personalized Differential Privacy (( w,є )-EPDP), namely Personalized Budget Distribution (PBD) and Personalized Budget Absorption (PBA). PBD always provides at least the same privacy budget for the next time step as the amount consumed in the previous release. PBA fully absorbs the privacy budget from the previous k time slots, while also borrowing from the privacy budget of the next k time slots, to increase the privacy budget for the current time slot. We prove that both PBD and PBA outperform the state-of-the-art private stream estimation methods while satisfying the privacy requirements of all users. We demonstrate the efficiency and effectiveness of our PBD and PBA on both real and synthetic datasets, compared with the recent uniformity w -event approaches, Budget Distribution (BD) and Budget Absorption (BA). Our PBD achieves 68% less error than BD on average on real datasets. Besides, our PBA achieves 24.9% less error than BA on average on synthetic datasets."
+   },
+   {
+    "doi": "https://doi.org/10.1007/s00778-026-01004-3",
+    "title": "Personalized w-event privacy for infinite stream estimation",
+    "year": 2026,
+    "venue": "The VLDB Journal",
+    "cited_by": 0,
+    "abstract": ""
+   },
+   {
+    "doi": "https://doi.org/10.1016/j.inffus.2026.104155",
+    "title": "On the security and privacy of federated learning: A survey with attacks, defenses, frameworks, applications, and future directions",
+    "year": 2026,
+    "venue": "Information Fusion",
+    "cited_by": 35,
+    "abstract": "Federated Learning (FL) is an emerging distributed machine learning paradigm enabling multiple clients to train a global model collaboratively without sharing their raw data. While FL enhances data privacy by design, it remains vulnerable to various security and privacy threats. This survey provides a comprehensive overview of 203 papers regarding the state-of-the-art attacks and defense mechanisms developed to address these challenges, categorizing them into security-enhancing and privacy-preserving techniques. Security-enhancing methods aim to improve FL robustness against malicious behaviors such as byzantine attacks, poisoning, and Sybil attacks. At the same time, privacy-preserving techniques focus on protecting sensitive data through cryptographic approaches, differential privacy, and secure aggregation. We critically analyze the strengths and limitations of existing methods, highlight the trade-offs between privacy, security, and model performance, and discuss the implications of non-IID data distributions on the effectiveness of these defenses. Furthermore, we identify open research challenges and future directions, including the need for scalable, adaptive, and energy-efficient solutions operating in dynamic and heterogeneous FL environments. Our survey aims to guide researchers and practitioners in developing robust and privacy-preserving FL systems, fostering advancements safeguarding collaborative learning frameworks’ integrity and confidentiality."
+   },
+   {
+    "doi": null,
+    "title": "Crowdsourcing",
+    "year": 2026,
+    "venue": "Directory of Open access Books (OAPEN Foundation)",
+    "cited_by": 0,
+    "abstract": "Crowdsourcing – Innovations in Digital Collaboration explores how digital platforms, collective intelligence, and artificial intelligence are transforming the ways people work together, innovate, and solve complex problems. This volume gathers international perspectives on emerging crowdsourcing ecosystems across research, industry, and society. The chapters examine key themes such as AI-enabled Crowdwork, large language models and collaborative intelligence, strategic crowdsourcing frameworks, digital education platforms, crowdfunding methods, digital labor markets, and global research partnerships. By blending theoretical insights with real-world applications, the book demonstrates how crowdsourcing promotes innovation, knowledge development, and inclusive participation in the digital economy. Researchers, practitioners, policymakers, and students will benefit from the interdisciplinary viewpoints presented in this volume. The book offers valuable insights into the future of digital collaboration and the changing role of crowdsourcing in addressing complex global challenges."
+   }
+  ]
+ },
+ "G6": {
+  "query": "verifiable encryption report zero-knowledge proof plaintext consistency sensing",
+  "url": "https://api.openalex.org/works?search=verifiable%20encryption%20report%20zero-knowledge%20proof%20plaintext%20consistency%20sensing&per-page=6&mailto=research@example.org",
+  "count": 543,
+  "results": [
+   {
+    "doi": "https://doi.org/10.1007/978-3-642-20465-4_14",
+    "title": "Commuting Signatures and Verifiable Encryption",
+    "year": 2011,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 101,
+    "abstract": ""
+   },
+   {
+    "doi": "https://doi.org/10.62056/a3wa3zl7s",
+    "title": "Verifiable Encryption from MPC-in-the-Head",
+    "year": 2024,
+    "venue": "IACR Communications in Cryptology",
+    "cited_by": 3,
+    "abstract": "Verifiable encryption (VE) is a protocol where one can provide assurance that an encrypted plaintext satisfies certain properties, or relations. It is an important building block in cryptography with many useful applications, such as key escrow, group signatures, optimistic fair exchange, and others. However, the majority of previous VE schemes are restricted to instantiation with specific public-key encryption schemes or relations. In this work, we propose a novel framework that realizes VE protocols using zero-knowledge proof systems based on the MPC-in-the-head paradigm (Ishai et al. STOC 2007). Our generic compiler can turn a large class of zero-knowledge proofs into secure VE protocols for any secure public-key encryption scheme with the undeniability property, a notion that essentially guarantees binding of encryption when used as a commitment scheme. Our framework is versatile: because the circuit proven by the MPC-in-the-head prover is decoupled from a complex encryption function, the work of the prover is focused on proving the encrypted data satisfies the relation, not the proof of plaintext knowledge. Hence, our approach allows for instantiation with various combinations of properties about the encrypted data and encryption functions. We then consider concrete applications, to demonstrate the efficiency of our framework, by first giving a new approach and implementation to verifiably encrypt discrete logarithms in any prime order group more efficiently than was previously known. Then we give the first practical verifiable encryption scheme for AES keys with post-quantum security, along with an implementation and benchmarks."
+   },
+   {
+    "doi": "https://doi.org/10.1007/978-3-030-45374-9_3",
+    "title": "Verifiable Inner Product Encryption Scheme",
+    "year": 2020,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 10,
+    "abstract": ""
+   },
+   {
+    "doi": "https://doi.org/10.1109/csf51468.2021.00045",
+    "title": "Consistency for Functional Encryption",
+    "year": 2021,
+    "venue": "IEEE Computer Security Foundations Workshop (CSFW)",
+    "cited_by": 3,
+    "abstract": "In functional encryption (FE) a sender, Alice, encrypts plaintexts for which a receiver, Bob, can obtain functional evaluations, while Charlie is responsible for initializing the encryption keys and issuing the decryption keys. Standard notions of security for FE deal with a malicious Bob and guarantee the confidentiality of Alice's messages despite the leakage that occurs due to the functional keys that are revealed to the adversary via various forms of indistinguishability experiments that correspond to IND-CPA, IND-CCA and simulation-based security.In this work we provide a complete and systematic investigation of Consistency, a natural security property for FE, that deals with attacks that can be mounted by Alice, Charlie or a collusion of the two against Bob. We develop three main types of consistency notions according to which set of parties is corrupted and investigate their relation to the standard security properties of FE. To validate our different consistency types, we extend the universally composable framework for FE by Matt and Maurer (CSF 2015) and we show that our consistency notions naturally complement FE security by proving how they imply (and are implied by) UC security depending on which set of parties is corrupted; in this way we demonstrate a complete characterization of consistency for FE. Finally, we provide explicit constructions that achieve consistency efficiently either directly via a construction based on MDDH for specific function classes of inner products over a modulo group or generically for all the consistency types via compilers using standard cryptographic tools."
+   },
+   {
+    "doi": "https://doi.org/10.1007/978-3-031-20917-8_17",
+    "title": "(Public) Verifiability for Composable Protocols Without Adaptivity or Zero-Knowledge",
+    "year": 2022,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 5,
+    "abstract": ""
+   },
+   {
+    "doi": "https://doi.org/10.1007/978-3-031-15802-5_9",
+    "title": "Certified Everlasting Zero-Knowledge Proof for QMA",
+    "year": 2022,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 25,
+    "abstract": ""
+   }
+  ]
+ },
+ "G7": {
+  "query": "proof of location signed witness trajectory zero-knowledge vehicular",
+  "url": "https://api.openalex.org/works?search=proof%20of%20location%20signed%20witness%20trajectory%20zero-knowledge%20vehicular&per-page=6&mailto=research@example.org",
+  "count": 308,
+  "results": [
+   {
+    "doi": "https://doi.org/10.18725/oparu-1744",
+    "title": "Location privacy in vehicular communication systems: a measurement approach",
+    "year": 2011,
+    "venue": "OPen Access Repositorium der Universität Ulm (OPARU) (Ulm University)",
+    "cited_by": 4,
+    "abstract": "The emerging vehicular communication systems have the promise to greatly improve road safety, traffic efficiency, and driver convenience. However, many envisioned applications require a user to constantly reveal his locations, the user is in danger of loosing his location privacy. Hence, in the context of vehicular communication systems, a meaningful location privacy metric is indispensable for the development of cost-effective location privacy-protection mechanisms. Existing privacy metrics have various limitations which make them incapable to fully capture a user´s location privacy and give meaningful and accurate privacy measurements. In this dissertation, we aim at developing a location privacy metric for the users of vehicular communication systems. Based on a capture-model-measure paradigm, the metric captures related information in snapshots, processes the information, and gives quantitative measurements of a user´s level of location privacy in the system. To truthfully reflect the underlying privacy values, we extend the metric and provide solutions for measuring a user´s location privacy in multiple dimensions such as privacy in timely-ordered snapshots and privacy in snapshots with interrelated users. We evaluate our approach by extensive simulations as well as by a proof-of-concept implementation based on realistic dataset. As a result, we give a comprehensive answer to how to measure a user´s location privacy in vehicular communication systems while taking into account domain specific aspects and privacy in multiple dimensions. The location privacy metric fills an important gap in current research. Furthermore, our measurement approach provides insights into the cause of the location privacy problem, on which cost-effective privacy-protection mechanisms can be developed to benefit the users of vehicular communication systems."
+   },
+   {
+    "doi": "https://doi.org/10.54364/cybersecurityjournal.2025.1112",
+    "title": "ZAPS: A Zero-Knowledge Proof Protocol for Secure UAV Authentication with Flight Path Privacy",
+    "year": 2025,
+    "venue": "Advances in Knowledge-Based Systems Data Science and Cybersecurity",
+    "cited_by": 6,
+    "abstract": "The increasing deployment of Unmanned Aerial Vehicles (UAVs) for military, commercial, and logistics applications has raised significant concerns regarding flight path privacy. Conventional UAV communication systems often expose flight path data to third parties, making them vulnerable to tracking, surveillance, and location inference attacks. Existing encryption techniques provide security but fail to ensure complete privacy, as adversaries can still infer movement patterns through metadata analysis. To address these challenges, we propose a zk-SNARK (Zero-Knowledge Succinct Non-Interactive Argument of Knowledge)-based privacy preserving flight path authentication and verification framework. Our approach ensures that a UAV can prove its authorisation, validate its flight path with a control centre, and comply with regulatory constraints without revealing any sensitive trajectory information. By leveraging zk-SNARKs, the UAV can generate cryptographic proofs that verify compliance with predefined flight policies while keeping the exact path and location undisclosed. This method mitigates risks associated with real-time tracking, identity exposure, and unauthorised interception, thereby enhancing UAV operational security in adversarial environments. Our proposed solution balances privacy, security, and computational efficiency, making it suitable for resource-constrained UAVs in both civilian and military applications."
+   },
+   {
+    "doi": "https://doi.org/10.3390/electronics15061243",
+    "title": "PrivLocAuth: Enabling Location-Aware Cross-Domain UAV Authentication with Zero-Knowledge Location Privacy",
+    "year": 2026,
+    "venue": "Electronics",
+    "cited_by": 1,
+    "abstract": "Secure cross-domain UAV authentication is challenging because identity verification alone is insufficient to guarantee safe operation. In many UAV applications, it is equally critical to verify that a UAV is currently located within an authorized geographic region. Existing approaches often expose precise GPS coordinates, rely on static identifiers that enable tracking, or fail to guarantee the freshness and authenticity of location evidence. These weaknesses allow replay, location spoofing, and trajectory inference attacks, especially in multi-domain environments. To address these limitations, we propose PrivLocAuth, a zero-knowledge-based cross-domain UAV authentication protocol that enforces geofence restrictions without revealing actual locations. In PrivLocAuth, UAVs encode their current coordinates into fresh Pedersen commitments, which are attested by the home Local Domain Server (LDS) using short-lived Schnorr signatures. Based on these attested commitments, UAVs generate Bulletproof range proofs to demonstrate compliance with cross-domain server-defined geofences. This design ensures that UAVs operate within authorized airspace while preserving strong location privacy. PrivLocAuth further incorporates a lightweight elliptic curve cryptography (ECC) and Schnorr signature-based credential framework that enables unlinkable authentication across-domains, preventing session correlation and identity tracking. Formal security analysis demonstrates resistance to impersonation, replay, geofence-bypass, and linkage attacks. Experimental evaluation shows low computational latency and minimal communication overhead, confirming the protocol’s suitability for resource-constrained UAV platforms operating in dynamic cross-domain environments."
+   },
+   {
+    "doi": "https://doi.org/10.1109/jiot.2025.3643468",
+    "title": "Secure UAV-Assisted Federated Learning: A Digital Twin-Driven Approach With Zero-Knowledge Proofs",
+    "year": 2025,
+    "venue": "IEEE Internet of Things Journal",
+    "cited_by": 5,
+    "abstract": "Federated learning (FL) has gained popularity as a privacy-preserving method of training machine learning models on decentralized networks. However to ensure reliable operation of UAV-assisted FL systems, issues like as excessive energy consumption, communication inefficiencies, and security vulnerabilities must be solved. This paper proposes an innovative framework that integrates Digital Twin (DT) technology and zero-knowledge FL (zkFed) to tackle these challenges. UAVs act as mobile base stations, allowing scattered devices to train FL models locally and upload model updates for aggregation. By incorporating DT technology, our approach enables real-time system monitoring and predictive maintenance, improving UAV network efficiency. Additionally, Zero-Knowledge Proofs (ZKPs) strengthen security by allowing model verification without exposing sensitive data. To optimize energy efficiency and resource management, we introduce a dynamic allocation strategy that adjusts UAV flight paths, transmission power, and processing rates based on network conditions. Using block coordinate descent and convex optimization techniques, our method significantly reduces system energy consumption by up to 29.6% compared to conventional FL approaches. Simulation results demonstrate improved learning performance, security, and scalability, positioning this framework as a promising solution for next-generation UAV-based intelligent networks."
+   },
+   {
+    "doi": "https://doi.org/10.1109/iv55156.2024.10588511",
+    "title": "Zero-Knowledge Proof of Distinct Identity: a Standard-compatible Sybil-resistant Pseudonym Extension for C-ITS",
+    "year": 2024,
+    "venue": "IEEE Intelligent Vehicles Symposium",
+    "cited_by": 4,
+    "abstract": "Pseudonyms are widely used in Cooperative Intelligent Transport Systems (C-ITS) to protect the location privacy of vehicles. However, the unlinkability nature of pseudonyms also enables Sybil attacks, where a malicious vehicle can pretend to be multiple vehicles at the same time. In this paper, we propose a novel protocol called zero-knowledge Proof of Distinct Identity (zk-PoDI,) which allows a vehicle to prove that it is not the owner of another pseudonym in the local area, without revealing its actual identity. Zk-PoDI is based on the Diophantine equation and zk-SNARK, and does not rely on any specific pseudonym design or infrastructure assistance. We show that zk-PoDI satisfies all the requirements for a practical Sybil-resistance pseudonym system, and it has low latency, adjustable difficulty, moderate computation overhead, and negligible communication cost. We also discuss the future work of implementing and evaluating zk-PoDI in a realistic city-scale simulation environment."
+   },
+   {
+    "doi": "https://doi.org/10.1109/ojcoms.2021.3103445",
+    "title": "Privacy for 5G-Supported Vehicular Networks",
+    "year": 2021,
+    "venue": "IEEE Open Journal of the Communications Society",
+    "cited_by": 11,
+    "abstract": "Vehicular networks allow billions of vehicular users to be connected to report and exchange real-time data for offering various services, such as navigation, ride-hailing, smart parking, traffic monitoring, and vehicular digital forensics. Fifth generation (5G) is a new radio access technology with greater coverage, accessibility, and higher network density. 5G-supported Vehicular Networks (5GVNs) have attracted plenty of attention from both academia and industry. Geared with new features, they are expected to revolutionize the mobility ecosystem to empower a portfolio of new services. Meanwhile, the development of such communication capabilities, along with the development of sensory devices and the enhancement of local computing powers, have lead to an inevitable reality of massive data (e.g., identity, location, and trajectory) collection from vehicular users. Unfortunately, 5GVN are still confronted with a variety of privacy threats. Such threats are targeted at users' data, identity, location, and trajectory. If not properly handled, such threats will cause unimaginable consequences to users. In this survey, we first review the state-of-the-art of survey papers. Next, we introduce the architecture, features, and services of 5GVN, followed by the privacy objectives of 5GVN and privacy threats to 5GVN. Further, we present existing privacy-preserving solutions and analyze them in-depth. Finally, we define some future research directions to draw more attention and down-to-earth efforts into this new architecture and its privacy issues."
+   }
+  ]
+ }
+}

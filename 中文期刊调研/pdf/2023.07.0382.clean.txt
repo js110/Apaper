@@ -1,0 +1,828 @@
+!"#$:2 0 2 3  0 7  0 7 ;%&#$:2 0 2 3  0 9  0 1 '()*:!"#$%&'()*+,( 6 1 3 0 0 2 1 6 ) ; -./01&234%5)*+
+,( 2 3 A 5 2 0 0 3 3 ) ; -.678&9:'()*+,( B 2 0 2 0  3 2 , B 2 0 2 2  1 6 )
++,-.:;<( 1 9 7 1 —) , =, >?@AB, CDE, FG, 9:, HI5JKLMNOPQRS、TUVWXY; Z[( 1 9 9 8 —) , =, -.\]<
+B, F:5J^, HI5JKLMNOPQRS、 _`ab; cd( 1 9 7 5 —) , =, -.efB, 9G, 9:, HI5JKLMNORS、PQVW;
+g#h( 1 9 8 0 —) , =, -..iB, FG, 9:, HI5JKLMNOPQRS、PQVW; jk( 1 9 7 8 —) , l, -.efB, FG, F:, HI5JKL
+MNOPQRS; jmn( 1 9 7 0 —) , =( oPfp) , <q8rB, FG, 9:, HI5JKLMNOPQRS、st&u( l i u p e i q i a n @h p u . e d u . c n ) .
+/0123456789:;<=>?@ABC
+! "
+a
+,# $
+a
+,% &
+b
+,'()
+a
+,* +
+b
+,*,-
+b 
+( -.678& a . vws%&xyz&{;b . |}&{,-. ef 4 5 4 0 0 0 )
+D E:M~_`ab , ~*_`ab
+( E A L P ) s。, _ab ¡6¢£¤¥, ¦§¨©Yª«¬( F C M ) w®
+©¯«¬°±, ¨©«¬²,³´, 0±6µ。¶·, M~¸¹º\»ab§¼½¾¿À, Á
+ÂÃ, ÄÅ, Áab§¼、 ºÆtÇ4½¾ÈÉrÊËÌ, ºab\»Í
+ÎRS¡vwab§¼ÏÐÑÒ, ÓÔbÕab§¼«¬Ö。×Ø, ~'ÙÚ_
+wÛÜKÝ, Þß\»ab§¼àp¦á, ÛÜab§¼â¯ãä。åæçèéê, xr¬K
+¢ë, ìsÁíî0~ïðñ, òó~TUabðô§¼ÏÐðô。
+FGH:_`ab;;;rÊËÌ;Yª«¬
+IJ@KL:T P 3 0 9 MNOPQ:A MRSL:1 0 0 1  3 6 9 5 ( 2 0 2 4 ) 0 4  0 3 6  1 2 0 8  0 6
+d o i : 1 0 . 1 9 7 3 4 / j . i s s n . 1 0 0 1  3 6 9 5 . 2 0 2 3 . 0 7 . 0 3 8 2
+E d g e  a s s i s t e dc r o w d s e n s i n gl o c a t i o np r i v a c yp r o t e c t i o n
+m u l t i  t a s ka l l o c a t i o nm e c h a n i s m
+A oS h a n a
+,C h a n gX i a n a
+,Wa n gH u i b
+,S h e nZ i h a o a
+,L i uK u n b
+,L i uP e i q i a n b 
+( a . S c h o o l o f C o m p u t e r S c i e n c e &T e c h n o l o g y ,b . S c h o o l o f S o f t w a r e ,H e n a nP o l y t e c h n i c U n i v e r s i t y ,J i a o z u oH e n a n4 5 4 0 0 0 ,C h i n a )
+A b s t r a c t :T os o l v e t h e p r o b l e mo f p r i v a c y l e a k a g e a n dm u l t i  t a s ka l l o c a t i o ni nc r o w d s e n s i n g ,t h i s p a p e r p r o p o s e da ne d g e a s 
+s i s t e dc r o w d s e n s i n gl o c a t i o np r i v a c y p r o t e c t i o n ( E A L P )m u l t i  t a s ka l l o c a t i o nm e c h a n i s m .F i r s t l y ,c o n s i d e r i n g t h e g e o g r a p h y o f
+t a s k s ,t h i s p a p e r u s e di m p r o v e df u z z yc l u s t e r i n g ( F C M)a l g o r i t h mt oc l u s t e r t a s k s l o c a t i o n s ,i m p r o v e dt h ec l u s t e r i n gi n d e x ,
+a n de n h a n c e dt h e r a t i o n a l i t y o f m u l t i  t a s ka l l o c a t i o n .S e c o n d l y ,t o p r e v e n t c o l l u s i o nb e t w e e nt h e c l o u da n dp e r c e i v e du s e r s ,i t
+p r o p o s e dal o c a t i o np r i v a c yp r o t e c t i o np r o t o c o l i nt h et a s ka l l o c a t i o np h a s e .I t d e p l o y e dh o m o m o r p h i ce n c r y p t i o na m o n gt h e
+p e r c e i v e du s e r s ,c l o u da n de d g en o d e s .T h ec l o u dc o u l ds a f e l yc a l c u l a t et h em o b i l ed i s t a n c eo f t h ep e r c e i v e du s e r s w i t h o u t
+k n o w i n g t h e i r l o c a t i o n s a n dt h el o c a t i o no f t h et a s kc l u s t e r c e n t e r .F i n a l l y ,i t p r o p o s e dam u l t i  t a s ka l l o c a t i o no p t i m i z a t i o n
+s c h e m eb a s e do na n t c o l o n y a l g o r i t h m ,i t b a l a n c e dt h e i n t e r e s t s o f b o t hp l a t f o r ma n dp e r c e p t i v e u s e r s b y o p t i m i z i n g t h e p a t ho f
+e x e c u t e t a s k s .E x p e r i m e n t r e s u l t s s h o wt h a t c o m p a r e dw i t hs i m i l a r m e t h o d s , t h e p r o p o s e dm e c h a n i s mi m p r o v e s t a s kc o m p l e t i o n
+r a t e w h i l ep r o t e c t i n g l o c a t i o np r i v a c y ,a n dr e d u c e s s y s t e mp e r c e p t i o nc o s t s a n du s e r m o b i l i t y c o s t s .
+K e yw o r d s :c r o w d s e n s i n g ;t a s ka s s i g n m e n t ;l o c a t i o np r i v a c y p r o t e c t i o n ;h o m o m o r p h i c e n c r y p t i o n ;f u z z y c l u s t e r i n g
+0 TU
+./0123( M C S ) 45678./9:( ;1<=>、
+?@ABCDEF9:) GHIJ、KLMNOPQRS, T
+IUVWX2G56YZ[\G]^
+[ 1 , 2 ]
+。_`abc<
+C P U、bd 5 Gef、KghijCkKGlm^X2n, 1<
+=>$oDpqrstuevw5x<X2nykGz{、 |
+}、j~CX2<\。, G7 PQNOy
+Cb。Yc6tueG8, ;
+
+[ 3 ]
+、 |
+[ 4 ]
+CVW9
+[ 5 ]
+。
+XG./0123UQv^, oKLM M C S v,
+NOXp Qv^NO¡¢£¤¥G|}z{¦§,
+¨©Gª«¬H。U®¯5°±, ²³z{´8µ¶
+|}Cz{¦§·¸¹º238»y¼G½R, ¾¿qbÀ
+¬
+[ 6 , 7 ]
+。Á¼, TYÂÃÄÅqÆÇa²³z{G M C S À
+。M a r j a n o v i c '
+È
+[ 8 ]
+qÆ56ÉÊKLM M C SËÌG²
+³z{ E C  M C S , DYÍÃNO¡¢GÎÏCÐÑc,
+Òªqb23ËÌÓh。ÔÕÖÈ
+[ 9 ]
+qÆ56./01
+23À²×ØÒÙÚÛ{S, <ÜÍÃNOXªÎ, Ý
+H1<9:G<¤。L i uÈ[ 1 0 ]
+qÆ568a²³Þß.
+/023Gàá23âãÚäRå, 9z56àá>æµ
+àá²³ËÌnC1<âãç«Gèé, ê8ëìíî¢ï
+µð ÁñGèé¯ò。Ö¿, óôRåíõYö÷øùúû
+°±, üýóo M C S GþÌÿ!¥v, 8»"##$%ËÌ
+nqr(&G'(}), p*¶5è+GþÌ,-./0。
+14, 23ËÌnD<45O8»G'(67Æ582}
+), ;8»G9:;<=>?È, ¾¿¨©@AGøù°
+±
+[ 1 1 ]
+。B, øùúûCGþÌÿ! ¹DE。S h e n È
+[ 1 2 ]
+qÆ568a²³z{FkG M C S GøùúûþÌÿ!H
+( P 2 T A ) , |¥[m²³IJµñKþÌL_¬, ÙóXM
+õ 4 1öõ 4÷
+2 0 2 4 ø 4ù
+v w s ú § 5 J
+A p p l i c a t i o nR e s e a r c ho f C o m p u t e r s
+V o l  4 1N o  4
+A p r . 2 0 2 4N'(¹²³IJµý$øùúûCðOþÌ。M a È
+[ 1 3 ]
+qÆP68a²³z{FkG M C S GøùúûQRS¢R
+å, 8»G}RTUOX2NOÁVWèXYGZ[\]y
+^, _Rå<Üúû23NOøùGÒª¡¢23þÌ
+Å。D i n g È
+[ 1 4 ]
+Ça`D}²³IJý$øùúûþÌÿ
+!, 78ÒabC[ÿøùµúûÅ'(øùCNOø
+ù。cdÈ
+[ 1 5 ]
+ÇaefgG²³./0123À, qÆ
+5623NOøùúûGQRy^Rå, h8ihjGøùú
+ûRSWè23NO, 5ONOÓhCklþÌm$y^Q
+R, _RåDYno238», ÝHªÎ, pqwJrsêú
+ûNOøù。Wa n g È
+[ 1 6 ]
+qÆþÌÿ!ªo²³IJÞß
+C¶8»WIt, u8[ÿøùúûÙ'(øùý$þÌ
+ÿ!。póRåvUwa5kY\Gx9, ×ËÌn=Å²
+³IJ4D}G, õYö÷þÌ'(øùy4_¹z{。ý|
+ó, ×ËÌnC²³IJD<4}~8»'(È82})µð
+u, ÒªÅDpþÌ'(Cÿ!67ÆIþÌG
+8»'(, B, úûþÌ'(øùy4#$®¯G°±。
+, 0123GþÌÿ!òK4wþÌ9
+zG, þÌv´U4IG。Ö¿, üýó4
+þÌÒ5¦§, ¿04。, TY
+Ùé0123þÌÿ!\]。T a o È
+[ 1 7 ]
+ö÷
+þÌGW, qÆ8 K  m e a n s {S¶þÌWI
+t, çXè X{SqÆþÌÓhÁKKGþÌÿ!>
+æ。¡¢\È
+[ 1 8 ]
+u8b£WÒþÌ\]W,
+5OWv¤$Y½¥¦JG§º, U¨þÌe©ÿ
+!ªÁ¼G½¥¦J, |¥ñKþÌÿ,ÝH23þÌI
+J。Y i n È
+[ 1 9 ]
+Ça'(CþÌ«qÆ56¬\G®
+{S, ®¯23þÌ¯°L±ñK°±, qb0123
+ËÌÓh。üýó, N$YG0123þÌÿ!²þ
+ÌG½¢c, þÌo½¢ÿ³C23#´Rµ¶YW
+c( ;PQ·¸¹¼Gºâ'}), =ÅPQ»¯¼¹¼
+G|})) 。;Y<½þÌWItè, Öÿ!.w
+238», §º238»¼GWþÌtèÿ!R^
+swþÌyg¾pb¿áZ[238», ÀGþÌ
+I¬4ÀÁqb。
+U®¯óô°±, JÂqÆ56²³Þß0123'
+(øùúû( e d g e  a s s i s t e dc r o w d s e n s i n gl o c a t i o np r i v a c yp r o t e c t i o n ,
+E A L P ) þÌÿ!>æ。JÂGÃ$ÄÅ;C: a ) Xè23þ
+ÌG'(«, ÇaMÆW( f u z z yC  m e a n s c l u s t e r i n g , F C M ) {
+S, ¶½¢'(Ç¼GþÌWIt, 5Èÿ!.238
+», qbþÌÿ!¬; b ) ®¯×23?É238»èÊ
+}~'(øùG°±, ÇaSÒabqÆ E A L Pÿ!>
+æ, |¥×23?É, ²³IJC238»èé, úû238»
+CþÌG'(øù; c ) ËÌ×23?ÉC238»PÅu`, q
+Æ56ÇaÍ0{SGWtiþÌÿ!ñK{S, ÝH
+0123ÀG23IJ; d ) ÎÏýÐmÀ, $Y>æs,
+E A L PþÌÿ!Råoúû'(øùGqCqbþÌI
+¬, ÝHÑ23IJC./IJ。
+1 VW6X
+JÒÓÔ²³Þß0123GÀMGCÒabG
+D3Õ。m 1(Ö×GN\]®Ø。
+1 . 1 YZ[\
+;Ù 1Ú, ²³z{Þß0123ÀMGYÛ6ý
+Ü, ÿÝ4þÌÞ´Å、 ×23?É、 ²³IJC238»。
+a ) þÌÞ´Å。þÌÞ´Å4ßà{¾Ö'(PQN
+Oêá]NOâãpäå1<8æG=tç。è;,
+éêDp23ëìeGí«NO, 8a?µACîïS¢。
+Ö¿, D<þÌÞ´Å8a·¸CðûKLMX2n9:Gñ
+{Yò, =ÅóhNOá]NOâãGz{<\Yò。B
+, þÌÞ´Å¶þÌô.ËÌqr·。
+b ) ×23?É。×23?Éõö÷ËÌqr·Gøù,
+úYkKGz{Cj~¦§。%éû,³þÌ, êÚÛ23
+8»¾þÌe©PQNO。
+c ) ²³IJ。²³IJ·¸oº238»y¼G½R,
+Øß×23?É\]þÌ,³、238»ÚÛ、NOX。J
+Âx9²³IJ¶YÊÜG|}Cz{¦§。
+d ) 238»。!:1<9:, 238»<ÜPQN
+O。8»»üþÌ2ýþª, 4¶ÿ'(,-¹×!,
+È"ÿ!þÌ。
+m 1 #$%À
+T a b . 1 N o t a t i o nd e s c r i p t i o n s
+&h 'ô &h 'ô
+n , m
+ÿÝ(mþÌC238»G
+Nh
+X w , Y w 238»'(G"£、 ð£
+S t , s i
+ÿÝ(mþÌQè, þÌQ
+èvG) i þÌ
+X珓t , Y珓t
+þÌ'(Wv¤G"£、
+ð£
+s r i ) i þÌGNOÓh$´ T 1
+x , T 1
+y
+×23?ÉGé*bGþ
+ÌWv¤'(bÂ
+s p i ) i þÌGþÌñ{ T 2
+x , T 2
+y
+²³IJGé*bGþÌ
+Wv¤'(bÂ
+P t , p j
+ÿÝ(m238»Qè, 2
+38»QèvG) j 23
+8»
+T w
+x , T w
+y
+×23?ÉGé*bG2
+38»'(bÂ
+Q , q k
+ÿÝ(mþÌ'(Wv¤
+Qè, ) kþÌ'(W
+v¤
+p k c , s k c ×23?ÉGé*Cù*
+C R , C r k
+þÌÓhWv¤Qè, )
+k WþÌÓhv¤
+p k e , s k e ²³IJGé*Cù*
+X t , Y t
+\]'(+,GþÌG"
+£、 ð£
+Ù 1 ÀMG
+F i g . 1 S y s t e mm o d e l
+1 . 2 P a i l l i e r ]^
+éU56"-GSÒabÀ, P a i l l i e r b.À<
+ÜbÂ\]/{, ¾¿ý$ÀÂGS/{。ÿÃ$ÿU
+01¼:
+a ) b*I1¼。2 n = p ·q。ÿv p、q UPK3N,
+45 g ∈!
+n 2 , 7 g c d = ( L ( g λ
+m o dn 2
+) , n )= 1 , é*U p k = ( n ,
+g ) , ù*U s k = ( p , q ) 。
+b ) b1¼。aÀÂ m ∈!n ,  m<n。4556>
+N r < n ,7bÂU c = g m
+× r n
+m o dn 2
+。
+c ) ®b1¼。abÂ c < n 2
+, 7ÀÂU m=
+L ( c λ
+m o dn 2
+)
+L ( g λ
+m o dn 2
+)
+m o dn。
+· 9 0 2 1 · õ 4÷ ; <, 1: *_`abs9YÀÂ m 1、m 2 , 78 P a i l l i e r bRåPÀÂ\]
+b, ¹ E ( m 1 )= g m 1
+× r n
+1 m o dn 2
+, E ( m 2 )=g m 2
+×r n
+2 m o dn 2
+,
+7 E ( m 1 )× E ( m 2 )=g m 1 + m 2
+( r 1 r 2 ) n
+m o dn 2
+=E ( m 1 +m 2 ) 。8
+PbÂ9:G®bT, PbÂÀÂGCÈ。m;
+^ÉÊSÒaGcÓ, B P a i l l i e r 4SÒa。
+2 E A L P>?@ABC_`
+2 . 1 E A L PBCa+bc
+E A L P þÌÿ!>æÃï;Ù2 Ú, ÿUpC<=>:
+a ) ,³23þÌ。þÌÞ´Å¶23þÌ( 23þÌ'
+(、23NOÓh?@、 þÌAB) ,³.×23?É。
+b ) ×23?É¶23þÌ\]MÆW, 8(&é*
+bþÌWv¤'(, C8²³IJé*CDb, Á¶
+PD'(bG23þÌCþÌig,-¹²³IJ。
+c ) ²³IJ¶'(bG23þÌCþÌig,-.2
+38»。
+d ) 238»EFþÌig, GH3á]þÌ, ¶'(o
+J½+,, Ö8×?Éé*b, Á,-¹²³IJ。
+e ) ²³IJz{bGþÌWv¤'(b238
+»'(G§º, ç¶bG§º,-.×?É。
+f ) ×?É8ù*®b§ºêXè}RTz{238»Ú
+ÛIJ, 4ÆÚÛIJÁIG238»。ÁU4ÆG238
+»ñKþÌá]Jæ, ¶4ÆG238»þÌWtè,
+-K²³IJ。
+g ) ²³IJ|3G238»IßÖþÌ。
+Ù 2 E A L PþÌÿ!ï
+F i g . 2 P r o c e s s o f E A L Pt a s ka s s i g n m e n t
+2 . 2 3456=>?[deK
+x9Àoª« t joþÌÞ´Å,³G n þÌC r
+238», 23þÌQèU S t= { s 1 , s 2 , …, s i , …, s n } , aþ
+Ì s i , '(mÚU s l i=( s l x
+i , s l y
+i ) , s l x
+i4þÌ'(G"£, s l y
+i4
+þÌ'(Gð£, þÌNOÓh8 s r imÚ, þÌñ{8 s p im
+Ú。238»GQè4 P t={ p 1 , p 2 , …, p j , …, p r } , a p j , '
+(mÚU p l j= ( p l x
+j , p l y
+j ) , }RU p r j。
+½ t ªLGþÌªcMI5 n × 3GNO X t , ÿv) i
+]4 x i= { s l x
+i , s l y
+i , s r i } 。¶ X tWI珓c þÌtè, B ¹
+R t= C 1 ∪C 2 ∪…∪C k ∪…∪C珓c。a4WþÌtG'(
+Wv¤C23þÌNOÓhv¤U Q={ q 1 , q 2 , …, q k , …,
+q珓c } C C R= { C r 1 , C r 2 , …, C r k , …, C r珓c } 。C r k (m C kvGþÌÓ
+hPT。
+78MÆW( F C M) 6Q±ÿW{Sµ\]þÌ
+W。aþÌªcNO X tvGNO, |¥ x ′ i j=x i j /
+m a x ( x 1 j , x 2 j , …, x n j ) ¹R7KNONO X ′ t。Ö5O{S 1
+ý$þÌWtè。
+{S 1 MÆWþÌ{S
+m: X ′ t , c ∈[ c m i n , c m a x ] , m , N , ε 。
+Æ: C= { C 1 , C 2 , …, C k , …, C珓c } , P= { p 1 , p 2 , …, p k , …, p珓c } 。
+a ) 86>NSTKUªNO U ( 0 )
+, V(DN t = 0 , W
+N c = c m i n
+b ) w h i l e c < c m a xd o
+c ) f o r k ∈[ 1 , c ]d o
+d ) f o r i ∈[ 1 , n ]d o
+e ) ^( 1 ) z{ U t
+k i
+f ) y^Wv¤
+g ) f o r k ∈[ 1 , c ]d o
+h ) ^( 2 ) z{ p t + 1
+k
+i ) z{‖P ( t + 1 )
+- P ( t )
+‖
+j ) i f ‖P ( t + 1 )
+- P ( t )
+‖ < εo r t < T
+k ) +¹ o )
+l ) e l s e
+m ) t = t + 1ê+¹ c )
+n ) e l s ei f
+o ) ^( 3 ) z{ I C H , ¹ÁñWN珓c
+p ) ^( 4 ) z{ 珓c
+q ) c = c + 1
+r ) e n dw h i l e
+s ) c = 珓c , AÐ) c )~ j ) ], ¹ P、U
+t ) 5O U ¹ C= { C 1 , C 2 , …, C k , …, C珓c }
+{S 14MÆWþÌ{SG'ô。{S 1v) c )~
+j ) ]ý$Ça F C M{SGþÌW, WNU珓c。MÆW
+{SÃ$ÿUz{Uª£NOCz{Wv¤P·ÿ。MÆ
+W{Svz{Uª£NO U ( t )
+W3;^( 1 ) Ú。
+u ( t )
+k i =
+1
+∑
+c
+r = 1
+(
+d ( t )
+k i
+d ( t )
+r i
+)
+2
+m- 1
+( 1 )
+´ Uª£NO, 5O^( 2 ) y^Wv¤ p t + 1
+k。
+p ( t + 1 )
+k =
+∑
+x k ∈X ′ t
+( u ( t )
+k i ) m
+∑
+x k ∈X ′ t
+( u ( t )
+k i ) m
+( 2 )
+X, W{S|##$9(WN, YZ5O"Ð ¹
+ÁñGWXY。ÁñWN|#|¥ C a l i n s k i  H a r a b a s z ß
+Nµ45。ö÷¹IGþÌtèD<[ô\5tèvG
+w5þÌ, 238»GZ[\I。B[mÁIþÌNP
+T M i n N u m , ê¶ÿ9U 2。Ö5O M i n N u m C H\]¬
+\, ¬\ I C H;^( 3 ) Ú。
+I C H=
+C H M i n N u m ≥2
+0 M i n N u m { < 2
+( 3 )
+5O^( 4 ) z{Wv¤Nh。
+珓c =
+c c = c m i n
+c ←m a x ( I C H ( c ) , I C H ( c - 1 ) ) c ∈( c m i n , c m a x
+{ )
+( 4 )
+{S1G=> o ) z{ WNCG I C H , |¥ó5D
+V(s, ¹ ÁñWN。"¥) b )~ s ) ]GV(, D
+p]¹.Ö]iGÁ^WN珓c。ÖAÐ) c )~ o ) ],
+¹ÁVG PC U , ê5O U¶23þÌÿI+ GþÌtè。
+2 . 3 /012789:;<fg
+JÂUþÌWv¤G'(})ªa82}), þÌ
+ig})ªaÂ82})。238»Dp|¥²³IJ_`
+µðOWþÌtGig。Cµ¶abÓÔJÂ'(øùú
+ûØc。
+UÂ}~þÌCÙG'(øù, þÌÞ´ÅC238
+· 0 1 2 1 · v w s ú § 5 J õ 4 1ö»#'(\]+,, +,é^;^( 5 )~ ( 8 ) Ú。ÿv, '
+(d?+,Gø£ φþÌÞ´Å238», ¿P
+ÅíÂ4¶ÿ}~.þe)0R。
+X t
+= s l x
+i ·c o s φ- s l y
+i s i nφ ( 5 )
+Y t
+= s l y
+i ·c o s φ- s l x
+i s i nφ ( 6 )
+X w
+= x w ·c o s φ- y w s i nφ ( 7 )
+Y w
+= y w ·c o s φ+ x w s i nφ ( 8 )
+þÌÞ´Å$¶þÌ'(oJ½\]+,, Ö¶+,
+G'(( X t
+, Y t
+) p þÌig Γ,-¹×23?É。\]'
+(+,4UþÌWCøùúûé@:。'(+,, ×2
+3?É¶¶Y¼½¢'(G23þÌ\]W, W#$
+þÌWtGv¤'(\]b。
+.Ö5WþÌv¤'(, 8( X
+珓t
+、Y
+珓t
+) mÚ, X
+珓t
+、Y
+珓t
+ÿÝ
+4þÌWv¤G"£Cf£, ×23?É8(&Gé*
+p k cbþÌtWv¤G'( T 1
+x= E n c (- X
+珓t
+, p k c ) C T 1
+y=
+E n c (- Y
+珓t
+, p k c ) 。L÷, C78²³IJGé* p k eCDb
+T 1
+x、T 1
+y。a4Y T 2
+x=E n c ( T 1
+x , p k e ) , T 2
+y=E n c ( T 1
+y , p k e ) 。×23
+?É¶ÿ_`¹²³IJ。Γ4þÌig, 'ôþÌNOG
+G( ;|NO、ghNO、 ºâD8c) 、 ¿áiò、2jª
+«、NOÓh$´È。
+²³IJP¹ Γ, k8(&Gù* s k e®b T 2
+xC T 2
+y ,
+¹ T 1
+x= D e c ( T 2
+x , s k e ) C T 1
+y= D e c ( T 2
+y , s k e ) 。Ö, %ÿlm
+]iG238»_`×?ÉGé* p k cCWþÌtG
+ig Γ 。
+238»EFþÌig, ;Y238»_WþÌt
+2ýþ, 478×23?ÉGé* p k cb\]'(+,G
+'(( X w
+, Y w
+) 。L÷, 238»¶(&bG'( T w
+x =
+E n c (- X w
+, p k c ) C T w
+y = E n c (- X w
+, p k c ) q.G²³IJ。
+²³IJP¹bG238»'(CWþÌÞ´
+, z{G²³IJ T +
+x = ⊙( T w
+x , T 1
+x )= E n c ( X w
+- X
+珓t
+) , T +
+y =
+⊙( T w
+y , T 1
+y )= E n c ( Y w
+- Y
+珓t
+) 。ç¶×é*bGWþÌt
+v¤238»ç«G§º,-.×23?É。
+×23?É8(&G ù * s k c ® b { T +
+x, T +
+y } , ¹
+D e c ( T w
+x , s k c )= Δ x C D e c ( T w
+y , s k c )= Δ y。ÿv Δ x = X w
+- X
+珓t
+, Δ y =
+Y w
+- Y
+珓t
+。Ö, ×23?É<Ü5O^( 9 ) z{238»W
+þÌv¤G./§º。
+d ( p k , u j )= ( Δ 2
+x+ Δ 2
+y )
+1
+2 ( 9 )
+6, Ça./§º、 ×23?É45è+G238»µ
+á]23þÌ。
+2 . 4 hi=>?@A
+$YGþÌÿ!>ænn[ö÷?É=Å8»5RGu
+`ÁKK, 4ÂÜè¢G, UqÆ56þÌÿ!ñK>
+æ。ÇaWþÌ238»GtèXY, ÿÝñK×23
+?ÉC238»Gu`, 7ÀGoÜu`ÁKK。
+×23?ÉGP`Dp|¥¾#$ÿ!þÌGÑñ{v
+Íp4238»GÑÚäIJµz{。|#UþÌGÑ
+ñ{4oþÌ,³Å,³ªqÖG, B×23?ÉP`ÁK
+K°±Dp+,U238»ÑÚäIJÁIK。
+×?ÉGP`8 p r o f i t ( t ) mÚ, ;^( 1 0 ) Ú。
+p r o f i t ( t )=∑
+n
+i = 1
+s p i- c o s t ( t ) ( 1 0 )
+238»ÑÚäIJ c o s t k , j WþÌtèC238»
+ç«Gr!¯Ö, ÿv
+c o s t k , j = λ 1 d ( p k , u j )+ λ 2 r ( C k , u j ) ( 1 1 )
+;^( 1 1 ) Ú, 238» u j C kGÚäIJP·ÿt
+I: )5·ÿ u jCþÌWv¤ C kGWv¤ p kç«G
+§º¯Ö, λ 14§ºB¨ÀN; )s·ÿ4238»}R
+T¯Ö, ÿv r ( C k , u j ) Dp|¥^( 1 2 ) z{, λ 2(mÓhB¨
+ÀN。
+r ( C k , u j )=
+u r j - C r k u r j ≥ C r k
+H { e l s e
+( 1 2 )
+o^( 1 2 ) v, u r j48»}RT, ;Y u r j<C r k , 7238
+»G}RTÂ<ÉÊWþÌtG$´。U¥t2323
+8», |#¶ÓhPT H9(IKGN。
+m i nC O S T ·X
+s . t . ∑
+珓c
+k = 1
+x k j ≤1 j = 1 , 2 , …, m
+∑
+m
+j = 1
+x k j = 1
+x k j = 0o r 1 k = 1 , 2 , …,珓c ; j = 1 , 2 , …, m ( 1 3 )
+238»45°±ý|ó456ßu°±。B, 238
+»45°±Dp+,UpC 0  1oNL±°±, ^( 1 3 ) D´
+, ÿv XmÚWþÌtC238»ç«Gr!XY。
+Xè^( 1 1 ) v./§ºC238»}RT, D ¹´4
+ÆG238»QèU W={ w 1 , w 2 , …, w c } 。ÇaþÌñ{C
+ÚäIJ, ¹þÌWt238»Áñr! C W=
+{ ( C 1 , w 1 ) , ( C 2 , w 2 ) , …, ( C c , w c ) } 。a w k , #$vw5ÖG
+Jæ π k o C kvá]þÌ, π={ π 1 , π 2 , …, π c } mÚþÌt
+èGá]Jæ。
+¹þÌWtC238»Gr!t, Á8
+»þÌá]¥\5=ñK, Dp¶þÌá]Jæ°±ÈU
+Áñ¯°L±°±。78ÁKÁIxÍÀ( M M A S ) ñK{
+S®¯þÌá]Jæ°±。
+3 jkl@m
+JÂqÆG²³Þß0123'(øùúû( E A L P ) þ
+Ìÿ!>æ, ?4úû23þÌC238»G'(øù, ¾
+¿<oyzGCIþÌÿ!。
+a ) E A L PþÌÿ!>æDpúû23þÌG'(øù。
+oþÌÿ!G¥v, ×23?Éð GþÌ'(4þÌ
+,³ÅoJ½\]'(+,G23þÌ'(, ×?É{Sð
+O'(+,ø£, BúûþÌ'(øù; þÌWv¤
+'(8×Gé*b,-¹²³IJ, ²³IJõY×?É
+ù*, {S®b, B23þÌ'( ¹úû。
+b ) E A L PþÌÿ!>æDpúû238»G'(øù。
+oqÆGØcv, 238»8×Gé*b'(I
+T w
+x、T w
+y。aÀvGÿ/ýÜ, [YG²³IJDp|
+°。1a P a i l l i e r Òab4}×yzG, Dpno45À
+Â
+[ 2 0 ]
+, pDpUÅ{S|¥bÂ~LðO23
+8»G'(})。²³IJõY×?ÉGù*, B²³IJ
+{S®bbÂ, Dpqú238»'(})G>bc。²³I
+J<z{bG23þÌWv¤238»'(G
+§º, ×?É<ðOù*®bG§º, {SðO238
+»'(, Búû238»G'(øù。
+4 E A L PBCln@m
+4 . 1 op_8
+U E A L PþÌÿ!>æGc<, Ça²³z{G
+· 1 1 2 1 · õ 4÷ ; <, 1: *_`absøùúûþÌÿ!>æ
+[ 1 4 ]
+p ÇaÍ0ñK{SGþÌÿ
+!>æ
+[ 2 1 ]
+\]s。ÂÅ[ 1 4 ] qÆGøùúûþÌÿ!>æ
+ E A L P>æ, Ò78Òabúû8»'(øù, 1
+4pÁ§ºÿ!þÌ。ÂÅ[ 2 1 ] qÆXè C o b b  D o u g l a s
+ NG"MGµ78Í0{S\]þÌÿ!>æ, 
+èö÷ª«、 §ºC¿áB3µý$238»u`ÁKKG
+þÌÿ!。ýÐNOhOéG G o w a l l a NOQ。o G o w a l l a
+NOQv, '8»4o½J¹, ýÐ¥vx9
+G o w a l l a NOQvG8»40123ÀvG238», ê¶
+ÿÁ¼G¹½JéU '(, oÁ¼G¹½J¹¼6>
+I0123þÌ'(。UpqýÐGÖc, JÂ\]
+1 0 0týÐ, ê4O 1 0 0týÐXYG?íTéUÁVGý
+ÐXY。ýÐ¶ÜN9(;m 2Ú。
+m 2 ýÐ9(
+T a b . 2 S e t t i n g o f e x p e r i m e n t a l
+N NT N NT
+ýÐ
+Wi n d o w s 1 1 , I n t e l C o r e T M
+i 5  1 1 4 0 0 H @ 2 . 7 0G H z , 1 6G B
+ij, } P y t h o n
+WN
+][ c m i n , c m a x ]
+[ 5 , 1 5 ]
+23e©KI 1 0k m× 1 0k m MÆßN m 2
+23e©Nh 5 WV(D 1 0 0
+þÌNh 3 0~ 8 0 §ºAB¨ 1
+238»Nh 9 0~ 2 4 0 }RAB¨ 1 0
+}RT] [ 5 , 1 0 ] }RPT 3 0 0
+4 . 2 q56rs
+Ñ23IJô?ÉGÚäIJCÅG./§ºI
+JP·ÿ。
+Ù 34 E A L P>æ、 ÂÅ[ 1 4 , 2 1 ] RåÑ23IJGs。
+¾Ù 3DpFÆ, 6÷238»NGF, E A L PCÂÅ
+[ 1 4 , 2 1 ] GþÌÿ!Ñ23IJvó, 14JÂ E A L P>
+æGÑ23IJTVHaÂÅ[ 1 4 , 2 1 ] GþÌÿ!。4B
+U E A L P>æÒªö÷23?ÉC238»PÅGu`。
+ÿv, ÂÅ[ 1 4 ] GÑ23IJÁb, BU_>æ[ö÷?É
+Gu`, Dp8ÁHGIJÚÛÅ。ÂÅ[ 2 1 ] Xè"
+¢ïMG, ¶þÌÒªÿ!.238», çß¨238
+»vw5ÖGJæIÿ!GþÌ, ý$238»u`
+ÁKK, B8»./IJHaÂÅ[ 1 4 ] , 1yõYö÷23
+?ÉGu`。B, E A L P>æGÑ23IJsÂÅ[ 1 4 , 2 1 ]
+ÿÝÝH 1 4 . 2 1 %C 2 3 . 5 4 %。
+4 . 3 >?tru
+þÌI¬4238»I23þÌNh×ËÌnL
+_þÌNhGsè。þÌI¬¾µ238»á]
+þÌG:c。
+;Ù 4Ú, ¶þÌNh9(U 8 0 , 6÷238»Nhó
+, 06>æGþÌI¬vo=ó。E A L P>æ4¶
+§º238»Y¼GþÌWItÿ!.5238», 
+þÌIG¿á238»Z[\yK, êÒªö÷./
+§ºC8»}RTµ45238», Á78Í0{Sþ
+Ìá]Jæ\]ñK, ÝH238»./§º, po06>
+ævþÌI¬Áb。ÂÅ[ 2 1 ] \]þÌÿ!ªp8»u
+`ÁKKU?, 14õYqrøùúû, þÌI¬Dç。
+ÂÅ[ 1 4 ] 238»qrøùúû, 1pÁ./§º
+45þÌá]Å, õYñKþÌÿ!, pþÌI¬HaÂ
+Å[ 2 1 ] , þÌI¬ÁH。
+Ù 3 238»Nh
+Ñ23IJG
+F i g . 3 E f f e c t o f t h en u m b e r
+o f s e n s i n g c u s t o m e r o n
+t h e t o t a l s e n s i n gc o s t
+Ù 4 238»Nh
+þÌI¬G
+F i g . 4 E f f e c t o f t h en u m b e r
+o f s e n s i n gc u s t o m e r o n
+t h et a s kc o m p l e t i o nr a t e
+Ù 5v, ¶238»Nh9(U 8 0 , 6÷þÌNhF,
+06>æþÌI¬vYCÝ, 4BU 8»NhÂ&
+ª, 23ÀvGþÌ, þÌIG¬I。14a
+E A L PCÂÅ[ 1 4 ] G>æoÿ!þÌªqrøùúû, p2
+38»á]þÌG3HyK; Òªa E A L P>æXèW{
+Sÿ!¼GþÌêÇaÍ0{SþÌá]Jæ\]ñ
+K, pþÌI¬baÂÅ[ 1 4 ] 。{øùúûGÂÅ[ 2 1 ]
+GþÌI¬ÁH。
+4 . 4 vwxyz{
+?í./§º4ßYá]þÌG8»./¹þÌ'(
+G?í§º, 4þÌÿ!{SG5A$ß?。
+Ù 6¶þÌNh9(UÖT 8 0 , 238»Nh¾ 9 0
+F¹ 2 4 0。E A L PþÌÿ!>æo06>æv?í./§ºÁ
+H。4BU 238»Nh&Kª, ÂÅ[ 1 4 , 2 1 ] GþÌÿ
+!>ævõYö÷þÌç«G½¢Duc, Ò58»4á
+]§ºYGþÌ, p238»G?í./§º4y
+K, ¿ E A L Pÿ!GþÌío8»¹¼。ÂÅ[ 1 4 ] ÿ!þ
+Ìñ45§ºÁG8», ¿ÂÅ[ 2 1 ] Xèª«、 ¿áC§
+ºÿ!þÌ, oÁKK238»P`, 238»4Xèÿ/
+B3á]§º '(1P`GþÌ, p?í./§
+ºbaÂÅ[ 1 4 ] 。E A L PþÌÿ!>æo?í§ºRµÂ
+Å[ 1 4 , 2 1 ] s, ÿÝCÝ 9 . 3 9 %C 1 5 . 7 1 %。
+Ù 5 þÌNhþÌ
+I¬G
+F i g . 5 E f f e c t o f t h en u m b e r o f
+t a s k s o nt h e t a s kc o m p l e t i o nr a t e
+Ù 6 238»Nh?í
+./§ºG
+F i g . 6 E f f e c t o f t h en u m b e r o f
+s e n s i n g c u s t o m e r o nt h e
+a v e r a g em o v i n gd i s t a n c e
+Ù7 ¶238»Nh9(U 6 0 , DpFÆ, o?í./§
+ºRµ, E A L P>æCÂÅ[ 1 4 ] Gc<íñaÂÅ[ 2 1 ] 。4
+a E A L P>æþÌÿ!\]ñK, E A L P>æ|¥MÆW
+¶½¢'(¼GþÌÒªÿ!.238», ÖÍ0
+{SñKþÌá]Jæ, ý$238»á]þÌG¯°Á。
+ÂÅ[ 2 1 ] èª«IJ、 §ºIJCþÌ¿áB3, 78Í0
+{SñKþÌá]Jæ, pÙP`ñ, BÂÅ[ 2 1 ] v2
+38»G?í./§ºbap§ºU7GÂÅ[ 1 4 ]
+GþÌÿ!>æ, o06Råv?í./§ºÁb。
+4 . 5 |}~
+{S/]ª«~L'(øùúûþÌÿ!>æGY
+cCD8c。
+· 2 1 2 1 · v w s ú § 5 J õ 4 1ö{S/]ª«ô×?ÉWþÌª«、 ²³IJz{
+bG§º£¤Gª«p 238»b'(Gª«0·ÿ。
+Ù 8ÁÚoÂÒÙNhC ¡oæóGª«。Ù 8v
+238»Nh¾ 2 0 0F¹ 10 0 0ª, =¢U 2 0 0。DpF¹,
+{S/]ª«6÷238»NhGF¿Â7F。4B
+U²³IJv#$z{238»¹þÌWv¤'(G§º,
+4ÇabNOG。o238»ª, 238»b'(
+Gª«Â_ÙNhG。DpFÆ, b£¤4ÂDpq
+½£¤5ÖG/]ª«。Ö¿, ÙNU 10 0 0ª, /
+]ª«¥U 2 8s。R;ñ¦, 238»NhFª, ×?É
+C²³IJG C P Uª«yF, 14p§cR^, BU0G
+z{IJÃ$4bÂóG¨é, 238»GNhIRs。
+X5Rµ, 238»Gz{IJ©4ªÖG, è;, o=>v
+z{¥U 0 . 2s , «S238»NhY。¬Ñ/]ª«¿,
+Øc[#Â¹ 3 0s 8Dý$¥ 10 0 0®ÙGøùúûþ
+Ìÿ!。JÂ\]WþÌÿ!238»Nho 2 0 0¯
+°, /]ª«¥U 5s , ¾ýÐXYF, øùúûØcFG
+ª«4DL_G。
+Ù 7 þÌNh?í
+./§ºG
+F i g . 7 E f f e c t o f t h en u m b e r o f
+t a s k s o nt h e a v e r a g e
+m o v i n gd i s t a n c e
+Ù 8 238»Nh&K
+{S/]ª«G
+F i g . 8 E f f e c t o f c h a n g i n g n u m b e r
+o f s e n s i n gc u s t o m e r o n
+a l g o r i t h mr u n n i n g t i m e
+5 
+JÂqÆ56²³Þß0123øùúûþÌÿ!>
+æ。u8MÆW{S¶½¢'(¼þÌWIt, 78Ò
+ab¶Wv¤'(C238»'(b, ²³IJz{
+b§º, ×23?É<|¥®bþÌ8»ç«G§ºµÿ
+!þÌ, úûþÌ'(øùC238»'(øù, ÁÒªö÷
+?É238»PÅu`, |¥±,^{SñKþÌá]Jæ。
+ýÐXYmÀ, ÒRSs, E A L PþÌÿ!>æoÑ23
+IJ、 þÌI¬C?í./§ºRµYq。
+«SJÂ®¯0123'(øùúûCGþÌÿ!
+°±, 14õYö÷238»GøùZ²ýþ, C5=³q
+Æ560123cKøùúûþÌÿ!>æ。
+MN:
+[ 1 ] C a p p o n i A ,F i a n d r i n oC ,K a n t a r c i B ,e t a l .As u r v e yo nm o b i l e
+c r o w d s e n s i n g s y s t e m s :c h a l l e n g e s ,s o l u t i o n s ,a n do p p o r t u n i t i e s [ J ] .
+I E E EC o mmu n i c a t i o n sS u r v e y sa n dT u t o r i a l s ,2 0 1 9 , 2 1 ( 3 ) :
+2 4 1 9  2 4 6 5 .
+[ 2 ] F uY u c h u a n ,L i C h a n g l e ,Y uFR ,e t a l .As u r v e yo f d r i v i n gs a f e t y
+w i t hs e n s i n g ,v e h i c u l a rc o m m u n i c a t i o n s ,a n da r t i f i c i a li n t e l l i g e n c e 
+b a s e dc o l l i s i o na v o i d a n c e [ J ] . I E E ET r a n s o nI n t e l l i g e n t T r a n s p o r 
+t a t i o nS y s t e ms , 2 0 2 2 , 2 3 ( 7 ) : 6 1 4 2  6 1 6 3 .
+[ 3 ] G a n t i RK , Y e F a n , L e i H u i . M o b i l e c r o w d s e n s i n g : c u r r e n t s t a t e a n d
+f u t u r ec h a l l e n g e s [ J ] .I E E EC o mmu n i c a t i o n sMa g a z i n e ,2 0 1 1 ,
+4 9 ( 1 1 ) : 3 2  3 9 .
+[ 4 ] B o c kF ,D i M a r t i n oS ,O r i g l i aA .S m a r t p a r k i n g :u s i n gac r o w do f
+t a x i s t o s e n s eo n  s t r e e t p a r k i n gs p a c ea v a i l a b i l i t y [ J ] .I E E ET r a n s
+o nI n t e l l i g e n t T r a n s p o r t a t i o nS y s t e ms , 2 0 1 9 , 2 1 ( 2 ) : 4 9 6  5 0 8 .
+[ 5 ] Wa n g E n , Y a n g Y o n g j i a n , Wu J i e , e t a l . U s e r r e c r u i t m e n t s y s t e mf o r
+e f f i c i e n t p h o t oc o l l e c t i o ni nm o b i l ec r o w d s e n s i n g [ J ] .I E E ET r a n s
+o nH u ma n  Ma c h i n eS y s t e ms , 2 0 1 9 , 5 0 ( 1 ) : 1  1 2 .
+[ 6 ] L i J i l i a n g , S uZ h o u ,G u o D e k e ,e t a l . S e c u r e d a t a d e d u p l i c a t i o np r o 
+t o c o l f o r e d g e  a s s i s t e d m o b i l e c r o w d s e n s i n g s e r v i c e s [ J ] . I E E ET r a n s
+o nV e h i c u l a r T e c h n o l o g y , 2 0 2 1 , 7 0 ( 1 ) : 7 4 2  7 5 3 .
+[ 7 ] N i J i a n b i n g ,Z h a n gA i q i n g ,L i nX i a o d o n g ,e t a l .S e c u r i t y ,p r i v a c y ,
+a n df a i r n e s s i n f o g  b a s e dv e h i c u l a r c r o w d s e n s i n g [ J ] . I E E EC o mmu 
+n i c a t i o n sMa g a z i n e , 2 0 1 7 , 5 5 ( 6 ) : 1 4 6  1 5 2 .
+[ 8 ] M a r j a n o v i c '
+M,A n t o n i c '
+A ,Z
+ˇ
+a r k oI P .E d g ec o m p u t i n ga r c h i t e c t u r e
+f o r m o b i l e c r o w d s e n s i n g [ J ] .I E E EA c c e s s , 2 0 1 8 , 6 : 1 0 6 6 2  1 0 6 7 4 .
+[ 9 ] ûü$, ýþÿ, !(". ÏÐ_`abTUºÄr7B#$w
+[ J ] . %&'(8&&), 2 0 2 2 , 4 5 ( 4 ) : 7 7  8 3 . ( X i H e r a n , Z h uJ i n g 
+h u a , L i J i n b a o .E d g e  c l o u dc o l l a b o r a t i v e w o r k e r r e c r u i t m e n t a l g o r i t h m
+i nm o b i l e c r o w ds e n s i n g s y s t e m [ J ] . J o u r n a l o f B e i j i n gU n i v e r s i t yo f
+P o s t sa n dT e l e c o mmu n i c a t i o n s , 2 0 2 2 , 4 5 ( 4 ) : 7 7  8 3 . )
+[ 1 0 ]L i uL u n i n g ,We nX i a n m i n g ,Wa n g L u h a n ,e t a l .I n c e n t i v e  a w a r e r e 
+c r u i t m e n t o f i n t e l l i g e n t v e h i c l e s f o r e d g e  a s s i s t e dm o b i l e c r o w d s e n s i n g
+[ J ] .I E E E T r a n so nV e h i c u l a rT e c h n o l o g y ,2 0 2 0 , 6 9( 1 0 ) :
+1 2 0 8 5  1 2 0 9 7 .
+[ 1 1 ]L i Q i n g h u a ,C a o G u o h o n g ,L a P o r t a TF .E f f i c i e n t a n dp r i v a c y  a w a r e
+d a t a a g g r e g a t i o ni nm o b i l e s e n s i n g [ J ] . I E E ET r a n so nD e p e n d a b l e
+a n dS e c u r eC o mp u t i n g , 2 0 1 3 , 1 1 ( 2 ) : 1 1 5  1 2 9 .
+[ 1 2 ]S h e nH a n g ,B a i G u a n g w e i ,H uY u j i a ,e t a l .P 2 T A :p r i v a c y  p r e s e r 
+v i n g t a s ka l l o c a t i o nf o r e d g e c o m p u t i n g e n h a n c e dm o b i l e c r o w d s e n s i n g
+[ J ] .J o u r n a l o f S y s t e msA r c h i t e c t u r e , 2 0 1 9 , 9 7 : 1 3 0  1 4 1 .
+[ 1 3 ]M a L i c h u a n , L i uX u e f e n g , P e i Q i n g q i , e t a l . P r i v a c y  p r e s e r v i n g r e p u 
+t a t i o nm a n a g e m e n t f o r e d g ec o m p u t i n ge n h a n c e dm o b i l ec r o w d s e n s i n g
+[ J ] .I E E ET r a n s o nS e r v i c e s C o mp u t i n g , 2 0 1 9 , 1 2 ( 5 ) : 7 8 6  7 9 9 .
+[ 1 4 ]D i n gX u y a n g ,L y uR u i z h a o ,P a n gX i a o y i ,e t a l .P r i v a c y  p r e s e r v i n g
+t a s ka l l o c a t i o nf o re d g ec o m p u t i n g  b a s e dm o b i l ec r o w d s e n s i n g [ J ] .
+C o mp u t e r s&E l e c t r i c a l E n g i n e e r i n g , 2 0 2 2 , 9 7 : 1 0 7 5 2 8  1 0 7 5 4 1 .
+[ 1 5 ]*+,!,-,.//.'Ù012ÏÐ_`ab345
+6KÝ[ J ] .vwsú§5J, 2 0 2 2 , 4 4 ( 6 ) :1  6 .( Wa nT a o ,L i
+Wa n q i ,G eJ i n g j i n g .R e p u t a t i o nu p d a t e s c h e m ef o r b l o c k c h a i n  b a s e d
+e d g e m o b i l ec r o w d s e n s i n g [ J ] .A p p l i c a t i o nR e s e a r c ho f C o mp u 
+t e r s , 2 0 2 2 , 4 4 ( 6 ) : 1  6 . )
+[ 1 6 ]Wa n g Z h i h u a ,G u o C h a o q i ,L i uJ i a h a o ,e t a l .A c c u r a t e a n dp r i v a c y 
+p r e s e r v i n g t a s k a l l o c a t i o n f o re d g e c o m p u t i n g a s s i s t e d m o b i l e
+c r o w d s e n s i n g [ J ] .I E E E T r a n so nC o mp u t a t i o n a l S o c i a lS y s 
+t e ms , 2 0 2 1 , 9 ( 1 ) : 1 2 0  1 3 3 .
+[ 1 7 ]T a oX i ,S o n gWe i .L o c a t i o n  d e p e n d e n tt a s ka l l o c a t i o nf o rm o b i l e
+c r o w d s e n s i n gw i t hc l u s t e r i n ge f f e c t [ J ] .I E E EI n t e r n e t o f T h i n g s
+J o u r n a l , 2 0 1 8 , 6 ( 1 ) : 1 0 2 9  1 0 4 5 .
+[ 1 8 ]78©,9:;,j<ÿ,1.'Ù=>?Õ@o_`ab
+AK[ J ] .(BxPQ&),2 0 2 1 ,4 3 ( 1 0 ) :3 0 3 5  3 0 4 2 .
+( J i a n gWe i j i n ,L y uS i j i a n ,L i uY u e h u a ,e ta l .T a s kd i s t r i b u t i o n
+m e t h o do f p a r t i c i p a t o r y s e n s i n g b a s e do nu r b a nr a i l t r a n s i t [ J ] .J o u r 
+n a l o f E l e c t r o n i c s&I n f o r ma t i o nT e c h n o l o g y ,2 0 2 1 , 4 3 ( 1 0 ) :
+3 0 3 5  3 0 4 2 . )
+[ 1 9 ]Y i nB o ,L i J i a q i ,We i X u e t a o .R a t i o n a l t a s ka s s i g n m e n t a n dp a t h
+p l a n n i n gb a s e d o n l o c a t i o n a n d t a s k c h a r a c t e r i s t i c si n m o b i l e
+c r o w d s e n s i n g [ J ] .I E E E T r a n so nC o mp u t a t i o n a l S o c i a lS y s 
+t e ms , 2 0 2 1 , 9 ( 3 ) : 7 8 1  7 9 3 .
+[ 2 0 ]P a i l l i e r P . P u b l i c  k e y c r y p t o s y s t e m s b a s e d o n c o m p o s i t e d e g r e e r e s i d u o s i t y
+c l a s s e s [ C ] / / P r o c o f t h e 7 t hI n t e r n a t i o n a l C o n f e r e n c e o nt h eT h e o r ya n d
+A p p l i c a t i o no f C r y p t o g r a p h i cT e c h n i q u e s .B e r l i n :S p r i n g e r , 1 9 9 9 : 2 2 3 
+2 3 8 .
+[ 2 1 ]L i W YG ,J i aB i n g ,X uH a o t i a n ,e t a l .Am u l t i  t a s ks c h e d u l i n g
+m e c h a n i s mb a s e do nA C Of o r m a x i m i z i n g w o r k e r s ’b e n e f i t s i nm o b i l e
+c r o w d s e n s i n g s e r v i c em a r k e t sw i t ht h eI n t e r n e t o f T h i n g s [ J ] .I E E E
+A c c e s s , 2 0 1 9 , 7 : 4 1 4 6 3  4 1 4 6 9 .
+· 3 1 2 1 · õ 4÷ ; <, 1: *_`abs

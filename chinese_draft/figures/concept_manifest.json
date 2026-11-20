@@ -1,0 +1,35 @@
+{
+ "fig1_workflow_v2": {
+  "caption_zh": "图 1 报告绑定时空验证的角色与证据流（编号为消息顺序）。",
+  "kind": "conceptual schematic (no measured data)",
+  "encoding_notes": "概念示意图；私有见证以虚线框标出；同置与认证先于受理在图注说明",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — journal not chosen"
+ },
+ "fig_binding": {
+  "caption_zh": "图 2 同一个秘密支撑凭证、持有人值与任务标签，上下文把绑定延伸到收到的报告字节。",
+  "kind": "conceptual schematic (no measured data)",
+  "encoding_notes": "概念示意图；节点标注对应式号；无实验数据",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — journal not chosen"
+ },
+ "fig_collusion": {
+  "caption_zh": "图 3 合谋双方记录之间的连接键：主关系共享确定性上下文，上下文隐藏构造将其消除。",
+  "kind": "conceptual schematic (no measured data)",
+  "encoding_notes": "概念示意图；字段集合与 §4.7 共谋视图一致；残留时空邻近通道单独标注",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — journal not chosen"
+ }
+}

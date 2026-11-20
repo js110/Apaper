@@ -21,3 +21,8 @@ The Groth16 setup generated here is local to a research run and does not demonst
 - `region_scale_{4,6,8}.log`: 30 proof and verification measurements per independently compiled region circuit, with one warm-up and one setup each. The inputs are synthetic; all cells are populated, and the same event is proved. Run `python3 experiments/run_region_scaling.py` from the project directory. The script changes the compile-time depth in temporary copies; the eight-level production prototype is unchanged. Source hashes in each log identify the generated variant.
 
 The experiments were run sequentially on the Apple M1 system recorded in the region logs; they are not field or network measurements. `tests_after_ablations.log` records the non-opt-in test suite after adding the new tests.
+
+## Role-view and candidate security checks
+
+- `context_linkability.log`: `go test -run '^TestIssuerGatewayContextLinkage$' -count=1 -v` demonstrates a two-record synthetic join when issuer and gateway share the current protocol's context records.
+- `context_hiding_candidate.log`: `go test -run '^TestHiddenContextCandidate$' -count=1 -v` checks an independently implemented base-circuit research candidate. It is not the current manuscript's main protocol, and is not an experimental proof of collusion resistance. See `../安全修订与候选方案.md` for conditions and outstanding work.

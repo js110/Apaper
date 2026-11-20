@@ -1,0 +1,718 @@
+{
+ "A1_zk_proof_of_location": {
+  "query": "all:\"zero-knowledge proof of location\"",
+  "url": "http://export.arxiv.org/api/query?search_query=all%3A%22zero-knowledge%20proof%20of%20location%22&start=0&max_results=15",
+  "n": 2,
+  "items": [
+   {
+    "id": "http://arxiv.org/abs/2406.18389v1",
+    "title": "Blockchain Based Zero-Knowledge Proof of Location in IoT",
+    "published": "2024-06-26",
+    "summary": "With the development of precise positioning technology, a growing number of location-based services (LBSs) facilitate people's life. Most LBSs require proof of location (PoL) to prove that the user satisfies the service requirement, which exposes the user's privacy. In this paper, we propose a zero-"
+   },
+   {
+    "id": "http://arxiv.org/abs/2506.16812v1",
+    "title": "Zero-Knowledge Proof-of-Location Protocols for Vehicle Subsidies and Taxation Compliance",
+    "published": "2025-06-20",
+    "summary": "This paper introduces a new set of privacy-preserving mechanisms for verifying compliance with location-based policies for vehicle taxation, or for (electric) vehicle (EV) subsidies, using Zero-Knowledge Proofs (ZKPs). We present the design and evaluation of a Zero-Knowledge Proof-of-Location (ZK-Po"
+   }
+  ]
+ },
+ "A2_proof_of_location_privacy": {
+  "query": "all:\"proof of location\" AND all:privacy",
+  "url": "http://export.arxiv.org/api/query?search_query=all%3A%22proof%20of%20location%22%20AND%20all%3Aprivacy&start=0&max_results=15",
+  "n": 9,
+  "items": [
+   {
+    "id": "http://arxiv.org/abs/2406.18389v1",
+    "title": "Blockchain Based Zero-Knowledge Proof of Location in IoT",
+    "published": "2024-06-26",
+    "summary": "With the development of precise positioning technology, a growing number of location-based services (LBSs) facilitate people's life. Most LBSs require proof of location (PoL) to prove that the user satisfies the service requirement, which exposes the user's privacy. In this paper, we propose a zero-"
+   },
+   {
+    "id": "http://arxiv.org/abs/1607.00174v3",
+    "title": "Blockchain-based Proof of Location",
+    "published": "2016-07-01",
+    "summary": "Location-Based Services (LBSs) build upon geographic information to provide users with location-dependent functionalities. In such a context, it is particularly important that geographic locations claimed by users are trustworthy. Centralized verification approaches proposed in the last few years ar"
+   },
+   {
+    "id": "http://arxiv.org/abs/2506.16812v1",
+    "title": "Zero-Knowledge Proof-of-Location Protocols for Vehicle Subsidies and Taxation Compliance",
+    "published": "2025-06-20",
+    "summary": "This paper introduces a new set of privacy-preserving mechanisms for verifying compliance with location-based policies for vehicle taxation, or for (electric) vehicle (EV) subsidies, using Zero-Knowledge Proofs (ZKPs). We present the design and evaluation of a Zero-Knowledge Proof-of-Location (ZK-Po"
+   },
+   {
+    "id": "http://arxiv.org/abs/2508.14230v1",
+    "title": "A Taxonomy and Methodology for Proof-of-Location Systems",
+    "published": "2025-08-19",
+    "summary": "Digital societies increasingly rely on trustworthy proofs of physical presence for services such as supply-chain tracking, e-voting, ride-sharing, and location-based rewards. Yet, traditional localization methods often lack cryptographic guarantees of where and when an entity was present, leaving th"
+   },
+   {
+    "id": "http://arxiv.org/abs/2604.13668v2",
+    "title": "Where Trust Fails: Mapping Location-Data Provenance Risks in Europe",
+    "published": "2026-04-15",
+    "summary": "European digital sovereignty and security increasingly depend on whether high-impact decisions can be grounded in location evidence that remains credible under adversarial pressure. This paper frames a cross-sector analysis as a location-data provenance problem: whether there is contestable evidence"
+   },
+   {
+    "id": "http://arxiv.org/abs/1806.05242v1",
+    "title": "Blockchain Enabled Enhanced IoT Ecosystem Security",
+    "published": "2018-06-12",
+    "summary": "Blockchain (BC), the technology behind the Bitcoin cryptocurrency system, is starting to be adopted for ensuring enhanced security and privacy in the Internet of Things (IoT) ecosystem. Fervent research is currently being focused in both academia and industry in this domain. Proof of Work (PoW), a c"
+   },
+   {
+    "id": "http://arxiv.org/abs/2005.14520v1",
+    "title": "Lightweight Blockchain Framework for Location-aware Peer-to-Peer Energy Trading",
+    "published": "2020-05-21",
+    "summary": "Peer-to-Peer (P2P) energy trading can facilitate integration of a large number of small-scale producers and consumers into energy markets. Decentralized management of these new market participants is challenging in terms of market settlement, participant reputation and consideration of grid constrai"
+   },
+   {
+    "id": "http://arxiv.org/abs/2010.07194v2",
+    "title": "Keys from the Sky: A First Exploration of Physical-Layer Security Using Satellite Links",
+    "published": "2020-10-14",
+    "summary": "In this paper, we investigate physical-layer security (PLS) methods for proximity-based group-key establishment and proof of location. Fields of application include secure car-to-car communication, privacy-preserving and secure distance evidence for healthcare or location-based feature activation. E"
+   },
+   {
+    "id": "http://arxiv.org/abs/1801.03528v1",
+    "title": "Applications of Blockchain Technology beyond Cryptocurrency",
+    "published": "2018-01-04",
+    "summary": "Blockchain (BC), the technology behind the Bitcoin crypto-currency system, is considered to be both alluring and critical for ensuring enhanced security and (in some implementations, non-traceable) privacy for diverse applications in many other domains including in the Internet of Things (IoT) eco-s"
+   }
+  ]
+ },
+ "A3_crowdsensing_zk": {
+  "query": "all:\"crowdsensing\" AND all:\"zero-knowledge\"",
+  "url": "http://export.arxiv.org/api/query?search_query=all%3A%22crowdsensing%22%20AND%20all%3A%22zero-knowledge%22&start=0&max_results=15",
+  "n": 0,
+  "items": []
+ },
+ "A4_nullifier_anonymous": {
+  "query": "all:\"nullifier\" AND all:\"anonymous\"",
+  "url": "http://export.arxiv.org/api/query?search_query=all%3A%22nullifier%22%20AND%20all%3A%22anonymous%22&start=0&max_results=15",
+  "n": 2,
+  "items": [
+   {
+    "id": "http://arxiv.org/abs/2308.01703v2",
+    "title": "Anonymity Analysis of the Umbra Stealth Address Scheme on Ethereum",
+    "published": "2023-08-03",
+    "summary": "Stealth addresses are a privacy-enhancing technology that provides recipient anonymity on blockchains. In this work, we investigate the recipient anonymity and unlinkability guarantees of Umbra, the most widely used implementation of the stealth address scheme on Ethereum, and its three off-chain sc"
+   },
+   {
+    "id": "http://arxiv.org/abs/2207.00116v1",
+    "title": "Privacy-Preserving Spam-Protected Gossip-Based Routing",
+    "published": "2022-06-30",
+    "summary": "WAKU-RLN-RELAY is an anonymous peer-to-peer gossip-based routing protocol that features a privacy-preserving spam-protection with cryptographically guaranteed economic incentives. While being an anonymous routing protocol where routed messages are not attributable to their origin, it allows global i"
+   }
+  ]
+ },
+ "A6_geofence_zk": {
+  "query": "all:\"geofence\" AND all:\"zero-knowledge\"",
+  "url": "http://export.arxiv.org/api/query?search_query=all%3A%22geofence%22%20AND%20all%3A%22zero-knowledge%22&start=0&max_results=15",
+  "n": 0,
+  "items": []
+ },
+ "A7_provenance_zk": {
+  "query": "all:\"provenance\" AND all:\"zero-knowledge\" AND all:\"TLS\"",
+  "url": "http://export.arxiv.org/api/query?search_query=all%3A%22provenance%22%20AND%20all%3A%22zero-knowledge%22%20AND%20all%3A%22TLS%22&start=0&max_results=15",
+  "n": 2,
+  "items": [
+   {
+    "id": "http://arxiv.org/abs/1909.00938v6",
+    "title": "DECO: Liberating Web Data Using Decentralized Oracles for TLS",
+    "published": "2019-09-03",
+    "summary": "Thanks to the widespread deployment of TLS, users can access private data over channels with end-to-end confidentiality and integrity. What they cannot do, however, is prove to third parties the {\\em provenance} of such data, i.e., that it genuinely came from a particular website. Existing approache"
+   },
+   {
+    "id": "http://arxiv.org/abs/2409.17670v2",
+    "title": "A Comprehensive Review of TLSNotary Protocol",
+    "published": "2024-09-26",
+    "summary": "Transport Layer Security (TLS) protocol is a cryptographic protocol designed to secure communication over the internet. The TLS protocol has become a fundamental in secure communication, most commonly used for securing web browsing sessions. In this work, we investigate the TLSNotary protocol, which"
+   }
+  ]
+ },
+ "O1_zkpol_crowdsensing": {
+  "query": "zero-knowledge proof of location crowdsensing",
+  "url": "https://api.openalex.org/works?search=zero-knowledge%20proof%20of%20location%20crowdsensing&per-page=12&select=id,doi,title,publication_year,cited_by_count,primary_location",
+  "n": 882,
+  "items": [
+   {
+    "id": "https://openalex.org/W4312983822",
+    "doi": "https://doi.org/10.2197/ipsjjip.30.694",
+    "title": "An Efficient Anonymous Reputation System for Crowdsensing",
+    "year": 2022,
+    "cited": 1,
+    "venue": "Journal of Information Processing"
+   },
+   {
+    "id": "https://openalex.org/W4415942836",
+    "doi": "https://doi.org/10.1016/j.pmcj.2025.102125",
+    "title": "A blockchain-assisted privacy-preserving framework for Mobile CrowdSensing",
+    "year": 2025,
+    "cited": 2,
+    "venue": "Pervasive and Mobile Computing"
+   },
+   {
+    "id": "https://openalex.org/W7129069857",
+    "doi": "https://doi.org/10.1109/tetc.2026.3662784",
+    "title": "Anonymous Task Assignment and Worker Payment in Mobile Crowdsensing",
+    "year": 2026,
+    "cited": 1,
+    "venue": "IEEE Transactions on Emerging Topics in Computing"
+   },
+   {
+    "id": "https://openalex.org/W2943584607",
+    "doi": "https://doi.org/10.1109/comst.2019.2914030",
+    "title": "A Survey on Mobile Crowdsensing Systems: Challenges, Solutions, and Opportunities",
+    "year": 2019,
+    "cited": 613,
+    "venue": "IEEE Communications Surveys & Tutorials"
+   },
+   {
+    "id": "https://openalex.org/W2748934360",
+    "doi": "https://doi.org/10.1145/3139243.3139252",
+    "title": "Detecting Location Fraud in Indoor Mobile Crowdsensing",
+    "year": 2017,
+    "cited": 6,
+    "venue": null
+   },
+   {
+    "id": "https://openalex.org/W3001837371",
+    "doi": "https://doi.org/10.3390/electronics9020215",
+    "title": "A Blockchain-Based Hybrid Incentive Model for Crowdsensing",
+    "year": 2020,
+    "cited": 44,
+    "venue": "Electronics"
+   },
+   {
+    "id": "https://openalex.org/W2809254512",
+    "doi": "https://doi.org/10.1109/tnet.2018.2846569",
+    "title": "Quality-Aware Pricing for Mobile Crowdsensing",
+    "year": 2018,
+    "cited": 72,
+    "venue": "IEEE/ACM Transactions on Networking"
+   },
+   {
+    "id": "https://openalex.org/W2963044698",
+    "doi": "https://doi.org/10.1145/3139256",
+    "title": "Quality of Information in Mobile Crowdsensing: Survey and Research Challenges",
+    "year": 2017,
+    "cited": 184,
+    "venue": "ACM Transactions on Sensor Networks"
+   },
+   {
+    "id": "https://openalex.org/W2964280086",
+    "doi": "https://doi.org/10.1109/tmc.2019.2908638",
+    "title": "Enabling Strong Privacy Preservation and Accurate Task Allocation for Mobile Crowdsensing",
+    "year": 2019,
+    "cited": 203,
+    "venue": "IEEE Transactions on Mobile Computing"
+   },
+   {
+    "id": "https://openalex.org/W2986280884",
+    "doi": "https://doi.org/10.1109/smartiot.2019.00042",
+    "title": "Crowdchain: A Location Preserve Anonymous Payment System Based on Permissioned Blockchain",
+    "year": 2019,
+    "cited": 10,
+    "venue": "IEEE International Conference on Smart Internet of Things (SmartIoT)"
+   },
+   {
+    "id": "https://openalex.org/W2516948806",
+    "doi": "https://doi.org/10.1109/thms.2016.2599489",
+    "title": "ActiveCrowd: A Framework for Optimized Multitask Allocation in Mobile Crowdsensing Systems",
+    "year": 2016,
+    "cited": 240,
+    "venue": "IEEE Transactions on Human-Machine Systems"
+   },
+   {
+    "id": "https://openalex.org/W2615071759",
+    "doi": "https://doi.org/10.1109/tmc.2017.2763956",
+    "title": "Data-Centric Mobile Crowdsensing",
+    "year": 2017,
+    "cited": 26,
+    "venue": "IEEE Transactions on Mobile Computing"
+   }
+  ]
+ },
+ "O2_report_bound_zk": {
+  "query": "report-bound zero-knowledge verification vehicular crowdsensing",
+  "url": "https://api.openalex.org/works?search=report-bound%20zero-knowledge%20verification%20vehicular%20crowdsensing&per-page=12&select=id,doi,title,publication_year,cited_by_count,primary_location",
+  "n": 293,
+  "items": [
+   {
+    "id": "https://openalex.org/W4318041137",
+    "doi": "https://doi.org/10.1145/3582008",
+    "title": "Secure and Lightweight Blockchain-based Truthful Data Trading for Real-Time Vehicular Crowdsensing",
+    "year": 2023,
+    "cited": 27,
+    "venue": "ACM Transactions on Embedded Computing Systems"
+   },
+   {
+    "id": "https://openalex.org/W2516948806",
+    "doi": "https://doi.org/10.1109/thms.2016.2599489",
+    "title": "ActiveCrowd: A Framework for Optimized Multitask Allocation in Mobile Crowdsensing Systems",
+    "year": 2016,
+    "cited": 240,
+    "venue": "IEEE Transactions on Human-Machine Systems"
+   },
+   {
+    "id": "https://openalex.org/W2963044698",
+    "doi": "https://doi.org/10.1145/3139256",
+    "title": "Quality of Information in Mobile Crowdsensing: Survey and Research Challenges",
+    "year": 2017,
+    "cited": 184,
+    "venue": "ACM Transactions on Sensor Networks"
+   },
+   {
+    "id": "https://openalex.org/W3014183306",
+    "doi": "https://doi.org/10.3390/s20072055",
+    "title": "Game Theory in Mobile CrowdSensing: A Comprehensive Survey",
+    "year": 2020,
+    "cited": 66,
+    "venue": "Sensors"
+   },
+   {
+    "id": "https://openalex.org/W2884971059",
+    "doi": "https://doi.org/10.1109/twc.2018.2885747",
+    "title": "A Stackelberg Game Approach Toward Socially-Aware Incentive Mechanisms for Mobile Crowdsensing",
+    "year": 2018,
+    "cited": 193,
+    "venue": "IEEE Transactions on Wireless Communications"
+   },
+   {
+    "id": "https://openalex.org/W3182346119",
+    "doi": "https://doi.org/10.1109/tnet.2022.3169180",
+    "title": "Harnessing Context for Budget-Limited Crowdsensing With Massive Uncertain Workers",
+    "year": 2022,
+    "cited": 41,
+    "venue": "IEEE/ACM Transactions on Networking"
+   },
+   {
+    "id": "https://openalex.org/W2953002421",
+    "doi": "https://doi.org/10.1016/j.comnet.2019.06.010",
+    "title": "Reinforcement learning-based cell selection in sparse mobile crowdsensing",
+    "year": 2019,
+    "cited": 70,
+    "venue": "Computer Networks"
+   },
+   {
+    "id": "https://openalex.org/W2964254270",
+    "doi": "https://doi.org/10.1109/icdcs.2018.00164",
+    "title": "Cell Selection with Deep Reinforcement Learning in Sparse Mobile Crowdsensing",
+    "year": 2018,
+    "cited": 44,
+    "venue": "IEEE International Conference on Distributed Computing Systems (ICDCS)"
+   },
+   {
+    "id": "https://openalex.org/W4409356394",
+    "doi": "https://doi.org/10.1109/jsac.2025.3560038",
+    "title": "CPDZ: A Credibility-Aware and Privacy-Preserving Data Collection Scheme With Zero-Trust in Next-Generation Crowdsensing Networks",
+    "year": 2025,
+    "cited": 13,
+    "venue": "IEEE Journal on Selected Areas in Communications"
+   },
+   {
+    "id": "https://openalex.org/W2947963498",
+    "doi": "https://doi.org/10.13140/rg.2.2.31649.04964",
+    "title": "Crowdsensing and Resource Allocation in Shared Spectrum",
+    "year": 2018,
+    "cited": 0,
+    "venue": "ResearchWorks at the University of Washington (University of Washington)"
+   },
+   {
+    "id": "https://openalex.org/W2962989298",
+    "doi": "https://doi.org/10.1145/3267105",
+    "title": "FIRST: A Framework for Optimizing Information Quality in Mobile Crowdsensing Systems",
+    "year": 2018,
+    "cited": 25,
+    "venue": "ACM Transactions on Sensor Networks"
+   },
+   {
+    "id": "https://openalex.org/W2899375409",
+    "doi": "https://doi.org/10.48550/arxiv.1807.08412",
+    "title": "A Stackelberg Game Approach Towards Socially-Aware Incentive Mechanisms for Mobile Crowdsensing (Online report)",
+    "year": 2018,
+    "cited": 2,
+    "venue": "arXiv (Cornell University)"
+   }
+  ]
+ },
+ "O3_nullifier_dup": {
+  "query": "nullifier duplicate detection anonymous credential",
+  "url": "https://api.openalex.org/works?search=nullifier%20duplicate%20detection%20anonymous%20credential&per-page=12&select=id,doi,title,publication_year,cited_by_count,primary_location",
+  "n": 49,
+  "items": [
+   {
+    "id": "https://openalex.org/W7167919682",
+    "doi": "https://doi.org/10.3390/app16146953",
+    "title": "Anonymous E-Voting on Hyperledger Fabric: Practical Mitigation of the Verification Paradox and Coercion Resistance",
+    "year": 2026,
+    "cited": 1,
+    "venue": "Applied Sciences"
+   },
+   {
+    "id": "https://openalex.org/W7214459594",
+    "doi": "https://doi.org/10.2139/ssrn.7528308",
+    "title": "SCOPE-AKA: A Privacy-Preserving Authentication and Key Agreement Framework with Scoped Sybil Detection and Group Recovery for SDVNs",
+    "year": 2026,
+    "cited": 0,
+    "venue": "SSRN Electronic Journal"
+   },
+   {
+    "id": "https://openalex.org/W4402703524",
+    "doi": "https://doi.org/10.48550/arxiv.2408.07892",
+    "title": "Personhood credentials: Artificial intelligence and the value of privacy-preserving tools to distinguish who is real online",
+    "year": 2024,
+    "cited": 41,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W4404213220",
+    "doi": "https://doi.org/10.56553/popets-2025-0034",
+    "title": "PrePaMS: Privacy-Preserving Participant Management System for Studies with Rewards and Prerequisites",
+    "year": 2024,
+    "cited": 2,
+    "venue": "Proceedings on Privacy Enhancing Technologies"
+   },
+   {
+    "id": "https://openalex.org/W7224044304",
+    "doi": null,
+    "title": "Real-time intrusion detection in CubeSats using embedded TinyML",
+    "year": 2026,
+    "cited": 0,
+    "venue": "e-scholar@UOIT (University of Ontario Institute of Technology)"
+   },
+   {
+    "id": "https://openalex.org/W4412373375",
+    "doi": "https://doi.org/10.56553/popets-2025-0142",
+    "title": "Sheep's clothing, wolfish intent: Automated detection and evaluation of problematic 'allowed' advertisements",
+    "year": 2025,
+    "cited": 1,
+    "venue": "Proceedings on Privacy Enhancing Technologies"
+   },
+   {
+    "id": "https://openalex.org/W7171309167",
+    "doi": "https://doi.org/10.1038/s41598-026-62925-1",
+    "title": "Secure electronic voting system based on blockchain with dilithium authentication and zero-knowledge proof verification",
+    "year": 2026,
+    "cited": 0,
+    "venue": "Scientific Reports"
+   },
+   {
+    "id": "https://openalex.org/W7214376964",
+    "doi": "https://doi.org/10.48550/arxiv.2609.29981",
+    "title": "A Lightweight Ethereum Voting Prototype for Hospital Ethics Committees with Receipt-Based Inclusion Verification",
+    "year": 2026,
+    "cited": 0,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W7225728513",
+    "doi": "https://doi.org/10.48550/arxiv.2611.12636",
+    "title": "BioBind: Binding Biometric Deduplication to Zero-Knowledge Authentication",
+    "year": 2026,
+    "cited": 0,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W7134035243",
+    "doi": "https://doi.org/10.55277/researchhub.xc20kx1v.1",
+    "title": "VoteXX: Extreme Coercion Resistance",
+    "year": 2026,
+    "cited": 0,
+    "venue": null
+   },
+   {
+    "id": "https://openalex.org/W7160909290",
+    "doi": "https://doi.org/10.3390/s26103039",
+    "title": "A Method for Continuous Dual-Offline Payment of Cryptocurrency Based on Asset Credentials",
+    "year": 2026,
+    "cited": 1,
+    "venue": "Sensors"
+   },
+   {
+    "id": "https://openalex.org/W7225321889",
+    "doi": "https://doi.org/10.48550/arxiv.2611.06286",
+    "title": "Clear Human Web: Where a Person Vouches for Every Client",
+    "year": 2026,
+    "cited": 0,
+    "venue": "arXiv (Cornell University)"
+   }
+  ]
+ },
+ "O4_zk_geofence_vehicle": {
+  "query": "zero-knowledge geofence location privacy vehicle",
+  "url": "https://api.openalex.org/works?search=zero-knowledge%20geofence%20location%20privacy%20vehicle&per-page=12&select=id,doi,title,publication_year,cited_by_count,primary_location",
+  "n": 232,
+  "items": [
+   {
+    "id": "https://openalex.org/W7137898532",
+    "doi": "https://doi.org/10.3390/electronics15061243",
+    "title": "PrivLocAuth: Enabling Location-Aware Cross-Domain UAV Authentication with Zero-Knowledge Location Privacy",
+    "year": 2026,
+    "cited": 1,
+    "venue": "Electronics"
+   },
+   {
+    "id": "https://openalex.org/W3011719309",
+    "doi": "https://doi.org/10.1109/tdsc.2020.2980270",
+    "title": "On-the-Fly Privacy for Location Histograms",
+    "year": 2020,
+    "cited": 12,
+    "venue": "IEEE Transactions on Dependable and Secure Computing"
+   },
+   {
+    "id": "https://openalex.org/W4372311414",
+    "doi": "https://doi.org/10.1016/j.iot.2023.100801",
+    "title": "Maximizing privacy and security of collaborative indoor positioning using zero-knowledge proofs",
+    "year": 2023,
+    "cited": 12,
+    "venue": "Internet of Things"
+   },
+   {
+    "id": "https://openalex.org/W2968818336",
+    "doi": null,
+    "title": "Privacy-Preserving Mechanisms for Location Traces",
+    "year": 2019,
+    "cited": 0,
+    "venue": "Portuguese National Funding Agency for Science, Research and Technology (RCAAP Project by FCT)"
+   },
+   {
+    "id": "https://openalex.org/W4391179627",
+    "doi": "https://doi.org/10.1007/978-3-031-39101-9_14",
+    "title": "How Digital Geographies Render Value: Geofences, the Blockchain, and the Possibilities of Slow Alternatives",
+    "year": 2024,
+    "cited": 6,
+    "venue": "Knowledge and space"
+   },
+   {
+    "id": "https://openalex.org/W3042991018",
+    "doi": "https://doi.org/10.7275/17627979",
+    "title": "The Limits of Location Privacy in Mobile Devices",
+    "year": 2020,
+    "cited": 0,
+    "venue": "Scholarworks (University of Massachusetts Amherst)"
+   },
+   {
+    "id": "https://openalex.org/W7167808609",
+    "doi": "https://doi.org/10.3390/s26144358",
+    "title": "Differential-Privacy-Based Collaborative Protection for Visual and Location Data in UAV Semantic Communications",
+    "year": 2026,
+    "cited": 0,
+    "venue": "Sensors"
+   },
+   {
+    "id": "https://openalex.org/W7128436066",
+    "doi": "https://doi.org/10.31893/multirev.2026350",
+    "title": "Blockchain-based data integrity and privacy in vehicle-to-everything (V2X) communication networks: A systematic literature review",
+    "year": 2026,
+    "cited": 3,
+    "venue": "Multidisciplinary Reviews"
+   },
+   {
+    "id": "https://openalex.org/W7125702266",
+    "doi": "https://doi.org/10.14419/4ve8yy06",
+    "title": "A Blockchain-Enabled Framework for Privacy Preserving Smart Mobility Services",
+    "year": 2026,
+    "cited": 0,
+    "venue": "International Journal of Basic and Applied Sciences"
+   },
+   {
+    "id": "https://openalex.org/W2945033051",
+    "doi": "https://doi.org/10.3390/f10050458",
+    "title": "Positioning Methods and the Use of Location and Activity Data in Forests",
+    "year": 2019,
+    "cited": 86,
+    "venue": "Forests"
+   },
+   {
+    "id": "https://openalex.org/W7213416179",
+    "doi": "https://doi.org/10.20944/preprints202609.1479.v1",
+    "title": "AI Rickshaw: A Secure, Geofenced, Solar-Assisted Autonomous Electric Rickshaw for Bangladesh and the Displacement Risk to the Lowest-Income Transport Workers",
+    "year": 2026,
+    "cited": 0,
+    "venue": "Preprints.org"
+   },
+   {
+    "id": "https://openalex.org/W4382370124",
+    "doi": "https://doi.org/10.1109/jiot.2023.3290508",
+    "title": "Unmanned Aerial Vehicles for Air Pollution Monitoring: A Survey",
+    "year": 2023,
+    "cited": 108,
+    "venue": "IEEE Internet of Things Journal"
+   }
+  ]
+ },
+ "O5_verifiable_encryption_escrow": {
+  "query": "verifiable encryption identity escrow anonymous credential",
+  "url": "https://api.openalex.org/works?search=verifiable%20encryption%20identity%20escrow%20anonymous%20credential&per-page=12&select=id,doi,title,publication_year,cited_by_count,primary_location",
+  "n": 245,
+  "items": [
+   {
+    "id": "https://openalex.org/W2100460660",
+    "doi": "https://doi.org/10.1007/978-3-540-45146-4_8",
+    "title": "Practical Verifiable Encryption and Decryption of Discrete Logarithms",
+    "year": 2003,
+    "cited": 542,
+    "venue": "Lecture notes in computer science"
+   },
+   {
+    "id": "https://openalex.org/W2132144109",
+    "doi": "https://doi.org/10.1007/3-540-44647-8_23",
+    "title": "An Identity Escrow Scheme with Appointed Verifiers",
+    "year": 2001,
+    "cited": 47,
+    "venue": "Lecture notes in computer science"
+   },
+   {
+    "id": "https://openalex.org/W2187669868",
+    "doi": null,
+    "title": "Anonymous Credential Systems: From Theory Towards Practice",
+    "year": 2012,
+    "cited": 3,
+    "venue": "Lirias (KU Leuven)"
+   },
+   {
+    "id": "https://openalex.org/W592266745",
+    "doi": null,
+    "title": "Private information escrow bound to multiple conditions",
+    "year": 2008,
+    "cited": 3,
+    "venue": "QUT ePrints (Queensland University of Technology)"
+   },
+   {
+    "id": "https://openalex.org/W2110740499",
+    "doi": "https://doi.org/10.1007/3-540-45682-1_33",
+    "title": "Key-Privacy in Public-Key Encryption",
+    "year": 2001,
+    "cited": 448,
+    "venue": "Lecture notes in computer science"
+   },
+   {
+    "id": "https://openalex.org/W4415312075",
+    "doi": "https://doi.org/10.48550/arxiv.2506.14566",
+    "title": "Anonymous Authentication using Attribute-based Encryption",
+    "year": 2025,
+    "cited": 1,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W7202208708",
+    "doi": "https://doi.org/10.48550/arxiv.2608.07846",
+    "title": "China RealDID: Verifiable Credentials Anchored in Legal Identity",
+    "year": 2026,
+    "cited": 0,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W4403174989",
+    "doi": "https://doi.org/10.62056/ahsdkmp-3y",
+    "title": "Exponent-Inversion P-Signatures and Accountable Identity-Based Encryption from SXDH",
+    "year": 2024,
+    "cited": 1,
+    "venue": "IACR Communications in Cryptology"
+   },
+   {
+    "id": "https://openalex.org/W4407691625",
+    "doi": "https://doi.org/10.1109/comst.2025.3543197",
+    "title": "A Survey on Decentralized Identifiers and Verifiable Credentials",
+    "year": 2025,
+    "cited": 199,
+    "venue": "IEEE Communications Surveys & Tutorials"
+   },
+   {
+    "id": "https://openalex.org/W1526393684",
+    "doi": "https://doi.org/10.1109/npc.2008.37",
+    "title": "Conditional Privacy Using Re-encryption",
+    "year": 2008,
+    "cited": 8,
+    "venue": "Network and Parallel Computing"
+   },
+   {
+    "id": "https://openalex.org/W7171379640",
+    "doi": "https://doi.org/10.2139/ssrn.7537278",
+    "title": "Anonymous Credential Recovery as a First-Class Economic Variable: Multi-Cycle TCO Model for the Arcaunt Remote E-Voting Architecture",
+    "year": 2026,
+    "cited": 1,
+    "venue": "SSRN Electronic Journal"
+   },
+   {
+    "id": "https://openalex.org/W4417442927",
+    "doi": "https://doi.org/10.21203/rs.3.rs-8325166/v1",
+    "title": "SPM-HealSer: Hierarchical Identity-Based Encryption for Scalable and Privacy-Preserving Mobile Health Services",
+    "year": 2025,
+    "cited": 0,
+    "venue": "Research Square"
+   }
+  ]
+ },
+ "O6_deco_tls_provenance": {
+  "query": "DECO TLS notary zero-knowledge data provenance",
+  "url": "https://api.openalex.org/works?search=DECO%20TLS%20notary%20zero-knowledge%20data%20provenance&per-page=12&select=id,doi,title,publication_year,cited_by_count,primary_location",
+  "n": 8,
+  "items": [
+   {
+    "id": "https://openalex.org/W4408216057",
+    "doi": "https://doi.org/10.56553/popets-2025-0069",
+    "title": "ORIGO: Proving Provenance of Sensitive Data with Constant Communication",
+    "year": 2025,
+    "cited": 7,
+    "venue": "Proceedings on Privacy Enhancing Technologies"
+   },
+   {
+    "id": "https://openalex.org/W7161005617",
+    "doi": "https://doi.org/10.14722/ndss.2026.241861",
+    "title": "ACTS: Attestations of Contents in TLS Sessions",
+    "year": 2026,
+    "cited": 1,
+    "venue": "Network and Distributed System Security Symposium"
+   },
+   {
+    "id": "https://openalex.org/W7223671267",
+    "doi": "https://doi.org/10.62056/a3z11w9p",
+    "title": "TLShare: Private Authenticated MPC and FHE Inputs Over TLS",
+    "year": 2026,
+    "cited": 0,
+    "venue": "IACR Communications in Cryptology"
+   },
+   {
+    "id": "https://openalex.org/W4403794803",
+    "doi": "https://doi.org/10.48550/arxiv.2409.17670",
+    "title": "A Comprehensive Review of TLSNotary Protocol",
+    "year": 2024,
+    "cited": 4,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W7204991118",
+    "doi": "https://doi.org/10.1007/s12083-026-02246-2",
+    "title": "Scribe: Private Web2-to-Web3 eligibility proofs for decentralized applications with transparent STARKs",
+    "year": 2026,
+    "cited": 0,
+    "venue": "Peer-to-Peer Networking and Applications"
+   },
+   {
+    "id": "https://openalex.org/W4400667616",
+    "doi": "https://doi.org/10.48550/arxiv.2407.08792",
+    "title": "ProxyGPT: Enabling User Anonymity in LLM Chatbots via (Un)Trustworthy Volunteer Proxies",
+    "year": 2024,
+    "cited": 5,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W7164897612",
+    "doi": "https://doi.org/10.48550/arxiv.2606.15822",
+    "title": "TrustedARI: Towards Trust-Native Agentic Routing Infrastructure for Agentic AI",
+    "year": 2026,
+    "cited": 1,
+    "venue": "arXiv (Cornell University)"
+   },
+   {
+    "id": "https://openalex.org/W4389821168",
+    "doi": "https://doi.org/10.48550/arxiv.2312.09125",
+    "title": "Puppy: A Publicly Verifiable Watermarking Protocol",
+    "year": 2023,
+    "cited": 2,
+    "venue": "arXiv (Cornell University)"
+   }
+  ]
+ }
+}

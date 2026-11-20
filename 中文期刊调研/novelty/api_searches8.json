@@ -1,0 +1,78 @@
+{
+ "G12": {
+  "query": "SCOPE-AKA Scoped Sybil Detection Group Recovery SDVN privacy preserving authentication",
+  "url": "https://api.openalex.org/works?search=SCOPE-AKA%20Scoped%20Sybil%20Detection%20Group%20Recovery%20SDVN%20privacy%20preserving%20authentication&per-page=5&mailto=research@example.org",
+  "count": 2,
+  "results": [
+   {
+    "doi": "https://doi.org/10.2139/ssrn.7528308",
+    "title": "SCOPE-AKA: A Privacy-Preserving Authentication and Key Agreement Framework with Scoped Sybil Detection and Group Recovery for SDVNs",
+    "year": 2026,
+    "venue": "SSRN Electronic Journal",
+    "cited_by": 0,
+    "abstract": ""
+   },
+   {
+    "doi": "https://doi.org/10.1002/spy2.367",
+    "title": "Autonomous vehicle security: Current survey and future research challenges",
+    "year": 2024,
+    "venue": "Security and Privacy",
+    "cited_by": 26,
+    "abstract": "Summary The advancement in technology and the adoption of innovative developments have made our lives easier. Every industry, from agriculture to transport, has experienced this advancement. The entire transportation system is in the process of becoming intelligent. Smart mobility of autonomous vehicles is an important part of the upcoming smart cities. The autonomous vehicle provides functionalities for safety and convenience. It has been an emerging field with a lot of attention and still under advancement and requires a thorough study and solutions for potential challenges and opportunities. Despite impressive advantages, it has some security vulnerabilities which could lead to life‐threatening consequences. Though they could prevent road accidents by eliminating human errors from the driving process, they also create the possibility of cyber‐physical attacks on the vehicular controlling system. For this, many researchers have focused on the security attacks and defenses in autonomous vehicular systems. A 360‐degree research has been undertaken to understand the concept of autonomous vehicles entirely, such as history, social impacts, difficulties and challenges, current product developments, and security aspects. Also, a vehicular architecture is proposed by integrating various technologies such as 5G, SDN, cloud, and so forth, its possible security attacks are mentioned."
+   }
+  ]
+ },
+ "G13": {
+  "query": "Post-Quantum Tokenized Security C-V2X rate limited anonymous tokens nullifier",
+  "url": "https://api.openalex.org/works?search=Post-Quantum%20Tokenized%20Security%20C-V2X%20rate%20limited%20anonymous%20tokens%20nullifier&per-page=5&mailto=research@example.org",
+  "count": 1,
+  "results": [
+   {
+    "doi": "https://doi.org/10.1109/acit68900.2025.11510686",
+    "title": "Post-Quantum Tokenized Security for C-V2X",
+    "year": 2025,
+    "venue": "International Arab Conference on Information Technology (ACIT)",
+    "cited_by": 0,
+    "abstract": "Vehicular networks must authenticate high-rate safety messages under tight latency while preserving privacy and remaining secure against post-quantum adversaries. We present$P Q$-Rate, a post-quantum, privacy-preserving, rate-limited credential system for C-V2X. PQ-Rate replaces per-message signatures with a one-round-trip (1-RTT) KEM handshake to derive an AEAD session key, keeping the fast path lightweight. Vehicles obtain unlinkable Rate-Limited Anonymous Tokens (RLATs) from edge issuers (RSU/MEC) via a threshold VOPRF; each token is spent once using a zero-knowledge proof that binds a unique nullifier, enforcing per-epoch budgets without revealing identity. Revocation scales via compact, signed Bloom-filter digests broadcast by RSUs, with optional online disambiguation to handle rare false positives, and accountability is provided by threshold opening of verifiably encrypted token metadata. We prototype PQ-Rate in NS-3 with SUMO-driven mobility and compare against pseudonym-based PKI and verifier-local-revocation group signatures. Metrics include 1-RTT authentication latency, beacon delivery ratio (PDR), channel busy ratio (CBR), verifier throughput, revocation-wire overhead, and realized Sybil capacity. Results show that PQ-Rate maintains sub- 20 ms session setup, improves PDR under high density by reducing airtime overhead, increases verifier throughput via batching and inexpensive decapsulation, and bounds attacker identities to the product of enrolled hardware modules and budget. Revocation digests remain small (on the order of 9-12 KB for thousands of inserts at$10^{-3}-10^{-4}$false-positive targets), supporting frequent broadcast without inflating CBR. PQ-Rate demonstrates that post-quantum security, strong privacy, Sybil resistance, and rapid revocation can be achieved simultaneously within V2X timing constraints."
+   }
+  ]
+ },
+ "G14": {
+  "query": "rate limiting nullifier anonymous credential RLN semaphore spam prevention",
+  "url": "https://api.openalex.org/works?search=rate%20limiting%20nullifier%20anonymous%20credential%20RLN%20semaphore%20spam%20prevention&per-page=5&mailto=research@example.org",
+  "count": 1,
+  "results": [
+   {
+    "doi": "https://doi.org/10.5121/csit.2025.151417",
+    "title": "Five modes of ZK-based community chats around non-fungible tokens’ owners",
+    "year": 2025,
+    "venue": null,
+    "cited_by": 0,
+    "abstract": "We present Free-Delete, a censorship-resistant group-chat protocol whose membership is validated by non-fungible-token (NFT) ownership while user privacy ranges across five selectable modes. A single Groth16 circuit, anchored in a sparse Merkle tree of verifiable commitments, realises (i) Fully Anonymous messaging, (ii) Linkable Anonymous reputation building, (iii) Publicly Identified disclosure, (iv) Confidential end-to-end encryption, and (v) Rate-Limited Accountability that revokes keys on spam—all without moderator involvement or economic deposits. A black-paper prototype written in TypeScript, Circom 2, and Solidity achieves 0.35 s for register and 1.38 s for postMessage on consumer hardware; on-chain verification costs 3–5.5×105 gas per proof on Polygon. These results demonstrate that NFT-gated, stake-free, privacy-preserving communication can be deployed today on any EVM chain."
+   }
+  ]
+ },
+ "G15": {
+  "query": "zero-knowledge proof encrypted data submission gateway binding ciphertext task crowdsensing",
+  "url": "https://api.openalex.org/works?search=zero-knowledge%20proof%20encrypted%20data%20submission%20gateway%20binding%20ciphertext%20task%20crowdsensing&per-page=5&mailto=research@example.org",
+  "count": 2,
+  "results": [
+   {
+    "doi": "https://doi.org/10.70675/6f8c36a7z282fz4babz944cz0316a1640061",
+    "title": "Towards a secure data sharing management approach for IoT environments",
+    "year": 2024,
+    "venue": "theses.fr (ABES)",
+    "cited_by": 0,
+    "abstract": "Vers une approche de gestion sécurisée du partage des données pour les environnements IoT Les environnements connectés promettent de nous apporter de nouveaux services : meilleure gestion de l'énergie, optimisation des transports, ciblage de l'information diffusée, etc. La grande valeur ajoutée de ces architectures à base d'objets connectés (IoT) est la donnée dont la collecte et le traitement impliquent un très grand nombre de systèmes informatiques opérés par des acteurs différents. Chaque acteur pouvant avoir ses propres objectifs, contraintes et enjeux, un des défis en terme de sécurité est de garder la maîtrise des informations échangées afin d'assurer ce que l'on appelle l'autodétermination informationnelle. Cette notion signifie par exemple que chaque acteur peut contrôler qui utilise ses données, où et pour quelle finalité.Cette thèse décrit notre approche pour la gestion du partage des données dans les environnements connectés. L'exploitation des données générées par les ressources de l'internet des objets soulève des risques de sécurité en raison du manque de transparence entre les différents acteurs de l'environnement. Ainsi, nous proposons tout d'abord une ontologie de gestion du partage des données IoT qui prend en considération les contextes, appelée IdSM-O, afin d'établir un vocabulaire de sécurité partagé et de gérer l'interopérabilité des environnements IoT. Ensuite, nous introduisons un gestionnaire de règles sémantiques automatique à trois niveaux, qui recueille les exigences des politiques de sécurité des fournisseurs de données et les traduit automatiquement en règles sémantiques prêtes pour le processus du raisonnement. Ces contributions constituent la base d'IdSM, un framework de sécurité de bout en bout pour la gestion du partage des données, qui répondent aux exigences de sécurité de l'information et au respect des obligations entre les différentes parties. Enfin, nous développons un prototype de la proposition afin de prouver sa faisabilité et d'analyser ses performances."
+   },
+   {
+    "doi": "https://doi.org/10.5281/zenodo.6811180",
+    "title": "D3.1 ONTOCHAIN STATΕ OF THE ART ANALYSIS REPORT",
+    "year": 2021,
+    "venue": "Zenodo (CERN European Organization for Nuclear Research)",
+    "cited_by": 0,
+    "abstract": "This deliverable summarizes the status of the art which has been taken into account in the definition of the ONTOCHAIN architecture, for blockchain, semantics and both. This status of the art includes information from scientific and business sources, from standards, from patents and from other research projects."
+   }
+  ]
+ }
+}

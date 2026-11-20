@@ -1,0 +1,687 @@
+收稿日期:20240906;修回日期:20241014基金项目:黑龙江省省属高等学校基本科研业务费优秀创新团队建设项目 (2022KYY
+WF0654);佳木斯大学国家基金培育项目 (JMSUGPZR2022014);黑龙江省自主智能与信息处理重点实验室开放课题 (ZZXC202302);佳木斯大学
+“东极 ”学术团队 (DJXSTD202417);黑龙江省省属本科高校优秀青年教师基础研究支持计划资助项目 (YQJH2024239);佳木斯大学博士专项科研
+启动项目 (JMSUBZ202407);黑龙江省自然科学基金联合基金培育项目 (PL2024F002)
+作者简介:张磊 ( 1982— ),男,黑龙江绥化人,教授,硕导,博士, CCF会员,主要研究方向为信息安全、隐私保护;张潇 (2000— ),女,黑龙江大
+庆人,硕士研究生,主要研究方向为群智感知、隐私保护;纪莉莉 ( 1979— ),女 (通信作者),黑龙江佳木斯人,副教授,硕士,主要研究方向为城市规
+划、基层治理与社区建设 (jmsdxwk3019@ 163. com).
+感知时间不可区分的车辆群智感知隐私保护任务
+分配方案 
+张磊1,2,3
+,张潇1,2
+,纪莉莉1
+( 1.佳木斯大学信息电子技术学院,黑龙江佳木斯154007;2.佳木斯大学信息电子技术学院黑龙江省自主智
+能与信息处理重点实验室,黑龙江佳木斯154007;3.佳木斯市卫星导航技术与装备工程技术重点实验室,黑
+龙江佳木斯154007)
+摘要:在车辆群智感知的任务分配中,大多数隐私保护机制将用户暴露于潜在的时间感知推理下,使攻击者
+能够推断出用户的敏感信息。针对该问题,提出一种感知时间不可区分的隐私保护任务分配方案。首先,该方
+案为满足用户对感知时间隐私保护的需求,运用差分隐私技术,对车辆的原始停留数据添加拉普拉斯噪声进行
+模糊处理。其次,在考虑任务之间旅行时间的同时,计算出车辆用户完成感知任务概率,以此来判断是否可以进
+行任务分配。若概率大于0,则合理分配所有任务保证负载均衡,否则不再分配任务。因此,该方案一方面提供
+了感知时间的隐私保护,另一方面能够保障分配任务的有效性。最后通过与其他方案进行比较,并分析它们的
+相对性能,进一步证实了该方案的优越性。
+关键词:车辆群智感知;感知时间;差分隐私;隐私保护;任务分配
+中图分类号:TP311文献标志码:A文章编号:10013695( 2025) 04031119806
+doi:10. 19734/ j. issn. 10013695. 2024. 09. 0320
+Indistinguishable sensing time privacypreserving task allocation scheme for
+vehicular crowdsensing
+Zhang Lei1,2,3
+,Zhang Xiao1,2
+,Ji Lili1
+( 1. College of Information Science & Electronic Technology,Jiamusi University,Jiamusi Heilongjiang 154007,China;2. The Heilongjiang Pro
+vincial Key Laboratory of Autonomous Intelligence & Information Processing,School of Information Science & Electronic Technology,Jiamusi
+University,Jiamusi Heilongjiang 154007,China;3. Jiamusi Key Laboratory of Satellite Navigation Technology & Equipment Engineering Tech
+nology,Jiamusi Heilongjiang 154007,China)
+Abstract:In the task allocation of vehicular crowdsensing,most privacy protection mechanisms expose users to potential tem
+poral sensing inferences,enabling attackers to deduce sensitive user information. To address this issue,this paper proposed a
+privacypreserving task allocation scheme that ensured indistinguishability of sensing times. Firstly,to meet the demand for
+privacy protection of sensing times,this scheme applied differential privacy technology to add Laplace noise to the original
+dwell data of vehicles,thereby obfuscating the data. Secondly,considering the travel time between tasks,it calculated the
+probability of vehicle users completing the sensing tasks,which helped to determine if task allocation could proceed. If the
+probability was greater than zero,it allocated all tasks reasonably to ensure load balancing;otherwise,no further tasks were
+assigned. Thus,this scheme provided privacy protection for sensing times on one hand and ensured the effectiveness of task
+allocation on the other. Finally,by comparing this scheme with others and analyzing their relative performance through simula
+tion experiments,the results further confirm the superiority of the proposed scheme.
+Key words:vehicular crowdsensing;sensing time;differential privacy;privacy protection;task allocation
+0引言
+随着群智感知技术的日益成熟和移动设备内置传感器种
+类与功能的不断丰富 [ 1,2],多样化任务高效分配成为了可
+能 [ 3]。当今智能网联汽车 ( intelligent connected vehicle, ICV) 的
+快速发展,车辆群智感知 (vehicular crowdsensing, VCS)已成为
+移动群智感知 (mobile crowdsensing, MCS)最有前途的解决方
+案之一 [ 4]。VCS通过招募车辆作为参与者来执行感知任务,
+新型的群智感知应用日益增多 [ 4,5]。大多车载网络可以提供
+非常可靠的无线通信,同时车辆配备更加丰富的传感器,具有
+更强大的计算和存储能力 [ 6],比普通MCS更适合移动传感任
+务 [ 7]。因此,基于VCS的各种应用层出不穷,如交通监控 [ 8]、
+智能停车 [ 9]、空气质量监测 [ 10]等,提高交通效率和驾驶体验的
+同时,为城市发展作出了贡献 [ 11]。由于VCS服务的客户对特
+定区域和时间段内的感知数据感兴趣,所以VCS的有效感知
+在很大程度上取决于任务分配方案的有效性,且随着群智感知
+第42卷第4期
+2025年4月
+计算机应用研究
+Application Research of Computers
+Vol 42 No 4
+Apr. 2025系统中车辆用户与感知任务量的迅速增加,有效的任务分配策
+略是提升用户参与度和获得实用收益的关键 [ 12,13]。
+车辆群智感知应用也存在许多可能影响群智感知结果的
+安全和隐私问题 [ 14,15]。一些方案由于没有考虑到对用户隐私
+的保护,从而影响任务分配的有效性 [ 16~18]。部分在时间限制
+下的任务分配方案,不仅忽略了执行每项任务所需的时间,还
+没有对其进行隐私保护,使得方案具有一定的风险 [ 19~21]。因
+此在VCS任务分配的过程中,隐私保护问题非常重要 [ 22,23]。
+用户需要将感知到的数据上传到平台,这些数据可能包含用户
+身份、位置和其他私人属性等敏感信息。如果平台出现安全漏
+洞,用户的隐私将暴露给未经授权的实体。Xiao等人 [ 24]使用
+秘密共享方案保护用户隐私; Zhuo等人 [ 25]的研究致力于保护
+用户采集的传感结果的隐私性; Basudan等人 [ 26]设计一种基于
+无证书聚合签名加密方案,实现数据的保密性、完整性、隐私性
+和匿名性。
+当前已有的隐私保护方案对感知时间的隐私保护和任务
+分配处理并不理想。因此,需要提出有效的解决方案,能够在
+优化时空相关的VCS任务分配的同时,满足用户对隐私保护
+的需求。为此,本文提出感知时间不可区分的隐私保护任务分
+配方案,它在考虑任务之间的旅行时间的同时,对车辆用户真
+实停留时间运用差分隐私技术来进行混淆,以此来保护感知时
+间的隐私,并将接收到的任务合理分配给多个资源 (车辆用
+户) ,以此来保证负载均衡。
+1预备知识
+1.1问题提出
+目前,大部分研究只关注任务期限 [ 19,20],并且在任务分配
+过程中的大多数隐私保护机制都强调保护用户的位置信
+息 [ 12,27,28]。然而与时空相关的车辆群智感知在任务分配过程
+中,由于对用户感知时间隐私保护的疏忽,而导致用户敏感数
+据泄露,这仍是未有效关注的问题。如果一个车辆用户在感知
+周期c内完成了感知任务,并且在感知区域a内完成了感知任
+务,则称在周期c内覆盖了区域a。因此,本方案给定一组愿
+意参与传感项目的车辆用户U,划分的传感区域设为A,以及
+所有车辆用户的呼叫记录 (包括呼叫时间和通信塔ID)和停留
+时间数据,满足时空覆盖的同时,运用差分隐私技术对停留时
+间数据混淆后进行负载均衡的任务分配。
+1.2隐私保护思想
+在车辆群智感知任务分配过程中,车辆用户往往通过无线
+接入点或蜂窝基础设施与平台共享数据,因此涉及到许多敏感
+数据泄露。在本文中,车辆用户的感知时间对任务能否顺利完
+成起着至关重要的作用。为准确高效地分配任务,车辆用户首
+先向平台提交他们在感知时段和区域的停留时间。然而,由于
+潜在的恶意攻击者可能会从真实的停留时间推断出日常习惯、
+轨迹和其他敏感信息,从而导致隐私风险。为解决这个问题,
+本方案将拉普拉斯噪声添加到用户的真实停留时间,以此来进
+行混淆数据,并通过规定合适的隐私参数,使方案既能够运用
+差分隐私技术让用户获得较好的隐私保护,又能保证良好的任
+务完成率。因为车辆用户上传的是模糊停留时间,而不是实际
+时间,使攻击者无法从用户完成任务的停留时间推断出真实感
+知时间数据,从而成功保护隐私。
+1.3系统架构
+整个VCS系统架构如图1所示,该系统主要由云平台和
+参与者两方实体构成。
+图1 VCS系统架构
+Fig. 1 System architecture of VCS
+参与者是愿意参与传感任务的车辆用户,他们向云平台发
+送原始数据,并在特定的感知区域执行任务后,上传混淆的停
+留数据至云平台;云平台具有巨大的计算和存储能力,需要收
+集并存储参与者发送的历史通话记录和停留时间数据,并向参
+与者发放感知任务。在该图中,群智感知传感项目采用以云平
+台为中心的任务分配方法。在每个感知周期中,参与者接收到
+任务后,将真实数据发送到云平台,并在执行任务的过程中,运
+用本文方案上传混淆后的停留数据至云平台。
+1.4差分隐私
+在差分隐私中,要求攻击者无法根据发布后的结果推测
+出哪一条结果对应于哪一个数据集。
+定义1 ε差分隐私 [ 29]:对于一个随机算法M,Pm为算
+法M可以输出的所有值的集合。如果对于任意的一对相邻数
+据集D和D′、Pm的任意子集Sm,算法M满足:
+Pr[ M( D) ∈Sm] ≤eε
+Pr[ M( D′) ∈Sm] ( 1)
+则称算法M满足 ε差分隐私,其中参数 ε 为隐私保护预算。
+Dwork等人 [ 29]提出了通过加入噪声来获得差分隐私的拉
+普拉斯机制。给定函数f( D) ,其中D为原始数据,运用拉普拉
+斯机制加入噪声后,该函数的噪声值表示为
+f′( D) = f( D)+Lap( λ) ( 2)
+其中: Lap( λ) 表示从拉普拉斯分布中采样的拉普拉斯噪声,具
+有概率密度函数:
+Pr( x‖λ) =
+1
+2λ
+exp(-|x| / λ) ( 3)
+其中:方差是2λ2
+,以0为中心。
+定义2拉普拉斯机制 [ 29]:给定一个函数f: D→Rd
+,在每
+个d输出中加入概率分布为Lap( Δf/ ε)的拉普拉斯噪声的算
+法将始终满足 ε差分隐私。
+2感知时间不可区分的隐私保护任务分配方案
+按照隐私保护思想,本文所提出的感知时间不可区分的隐
+私保护任务分配方案分为两个主要处理阶段: a)差分隐私的
+时间噪声添加,该阶段主要实现对感知时间隐私保护的同时,
+判断车辆用户是否可以完成所需的感知任务,并计算出完成感
+知任务的概率; b) 任务分配负载均衡,该阶段主要完成当车辆
+用户完成所需的感知任务后,对任务实现最优负载均衡分配。
+2.1差分隐私的时间噪声添加
+在指定的感知周期内,每个车辆用户在特定感知区域是否
+可以在保护感知时间隐私的同时,成功完成所需的感知任务,
+其判断过程分为以下三个步骤:
+a) 计算每个车辆用户在特定的感知周期和感知区域内至
+少进行一次呼叫的概率:
+· 9 9 1 1 · 第4期张磊,等:感知时间不可区分的车辆群智感知隐私保护任务分配方案基于泊松分布建立每个车辆用户完成每个传感任务的概
+率模型。在感知周期c( 0≤c<N) 内,车辆用户ui在感知区域a
+( a∈A) 内进行n次呼叫的概率可表示为
+pc, a( ui, n) = λ
+n
+u, c, a ×e
+-λu, c, a
+/ n! ( 4)
+其中: λu, c, a表示泊松强度,其估计值为在感知周期c内,车辆
+用户ui在感知区域a的平均呼叫次数。
+在感知周期c内,车辆用户ui在感知区域a至少进行一
+次呼叫的概率可计算为
+P′c, a( ui) = ∑
++"
+n=1
+Pc, a( ui, n) = 1-e
+-λu, c, a
+( 5)
+b) 计算每个车辆用户在特定感知周期和感知区域的停留
+时间等于或大于任务所需感知时间的概率:
+车辆用户的感知时间对任务能否顺利完成起着至关重要
+的作用,只有当车辆用户到达特定的感知区域并在该区域停留
+的时间等于或超过所需的感知时间时,传感任务才被认为有效
+完成。为了准确高效地分配任务,车辆用户可以向平台提交他
+们在感知周期和区域内的停留时间。由于潜在的恶意攻击者
+可能会从真实的停留时间推断出敏感信息,从而导致隐私风
+险。为了解决这个问题,本文采用添加拉普拉斯机制噪声混淆
+真实停留时间,从而达到保护隐私的目的。
+用lu, c, a表示车辆用户ui在感知时段c、感知区域a的停
+留时间,用l
+~
+u, c, a表示在真实停留时间上加入拉普拉斯噪声后
+产生的混淆停留时间。考虑噪声对停留时间的影响,转换为计
+算模糊停留时间大于感知时间的概率。当定义感知任务所需
+的感知持续时间为 δ 时, P( lu, c, a≥δ) 表示为获得lu, c, a不小于 δ
+的概率。假设用户ui利用隐私预算参数 ε 对真实停留时间
+lu, c, a加入拉普拉斯噪声,得到模糊停留时间l
+~
+u, c, a,并上传到平
+台。因此,可以得到:
+l
+~
+u, c, a =lu, c, a +η, η~Laplace( 0, 1/ e) ( 6)
+其中: η 是服从拉普拉斯分布的变量,隐私预算参数 ε 越小,所
+增加的噪声越大,隐私保护水平越高。对于P( lu, c, a≥δ) ,有下式:
+P( lu, c, a≥δ) = P(l
+~
+n, c, a-η≥δ) = P(l
+~
+u, c, a-δ≥η) = P( η≤l
+~
+u, c, a-δ)( 7)
+其中: l
+~
+u, c, a -δ 平台可计算,将上式视为连续随机变量的概率问
+题;可得:
+P( η≤l
+~
+u, c, a -δ) = !
+l
+~
+u, c, a-δ
+-" f( η) dη ( 8)
+其中: f( η) 表示变量 η 的概率密度函数:
+f( η) =
+ε
+2
+e-ε|η|
+( 9)
+因此,平台可以根据模糊停留时间l
+~
+u, c, a和隐私预算参数
+ε,计算出车辆用户ui在感知周期c和感知区域a中不小于任
+务所需感知时间的概率P″c, a( ui) :
+P″c, a( ui) = P( η≤l
+~
+u, c, a -δ) = !
+l
+~
+u, c, a
+-δ
+-"
+ε
+2
+e-ε|η|
+) dη ( 10)
+根据上述计算过程,可以得到每个车辆用户在特定的感知
+周期c和感知区域a内完成感知任务的概率Pc, a( ui) :
+Pc, a( ui) = P′c, a( ui) P″c, a( ui) ( 11)
+即在感知周期c中,感知区域a被车辆用户ui覆盖的概率。
+c) 计算行程时间:
+设k个任务分配给车辆用户ui,使 { t0,t1, … , tk-1 }为分配
+给ui的任务集。用户ui首先必须移动到任务t0的位置执行
+第一项任务,然后从任务t0的位置移动到任务t1的位置执行
+第二项任务,依此类推。从ui的初始位置到任务tj的位置的
+行程时间 (用T表示) 为
+T=
+Euclidean( ui, tj)
+s
+( 12)
+其中: Euclidean( ui, tj )为ui到tj的欧几里德距离。从tj位置
+到tj+1位置的行程时间为
+T=
+Euclidean( tj, tj+1)
+s
+( 13)
+其中: Euclidean( tj, tj+1) 是tj到tj+1的欧几里德距离。
+将所求的欧几里德距离除以ui的速度即可得到行程时间。
+算法1差分隐私的时间噪声添加算法
+输入:任务j开始时间st( tj) 、任务j结束时间ft( tj) 、分配给用户ui
+的任务集A[ i] 、最后一个分配给用户ui的任务last[i] 、隐私预算参数
+ε、用户速度s、用户真实停留时间lu, c, a、感知任务所需的感知时间 δ。
+输出:在感知周期c中,感知区域a被车辆用户ui覆盖的概率Pc, a
+( ui) 。
+while true do / / 最多循环n次
+利用式 ( 7) 求得P″c, a( ui)
+利用式 ( 8) 求得l
+~
+u, c, a
+if l
+~
+u, c, a >=lu, c, a
+probability= =1
+else
+probability= =0
+利用式 ( 12) 求得P″c, a( ui)
+最后利用式 ( 13) 求出Pc, a( ui)
+dist ← Euclidean( last[ i] , tj)
+traveltime ← dist / s
+if probability= =1 and ft( last[ i] )+ traveltime < st( tj)and Pc, a
+( ui)> 0 then
+A[ i]← A[ i]∪{ tj} / / 将任务tj成功分配给用户ui
+end while
+算法1首先计算车辆用户ui在感知周期c和感知区域a
+内至少进行一次呼叫的概率P′c, a( ui) ,若P′c, a(ui )>0,则对真
+实停留时间添加拉普拉斯噪声,得到混淆后的停留时间。再判
+断每个用户在特定感知周期和感知区域的模糊停留时间是否
+等于或大于任务所需的感知时间,满足条件,则设为1,否则为
+0。计算出概率P″c, a( ui )后,得到每个车辆用户在特定的感知
+周期c和感知区域a中完成感知任务的概率Pc, a( ui) 。当满足
+以上条件后,将获得的last[ i] 到任务tj的欧几里德距离,除以
+ui的速度来计算行程时间。由于ui最初没有任何任务,所以
+ft( last[ i] ) 为零;继而算法检查行程时间是否小于tj的开始时
+间,如果满足此条件,则tj成功地分配给ui。
+2.2任务分配负载均衡
+考虑n个用户和m个任务的集合,其中用户和任务都与
+初始位置相关,假设任务在它们的位置保持固定,但是用户ui
+可以在系统中移动。设st( tj) 和ft( tj)分别表示任务tj的开始
+时间和完成时间,每个任务tj都与其开始时间和结束时间相关
+联。因此,要成功执行任务tj,它必须在其开始时间执行,在结
+束时间之前完成,并要求一个任务tj最多只能分配给一个用户
+ui。令U= { u0, u1, … , un-1} 表示用户集合, S ={ t0, t1, … , tm-1}
+为系统中任务的集合。设Ai为分配给用户ui的任务集:
+Ai = ∑
+m-1
+i=0
+xij ( 14)
+其中: xij是决策变量, xij ={ 0, 1} ,如果任务tj分配给用户ui,则
+xij = 1,否则xij = 0。并且,|Ai |表示Ai的基数。
+定义3两个任务tk和tl使得ft( tk) ≤ft( tl) 重叠:
+ft( tk)+traveltime( tk, tl)>st( tl)
+其中: traveltime( tk, tl) 表示从任务tk的位置到任务tl的位置所
+花费的时间。
+任务分配问题可表述为:最大化分配任务数量的同时考虑
+用户之间的负载均衡,每个任务只能分配给一个用户,且每个
+用户的任务分配不能有重叠。通过这些约束条件,可以确保任
+· 0 0 2 1 · 计算机应用研究第42卷务分配的合理性和公平性。
+Maximize f1( ) , f2( ) s. t. ( 15)
+fl( ) = ∑
+n-1
+i=0
+∑
+m-1
+j=0
+xij ( 16)
+f2( ) = -∑
+n-1
+i=0
+∑
+m-1
+j=0
+(|Ai |-|Aj |)| ( 17)
+其中: f1是希望最大化的目标函数,即最大化分配的任务数量;
+f2是目标函数,即用户之间的最优负载均衡。当一个任务tj最
+多可以分配给一个用户时,可以表示为 ∑
+n-1
+i=0
+xij ≤1, 0≤j≤m-1;
+xij ={ 0, 1} , 0≤i≤n-1, 0≤j≤m-1为决策变量; tk,tl ∈Ai, k≠
+l, 0≤i≤n-1, tk and tl do not overlap为重叠条件,即分配给用户
+的两个任务不应重叠。
+算法2任务分配负载均衡算法
+输入:分配给用户ui的任务集A[ i] 、最后一个分配给用户ui的任
+务last[ i] 、任务j结束时间ft( tj) 、用户数n、任务数m、跟踪尝试将任务
+分配给tj的次数times( tj) 。
+输出:任务分配结果。
+初始化i ← 0 , j ← 0
+将所有任务按照结束时间升序排序,使得ft(tj )<= ft(tj+1 ) ,其中
+0<=j<m-1
+while j<m do
+times ( tj)← 0
+while true do / / 最多循环n次
+if probability = = 1 and ft( last[ i] )+ traveltime<st( tj)and Pc, a
+( ui)>0 then
+A[ i]← A[ i] ∪{ tj}/ / 将任务tj成功分配给用户ui
+last[ i]←tj
+i ← ( i + 1)mod n / / 转到下一个用户
+break
+else / / 任务tj没能成功分配给用户ui
+times( tj)← times( tj)+ 1
+i ← ( i + 1)mod n
+end if
+if times( tj)= n then
+Assigned[ j]← false / 任务tj无法分配给任何用户,请执
+行下一个任务 /
+break
+end if
+end while
+j ← j + 1
+end while
+算法2首先按照完成时间的递增顺序对任务进行排序,称
+这个排序列表为R = { t0, t1, … , tm-1} 。对于每个任务,搜索用
+户以查找任务分配,任务以循环的方式分配给用户u0 ~ un-1。
+A[ i] 是ui接受的任务集合, last[i]是最后一个分配给ui的任
+务。最初,用户ui没有任何任务分配给它,因此, last[i]将与
+用户ui的初始位置相同。如果任务tj成功分配给用户,则
+Assign[ j] 设置为 ‘true’ ,否则它被设置为 ‘false’ 。times(tj )为
+将任务tj尝试分配给某个用户的次数,最初它被设置为0。若
+tj成功地分配给ui(成功分配的条件已在2. 1节中详细阐述) ,
+更新last[ i] ,并增加i,以便继续到下一个用户。但是,如果不
+满足此条件,则递增times( tj ) , i的值也会增加,以推进到下一
+个用户。最后检查times( tj)是否等于n的值,如果是,这意味
+着所有用户都已经尝试任务分配,并且失败了,在这种情况下,
+Assigned[ j] 被设置为false, tj保持未分配。
+2.3安全性分析
+本文所提出的感知时间不可区分的的隐私保护任务分配
+方案,是为解决车辆用户在任务分配时,忽视对感知时间的隐
+私保护,从而导致敏感数据泄露的问题。本方案可以在考虑任
+务之间的旅行时间的同时,满足车辆用户对感知时间隐私的需
+求,并实现合理的任务分配。
+在本文中,通过在感知时间数据中添加拉普拉斯噪声来混
+淆真实的停留时间,得到模糊停留时间后,将模糊停留时间上
+传至云平台,从而有效地保护了车辆用户敏感数据的隐私。
+l
+~
+u, c, a =lu, c, a +η, η~Laplace( 0, 1/ ε) ( 18)
+噪声的大小 (即拉普拉斯分布的尺度参数)决定了隐私保
+护的强度,不同的噪声可以提供不同强度的隐私保护。隐私预
+算参数 ε 越小,所增加的噪声越大,隐私保护水平越高。在此
+基础上还考虑到了噪声对停留时间的影响,从而将其转换为计
+算模糊停留时间大于感知停留时间的概率。
+P( η≤l
+~
+u, c, a -δ) = !
+l
+~
+u, c, a-δ
+-" f( η) dη ( 19)
+车辆用户上传的是模糊停留时间而非实际停留时间,因此
+攻击者无法准确推断出用户的真实感知时间。通过合理的隐
+私预算参数选择和噪声控制,能够在保护隐私的同时,最大限
+度地满足用户需求,进而使本方案能在保证安全的情况下实现
+任务分配。
+3实验验证
+3.1实验设置
+本文的实验环境为笔记本电脑Intel Core i5 CPU, 12 GB内
+存, Windows 10操作系统,并运用Python 3. 7作为测试工具生
+成模拟数据集,其包括每个感知区域中100个车辆用户的ID、
+信号塔ID、每个感知区域的呼叫数、车辆用户的真实停留时间
+以及每个任务开始时间,并将任务完成时间设为开始时间的后
+1小时。实验参数设置如表1所示。
+表1实验参数设置
+Tab. 1 Experimental parameter settings
+参数名称默认值
+感知区域数量 |A| 50
+每个任务所需感知时间d / min 3
+隐私预算参数 ε 1. 0
+每个车辆用户平均速度 / ( km/ h) 60
+为了分别控制任务数量和用户数量这两个变量,从而独立
+地观察它们各自对系统性能的影响,因此模拟使用两个设置进
+行,即设置A和B。对于设置A,将任务数量固定为100,同时
+改变用户数量,通过将用户数量从0变化到100(间隔为20) 来
+进行观察;对于设置B,将用户数量固定为100,而任务数量是变
+化的,通过改变任务数量从0到500(间隔为100) 来进行观察。
+3.2性能指标
+模拟使用的性能指标如下所示:
+a) 任务完成率 ( TCR) 。任务完成比率是分配给任务总数
+的任务的比率。TCR越高,表示执行的任务越多。
+TCR=
+total tasks assigned
+total number of tasks
+( 20)
+b) 负载公平指数 ( LFI) 。负载公平性指数被定义为 “用户
+所承受的负载或任务的公平性,它衡量任务在用户之间的公平
+分配 [ 30]” 。LFI值越高,表示任务在用户之间的分配越均匀。
+LFI=1-
+1
+n
+∑
+n
+j=1
+tmax -tj
+tmax
+( 21)
+其中: tj表示分配给用户ui的任务数; tmax是分配给任何用户
+的最大任务数。
+c) 平均任务完成时间 (AvTCT) 。任务平均完成时间 (单
+位:分钟) 是所有用户执行任务的平均时间,即所有用户最后
+一个任务完成时间与第一个任务开始时间的时间差。AvTCT
+值越小,用户执行分配任务的速度就越快。
+· 1 0 2 1 · 第4期张磊,等:感知时间不可区分的车辆群智感知隐私保护任务分配方案AvTCT=
+1
+n
+∑
+n
+i=1
+( finish time of last task of ui -
+start time of first task of ui) ( 22)
+3.3实验结果与分析
+为了验证本文方案与其他方案上的性能优势,本文将该方
+案与UBTA[ 31]、LBTA[ 32]和MPPTA[ 33]进行比较,并以LBTA作
+为基准。本实验主要测量了本文方案与UBTA、LBTA和
+MPPTA在TCR和LFI中的性能以及AvTCT。
+图2为固定100个任务,不同用户数的TCR。从图2中可
+以看出,当用户数在40~80时,本文方案的任务完成率仅次于
+LBTA,因为本文方案的约束条件最多,但在任务分配过程中能
+够实现负载均衡,最大化分配所提供的任务。通常,设置A的
+TCR值随着用户数量的增加而增加,因为增加更多的用户使
+它们有可能执行更多的任务。
+图3为固定100位用户,不同任务数的TCR。从图3可以
+看出,当任务数量足够多时,本文方案的任务完成率是最高的,
+并且能够维持较为平稳的状态。TCR随着任务数量的增加而
+降低,是因为在用户数量固定的情况下,任务数量的增加会导
+致无法执行其他任务。其中, MPPTA的任务完成率随着任务
+数量的增加,急剧减少,因为其约束条件要求每名用户最多可
+以执行一个任务,所以当用户数固定时,随着发出的任务数增
+多,无法完成的任务数也会逐渐增加。
+图2基于设置A的TCR
+Fig. 2 TCR based on
+setting A
+图3基于设置B的TCR
+Fig. 3 TCR based on
+setting B
+图4显示了固定100个任务,不同用户数的LFI图。从图
+4中可以看出,本文方案在负载平衡方面的公平性在用户数少
+于80时最高。当用户数大于80时, MPPTA的指数急剧增高,
+因为当用户数和任务数越发接近时,其约束条件会使分配给用
+户的任务数和最大任务数接近一致。UBTA急剧下降是由于
+在其方案中只给出了能否成功分配的条件,并没有给出在任务
+分配时如何保证公平性的约束条件,所以没有任何内在的公平性。
+图5显示了固定100位用户,不同任务数的LFI图。从图
+5中可以看出, MPPTA的负载公平较高,因其约束条件使得分
+配给任何用户的任务数皆为0或1,本文方案和LBTA的负载
+公平指数基本持平,并相对平稳。
+图4基于设置A的LFI
+Fig. 4 LFI based on
+setting A
+图5基于设置B的LFI
+Fig. 5 LFI based on
+setting B
+图6为固定100个任务,不同用户数的AvTCT,该参数未
+与MPPTA进行比较,因为MPPTA中的任务没有任何开始或
+结束时间。从图6中可以看出,本文方案完成任务的速度快于
+UBTA,因为虽然其约束条件最多,但能够使在任务分配时,达
+到较快的负载均衡,并且与另外两种方案相比,本方案的速度
+变化较为平稳。AvTCT随着用户的增加而减少,是因为随着任
+务数量的固定,引入更多的用户会导致每个用户的任务减少,
+所以AvTCT得到了降低。
+图7为固定100位用户,不同任务数的AvTCT。在图7
+中,本文方案完成任务的速度略高于UBTA的速度, LBTA速度
+最快是因为其不仅约束条件少,并且也能够实现负载均衡的任
+务分配。随着用户数量的固定,用户总数的增加导致每个用户
+的任务增加, AvTCT也因此相应地逐渐增多。
+图6基于设置A的AvTCT
+Fig. 6 AvTCT based on
+setting A
+图7基于设置B的AvTCT
+Fig. 7 AvTCT based on
+setting B
+图8和9分别为固定100个任务,不同用户数和固定100
+位用户,不同任务数的不同隐私参数的本文方案的TCR。从图
+中可以看出,隐私参数的变化会导致任务完成数量的增减,当
+隐私参数 ε=1. 0时,任务完成率是最高的。因为随着隐私参
+数的减少,噪声数量急剧增加,使本文方案完成任务的条件更
+加苛刻,从而当隐私参数 ε=0. 1时,任务完成率是最低的。
+图8基于设置A的TCR
+Fig. 8 TCR based on
+setting A
+图9基于设置B的TCR
+Fig. 9 TCR based on
+setting B
+4结束语
+为解决感知时间隐私暴露问题,本文提出感知时间不可区
+分的的隐私保护任务分配方案。它将感知到的任务合理分配
+给多个车辆用户,并且在考虑任务之间旅行时间的同时,运用
+差分隐私技术对车辆用户的停留时间进行处理,通过向真实数
+据中注入拉普拉斯噪声实现数据混淆,从而满足用户对感知时
+间的隐私需求。该方案完成所需感知任务需要满足三个条件:
+a) 每个车辆用户在特定的感知周期和感知区域内至少进行一
+次呼叫; b) 每个车辆用户在特定感知周期和感知区域内的停
+留时间等于或大于任务所需的感知持续时间; c)每个车辆用
+户在特定感知周期和感知区域内的行程时间小于每个任务的
+开始时间。在以上条件都满足的情况下,计算出完成感知任务
+的概率,最后以循环方式合理分配任务,确保没有单个车辆用
+户独占系统中的所有任务,从而在任务分配方面保持负载
+均衡。
+参考文献:
+[ 1] Chen Min,Hao Yixue,Gharavi H,et al. Cognitive information mea
+surements:a new perspective [J]. Information Sciences:an In
+ternational Journal,2019,505 (C):487497.
+[ 2] Jin Xiaocong,Zhang Rui,Chen Yimin,et al. DPSense:differential
+ly private crowdsourced spectrum sensing. in computer and communi
+cations security [C]/ / Proc of Computer and Communications Securi
+ty. New York: ACM Press, 2019: 296307.
+[ 3] Guo Bin,Liu Yan,Wu Wenle,et al. ActiveCrowd:a framework for
+optimized multitask allocation in mobile crowdsensing systems [J].
+IEEE Trans on HumanMachine Systems,2017( 3):392403.
+[ 4] Basudan S,Lin Xiaodong,Sankaranarayanan K. A privacyperserving
+· 2 0 2 1 · 计算机应用研究第42卷vehicular crowdsensingbased road surface condition monitoring system
+using fog computing [J]. IEEE Internet of Things Journal,2017,
+4 ( 3):772782.
+[ 5] Wan Jiafu,Liu Jianqi,Shao Zihui,et al. Mobile crowdsensing for
+traffic prediction in Internet of Vehicles [ J] . Sensors,2016, 16:88.
+[ 6] Jiau M K,Huang S C,Hwang J N,et al. Multimedia services in
+cloudbased vehicular networks [J]. IEEE Intelligent Transporta
+tion Systems Magazine,2015, 7 ( 3):6279.
+[ 7] Wang Xiumin,Wu Weiwei,Qi Deyu. Mobilityaware participant
+recruitment for vehiclebased mobile crowdsensing [J]. IEEE Trans
+on Vehicular Technology,2018, 67( 5):44154426.
+[ 8] Li Meng,Zhu Liehuang,Lin Xiaodong. Privacypreserving traffic
+monitoring with false report filtering via fogassisted vehicular
+crowdsensing [J]. IEEE Trans on Services Computing,2019,
+14 ( 99):19021913.
+[ 9] Lai Chengzhe,Li Qian,Zhou Haibo,et al. SRSP:a secure and reli
+able smart parking scheme with dual privacy preservation [J]. IEEE
+Internet of Things Journal,2021, 8( 13):1061910630.
+[10]Liu Rui,Pan Jianping. Lightweight privacypreserving truth discovery
+for vehicular air quality monitoring [J]. Digital Communications
+and Networks,2023, 9 ( 1):280291.
+[ 11]王振宁,曹越,江恺,等.车辆群智感知中激励驱动的车辆选择
+与调度方法 [J].计算机研究与发展,2024,61 (9):2213
+2228. (Wang Zhenning,Cao Yue,Jiang Kai,et al. Incentivedriven
+vehicle selection and scheduling method in vehicular crowdsensing
+[J]. Journal of Computer Research and Development,2024,
+61 ( 9):22132228. )
+[ 12]Qian Yongfeng,Ma Yujun,Chen Jing,et al. Optimal location priva
+cy preserving and service quality guaranteed task allocation in
+vehiclebased crowdsensing networks [J]. IEEE Trans on Intelli
+gent Transportation Systems,2021,22:43674375.
+[ 13]Yu Yantao,Xue Xiaoping,Ma Jingxiao,et al. Efficient privacy
+preserving task allocation with secret sharing for vehicular crowdsensing
+[ J] . IEEE Internet of Things Journal,2024, 11 ( 6) :94739486.
+[ 14]Wang Zhihong,LiYongbiao,Li Dingcheng,et al. Enabling fairness
+aware and privacypreserving for quality evaluation in vehicular
+crowdsensing:a decentralized approach [J]. Security and Commu
+nication Networks,2021, 2021:111.
+[ 15]Xu Guowen,Li Hongwei,Tan Chen,et al. Achieving efficient and
+privacypreserving truth discovery in crowd sensing systems [J].
+Elsevier Advanced Technology,2017,69:114126.
+[ 16]Li Hanshang,Li Ting,Wang Weichao,et al. Dynamic participant
+selection for largescale mobile crowd sensing [J]. IEEE Trans on
+Mobile Computing,2018, 18:28422855.
+[ 17]Wang Jingtao,Wang Feng,Wang Yasha,et al. HyTasker:hybrid
+task allocation in mobile CrowdSensing [J]. IEEE Trans on Mobile
+Computing,2020, 19 ( 3):598611.
+[ 18]Wang Liang,Yu Zhiwen,Wu Kaishun,et al. Towards robust task
+assignment in mobile crowdsensing systems [J]. IEEE Trans on
+Mobile Computing,2023,22 ( 7):42974313.
+[ 19]Huang Yang,Chen Honglong,Ma Guoqi,et al. OPAT:optimized
+allocation of time dependent tasks for mobile crowdsensing [J]. IEEE
+Trans on Industrial Informatics,2021,18 ( 4):24762485.
+[20]Li Xin,Zhang Xinglin. Multitask allocation under time constraints in
+mobile crowdsensing [J]. IEEE Trans on Mobile Computing,
+2019, 20 ( 4):14941510.
+[ 21]Peng Shuo,Liu Kun,Wang Shiji,et al. Time windowbased online
+task assignment in mobile crowdsensing:problems and algorithms
+[J]. PeertoPeer Networking Applications,2023,16 (2):
+10691087.
+[ 22]Luo Chengwen,Liu Xiao,Xue Wanli,et al. Predictable privacy
+preserving mobile crowd sensing:a tale of two roles [J]. IEEE/ ACM
+Trans on Networking,2019, 27:361374.
+[ 23]Wang Zhibo,Hu Jiahui,Lyu Ruizhao,et al. Personalized privacy
+preserving task allocation for mobile crowdsensing [J]. IEEE Trans
+on Mobile Computing,2018,18 ( 6):13301341.
+[24]Xiao Mingjun,Wu Jie,Zhang Sheng,et al. Secretsharingbased se
+cure user recruitment protocol for mobile crowdsensing [C]/ / Proc of
+IEEE Conference on Computer Communications. Piscataway,NJ:
+IEEE Press,2017: 19.
+[25]Zhuo Gaoqiang,Jia Qi,Guo Linke,et al. Privacypreserving verifia
+ble data aggregation and analysis for cloudassisted mobile
+crowdsourcing [C]/ / Proc of IEEE Conference on Computer Commu
+nications. Piscataway, NJ: IEEE Press,2016: 19.
+[ 26]Basudan S,Lin Xiaodong,Sankaranarayanan K. A privacypreser
+ving vehicular crowdsensingbased road surface condition monitoring
+system using fog computing [J]. IEEE Internet of Things Journal,
+2017,4 ( 3):772782.
+[27]Cheng Yudan,Ma Jianfeng,Liu Zhiquan,et al. A lightweight priva
+cy preservation scheme with efficient reputation management for mo
+bile crowdsensing in vehicular networks [J]. IIEEE Trans on De
+pendable and Secure Computing,2023,20 ( 3):17711788.
+[ 28]Guan Yunguo,Lu Rongxing,Zheng Yandong,et al. Achieving pri
+vacypreserving vehicle selection for effective content dissemination in
+smart cities [C]/ / Proc of IEEE Global Communications Conference.
+Piscataway, NJ: IEEE Press,2020: 16.
+[ 29]Dwork C. Differential privacy [C]/ / Proc of the 33rd International
+Conference on Automata,Languages and Programming. Berlin:
+Springer, 2006: 338340.
+[ 30]Meitei M G,Marchang N. A usercentric task allocation approach in
+mobile crowdsensing [C]/ / Proc of Electronic Systems and Intelligent
+Computing. Singapore: Springer, 2020:627639.
+[ 31]Li Zhe,Liu Xiaolong,Huang Yang, et al. Probabilistic coverage con
+straint task assignment with privacy protection in vehicular crowdsen
+sing [J]. Sensors,2023,23 ( 18): 7798 .
+[ 32]Meitei M G,Marchang N. Provisioning load balancing in time
+sensitive task allocation for mobile crowdsensing [J]. Journal of
+Network Systems Management,2022, 32 ( 1): 9783.
+[ 33]Yu Longxin,Meng Haofei, Yu Wenwu. Privacy preserving task allo
+cation with multiobjectives in edge computing enhanced mobile
+crowdsensing[C]/ / Proc of the 4th International Conference on Indus
+trial Artificial Intelligence . 2022:15.
+· 3 0 2 1 · 第4期张磊,等:感知时间不可区分的车辆群智感知隐私保护任务分配方案

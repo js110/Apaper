@@ -1,0 +1,1560 @@
+收稿日期:2 0 2 4  1 1  2 0 ;修回日期:2 0 2 5  0 1  0 9基金项目:黑龙江省省属高等学校基本科研业务费优秀创新团队建设项目( 2 0 2 2  K Y Y 
+WF  0 6 5 4 ) ;佳木斯大学国家基金培育项目( J M S U G P Z R 2 0 2 2  0 1 4 ) ;黑龙江省自主智能与信息处理重点实验室开放课题( Z Z X C 2 0 2 3 0 2 ) ;佳木斯大学
+“ 东极” 学术团队资助项目( D J X S T D 2 0 2 4 1 7 ) ;黑龙江省省属本科高校优秀青年教师基础研究支持计划资助项目( Y Q J H 2 0 2 4 2 3 9 ) ;黑龙江省外国专
+家项目( G 2 0 2 4 0 2 0 ) ;黑龙江省自然科学基金联合基金培育项目( P L 2 0 2 4 F 0 0 2 ) ;河北省教育厅科学研究项目( Z C 2 0 2 4 1 1 8 ) ;邯郸市教育科学“ 十四
+五” 规划课题( 2 2 Y B 0 7 4 )
+作者简介:张磊( 1 9 8 2 —) ,男,黑龙江绥化人,教授,硕导,博士, C C F会员,主要研究方向为信息安全、隐私保护;杨芜蔚( 1 9 9 8 —) ,女,江苏宿
+迁人,硕士研究生,主要研究方向为隐私求交、隐私保护;叶前呈( 1 9 9 9 —) ,男,浙江温州人,硕士研究生,主要研究方向为联邦学习、隐私保护;
+连帅帅( 1 9 9 6 —) ,男,河北邯郸人,硕士,主要研究方向为隐私保护;赵兴丰( 1 9 7 2 —) ,男(通信作者) ,河北邯郸人,高级实验师,主要研究方向为隐
+私保护( 3 4 5 1 8 0 2 6 9 9 @q q . c o m ) .
+高效且平衡的多方P S I协议
+张磊
+1 a , 1 b , 1 c
+,杨芜蔚
+1 a , 1 b , 1 c
+,叶前呈
+1 a , 1 b , 1 c
+,连帅帅
+1 c , 2
+,赵兴丰
+1 c , 2 
+( 1 .佳木斯大学a .信息电子技术学院,b .黑龙江省自主智能与信息处理重点实验室;c .佳木斯市卫星导航
+技术与装备工程技术重点实验室,黑龙江佳木斯1 5 4 0 0 7 ;2 .邯郸科技职业学院,河北邯郸0 5 6 0 0 0 )
+摘要:随着应用场景的多样化和私有数据共享规模的扩大,多方隐私集合交集计算( p r i v a t es e t i n t e r s e c t i o n ,
+P S I ) 成为协同数据处理中的一个研究热点。然而,现有的多方P S I协议大多存在着参与方之间开销不平衡的问
+题,这不仅影响参与方之间的公平性,还影响协议的总体效率。针对该问题,基于不经意键值存储和秘密分享技
+术,提出了一个高效、平衡的多方P S I协议( E B M P S I ) 。该协议具备面向所有半诚实敌手的安全性,且可抵抗多
+个参与方的合谋攻击。理论和实验分析表明, E B M P S I协议有效地平衡了各个参与方之间的计算和通信开销。
+与现有方案的实验对比表明, E B M P S I协议在资源分布均匀的环境中展现出更高的执行效率。
+关键词:多方隐私集合求交;抗合谋;不经意键值存储;秘密分享技术
+中图分类号:T P 3 0 9 . 2文献标志码:A文章编号:1 0 0 1  3 6 9 5 ( 2 0 2 5 ) 0 9  0 3 4  2 8 1 6  0 9
+d o i : 1 0 . 1 9 7 3 4 / j . i s s n . 1 0 0 1  3 6 9 5 . 2 0 2 4 . 1 1 . 0 5 2 3
+E f f i c i e n t a n db a l a n c e dm u l t i  p a r t yP S I p r o t o c o l
+Z h a n gL e i 1 a , 1 b , 1 c
+,Y a n gWu w e i 1 a , 1 b , 1 c
+,Y eQ i a n c h e n g 1 a , 1 b , 1 c
+,L i a nS h u a i s h u a i 1 c , 2
+,Z h a oX i n g f e n g 1 c , 2 
+( 1 .a .S c h o o l o f I n f o r m a t i o n&E l e c t r o n i c T e c h n o l o g y ,b .H e i l o n g j i a n gP r o v i n c e K e y L a b o r a t o r y o f A u t o n o m o u s I n t e l l i g e n c e &I n f o r m a t i o nP r o 
+c e s s i n g ,c .J i a m u s i K e y L a b o r a t o r yo f S a t e l l i t e N a v i g a t i o nT e c h n o l o g y &E q u i p m e n t E n g i n e e r i n gT e c h n o l o g y ,J i a m u s i U n i v e r s i t y ,J i a m u s i H e i 
+l o n g j i a n g 1 5 4 0 0 7 ,C h i n a ; 2 .H a n d a nP o l y t e c h n i c C o l l e g e ,H a n d a nH e b e i 0 5 6 0 0 0 ,C h i n a )
+A b s t r a c t :A s a p p l i c a t i o ns c e n a r i o s d i v e r s i f y a n dt h e s c a l eo f p r i v a t e d a t a s h a r i n ge x p a n d s ,m u l t i  p a r t y( p r i v a t es e t i n t e r s e c 
+t i o n ,P S I )b e c o m e s a r e s e a r c h h o t s p o t i nc o l l a b o r a t i v e d a t a p r o c e s s i n g . H o w e v e r , m o s t e x i s t i n g m u l t i  p a r t y P S I p r o t o c o l s s u f f e r
+f r o ma ni m b a l a n c ei nt h e w o r k l o a db e t w e e np a r t i c i p a n t s ,w h i c hn o t o n l y a f f e c t s t h ef a i r n e s s b e t w e e np a r t i c i p a n t s b u t a l s oi m 
+p a c t s t h e o v e r a l l e f f i c i e n c y o f t h e p r o t o c o l .R e g a r d i n g t h i s i s s u e ,t h i s p a p e r p r o p o s e da ne f f i c i e n t a n db a l a n c e dm u l t i  p a r t y P S I
+p r o t o c o l ( E B M P S I )b a s e d o n o b l i v i o u s k e y v a l u e s t o r e a n d s e c r e t s h a r i n g t e c h n o l o g y . T h e p r o t o c o l w a s s e c u r e a g a i n s t a l l s e m i 
+h o n e s t a d v e r s a r i e s a n dc o u l dr e s i s t c o l l u s i o na t t a c k s . T h e t h e o r e t i c a l a n de x p e r i m e n t a l a n a l y s i s s h o w s t h a t E B M P S I p r o t o c o l e f 
+f e c t i v e l y b a l a n c e s t h ec o m p u t a t i o n a l a n dc o m m u n i c a t i o nw o r k l o a da m o n ga l l p a r t i c i p a n t s .T h ee x p e r i m e n t a l c o m p a r i s o nw i t h
+t h e e x i s t i n g s c h e m e s s h o w s t h a t E B M P S I e x h i b i t s h i g h e r e x e c u t i o n e f f i c i e n c y i n e n v i r o n m e n t s w i t h e v e n l y d i s t r i b u t e d r e s o u r c e s .
+K e yw o r d s :m u l t i  p a r t y P S I ;c o l l u s i o nr e s i s t a n c e ;o b l i v i o u s k e y v a l u es t o r e ;s e c r e t s h a r i n g
+0引言
+随着信息技术的飞速发展,数据已成为现代社会最宝贵的
+资源之一
+[ 1 ]
+。在大数据时代,数据的收集、共享和分析对于商
+业智能、科学研究、社会管理和个人决策都有着不可估量的价
+值
+[ 2 ]
+。然而,数据的这些积极作用背后,隐藏着个人隐私泄露
+的风险
+[ 3 ]
+。如何在保护个人隐私的前提下,实现数据的有效
+利用,已经成为一个研究热点
+[ 4 ]
+。
+隐私集合求交作为一种重要的隐私保护技术,可为数据的
+安全共享提供有效的解决方案。P S I技术允许两个或多个参
+与方秘密地计算他们的交集,且不泄露除交集之外的其他任何
+信息,在保护隐私的同时促进了数据的共享与合作
+[ 5 ]
+。两方
+场景下的P S I已有多种高效且安全的实现方案
+[ 6 ~ 1 1 ]
+,并且在
+社交
+[ 1 2 ]
+、医学
+[ 1 3 ]
+、金融
+[ 1 4 ]
+等多个领域展现出了广泛的应用潜
+力。随着私有数据共享规模的扩大以及应用场景的多样化,参
+与方多于两方的场景更为常见,因此产生了多方P S I技术。相
+比于两方P S I ,多方P S I在协议构造上更加困难,参与方之间的
+交互也更为复杂
+[ 1 5 ]
+。K i s s n e r等人
+[ 1 6 ]
+对加法同态加密的私钥
+进行秘密分享从而实现多方P S I协议,该协议的计算和通信复
+杂度较高,为集合大小和参与方数量的平方级。H a z a y等人
+[ 1 7 ]
+提出的多方P S I协议需要作为服务端的参与方分别和其他参
+与方两两执行一次两方P S I协议,这种构造方法成功地将通信
+轮数从O ( t ) 降低为O ( 1 ) 。然而,这也意味着服务端的通信与
+计算开销近乎是其他参与方的O ( t ) 倍,需要服务端具备较强
+的通信和计算能力。K o l e s n i k o v等人
+[ 1 8 ]
+利用不经意伪随机函
+数( o b l i v i o u s p s e u d o r a n d o mf u n c t i o n , O P R F ) 构造不经意可编程
+伪随机函数 ( o b l i v i o u sp r o g r a m m a b l ep s e u d o r a n d o m f u n c t i o n ,
+O P P R F ) ,并以此为基础实现多方P S I协议。由于该协议需要
+第4 2卷第9期
+2 0 2 5年9月
+计算机应用研究
+A p p l i c a t i o nR e s e a r c ho f C o m p u t e r s
+V o l  4 2N o  9
+S e p . 2 0 2 5服务端分别和其他参与方两两执行OPPRF,所以服务端承担
+的开销也近乎是其他参与方的O(t)倍。Kavousi等人[19]
+将文
+献[6]中的多点OPRF推广到多方场景,从而构造出多方PSI
+协议。在该协议中,为了实现对OPRF密钥的秘密分享,服务
+端需要分别与其他参与方两两执行不经意传输协议(oblivious
+transfer,OT),因此服务端承担的通信和计算开销远高于其他
+参与方。Nevo等人[20]
+基于不经意键值存储(oblivious key va-
+lue store,OKVS)设计出快速的、针对恶意敌手的多方PSI协
+议,此协议同样由服务端承担大部分开销。这种不平衡的开销
+分配策略不仅会影响参与方之间的公平性,在服务端能力受限
+的情况下,还会影响协议的总体效率。
+因此,如何平衡各个参与方之间的开销是多方PSI领域中
+一个值得深入研究的问题。目前能够实现各方开销均衡的多
+方PSI协议相对较少。Zhang等人[21]
+利用cut-and-choose技术
+实现恶意安全的多方PSI协议,其中各个参与方具有相同的通
+信和计算复杂度。然而此协议本质上是运行O(t)次两方PSI,
+在参与方数量较大的情况下,协议的总体运行效率并不理想。
+Wei等人[22]
+结合DH密钥协商和零秘密分享技术,构造出一
+个各方计算复杂度相同的多方PSI协议。但是该协议并未实
+现通信开销的均衡分配,且协议采用多项式表示集合的方法,
+在面对大规模数据集时会导致参与方的计算开销显著增加。
+Yang等人[23]
+将乱码布隆过滤器(garbled Bloom filter,GBF)与
+零秘密分享技术相结合,在服务器的帮助下实现各方开销均衡
+的多方PSI协议。由于此协议采用GBF类型的数据结构表示
+集合元素,所以参与方的通信开销较高。
+针对上述不足,本文结合OKVS和秘密分享技术,提出了
+一个高效且平衡的多方PSI协议。OKVS是一种具有隐藏特性
+的紧凑型数据结构,在编码和解码过程中展现出较高的效率和
+较低的存储空间需求,采用该种数据结构表示隐私集合能够有
+效防止集合元素的泄露。本文通过使用秘密分享技术,将
+OKVS的应用范围拓展至多方场景,同时将协议的开销平均分
+配给各个参与方,从而构造出高效且平衡的多方PSI协议。本
+文的具体贡献如下:
+a)本文结合OKVS和秘密分享技术,提出一个高效、平衡
+的多方PSI协议。OKVS常被用作存储集合元素的数据结构以
+构建两方PSI协议,本文通过秘密分享技术,将OKVS的应用
+范围扩展至多方场景,从而构造出多方PSI协议。
+b)本文在半诚实模型下证明了EBMPSI协议的安全性,通
+过证明结果可知,EBMPSI协议不仅具备针对所有半诚实敌手
+的安全性,还可以抵抗多个参与方的合谋攻击。
+理论和实验结果表明,EBMPSI协议在各个参与方之间有
+效地实现了计算和通信开销的均衡分配,避免了服务端开销较
+大导致协议总体运行时间较高的问题。在资源分布均匀的环
+境中,与其他先进的多方PSI协议相比,EBMPSI协议展现出更
+高的执行效率。
+1相关工作
+现有的多方PSI工作主要围绕协议设计框架和集合表示
+方式两方面展开研究。
+1.1针对协议设计框架的研究
+根据所采用的底层密码技术的不同,多方PSI协议的设计
+框架可分为基于公钥加密的设计框架和基于OT的设计框架
+两类。
+公钥加密框架下的多方PSI协议大多采用同态加密技术。
+Freedman等人[24]
+基于加法同态加密技术首次提出多方PSI协
+议的构造思路。Kissner等人[16]
+对加法同态加密的私钥进行
+秘密分享,从而实现多方PSI协议。Hazay等人[17]
+以文献[24]
+中基于同态加密设计的两方PSI协议为基础,在半诚实模型和
+恶意模型下分别设计出两种多方PSI协议。Bay等人[25]
+基于
+门限加法同态加密技术构造多方PSI协议,该协议的计算和通
+信复杂度均与参与方的数量无关,因此适合具有大规模参与方
+的场景。由于整数群上的同态加密操作开销较高,Vos等
+人[26]
+基于椭圆曲线分别实现针对小集合和大集合的多方PSI
+协议,该协议在小集合上的运行时间比文献[25]快两个数量
+级。Wei等人[22]
+结合DH(Diffie-Hellman)密钥协商和零秘密
+分享技术构造出多方PSI协议,该协议的计算复杂度与参与方
+数量无关,适用于参与方数量较多、集合规模较小的场景。
+OT框架下的多方PSI协议的构造思路可以分为直接使用
+OT进行数据传输和利用OT构造OPRF两种。在直接使用OT
+进行数据传输方面,Inbar等人[27]
+将文献[28]中基于OT的两
+方PSI协议拓展到多方场景,在半诚实模型和增强的半诚实模
+型中分别设计出两种多方PSI协议。Zhang等人[21]
+利用cut-
+and-choose技术提出了针对恶意敌手的多方PSI。然而此协议
+规定两个特定的参与方不会合谋,否则,即使在半诚实模型下
+也无法保证协议的安全性。Ben-Efraim等人[29]
+对文献[30]中
+恶意安全的两方PSI协议进行了改进,并结合文献[27]构造出
+标准的恶意敌手模型下的多方PSI协议。Yang等人[23]
+设计出
+服务器帮助下的多方PSI协议,该协议仅由一个特定的参与方
+与服务器执行一次OT协议即可求得多方交集。在利用OT构
+造OPRF方面,Kavousi等人[19]
+将文献[6]中的多点OPRF推
+广到多方场景,从而获得多方PSI协议。Kolesnikov等人[18]
+进
+一步构造出OPPRF,利用发送方的输入对OPRF的密钥进行编
+程,使得OPPRF的密钥与发送方的集合元素相关,从而便于将
+两方协议扩展为多方协议。
+对不同设计框架下的典型的多方PSI协议的比较如表1
+所示。由表可知,公钥加密框架具有计算昂贵、通信负载低的
+特点,OT框架具有计算效率高的优势。此外,与基于公钥加密
+设计的多方PSI协议相比,基于OT的多方PSI协议增加了对
+增强的半诚实敌手模型下的多方PSI协议的研究。
+1.2针对集合表示方式的研究
+在多方PSI中,集合的表示方式对于协议的效率和安全性
+有着重要影响。目前,常见的集合表示方法有多项式、定长字
+符串、BF(Bloom filter)和GBF、OKVS等。将集合表示为特定
+的数据结构是多方PSI协议的一项基本任务,不仅关乎到集合
+的隐私保护、数据结构的存储空间、编码和解码效率,还直接影
+响协议的性能。
+文献[16,17,22]将集合表示为多项式的形式,并结合公
+钥加密技术实现多方PSI。多项式的编码和解码操作的计算
+复杂度通常较高,在大集合下会导致协议的计算开销显著增
+加。Bsy等人[31]
+使用定长字符串来表示全集,用与该字符串等
+长的比特串来表示集合,如果集合中包含某个元素,则将该比
+特串的对应位置设为1,否则设为0。该种方式虽然简洁直观,
+但是协议的通信和计算开销直接受到全集大小的影响。BF或
+GBF的集合表示方式通常会结合OT技术来实现多方PSI协
+议[27, 29]
+。Yang等人[23]
+利用零秘密分享技术构造出GBF的变
+体— — —零秘密分享乱码布隆过滤器(zero-sharing GBF,ZGBF),
+并基于该种数据结构构造出服务器帮助下的多方PSI协议。
+在该协议中,服务器仅需与一个特定的参与方执行一次OT协
+议即可求得多方交集,因此协议具有较高的运行效率。Nevo
+等人[20]
+基于OKVS实现恶意模型下安全的多方PSI协议。该
+协议根据恶意敌手是否合谋分为两种情况分别讨论,是目前为
+止表现最优的针对恶意敌手的多方PSI协议。
+· 7 1 8 2 · 第9期张磊,等:高效且平衡的多方PSI协议对不同集合表示方法下的典型多方PSI协议的比较如表2
+所示。由表1、2可知,多项式表示集合的方式所需的存储空间
+较小,有利于降低协议的通信开销。然而其编码和解码操作的
+计算复杂度高达O(n(log n)2
+)数量级,随着集合规模的增大,
+协议的性能将显著降低。定长字符串的长度由全集大小决定,
+使用该种集合表示方式会造成协议的通信和计算开销直接受
+全集大小的影响。GBF和ZGBF类型的集合表示方式与多项
+式相比,在编码和解码过程中展现出更高的效率,但是需要更
+大的存储开销,给参与方带来了更高的通信负担。OKVS与其
+他的集合表示方式相比,不仅具有更优的存储效率,其编码和
+解码的操作也更加快速,能够在降低参与方通信成本的同时提
+升协议的运行效率。
+表1不同设计框架下的典型的多方PSI协议比较
+Tab.1 Comparison of typical multi-party PSI protocols under different design frameworks
+设计框架协议安全性
+通信复杂度
+服务端客户端
+计算复杂度
+服务端客户端
+公钥加密
+文献[16]
+文献[17]
+文献[22]
+文献[25]
+半诚实O(t2n2λ) O(t2n2λ) O(t2n + tλn2) O(t2n + tλn2)
+半诚实O(ntλ) O(nλ) O(nt log nκ) O(nκ)
+恶意O((t2 + nt log n)κ) O((t + n log n)κ) O(n2) O(n2)
+半诚实O(ntλ) O(nλ) O(n(log n)2) O(n(log n)2)
+半诚实O(nl log X ) O(nl log X ) O(n) O(nλ)
+OT框架
+文献[18]
+文献[19]
+文献[21]
+文献[23]
+文献[27]
+文献[29]
+半诚实O(tnλ) O(n􀅼λ) O(tκ) O(􀅼κ)
+增强的半诚实O(tnλ) O(nλ) O(tκ) O(κ)
+半诚实O(tnλ) O(nλk) O(tnλ) O(nλk)
+恶意O(tnλ2 + tnλ log nλ) O(tnλ2 + tnλ log nλ) O(ntk) O(ntk)
+半诚实O(nλk) O(nλk) O(ntλk) O(nλk)
+半诚实O(ntκk) O(ntκk) O(ntκk) O(ntκk)
+增强的半诚实O(nκk log t) O(nκk log t) O(ntκk) O(ntκk)
+恶意O(tnκ2 + tnκ log nκ) O(tnκ2 + tnκ log nκ) O(ntκ) O(ntκ)
+注:n表示集合大小;t表示参与方数量;λ 和 κ 分别表示统计和计算安全参数;,k为哈希函数的个数;log X为二进制密文X的大小;l为门限加法同态加密系统的
+门限值;􀅼为合谋数量。
+表2不同集合表示方法下的典型的多方PSI协议比较
+Tab. 2 Comparison of typical multi-party PSI protocols under different set representations
+集合表示方式协议安全性存储空间编/ 解码复杂度
+通信复杂度
+服务端客户端
+计算复杂度
+服务端客户端
+GBF文献[19] 半诚实O(nλk) O(nλk) O(tnλ) O(nλk) O(tnλ) O(nλk)
+OKVS文献[20] 恶意
+O(nκ) O(nκ) O((n + t)κ) O(nκ) O(ntκ) O(nκ)
+O(nκ) O(nκ) O(nκ·max(􀅼,t - 􀅼)) O(nκ) O(nκ(t - 􀅼)) O(n 􀅼κ)
+多项式文献[22] 半诚实O(nλ) O(n(log n)2) O(ntλ) O(nλ) O(n(log n)2) O(n(log n)2)
+ZGBF文献[23] 半诚实O(nλk) O(nλk) O(nλk) O(nλk) O(ntλk) O(nλk)
+定长字符串文献[31] 半诚实O(d) O(d) O(dt log|X|〛) O(d log|X|) O(d) O(d)
+注:n表示集合大小;t表示参与方数量;λ 和 κ 分别表示统计和计算安全参数;k为哈希函数的个数;log|X|为二进制密文X的大小;d为全集大小;􀅼为合谋数量。
+2预备知识
+本章介绍EBMPSI协议的相关知识、系统模型以及安全性
+定义。为方便阅读,表3提供常用符号和变量的详细说明。
+表3常用符号和变量说明
+Tab. 3 Symbols and variable descriptions
+符号含义符号含义
+n集合大小Xi参与方Pi的隐私集合
+t参与方数量xi,j集合Xi中的第j个元素
+m编码大小u[i] 向量u的第i个元素
+ω 随机带长度M[〛i] 矩阵M的第i行向量
+λ 安全参数M[i][j] 矩阵M的第i行向量中的第j个元素
+Pi第i个参与方
+2.1相关知识
+2.1.1不经意键值存储
+OKVS是一种用来表示键值对正确映射的紧凑型数据结
+构[9]
+,由编码和解码算法组成。编码算法将一组键值对{(ki,
+vi)}编码为一个抽象的数据结构S;解码算法将数据结构S和
+键k′作为输入,得到相应的值v′。如果k′ = ki,则v′ = vi,否则
+vi为一个随机值。
+本文在PSI的构造中,使用基于随机带矩阵的OKVS
+(OKVS built on random band matrices,RB-OKVS)[32]
+对参与方
+的集合进行处理,该种编码方式在计算和存储方面具有优越的
+性能。在RB-OKVS中, m、ω 和 λ 分别表示编码大小、随机带
+长度和统计安全参数;K为键域、F为值域。对键值对{(ki,
+vi)}1≤i≤n进行编码的算法记为encode({(ki,vi )}1≤i≤n ) = S,编
+码结果S为一个m维向量,S∈Fm
+;使用S对任意键k′∈K进
+行解码的算法记为decode(S,k′) = row(k′)∗S,其中row(k′)
+是关于k′的一个m维的二进制行向量。
+2.1.2秘密分享技术
+Shamir的秘密分享[33]
+是一个基本的秘密分享方案,也称
+为(n,t)门限方案。在该方案中,秘密分发方将秘密S分割成
+n个份额,重构秘密S最少需要t个秘密份额。
+本文在PSI的构造中,使用简洁高效的异或秘密分享方
+案,设置t = n,并规定两个向量之间的异或运算为对它们各自
+对应位的逐位异或运算。具体地说,秘密S为一个m维向量,
+秘密分发方将秘密S分成n个份额,即构造n个m维的随机
+向量S1 ,…,Sn,使得S1 ⊕…⊕ Sn = S。恢复秘密S需要全部n
+个秘密份额。
+2.2系统模型
+在EBMPSI中,假设共有t个参与方,每个参与方Pi持有
+一个隐私集合Xi。设置参与方Pt为服务端,其他参与方P1 ,
+P2 ,…,Pt -1为客户端。
+客户端:客户端Pi (i∈[t - 1]) 将隐私集合Xi编码为
+OKVS数据结构Si,并根据秘密分享技术将Si分享给除自己
+以外的其他所有客户端;在接收到服务端和其他所有客户端的
+秘密份额后,客户端Pi基于Xi和接收到的秘密份额重新构造
+OKVS数据结构S′i,并将该结果发送给服务端。
+服务端:服务端Pt将隐私集合Xt编码为OKVS数据结构
+St,并根据秘密分享技术将St分享给其他所有客户端;在接收
+到所有客户端重新构造的OKVS后,Pt计算交集结果。
+· 8 1 8 2 · 计算机应用研究第42卷图1提供了t =4时EBMPSI的系统模型。其中P4为服务
+端,P1、P2和P3为客户端。
+P1
+P4
+P3 P2
+!"#$%&'()* +,-./
+!"#01()* +2345
+OKVS
+OKVS
+图1 EBMPSI系统模型
+Fig. 1 EBMPSI system model
+2.3安全性定义
+2.3.1多方PSI的理想功能
+多方PSI允许持有隐私集合的多个参与方共同计算交集,
+除了交集之外无法获得任何其他信息,其理想功能的具体定义
+如下。
+定义1多方PSI的理想功能FPSI。假设共有t个参与方,
+每个参与方Pi持有一个隐私集合Xi = {xi,1 ,xi,2 ,…,xi,n },其
+中i∈[t]。设置参与方Pt为服务端,其他参与方P1 ,P2 ,…,
+Pt -1为客户端。所有的参与方都参与到计算中,最终由服务端
+Pt计算出交集结果I∈∩t
+i =1 Xi。除了交集I之外,所有参与方
+无法获得其他任何信息。
+2.3.2安全模型
+本文假设所有参与方都是半诚实的,他们会诚实地遵循协
+议,但试图获取更多信息。本文还允许多个参与方的合谋攻
+击。令∏为多方PSI协议,F为多方PSI的理想功能。假设C
+为攻击者控制的参与方的集合,View∏为攻击者的现实视角,由
+攻击者使用C的现实输入和现实输出去执行现实协议∏获
+得,将其表示为View∏ (input( · ),output( · ))。假设SimF为攻
+击者的模拟视角,由模拟器Sim模拟攻击者的现实视角获得,
+将其表示为SimF(input( · ),output( · ))。
+定义2半诚实安全模型。给定多方PSI协议∏PSI以及相
+应的理想功能FPSI,如果在安全参数下存在一个概率多项式时
+间模拟器Sim,能够在多项式时间内生成一个与攻击者的现实
+视角无法区分的模拟视角,即
+SimFPSI
+(input(Xi,Pi∈C),output(FPSI(Pi,Pi∈C)))≈
+View∏PSI
+(input(Xi,Pi∈C),output(∏PSI(Pi,Pi∈C)))
+(1)
+则称∏PSI在半诚实模型下安全。
+3 EBMPSI
+本章利用秘密分享技术,将OKVS扩展到多方场景,从而
+构造出高效、平衡的多方PSI协议。协议的具体构造如下。
+3.1系统初始化阶段
+假设共有t个参与方,每个参与方Pi持有一个隐私集合
+Xi = {xi,1 ,xi,2 ,…,xi,n },其中i∈[t]。在这些参与方中,Pt担
+任服务端的角色,P1 ,P2 ,…,Pt -1担任客户端的角色。由系统
+管理员负责进行以下参数配置:确定编码大小m、随机带长度
+ω 和统计安全参数 λ;设置键域K和值域F,所有参与方的集
+合元素均属于域K;选择三个安全哈希函数H1
+、H2
+和H3
+,H1
+:
+{0,1}λ
+× K→{1,2,…,m - ω}、H2
+:{0,1}λ
+× K→{0,1}ω
+、H3
+:
+{0,1}λ
+× K→F。配置完成后,系统管理员将参数m、ω、λ 和三
+个安全哈希函数H1
+、H2
+、H3
+广播给所有客户端和服务端,以便
+进行后续的计算。
+3.2集合编码阶段
+参与方Pi(i∈[t])执行RB-OKVS的编码算法,随机选择
+三个字符串si,1 ,si,2 ,si,3 ∈{0,1}λ
+,将持有的隐私集合Xi =
+{xi,1 ,xi,2 ,…,xi,n } 编码为向量Si ∈ Fm
+,即encode ({( xi,a,
+H3
+(si,3 ,xi,a))}1≤a≤n) = Si。
+集合编码阶段算法如算法1所示。
+算法1集合编码阶段算法
+输入:参与方Pi(i∈[t])的隐私集合Xi = xi,1 ,xi,2 ,…,xi,n { }。
+输出:随机字符串si,1 ,si,2 ,si,3 ,Xi的编码结果Si。
+初始化一个n × m维的随机带矩阵M / / 所有元素初始化为零
+si,1 ,si,2 ,si,3
+r
+← {0,1}λ
+for j =1 to n
+a←H1
+(si,1 ,xi,j) / / 计算M[j]中随机带的起始位置
+u←H2
+(si,2 ,xi,j) / / 计算M[j]的随机带
+vi,j←H3
+(si,3 ,xi,j) / / 计算键xi,j对应的值vi,j
+for k =1 to ω
+M[j][a + k - 1]←u[k] / ∗M[j]中第H1
+(si,1 ,xi,j )位至第
+H1
+(si,1 ,xi,j) + ω - 1位之间的 ω 位元素由随机带H2
+(si,2 ,
+xi,j)逐位填充∗/
+end for
+end for
+根据第一个非0位置对M的行进行排序
+执行高斯消元法和回代法求解向量Si,使得M∗Si = [vi,1 ,…,
+vi,n]T
+return si,1 ,si,2 ,si,3 ,Si
+算法1将隐私集合Xi编码为向量Si。在该算法中,Pi令
+键xi,a对应的值vi,a = H3
+(si,3 ,xi,a),根据Xi和si,1 ,si,2构造一个
+n ×m维的随机带矩阵M,最后计算向量Si∈Fm
+,使其满足M∗
+Si = [vi,1 ,…,vi,n]T
+。Si为Xi在该阶段的编码结果。
+3.3秘密分享阶段
+客户端Pi(i∈[t -1])将Si分成t -2个秘密份额:令Si,i =
+Si,构造t - 2个随机向量Si,j ∈Fm
+(j∈[t - 1],j≠i),满足
+⊕t -1
+j =1 Si,j = (0,…,0)T
+。接着Pi将Si,j和si,1 ,si,2发送给客户端
+Pj。客户端Pi秘密分享Si的过程如图2所示。
+Si,1 Si t , 1 -
+Si t , 1 -
+Si t , 1 +
+Pi
+P1 Pi-1 Pi+1 Pt-1
+t-1 T
+j i j =1 , S =(0, ,0) …
+… …
+图2客户端秘密分享
+Fig. 2 Client secret sharing
+服务端Pt将St分成t - 1个秘密份额:令St,t = St,构造
+t -1个随机向量St,j∈Fm
+(j∈[t - 1]),满足⊕t
+j =1 St,j = (0,…,
+0)T
+。接着Pt将St,j和st,1 ,st,2发送给客户端Pj。服务端Pt秘
+密分享St的过程如图3所示。
+t
+j t j = , 1S =(0, ,0) …
+T
+Pt
+St,1
+St t , -1
+St i ,
+P1 Pi Pt-1
+… …
+图3服务端秘密分享
+Fig.3 Server secret sharing
+3.4 OKVS重构阶段
+客户端Pi(i∈[t - 1])收到所有的{Sj,i,sj,1 ,sj,2 }(j∈[t],j≠i)
+· 9 1 8 2 · 第9期张磊,等:高效且平衡的多方PSI协议后,计算集合Xi中每一个元素xi,a的秘密份额ssi,a,公式如式
+(2)所示。
+ssi,a = ⊕t
+j =1 decode(Sj,i,xi,a) (2)
+接着Pi随机选择两个字符串s′i,1 ,s′i,2 ∈{0,1}λ
+并执行
+RB-OKVS的编码算法,将{(xi,a,ssi,a )}1≤a≤n编码为S′i后发送
+S′i和s′i,1 ,s′i,2给Pt。
+OKVS重构阶段算法如算法2所示。
+算法2 OKVS重构阶段算法
+输入:客户端Pi(i∈[t -1])的隐私集合Xi = {xi,1 ,xi,2 ,…,xi,n },
+秘密分享阶段获得的秘密份额{Sj,i,sj,1 ,sj,2 }j∈[t] 。
+输出:随机字符串s′i,1 ,s′i,2 ,重构结果S′i。
+for j =1 to n
+/ ∗计算xi,j的秘密份额ssi,j∗/
+ssi,j←0 / / 将ssi,j初始化为0
+for k =1 to t
+/ / 使用Sk,i对xi,j进行解码
+初始化一个m维的随机带行向量row(xi,j) / ∗所有元素初始
+化为零∗/
+a←H1
+(sk,1 ,xi,j) / / 计算row(xi,j)中随机带的起始位置
+u←H2
+(sk,2 ,xi,j) / / 计算row(xi,j)的随机带
+for l =1 to ω
+row(xi,j)[a + l -1]←u[l] / ∗row(xi,j)中第H1
+(sk,1 ,xi,j )
+位至第H1
+(sk,1 ,xi,j ) + ω - 1位间的 ω 位元素由H2
+(sk,2 ,
+xi,j)逐位填充∗/
+end for
+decode(Sk,i,xi,j)←row(xi,j)∗Sk,i / / 计算解码结果
+ssi,j←ssi,j⊕ decode(Sk,i,xi,j) / / 异或解码结果
+end for
+end for
+/ / 将{(xi,j,ssi,j)}1≤j≤n编码为S′i
+初始化一个n × m维的随机带矩阵M / / 所有元素初始化为零
+s′i,1 ,s′i,2
+r
+← {0,1}λ
+for j =1 to n
+a←H1
+(s′i,1 ,xi,j)
+u←H2
+(s′i,2 ,xi,j)
+for k =1 to ω
+M[j][a + k -1]←u[k]
+end for
+end for
+根据第一个非0位置对M的行进行排序
+执行高斯消元法和回代法求解向量S′i,使得M∗S′i = [ssi,1 ,…,
+ssi,n]T
+return s′i,1 ,s′i,2 ,S′i
+算法2将隐私集合Xi重新编码为向量S′i。在该算法中,
+Pi首先计算Xi中每一个元素xi,a的秘密份额ssi,a,即分别使用
+S1,i,…,St,i对xi,a进行解码,将所有解码结果的异或值作为
+ssi,a。接着Pi随机生成s′i,1 ,s′i,2 ,将{(xi,a,ssi,a )}1≤a≤n编码为
+S′i,编码过程与算法1类似。S′i为Xi在该阶段的重构结果。
+3.5交集计算阶段
+在接收到所有客户端的重构结果后,Pt计算集合Xt中每
+一个元素xt,a的秘密份额sst,a,如式(3)所示。
+sst,a = (⊕t -1
+i =1 decode(S′i,xt,a))⊕ decode(St,t,xt,a) (3)
+其中:decode(St,t,xt,a) = decode(St,xt,a) = H3
+(st,3 ,xt,a)。如果
+sst,a =0,则xt,a∈∩t
+i =1 Xi。
+交集计算阶段算法如算法3所示。
+算法3交集计算阶段算法
+输入:服务端Pt的隐私集合Xt = {xt,1 ,xt,2 ,…,xt,n },st,3以及客户
+端的重构结果{S′i,s′i,1 ,s′i,2 }j∈[t -1] 。
+输出:交集结果∩t
+i =1 Xi。
+for j =1 to n
+/ / 计算xt,j的秘密份额sst,j
+sst,j←0 / / 将sst,j初始化为0
+for k =1 to t -1
+/ / 使用S′k对xt,j进行解码
+初始化一个m维的随机带行向量row(xt,j) / ∗所有元素初始
+化为0∗/
+a←H1
+(s′k,1 ,xt,j) / / 计算row(xt,j)中随机带的起始位置
+u←H2
+(s′k,2 ,xt,j) / / 计算row(xt,j)的随机带
+for l =1 to ω
+row(xt,j)[a + l -1]←u[l] / ∗row(xt,j)中第H1
+(s′k,1 ,xt,j )
+位至第H1
+(s′k,1 ,xt,j) + ω - 1位间的 ω 位元素由H2
+(sk,2 ,
+xi,j)逐位填充∗/
+end for
+decode(S′k,xt,j)←row(xt,j)∗S′k / / 计算解码结果
+sst,j←sst,j⊕(row∗S′k) / / 异或解码结果
+end for
+sst,j←sst,j⊕ H3
+(st,3 ,xt,j) / / 异或解码结果
+if sst,j = =0
+xt,j∈∩t
+i =1 Xi
+end if
+end for
+return ∩t
+i =1 Xi
+算法3计算多方交集结果。在该算法中,Pt计算集合Xt
+中每一个元素xt,a的秘密份额sst,a,即分别使用S′1 ,…,S′t -1 ,
+St,t对xt,a进行解码,将所有解码结果的异或值作为sst,a。如果
+sst,a =0,意味着xt,a为所有参与方持有的隐私集合中共有的元
+素,所有满足该条件的元素即为多方交集结果。
+4协议分析
+本章给出EBMPSI协议的正确性与安全性分析。
+4.1正确性分析
+在RB-OKVS中,decode(S,x)可以表示为S的线性组合,
+即decode(S,x) = row(x)∗S,因此RB-OKVS具有以下性质:
+如果S = S′⊕ S″,那么decode(S,x) = row(x)∗(S′⊕ S″) =
+(row(x)∗S′)⊕(row(x)∗S″) = (decode(S′,x))⊕(decode
+(S″,x))。在秘密分享阶段,参与方Pi (i∈[t - 1])将Si秘密
+分享给P1 ,…,Pi -1 ,Pi +1 ,…,Pt -1。如果某个Pj(j∈[t -1],j≠
+i)和Pi共同拥有元素x,那么Pj通过计算decode(Si,j,x)能够
+获得H3
+(si,3 ,x)的一个秘密份额;如果P1 ,…,Pi -1 ,Pi +1 ,…,
+Pt -1与Pi共同拥有元素x,那么
+⊕i -1
+j =1 decode Si,j,x ( ) ( ) ( )⊕ ⊕t -1
+j = i +1 decode Si,j,x ( ) ( ) ( ) =
+decode ⊕i -1
+j =1 Si,j ( )⊕ ⊕t -1
+j = i +1 Si,j ( ),x ( ) =
+decode Si,i,x ( ) = H3
+si,3 ,x ( )
+(4)
+即⊕t -1
+j =1 (decode(Si,j,x)) = 0。同理,参与方Pt将St分享给
+P1 ,…,Pt -1 ,如果P1 ,…,Pt -1和Pt共同拥有元素x,则有
+⊕t
+j =1 (decode(St,j,x)) =0。
+在交集计算阶段,Pi(i∈[t -1])将S′i分享给Pt。如果Pt
+与Pi共同拥有元素x,那么Pt通过计算decode(S′i,x)可以获
+得⊕t
+j =1 decode(Sj,i,x);如果Pt与P1 ,…,Pt -1共同拥有元素x,
+即x∈∩t
+i =1 Xi,那么Pt通过计算decode(S′1 ,x),…,decode
+(S′t -1 ,x)可以获得⊕t
+j =1 decode(Sj,1 ,x),…,⊕t
+j =1 decode(Sj,t -1 ,
+x)。因此,如果x∈∩t
+i =1 Xi,有
+⊕t -1
+i =1 decode S′1 ,x ( ) ( )⊕ decode St,t,x ( ) =
+⊕t -1
+i =1 ⊕t
+j =1 decode Sj,i,x ( ) ( ) ( )⊕ decode St,t,x ( ) =
+⊕t -1
+i =1 ⊕t -1
+j =1 decode Si,j,x ( ) ( ) ( )⊕ ⊕t
+j =1 decode St,j,x ( ) ( ) =0
+(5)
+综上,EBMPSI协议的正确性成立。
+· 0 2 8 2 · 计算机应用研究第42卷4.2安全性分析
+定理1在半诚实模型下,假设RB-OKVS方案是安全的,
+那么EBMPSI协议具备针对所有半诚实敌手的安全性,并且能
+够抵御合谋攻击。如果服务端Pt参与合谋,协议可以抵抗包
+括Pt在内的t -2个半诚实敌手的合谋攻击;如果Pt未参与合
+谋,协议可以抵抗t -1个半诚实敌手的合谋攻击。
+证明EBMPSI协议涉及两类参与方,服务端Pt和参与端
+P1 ,…,Pi -1。假设半诚实敌手试图从协议中收集除交集以外
+的信息,根据敌手的类别和是否合谋考虑以下四种攻击方式。
+第1种只考虑一个半诚实敌手Pt。
+模拟器Sim与Pt交互生成一个模拟视角SimPt
+PSI( · )。在初
+始化阶段,Sim随机构造集合Xt = {xt,1 ,xt,2 ,…,xt,n }作为Pt的
+输入,并更新模拟视图为SimPt
+PSI (input(Xt ),output( · ))。在集
+合编码阶段,Sim随机选择st,1 ,st,2 ,st,3 ∈{0,1}λ
+并将集合Xt
+编码为St,接着将St和st,1,st,2,st,3发送给Pt并更新模拟视图为
+SimPt
+PSI(input(Xt,St,st,1,st,2,st,3,{St,j j∈[t -1]}),output( · ))。
+在秘密分享阶段,Sim构造t -1个随机向量St,j(j∈[t -1])满
+足⊕t
+j =1 St,j = (0,…,0)T
+,其中St,t = St,接着将St,j (j∈[t -1])
+发送给Pt并更新模拟视图为SimPt
+PSI (input(Xt,St,st,1 ,st,2 ,st,3 ,
+{St,j |j∈[t -1]}),output( · ))。在OKVS重构阶段,Sim生成
+t -1个随机向量S′j∈Fm
+以及相应的t -1对随机数s′j,1 ,s′j,2 ∈
+{0,1}λ
+,其中j∈[t -1],接着Sim将S′j,s′j,1 ,s′j,2 (j∈[t -1])
+发送给Pt并更新模拟视图为
+SimPt
+PSI
+input Xt,St,st,1 ,st,2 ,st,3 , St,j j∈ t -1 [ ] { } ( ),
+output S′j,s′j,1 ,s′j,2 j∈ t -1 [ ] { } ( ) ( )
+要证明SimPt
+PSI和Pt的真实视角ViewPt
+PSI不可区分,需要证
+明output({S′j,s′j,1 ,s′j,2 |j∈[t - 1]})在模拟视角和真实视角
+下不可区分。首先,由于模拟视角和真实视角下的{s′j,1 ,s′j,2 |
+j∈[t - 1]}均是随机数,所以Pt无法区分。其次,利用S′j对
+任意的数据元素x进行解码:如果x∉Xj,decode(S′j,x)是一个
+伪随机数;如果x∈Xj,decode(S′j,x) = ⊕t
+i =1 decode(Si,j,x),由
+于Pt对S1,j,…,St -1,j一无所知,所以decode(S′j,xt,a )的结果对
+于Pt来说仍是一个伪随机数。因此,Pt无法区分模拟视角和真
+实视角下的{S′j j∈[t -1]}。综上,可以得到SimPt
+PSI≈ViewPt
+PSI。
+第2种只考虑一个半诚实敌手Pi(i∈[t -1])。
+模拟器Sim与Pi交互生成一个模拟视角SimPi
+PSI( · )。在初
+始化阶段,Sim随机构造集合Xi = {xi,1 ,xi,2 ,…,xi,n }作为Pi的
+输入,并更新模拟视图为SimPi
+PSI (input(Xi ),output( · ))。在集
+合编码阶段,Sim随机选择si,1 ,si,2 ,si,3 ∈{0,1}λ
+,将集合Xi编
+码为Si,接着将Si和si,1 ,si,2 ,si,3发送给Pi并更新模拟视图为
+SimPi
+PSI(input(Xi,Si,si,1 ,si,2 ,si,3 ),output( · ))。在秘密分享阶
+段,Sim构造t -2个随机向量Si,j (j∈[t -1],j≠i),满足⊕t -1
+j =1
+Si,j = (0,…,0)T
+,其中Si,i = Si;Sim接着构造t -1个随机向量
+Sj,i∈Fm
+和t -1对随机数sj,1 ,sj,2 ∈{0,1}λ
+,其中j∈[t],j≠i;
+最后Sim将Si,j(j∈[t -1],j≠i)和Sj,i,sj,1 ,sj,2 (j∈[t],j≠i)发
+送给Pi并更新模拟视图为SimPi
+PSI (input(Xi,Si,si,1 ,si,2 ,si,3 ,
+{Si,j |j∈[t -1],j≠i}),output({Sj,i,sj,1 ,sj,2 j∈[t],j≠i}))。
+要证明SimPi
+PSI和Pi的真实视角ViewPi
+PSI不可区分,需要证
+明output({Sj,i,sj,1 ,sj,2 j∈[t],j≠i})在模拟视角和真实视角
+下不可区分。首先,由于模拟视角和真实视角下的{sj,1 ,sj,2 |
+j∈[t],j≠i}均是随机数,所以Pi无法区分。其次,利用Sj,i对
+任意的数据元素x进行解码:如果x∉Xj,decode(Sj,i,x)的结果
+是一个伪随机数;如果x∈Xj,decode(Sj,i,x)的结果为H3
+(sj,3 ,
+x)的一个随机的秘密份额,对于Pi来说仍是一个伪随机数。
+因此,Pi无法区分模拟视角和真实视角下的{Sj,i | j∈[t],j≠
+i}。综上,可以得到SimPi
+PSI≈ViewPi
+PSI。
+第3种考虑合谋数量为t - 1的半诚实敌手集合C1 ,其
+中Pt∉C1。
+模拟器Sim与C1交互生成一个模拟视角SimC1
+PSI( · )。根据
+上述分析,可得模拟视图为SimC1
+PSI (input(XC1
+,SC1
+,sC1,1 ,sC1,2 ,
+sC1,3 ),output(St,C1
+,st,1 ,st,2 ))。
+要证明SimC1
+PSI和C1的真实视角ViewC1
+PSI不可区分,需要证
+明output(St,C1
+,st,1 ,st,2 )在模拟视角和真实视角下不可区分。
+首先,由于模拟视角和真实视角下的st,1 ,st,2均是随机数,所以
+C1无法区分。此外,在真实视角下,C1可以通过合谋获得St。
+利用St对任意的数据元素x进行解码:如果x∉Xt,decode(St,
+x)的结果为一个伪随机值;如果x ∈ Xt,decode ( St,x) =
+H3
+(st,3 ,x),由于C1对st,3一无所知,所以decode(St,x)的结果
+对于C1来说仍是一个伪随机数。故而,C1无法区分模拟视角
+和真实视角下的St,C1
+。综上,可以得到SimC1
+PSI≈ViewC1
+PSI。
+第4种考虑合谋数量为t - 2的半诚实敌手集合C2 ,其
+中Pt∈C2。
+假设两个诚实的参与方分别为Pj1
+和Pj2
+,其中j1 ,j2 ∈[t -
+1],记H = {Pj1
+,Pj2
+}。模拟器Sim与C2交互生成一个模拟视
+角SimC2
+PSI(· )。根据上述分析,可得模拟视图为SimC2
+PSI (input
+(XC2
+,SC2
+,sC2,1 ,sC2,2 ,sC2,3 ),output(SH,C2
+,sH,1 ,sH,2 ,S′H,s′H,1 ,
+s′H,2 ))。
+要证明SimC2
+PSI和C2的真实视角ViewC2
+PSI不可区分,需要证
+明output(SH,C2
+,sH,1 ,sH,2 ,S′H,s′H,1 ,s′H,2 )在模拟视角和真实视
+角下不可区分。首先,由于模拟视角和真实视角下的sH,1 ,
+sH,2 ,s′H,1 ,s′H,2均是随机数,所以C2无法区分。其次,在真实视
+角下,由于C2中只包含t -3个客户端,因此C2无法通过合谋
+获得Sj1
+和Sj2
+,C2只能获得Sj1
+和Sj2
+的t -3个秘密份额SH,C2
+。
+利用SH,C2
+对数据x元素进行解码,无论这个元素是否属于Xj1
+和Xj2
+,解码的结果对C2来说都是伪随机数。因此,C2无法区
+分模拟视角和真实视角下的SH,C2
+。最后,利用S′j1
+对任意的数
+据元素x进行解码:如果x∉Xj1
+,decode(S′j1
+,x)的结果为一个
+伪随机值;如果x∈Xj1
+,decode(S′j1
+,x) = ⊕t
+i =1 decode(Si,j,x),
+由于C2对Sj1
+和Sj2
+,即Sj1,j1
+和Sj2,j2
+一无所知,所以decode
+(S′j1
+,x)的结果对于C2来说仍是一个伪随机数。故而,C2无
+法区分模拟视角和真实视角下的S′j1
+。同理,C2无法区分模拟
+视角和真实视角下的S′j2
+。综上,可以得到SimC2
+PSI≈ViewC2
+PSI。
+根据上述分析,可以证明定理1。
+5实验验证
+为了评估EBMPSI协议的性能,本章将EBMPSI协议与文
+献[19, 22, 23]中的三个多方PSI协议进行对比测试。
+5.1实验环境和参数设置
+本文使用Python 3. 8编程语言进行编程,所有的实验均在
+配备有Intel Core i5-13500HX处理器(2. 50 GHz)和16. 0 GB
+RAM的Windows 10操作系统的计算机上进行。在实验中,t
+表示参与方的数量,n表示参与方的集合大小,假设所有参与
+方的集合大小相同。由于计算机内存的限制,实验中选择n =
+{28
+,29
+,210
+,211
+,212
+,213
+}和t = {5,10,15,20}。集合元素的大
+小均设为512 bit。设置所有协议的安全参数 λ = 40。由于文
+献[19,23]中用到BF、GBF和ZGBF,所以在这两个协议的实
+验中设置哈希函数的个数k = 20,BF、GBF和ZGBF的大小为
+1. 44 × k × n。
+· 1 2 8 2 · 第9期张磊,等:高效且平衡的多方PSI协议5.2复杂度分析
+在EBMPSI中,客户端和服务端的计算开销受到RB-OKVS
+的编码和解码效率的影响。RB-OKVS的编码和解码效率分别
+为O(nω)和O(ω)。由于客户端共需要进行2次编码操作和
+t × n次解码操作,服务端共需要进行1次编码操作和t × n次解
+码操作,所以客户端和服务端的计算复杂度均为O(tnω)。与
+计算开销类似,EBMPSI中的客户端和服务端的通信开销受到
+RB-OKVS的编码大小,即m大小的影响。由于客户端和服务
+端均需要将各自的编码结果分享给其他t - 1方,所以客户端
+和服务端的通信复杂度均为O(tm)。
+文献[19,22, 23]中客户端和服务端的通信和计算复杂度
+如表1所示。与这些协议相比,EBMPSI的计算和通信开销不
+仅与集合的大小n有关,还与参与方的数量t有关;而文献
+[22]中所有参与方的计算开销均不受t的影响,文献[19,23]
+中客户端的计算开销和通信开销也均与t无关。然而,文献
+[22]中参与方需要将集合表示为多项式的形式,随着集合规
+模的增加,协议的计算开销将显著增加;文献[19,23]中服务
+端的计算开销与t有关,因此协议的总体运行时间仍然会受到
+t的影响。
+5.3 EBMPSI的开销分析
+图4给出不同数据集大小和不同参与方数量下EBMPSI
+中客户端和服务端的运行时间。由图可知,当参与方数量保持
+不变时,随着数据集规模的增长,客户端和服务端的运行时间
+相应增加;同样,当数据集规模固定时,随着参与方数量的增
+加,客户端和服务端的运行时间也呈现上升趋势。
+100
+80
+60
+40
+20
+0
+1.0
+0.8
+0.6
+0.4
+0.2
+0.0
+t
+t
+t
+t
+=20
+=15
+=10
+=5
+! " # $ % & '/s
+( ) # $ % & '/s
+100
+80
+60
+40
+20
+0
+2
+8
+29
+210
+211
+212
+213
+*+,-.
+1.0
+0.8
+0.6
+0.4
+0.2
+0.0
+2
+8
+2
+9
+2
+10
+2
+8
+2
+9
+2
+10
+28
+29
+210
+211
+212
+213
+*+,-.
+t
+t
+t
+t
+=20
+=15
+=10
+=5
+(a)客户端 (b)服务端
+图4 EBMPSI中客户端和服务端的运行时间对比
+Fig. 4 Runtime comparison between clients and server in EBMPSI
+图5给出不同数据集大小和不同参与方数量下EBMPSI
+中客户端和服务端的通信开销。由图可知,当参与方数量保持
+不变时,随着数据集规模的增长,客户端和服务端的通信开销
+相应增加;同样,当数据集规模固定时,随着参与方数量的增
+加,客户端和服务端的通信开销也呈现上升趋势。
+! " # $ % & '/KB
+0
+2
+8
+2
+9
+2
+10
+2
+11
+2
+12
+2
+13
+( ) # $ % & '/ KB
+0
+2
+8
+2
+9
+2
+10
+2
+11
+2
+12
+2
+13
+t
+t
+t
+t
+=5
+=10
+=15
+=20
+t
+t
+t
+t
+=5
+=10
+=15
+=20
+(a)客户端 (b)服务端
+图5 EBMPSI中客户端和服务端的通信开销对比
+Fig.5 Communication overhead comparison between
+clients and server in EBMPSI
+此外,在参与方和数据集大小相同的情况下,客户端和服
+务端的运行时间和通信开销大致相同。尽管客户端比服务端
+多了一次计算复杂度为O(nω)的编码操作,导致客户端的计
+算开销会略高于服务端,但是这一额外的计算负担在实验中被
+证明并没有对客户端的性能产生显著影响。因此,可以得出结
+论,EBMPSI协议在客户端和服务端之间有效地实现了计算和
+通信开销的均衡分配。
+5.4效率对比
+图6给出数据集大小为211
+,212
+,213
+时,不同参与方数量下
+各协议中客户端和服务端的运行时间(图中,对比协议1、2、3
+分别指文献[22,23,19]中的三个半诚实模型下安全的多方
+PSI协议)。由图可知,EBMPSI中服务端的运行时间显著低于
+其他协议,客户端的运行时间在n≤212
+时略高于协议3。协议
+3中客户端的效率优势来源于协议将大部分的计算工作交给
+服务端一方完成,客户端仅承担小部分的计算开销。此外,各
+协议中客户端和服务端的运行时间在很大程度上受集合表示
+方式的影响。协议1采用多项式表示集合的方式,多项式编码
+和解码操作的计算复杂度高达O(n(logn)2
+)数量级,导致协议
+1中客户端和服务端的运行时间较长。协议2中将集合编码
+为ZGBF的形式,所需的计算开销为O nλk ( )数量级,较多项式
+的表示方式效率更高。EBMPSI中采用具有更优的编码和解
+码效率的RB-OKVS编码方式,使得EBMPSI中客户端和服务
+端的运行效率与协议1和2相比具有显著优势。
+25
+20
+15
+10
+5
+0
+5 10 15 20
++,-./
+0 1 2 3/s
+!"#$ %&'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+%&'
+!"#$ %&'
+%&' EBMPSI
+!"#$ )*'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+)*'
+!"#$ )*'
+)*' EBMPSI
+!"#$ %&'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+%&'
+!"#$ %&'
+%&' EBMPSI
+!"#$ )*'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+)*'
+!"#$ )*'
+)*' EBMPSI
+120
+100
+80
+60
+40
+20
+0
+5 10 15 20
+0 1 2 3/s
+!"#$ %&'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+%&'
+!"#$ %&'
+%&' EBMPSI
+!"#$ )*'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+)*'
+!"#$ )*'
+)*' EBMPSI
++,-./
+5 10 15 20
++,-./
+600
+500
+400
+300
+200
+100
+0
+0 1 2 3/s
+(a)n =211
+(b)n =212
+(c)n =213
+图6各协议中客户端和服务端的运行时间对比
+Fig.6 Runtime comparison between clients and server in various protocols
+图7给出数据集大小为211
+,212
+,213
+时,不同参与方数量下
+各协议中客户端和服务端的通信开销(图中,对比协议1、2、3
+分别指文献[22,23,19]中的三个半诚实模型下安全的多方
+PSI协议)。从图中的数据可知,协议1在通信开销方面表现
+最优,EBMPSI次之,两者的通信开销均显著低于协议2。各协
+议的通信开销同样受集合表示方式的影响。协议1、2和
+EBMPSI分别将集合表示为多项式、ZGBF和OKVS的形式,其
+中多项式所需的存储空间最低,OKVS次之,ZGBF需要的存储
+空间最高,因此EBMPSI的通信开销介于两者之间。对于协议
+3来说,由于大部分的通信工作由服务端一方完成,所以服务
+端承担的通信开销远高于客户端和其他协议。
+图8展示了参与方数量在5,10,15,20时,不同数据集大
+小下各协议的总体运行时间(图中,对比协议1、2、3分别指文
+献[22,23,19]中的三个半诚实模型下安全的多方PSI协议)。
+· 2 2 8 2 · 计算机应用研究第42卷与协议1相比,随着集合规模的增大,EBMPSI的时间成本增长
+幅度远小于协议2。这是因为协议1主要依赖于多项式编码和
+解码操作,计算复杂度达到了O(n(log n)2
+)数量级。因此在集
+合规模较大的情况下,协议1的时间成本会远高于EBMPSI。
+!"#$ %&'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+%&'
+!"#$ %&'
+%&' EBMPSI
+!"#$ )*'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+)*'
+!"#$ )*'
+)*' EBMPSI
+10 000
+8 000
+6 000
+4 000
+2 000
+0
+30 000
+25 000
+20 000
+15 000
+10 000
+5 000
+0
+80 000
+60 000
+40 000
+20 000
+0
+5 10 15 20 5 10 15 20 5 10 15 20
++,-./ +,-./ +,-./
+0 1 2 3/KB
+!"#$ %&'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+%&'
+!"#$ %&'
+%&' EBMPSI
+!"#$ )*'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+)*'
+!"#$ )*'
+)*' EBMPSI
+!"#$ %&'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+%&'
+!"#$ %&'
+%&' EBMPSI
+!"#$ )*'
+!"#(
+1
+2
+( )
+( )
+3( )
+( )
+)*'
+!"#$ )*'
+)*' EBMPSI
+0 1 2 3/KB
+0 1 2 3/KB
+(a)n =211
+(b)n =212
+(c)n =213
+图7各协议中客户端和服务端的通信开销对比
+Fig.7 Communication overhead comparison between clients and server in various protocols
+400
+300
+200
+100
+0
+2
+8
+2
+9
+2
+10
+2
+11
+2
+12
+2
+13
+10
+8
+6
+4
+2
+0
+%&'()
+* + , - . //s
+2
+8
+2
+9
+2
+10
+2
+8
+2
+9
+2
+10
+2
+8
+2
+9
+2
+10
+2
+11
+2
+12
+2
+13
+%&'()
+400
+300
+200
+100
+0
+* + , - . //s
+10
+8
+6
+4
+2
+0
+2
+8
+2
+9
+2
+10
+2
+11
+2
+12
+2
+13
+15
+12
+9
+6
+3
+0
+400
+300
+200
+100
+0
+* + , - . //s
+2
+8
+2
+9
+2
+10
+2
+8
+2
+9
+2
+10
+2
+11
+2
+12
+2
+13
+15
+12
+9
+6
+3
+0
+600
+500
+400
+300
+200
+100
+0
+2
+8
+2
+9
+2
+10
+* + , - . //s
+%&'()
+!"#$1
+2
+3
+!"#$
+!"#$
+EBMPSI1
+%&'()
+!"#$1
+2
+3
+!"#$
+!"#$
+EBMPSI1
+!"#$1
+2
+3
+!"#$
+!"#$
+EBMPSI1
+!"#$1
+2
+3
+!"#$
+!"#$
+EBMPSI1
+(a)t =5 (b)t =10 (c)t =15 (d)t =20
+图8各协议的总体运行时间对比
+Fig.8 Overall runtime comparison of various protocols
+与协议2相比,当集合规模达到213
+时,EBMPSI的总体运
+行时间略高于协议2。这一现象可以归因于两个协议在并行
+化程度上的差异。在协议2中,客户端和服务端的计算操作几
+乎完全可以并行执行,因此协议的总体运行时间主要由运行时
+间较高的服务端决定。相比之下, EBMPSI中客户端重构
+OKVS和服务端计算交集的操作必须依次进行,且这两个操作
+的计算成本占据协议的大部分开销,从而导致协议的总体运行
+时间接近于两端运行时间的累加。因此,在集合规模较大的情
+况下,EBMPSI的运行效率相较于协议2略显不足。
+与协议3相比,随着集合规模和参与方数量的增加,
+EBMPSI的效率优势越发显著。在协议3中,服务端承担大部
+分的计算工作,特别是需要与每个客户端两两执行OT协议。
+随着参与方数量的增加,服务端需要执行的OT操作次数线性
+增长;同时,数据集规模的扩大也导致每次OT操作的计算成
+本显著增加。这些因素共同导致在参与方众多和数据集庞大
+的场景下,服务端面临极高的计算负担。因此,协议3更适合
+于服务端具备较高计算能力的场景。在本文的实验设置中,由
+于服务端与客户端的计算能力相同,协议3中服务端的性能瓶
+颈成为限制总体效率的关键因素。相比之下,EBMPSI实现了
+计算开销在各方之间的均衡分配,因此在资源分布均匀的多方
+环境中表现更为出色。
+6结束语
+本文结合OKVS和秘密分享技术,提出了一种高效且平衡
+的多方PSI协议— — —EBMPSI。理论分析表明,EBMPSI协议具
+备针对所有半诚实敌手的安全性,并且可以抵抗多个参与方的
+合谋攻击。实验结果表明,EBMPSI协议在多个参与方之间有
+效地实现了计算和通信开销的均衡分配,这一特性使得
+EBMPSI协议在资源分布均匀的环境中展现出更为优越的执
+行效率。未来的工作将集中在两个方面:a)进一步完善多方
+PSI协议的公平性,使得所有参与方都能够求得交集结果;b)
+增强多方PSI协议的安全性,开发出能够抵御恶意敌手及其合
+谋攻击的多方PSI协议。
+参考文献:
+[1] Luo Shengmei, Wang Zhikun, Wang Zhiping. Big-data analytics:
+challenges, key technologies and prospects [J]. ZTE Communica-
+tions, 2013, 11(2): 11-17.
+[2] Badshah A, Daud A, Alharbey R, et al. Big data applications: over-
+view, challenges and future [J]. Artificial Intelligence Review,
+2024, 57(11): 290.
+[3] 钱文君,沈晴霓,吴鹏飞,等.大数据计算环境下的隐私保护技
+术研究进展 [J].计算机学报, 2022, 45(4): 669-701. (Qian
+Wenjun, Shen Qingni, Wu Pengfei, et al. Research progress on pri-
+vacy-preserving techniques in big data computing environment [J].
+Chinese Journal of Computers, 2022, 45(4): 669-701. )
+[4] 孟小峰,张啸剑.大数据隐私管理 [J].计算机研究与发展,
+2015, 52(2): 265-281. (Meng Xiaofeng, Zhang Xiaojian. Big da-
+ta privacy management [J]. Journal of Computer Research and
+Development, 2015, 52(2): 265-281. )
+[5] Morales D, Agudo I, Lopez J. Private set intersection: a systematic
+literature review [ J]. Computer Science Review, 2023, 49:
+100567.
+[6] Chase M, Miao P. Private set intersection in the internet setting from
+lightweight oblivious PRF [C] / / Proc of the 40th Annual Interna-
+tional Cryptology Conference on Advances in Cryptology. Cham:
+Springer, 2020: 34-63.
+[7] Garimella G, Pinkas B, Rosulek M, et al. Oblivious key-value stores
+and amplification for private set intersection [C] / / Proc of the 41st
+Annual International Cryptology Conference on Advances in Cryptolo-
+gy. Cham: Springer, 2021: 395-425.
+[8] Pinkas B, Rosulek M, Trieu N, et al. SpOT-Light: lightweight pri-
+vate set intersection from sparse OT extension [C] / / Proc of the 39th
+Annual International Cryptology Conference on Advances in Cryptology.
+Cham: Springer, 2019: 401-431.
+· 3 2 8 2 · 第9期张磊,等:高效且平衡的多方PSI协议[9] Pinkas B, Rosulek M, Trieu N, et al. PSI from PaXoS: fast, mali-
+cious private set intersection [C] / / Proc of the 39th Annual Interna-
+tional Conference on the Theory and Applications of Cryptographic
+Techniques on Advances in Cryptology. Cham: Springer, 2020: 739-
+767.
+[10] Raghuraman S, Rindal P. Blazing Fast PSI from improved OKVS and
+subfield VOLE [C] / / Proc of ACM SIGSAC Conference on Computer
+and Communications Security. New York: ACM Press, 2022: 2505-
+2517.
+[11] 赵宗渠,王书静,汤永利,等.基于理想格的两方隐私集合交集
+协议 [J].计算机应用研究, 2023, 40(12): 3795-3799. (Zhao
+Zongqu, Wang Shujing, Tang Yongli, et al. Two-party privacy set
+intersection protocol based on ideal lattice [J]. Application Re-
+search of Computers, 2023, 40(12): 3795-3799. )
+[12] Wang Xu’an, Xhafa F, Luo Xiaoshuang, et al. A privacy-preserving
+fuzzy interest matching protocol for friends finding in social networks
+[J]. Soft Computing, 2018, 22(8): 2517-2526.
+[13] Shen Liyan, Chen Xiaojun, Wang Dakui, et al. Efficient and private
+set intersection of human genomes [C] / / Proc of IEEE International
+Conference on Bioinformatics and Biomedicine. Piscataway, NJ:
+IEEE Press, 2018: 761-764.
+[14] Ion M, Kreuter B, Nergiz A E, et al. On deploying secure compu-
+ting: private intersection-sum-with-cardinality [C] / / Proc of IEEE
+European Symposium on Security and Privacy. Piscataway,NJ: IEEE
+Press, 2020: 370-389.
+[15] 巩一德,张恩,王梦涛.抗恶意敌手的多方概率门限隐私集合交
+集方法 [J].计算机应用研究, 2024, 41(12): 3834-3842. (Gong
+Yide, Zhang En, Wang Mengtao. Multiparty probabilistic threshold
+private set intersection method against malicious adversaries [ J].
+Application Research of Computers,2024,41(12):3834-3842. )
+[16] Kissner L, Song D. Privacy-preserving set operations [C] / / Proc of
+the 25th Annual International Cryptology Conference on Advances in
+Cryptology. Cham: Springer, 2005: 241-257.
+[17] Hazay C, Venkitasubramaniam M. Scalable multi-party private set-in-
+tersection [C] / / Proc of the 20th IACR International Conference on
+Practice and Theory in Public-Key Cryptography. Cham: Springer,
+2017: 175-203.
+[18] Kolesnikov V, Matania N, Pinkas B, et al. Practical multi-party pri-
+vate set intersection from symmetric-key techniques [C] / / Proc of
+ACM SIGSAC Conference on Computer and Communications Security.
+New York: ACM Press, 2017: 1257-1272.
+[19] Kavousi A, Mohajeri J, Salmasizadeh M. Efficient scalable multi-party
+private set intersection using oblivious PRF [C] / / Proc of the 17th
+International Workshop on Security and Trust Management. Cham:
+Springer, 2021: 81-99.
+[20] Nevo O, Trieu N, Yanai A. Simple, fast malicious multiparty private
+set intersection [C] / / Proc of ACM SIGSAC Conference on Compu-
+ter and Communications Security. New York: ACM Press, 2021:
+1151-1165.
+[21] Zhang En, Liu Fenghao, Lai Qiqi, et al. Efficient multi-party private
+set intersection against malicious adversaries [C] / / Proc of ACM
+SIGSAC Conference on Cloud Computing Security Workshop. New
+York: ACM Press, 2019: 93-104.
+[22] Wei Lifei, Liu Jihai, Zhang Lei, et al. Efficient multi-party private
+set intersection protocols for large participants and small sets [J].
+Computer Standards & Interfaces, 2024, 87: 103764.
+[23] Yang Yunbo, Dong Xiaolei, Cao Zhenfu, et al. EMPSI: efficient
+multiparty private set intersection (with cardinality) [J]. Frontiers
+of Computer Science, 2024, 18(1): 181804.
+[24] Freedman M J, Nissim K, Pinkas B. Efficient private matching and
+set intersection [C] / / Proc of International Conference on the Theory
+and Applications of Cryptographic Techniques. Berlin: Springer,
+2004: 1-19.
+[25] Bay A, Erkin Z, Hoepman J H, et al. Practical multi-party private
+set intersection protocols [J]. IEEE Trans on Information Foren-
+sics and Security, 2022, 17: 1-15.
+[26] Vos J, Conti M, Erkin Z. Fast multi-party private set operations in
+the star topology from secure ANDs and ORs [EB/ OL]. (2022)
+[2025-01-08]. https:/ / eprint. iacr. org/2022/721.
+[27] Inbar R, Omri E, PIinkas B. Efficient scalable multiparty private set-
+intersection via garbled Bloom filters [C] / / Proc of the 11th Interna-
+tional Conference on Security and Cryptography for Networks. Cham:
+Springer, 2018: 235-252.
+[28] Dong Changyu, Chen Liqun, Wen Zikai. When private set intersec-
+tion meets big data: an efficient and scalable protocol [C] / / Proc of
+ACM SIGSAC Conference on Computer & Communications Security.
+New York: ACM Press, 2014: 789-800.
+[29] Ben-Efraim A, Nissenbaum O, Omri E, et al. Psimple: practical
+multiparty maliciously-secure private set intersection [C] / / Proc of
+ACM on Asia Conference on Computer and Communications Security.
+New York: ACM Press, 2022: 1098-1112.
+[30] Rindal P, Rosulek M. Improved private set intersection against mali-
+cious adversaries [C] / / Proc of the 36th Annual International Con-
+ference on the Theory and Applications of Cryptographic Techniques.
+Cham: Springer, 2017: 235-259.
+[31] Bsy A, Erkin Z, Alishahi M, et al. Multi-party private set intersec-
+tion protocols for practical applications [C] / / Proc of the 18th Inter-
+national Conference on Security and Cryptography. Los Angeles: Scien-
+ce and Technology Press, 2021: 515-522.
+[32] Bienstock A, Patel S, Seo J Y, et al. Near-optimal oblivious key-value
+stores for efficient PSI, PSU and volume-hiding multi-maps [C] / /
+Proc of the 32nd USENIX Security Symposium. Berkeley,CA: USENIX
+Association Press, 2023: 301-318.
+[33] Shamir A. How to share a secret [J]. Communications of the
+ACM, 1979, 22(11): 612-613.
+· 4 2 8 2 · 计算机应用研究第42卷

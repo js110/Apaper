@@ -1,0 +1,158 @@
+{
+ "S1_zkpol_vehicle": {
+  "query": "zero-knowledge proof-of-location vehicle compliance signed",
+  "error": "HTTP Error 429: "
+ },
+ "S2_report_binding": {
+  "query": "zero-knowledge proof binds submitted ciphertext report crowdsensing",
+  "error": "HTTP Error 429: "
+ },
+ "S3_nullifier_crowdsensing": {
+  "query": "nullifier anonymous crowdsensing duplicate detection",
+  "error": "HTTP Error 429: "
+ },
+ "S4_zklp": {
+  "query": "Zero-Knowledge Location Privacy Accurate Floating-Point SNARKs",
+  "error": "HTTP Error 429: "
+ },
+ "S5_holder_binding": {
+  "query": "holder binding anonymous credential receipt transfer zero-knowledge",
+  "error": "HTTP Error 429: "
+ },
+ "O7_zklocus": {
+  "query": "zkLocus zero-knowledge location privacy",
+  "url": "https://api.openalex.org/works?search=zkLocus%20zero-knowledge%20location%20privacy&per-page=8&select=id,doi,title,publication_year,cited_by_count",
+  "n": 1,
+  "items": [
+   {
+    "t": "The Green Crypto Handbook: Blockchain for Sustainability Professionals",
+    "y": 2026,
+    "doi": "https://doi.org/10.1201/9781003748472",
+    "c": 0
+   }
+  ]
+ },
+ "O8_spoon": {
+  "query": "SPOON anonymous crowdsensing duplicate detection Ni",
+  "url": "https://api.openalex.org/works?search=SPOON%20anonymous%20crowdsensing%20duplicate%20detection%20Ni&per-page=8&select=id,doi,title,publication_year,cited_by_count",
+  "n": 1,
+  "items": [
+   {
+    "t": "A Batch Processing Technique for Wearable Health Crowd-Sensing in the Internet of Things",
+    "y": 2022,
+    "doi": "https://doi.org/10.3390/cryptography6030033",
+    "c": 5
+   }
+  ]
+ },
+ "O9_zklp_float": {
+  "query": "Zero-Knowledge Location Privacy via Accurate Floating-Point SNARKs",
+  "url": "https://api.openalex.org/works?search=Zero-Knowledge%20Location%20Privacy%20via%20Accurate%20Floating-Point%20SNARKs&per-page=8&select=id,doi,title,publication_year,cited_by_count",
+  "n": 74,
+  "items": [
+   {
+    "t": "Zero-Knowledge Location Privacy via Accurate Floating-Point SNARKs",
+    "y": 2025,
+    "doi": "https://doi.org/10.1109/sp61157.2025.00057",
+    "c": 18
+   },
+   {
+    "t": "Enhancing Unmanned Aerial Vehicle Security: A Zero-Knowledge Proof Approach with Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge for Authentication and Location Proof",
+    "y": 2024,
+    "doi": "https://doi.org/10.3390/s24175838",
+    "c": 18
+   },
+   {
+    "t": "Zero-Knowledge Proof-of-Location Protocols for Vehicle Subsidies and Taxation Compliance",
+    "y": 2025,
+    "doi": "https://doi.org/10.1007/978-3-032-00642-4_20",
+    "c": 4
+   },
+   {
+    "t": "VerifBFL: Leveraging zk-SNARKs for a Verifiable Blockchained Federated Learning",
+    "y": 2025,
+    "doi": "https://doi.org/10.1109/noms57970.2025.11073628",
+    "c": 15
+   },
+   {
+    "t": "Soft Redaction of Image Provenance via Zero-Knowledge Proofs",
+    "y": 2026,
+    "doi": "https://doi.org/10.48550/arxiv.2608.07063",
+    "c": 1
+   },
+   {
+    "t": "Zero-Knowledge AI Inference with High Precision",
+    "y": 2025,
+    "doi": "https://doi.org/10.1145/3719027.3765056",
+    "c": 3
+   },
+   {
+    "t": "Decentralized Proof-of-Location systems for trust, scalability, and privacy in digital societies",
+    "y": 2025,
+    "doi": "https://doi.org/10.1038/s41598-025-04566-4",
+    "c": 12
+   },
+   {
+    "t": "Proving UNSAT in Zero Knowledge",
+    "y": 2022,
+    "doi": "https://doi.org/10.1145/3548606.3559373",
+    "c": 21
+   }
+  ]
+ },
+ "O10_receipt_holder": {
+  "query": "zero-knowledge receipt holder binding credential secret signed event",
+  "url": "https://api.openalex.org/works?search=zero-knowledge%20receipt%20holder%20binding%20credential%20secret%20signed%20event&per-page=8&select=id,doi,title,publication_year,cited_by_count",
+  "n": 99,
+  "items": [
+   {
+    "t": "Why Credentials Are Not Hard to Hunt: A Critical Review of Credential Gathering Attacks",
+    "y": 2026,
+    "doi": "https://doi.org/10.4236/jsea.2026.197012",
+    "c": 0
+   },
+   {
+    "t": "Public Evidence from Secret Ballots",
+    "y": 2017,
+    "doi": "https://doi.org/10.1007/978-3-319-68687-5_6",
+    "c": 74
+   },
+   {
+    "t": "Guidelines for the Authorization of PIV Card and Derived PIV Credential Issuers",
+    "y": 2023,
+    "doi": "https://doi.org/10.6028/nist.sp.800-79r3.ipd",
+    "c": 1
+   },
+   {
+    "t": "ZK-Trace: Certified Collusion Tracing with Zero-Knowledge Credentials for Federated GNSS Interference Monitoring",
+    "y": 2026,
+    "doi": "https://doi.org/10.1109/taes.2026.3738067",
+    "c": 0
+   },
+   {
+    "t": "Zero-Knowledge Proof-of-Identity: Sybil-Resistant, Anonymous Authentication on Permissionless Blockchains and Incentive Compatible, Strictly Dominant Cryptocurrencies",
+    "y": 2019,
+    "doi": "https://doi.org/10.2139/ssrn.3392331",
+    "c": 22
+   },
+   {
+    "t": "Safeguarding privacy with soulbound tokens and zero-knowledge proofs: Fully developed identity-related attribute verification protocol",
+    "y": 2026,
+    "doi": "https://doi.org/10.1016/j.jisa.2026.104705",
+    "c": 0
+   },
+   {
+    "t": "Cross-ZID: Trustless and Secure Cross-Blockchain Communication with Identity Privacy, Data Confidentiality, and Non-Repudiation",
+    "y": 2026,
+    "doi": "https://doi.org/10.1016/j.procs.2026.10.132",
+    "c": 0
+   },
+   {
+    "t": "Revisiting Silent Coercion",
+    "y": 2025,
+    "doi": "https://doi.org/10.1007/978-3-032-05036-6_3",
+    "c": 0
+   }
+  ]
+ }
+}

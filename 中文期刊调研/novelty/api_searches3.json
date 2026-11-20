@@ -1,0 +1,340 @@
+{
+ "F1_zk_crowdsensing_report": {
+  "query": "\"zero-knowledge\" AND \"crowdsensing\" AND \"report\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22zero-knowledge%22%20AND%20%22crowdsensing%22%20AND%20%22report%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 2,
+  "items": [
+   {
+    "t": "Toward Incentivizing Fog-Based Privacy-Preserving Mobile Crowdsensing in the Internet of Vehicles",
+    "y": 2019,
+    "doi": "https://doi.org/10.1109/jiot.2019.2951410",
+    "c": 55
+   },
+   {
+    "t": "A Distributed Anonymous Reputation System for V2X Communication",
+    "y": 2026,
+    "doi": "https://doi.org/10.32604/cmc.2025.073774",
+    "c": 0
+   }
+  ]
+ },
+ "F2_nullifier_crowdsensing": {
+  "query": "\"nullifier\" AND \"crowdsensing\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22nullifier%22%20AND%20%22crowdsensing%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 0,
+  "items": []
+ },
+ "F3_pol_merkle": {
+  "query": "\"proof of location\" AND \"Merkle\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22proof%20of%20location%22%20AND%20%22Merkle%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 1,
+  "items": [
+   {
+    "t": "Group Time-based One-time Passwords and its Application to Efficient Privacy-Preserving Proof of Location",
+    "y": 2021,
+    "doi": "https://doi.org/10.1145/3485832.3488009",
+    "c": 16
+   }
+  ]
+ },
+ "F4_verifiable_sensing_zk": {
+  "query": "\"verifiable\" AND \"sensing\" AND \"zero-knowledge\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22verifiable%22%20AND%20%22sensing%22%20AND%20%22zero-knowledge%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 44,
+  "items": [
+   {
+    "t": "Verifiable Location Privacy for LBS: A Decentralized Scheme Based on Blockchain and Zero-Knowledge Proofs",
+    "y": 2025,
+    "doi": "https://doi.org/10.1145/3797161.3797220",
+    "c": 0
+   },
+   {
+    "t": "Authentication, Authorization, and Selective Disclosure for IoT Data Sharing Using Verifiable Credentials and Zero-Knowledge Proofs",
+    "y": 2023,
+    "doi": "https://doi.org/10.1007/978-3-031-25467-3_6",
+    "c": 11
+   },
+   {
+    "t": "Identity-Based Zero-Knowledge",
+    "y": 2005,
+    "doi": "https://doi.org/10.1007/978-3-540-30598-9_13",
+    "c": 12
+   },
+   {
+    "t": "Zero Knowledge LTCs and Their Applications",
+    "y": 2013,
+    "doi": "https://doi.org/10.1007/978-3-642-40328-6_42",
+    "c": 10
+   },
+   {
+    "t": "Privacy-Preserving Solutions in Hybrid Sensing, Anonymous Crowdsourcing and Verifiable Algorithmic Decision-Making",
+    "y": 2026,
+    "doi": "https://doi.org/10.25911/dbnw-9d38",
+    "c": 0
+   },
+   {
+    "t": "Verifiable Decryption for Fully Homomorphic Encryption",
+    "y": 2018,
+    "doi": "https://doi.org/10.1007/978-3-319-99136-8_19",
+    "c": 10
+   },
+   {
+    "t": "An exploration of constraint systems in verifiable computation",
+    "y": 2026,
+    "doi": "https://doi.org/10.5821/dissertation-2117-463752",
+    "c": 0
+   },
+   {
+    "t": "Making the Best of a Leaky Situation: Zero-Knowledge PCPs from Leakage-Resilient Circuits",
+    "y": 2015,
+    "doi": "https://doi.org/10.1007/978-3-662-49099-0_1",
+    "c": 13
+   },
+   {
+    "t": "Your Reputation’s Safe with Me: Framing-Free Distributed Zero-Knowledge Proofs",
+    "y": 2023,
+    "doi": "https://doi.org/10.1007/978-3-031-48615-9_2",
+    "c": 4
+   },
+   {
+    "t": "Instance-Dependent Verifiable Random Functions and Their Application to Simultaneous Resettability",
+    "y": 2007,
+    "doi": "https://doi.org/10.1007/978-3-540-72540-4_9",
+    "c": 20
+   }
+  ]
+ },
+ "F5_credential_revocation_merkle": {
+  "query": "\"anonymous\" AND \"credential\" AND \"revocation\" AND \"Merkle\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22anonymous%22%20AND%20%22credential%22%20AND%20%22revocation%22%20AND%20%22Merkle%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 4,
+  "items": [
+   {
+    "t": "ATRC: An Anonymous Traceable and Revocable Credential System Using Blockchain for VANETs",
+    "y": 2023,
+    "doi": "https://doi.org/10.1109/tvt.2023.3312547",
+    "c": 24
+   },
+   {
+    "t": "BAAR: A framework for blockchain-based anonymous and revocable user authentication scheme",
+    "y": 2026,
+    "doi": "https://doi.org/10.1371/journal.pone.0343696",
+    "c": 1
+   },
+   {
+    "t": "Efficient biometric-based identity management on the Blockchain for smart industrial applications",
+    "y": 2020,
+    "doi": "https://doi.org/10.1016/j.pmcj.2020.101322",
+    "c": 44
+   },
+   {
+    "t": "HPGS: An Efficient Hash-Based Post-Quantum Dynamic Group Signature for Industrial Internet of Things",
+    "y": 2026,
+    "doi": "https://doi.org/10.1109/jiot.2026.3740739",
+    "c": 0
+   }
+  ]
+ },
+ "F6_provenance_zk_ciphertext": {
+  "query": "\"provenance\" AND \"zero-knowledge\" AND \"ciphertext\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22provenance%22%20AND%20%22zero-knowledge%22%20AND%20%22ciphertext%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 3,
+  "items": [
+   {
+    "t": "TradeChain: Decoupling Traceability and Identity in Blockchain enabled Supply Chains",
+    "y": 2021,
+    "doi": "https://doi.org/10.1109/trustcom53373.2021.00155",
+    "c": 44
+   },
+   {
+    "t": "Dual Traceable Distributed Attribute-Based Searchable Encryption and Ownership Transfer",
+    "y": 2021,
+    "doi": "https://doi.org/10.1109/tcc.2021.3090519",
+    "c": 27
+   },
+   {
+    "t": "A Blockchain-Assisted Holographic Counterparts for Secure Consumer Electronics in Healthcare 4.0",
+    "y": 2026,
+    "doi": "https://doi.org/10.1109/tce.2026.3679034",
+    "c": 0
+   }
+  ]
+ },
+ "F7_vehicular_zk": {
+  "query": "\"vehicular crowdsensing\" AND \"zero-knowledge\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22vehicular%20crowdsensing%22%20AND%20%22zero-knowledge%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 2,
+  "items": [
+   {
+    "t": "Towards Privacy-Preserving Decentralized Reputation Management for Vehicular Crowdsensing",
+    "y": 2023,
+    "doi": "https://doi.org/10.1007/978-981-99-7872-4_13",
+    "c": 0
+   },
+   {
+    "t": "Toward Incentivizing Fog-Based Privacy-Preserving Mobile Crowdsensing in the Internet of Vehicles",
+    "y": 2019,
+    "doi": "https://doi.org/10.1109/jiot.2019.2951410",
+    "c": 55
+   }
+  ]
+ },
+ "F8_holder_binding": {
+  "query": "\"holder binding\" OR \"receipt transfer\" OR \"bearer credential\"",
+  "url": "https://api.openalex.org/works?filter=title_and_abstract.search:%22holder%20binding%22%20OR%20%22receipt%20transfer%22%20OR%20%22bearer%20credential%22&per-page=10&select=id,doi,title,publication_year,cited_by_count",
+  "n": 38,
+  "items": [
+   {
+    "t": "Identfer Binding: defning the Core of Holder Binding : a white paper from RWOT XI ; the Hague",
+    "y": 2023,
+    "doi": null,
+    "c": 0
+   },
+   {
+    "t": "The Composition Boundary of Large Language Fields: Cross-Field Authority, Receipt Transfer, and Consequence Ownership in Finite Manifield Systems",
+    "y": 2026,
+    "doi": "https://doi.org/10.5281/zenodo.21844363",
+    "c": 0
+   },
+   {
+    "t": "CapSeal: Capability-Sealed Secret Mediation for Secure Agent Execution",
+    "y": 2026,
+    "doi": "https://doi.org/10.48550/arxiv.2604.16762",
+    "c": 2
+   },
+   {
+    "t": "Proofs of concept for privacy-preserving e-ID",
+    "y": 2026,
+    "doi": "https://doi.org/10.5281/zenodo.23694674",
+    "c": 0
+   },
+   {
+    "t": "Criticality Safety Evaluation of Hanford Site High Level Waste Storage Tanks",
+    "y": 2000,
+    "doi": "https://doi.org/10.2172/801334",
+    "c": 0
+   },
+   {
+    "t": "zkp-android-spartan: Spartan proofs for e-ID on Android",
+    "y": 2026,
+    "doi": "https://doi.org/10.5281/zenodo.23694719",
+    "c": 0
+   },
+   {
+    "t": "Spartan backend for Noir (Tom-256)",
+    "y": 2026,
+    "doi": "https://doi.org/10.5281/zenodo.23694668",
+    "c": 0
+   },
+   {
+    "t": "Enhancing JWT Authentication Security Through Token Binding and Context-Aware Verification",
+    "y": 2026,
+    "doi": null,
+    "c": 0
+   },
+   {
+    "t": "Caging Action, Not Speech: Capability-Gated Credential Containment for Autonomous Agents",
+    "y": 2026,
+    "doi": "https://doi.org/10.5281/zenodo.24143405",
+    "c": 0
+   },
+   {
+    "t": "Development of Software for Personal Computer to Manage the International Controlled Materials",
+    "y": 2000,
+    "doi": "https://doi.org/10.3769/radioisotopes.49.587",
+    "c": 0
+   }
+  ]
+ },
+ "A8_crowdsensing_zk_ti": {
+  "query": "ti:\"crowdsensing\" AND abs:\"zero-knowledge\"",
+  "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22crowdsensing%22%20AND%20abs%3A%22zero-knowledge%22&start=0&max_results=12",
+  "n": 0,
+  "items": []
+ },
+ "A9_nullifier_location": {
+  "query": "abs:\"nullifier\" AND abs:\"location\"",
+  "url": "http://export.arxiv.org/api/query?search_query=abs%3A%22nullifier%22%20AND%20abs%3A%22location%22&start=0&max_results=12",
+  "n": 11,
+  "items": [
+   {
+    "id": "http://arxiv.org/abs/1205.0518v1",
+    "t": "Can Sequentially Linked Gamma-Ray Bursts Nullify Randomness?",
+    "p": "2012-05-02",
+    "s": "In order to nullify the property of randomness perceived in the dispersion of gamma-ray bursts (GRB's) we introduce two new procedures. 1. Create a segmented group of sequentially linked GRB's and quantify the resultant angles. 2. Create segmented groups of se"
+   },
+   {
+    "id": "http://arxiv.org/abs/2302.11991v2",
+    "t": "Multi-vehicle Dynamic Water Surface Monitoring",
+    "p": "2023-02-23",
+    "s": "Repeated exploration of a water surface to detect objects of interest and their subsequent monitoring is important in search-and-rescue or ocean clean-up operations. Since the location of any detected object is dynamic, we propose to address the combined surfa"
+   },
+   {
+    "id": "http://arxiv.org/abs/2407.03043v2",
+    "t": "SlerpFace: Face Template Protection via Spherical Linear Interpolation",
+    "p": "2024-07-03",
+    "s": "Contemporary face recognition systems use feature templates extracted from face images to identify persons. To enhance privacy, face template protection techniques are widely employed to conceal sensitive identity and appearance information stored in the templ"
+   },
+   {
+    "id": "http://arxiv.org/abs/2508.01229v1",
+    "t": "Towed Movable Antenna (ToMA) Array for Ultra Secure Airborne Communications",
+    "p": "2025-08-02",
+    "s": "This paper proposes a novel towed movable antenna (ToMA) array architecture to enhance the physical layer security of airborne communication systems. Unlike conventional onboard arrays with fixed-position antennas (FPAs), the ToMA array employs multiple subarr"
+   },
+   {
+    "id": "http://arxiv.org/abs/2607.20929v1",
+    "t": "The Consensus Number of Untraceable Cryptocurrencies",
+    "p": "2026-07-23",
+    "s": "Sender untraceability hides the account spent by a cryptocurrency transfer among a set of candidates, its masking set. What a transfer does to that set separates two designs: classical schemes retain the whole set and append a nullifier marking the spent accou"
+   },
+   {
+    "id": "http://arxiv.org/abs/2607.27123v1",
+    "t": "Hardware-efficient erasure-error detection with an integer fluxonium",
+    "p": "2026-07-29",
+    "s": "Erasure-error detection can improve the efficiency of quantum error correction by revealing the times and locations of their error events. In this work, we demonstrate erasure conversions and mid-circuit erasure detections in a single integer fluxonium, in whi"
+   },
+   {
+    "id": "http://arxiv.org/abs/2606.17711v1",
+    "t": "Structured Adversarial Camouflage via Voronoi Diagrams",
+    "p": "2026-06-16",
+    "s": "Pixel-wise adversarial patches are computationally heavy and often visually detectable, limiting utility in security-critical systems. We present adversarial Voronoi camouflage that optimizes only seed-point locations under fixed, printable palettes using a so"
+   },
+   {
+    "id": "http://arxiv.org/abs/1206.2375v2",
+    "t": "Angular fluctuations in the CXB: Is Fe 6.4 keV line tomography of the large-scale structure feasible?",
+    "p": "2012-06-11",
+    "s": "AGN are known to account for a major portion, if not all, of the cosmic X-ray background radiation. The dominant sharp spectral feature in their spectra is the 6.4 keV fluorescent line of iron, which may contribute to as much as ~ 5-10 % of the CXB spectral in"
+   },
+   {
+    "id": "http://arxiv.org/abs/2606.12831v1",
+    "t": "Sub-array Selection Optimization for Joint Self-Interference and Multi-User Interference Suppression in FD mMIMO",
+    "p": "2026-06-11",
+    "s": "This paper proposes a beamforming optimization scheme with joint antenna sub-array selection (SAS) and angular perturbation-based nulling (APN) for full-duplex (FD) massive multiple-input multiple-output (mMIMO) systems, to simultaneously suppress self-interfe"
+   },
+   {
+    "id": "http://arxiv.org/abs/2604.23266v2",
+    "t": "The Blockchain Execution Dilemma: Optimizing Revenue XOR Fair Ordering",
+    "p": "2026-04-25",
+    "s": "Successive consensus algorithm generations displaced the blockchain performance bottleneck to the execution layer. Recent works address this by parallelizing non-conflicting transactions. Historically, execution followed consensus-level ordering, a practice su"
+   },
+   {
+    "id": "http://arxiv.org/abs/quant-ph/0702134v2",
+    "t": "Qubit-Qubit and Qubit-Qutrit Separability Functions and Probabilities",
+    "p": "2007-02-14",
+    "s": "We list in increasing order -- 1/3, 3/8, 2/5, 135 pi/1024, 16/(3 pi^2), 3 pi/16, 5/8, 105 pi/512, 2 - 435 pi/1024, 11/16, 1 -- a number of exact two-qubit Hilbert-Schmidt (HS) separability probabilities, we are able to compute. Each probability corresponds to "
+   }
+  ]
+ },
+ "A10_provenance_ciphertext": {
+  "query": "abs:\"provenance\" AND abs:\"ciphertext\" AND abs:\"zero-knowledge\"",
+  "url": "http://export.arxiv.org/api/query?search_query=abs%3A%22provenance%22%20AND%20abs%3A%22ciphertext%22%20AND%20abs%3A%22zero-knowledge%22&start=0&max_results=12",
+  "n": 0,
+  "items": []
+ },
+ "A11_sensing_attestation_zk": {
+  "query": "abs:\"sensing\" AND abs:\"attestation\" AND abs:\"zero-knowledge\"",
+  "url": "http://export.arxiv.org/api/query?search_query=abs%3A%22sensing%22%20AND%20abs%3A%22attestation%22%20AND%20abs%3A%22zero-knowledge%22&start=0&max_results=12",
+  "n": 0,
+  "items": []
+ }
+}

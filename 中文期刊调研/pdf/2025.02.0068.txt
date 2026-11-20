@@ -1,0 +1,1655 @@
+第 42 卷第 10 期
+2025 年 10 月
+
+Vol. 42 No. 10
+Oct. 2025
+
+计 算 机 应 用 研 究
+Application Research of Computers
+
+基于智能合约信誉管理的 VANET 数据共享
+隐私保护方案 ∗
+磊1,2,3 , 白永波1,2,3 , 陈
+
+张
+
+运1,2,3 , 陈
+
+杰1,2,3 , 刘
+
+义1,2,3†
+
+(1. 佳木斯大学 信息电子技术学院, 黑龙江 佳木斯 154000; 2. 黑龙江省自主智能与信息处理重点实验室,
+黑龙江 佳木斯 154007; 3. 佳木斯市卫星导航技术与装备工程技术重点实验室, 黑龙江 佳木斯 154007)
+摘 要: 为解决车载自组织网络( VANET) 中数据共享所面临的隐私与安全问题,提出一种基于信誉管理的隐
+私保护方案。 该方案结合分布式存储 IPFS 与智能合约,实现数据的可追溯与不可窜改。 通过引入信誉机制和
+同态加密保护反馈评分,动态更新用户信誉值,有效防范恶意行为带来的隐私泄露风险。 基于轻量级的数据处
+理机制,该方案特别适用于资源受限的 VANET 环境。 实验结果表明,该方案在具备同等隐私保护能力的前提
+下,其计算和通信资源消耗方面优于现有方法。
+关键词: 车载自组织网络; 区块链; 隐私保护; 信誉机制
+中图分类号: TP311
+文献标志码: A
+文章编号: 1001- 3695(2025)10- 004- 2922- 10
+doi: 10. 19734 / j. issn. 1001- 3695. 2025. 02. 0068
+
+Privacy protection and reputation management scheme in VANET data sharing
+Zhang Lei1,2,3 , Bai Yongbo1,2,3 , Chen Yun1,2,3 , Chen Jie1,2,3 , Liu Yi1,2,3†
+
+(1. School of Information & Electronic Technology, Jiamusi University, Jiamusi Heilongjiang 154000, China; 2. Heilongjiang Province Key
+
+Laboratory of Autonomous Intelligence & Information Processing, Jiamusi Heilongjiang 154007, China; 3. Jiamusi Key Laboratory of Satellite
+Navigation Technology & Equipment Engineering Technology, Jiamusi Heilongjiang 154007, China)
+
+Abstract: To address the privacy and security challenges in data sharing within VANET, this paper proposed a privacy protection scheme based on reputation management. The scheme integrated distributed storage via IPFS and smart contracts to ensure data traceability and immutability. By introducing a reputation mechanism and employing homomorphic encryption to protect feedback ratings, the system enabled dynamic updates of user reputation scores, effectively mitigating privacy leakage
+risks caused by malicious behaviors. Leveraging a lightweight data processing mechanism, the proposed scheme was particularly suitable for resource-constrained VANET environments. Experimental results demonstrate that, while maintaining the same
+level of privacy protection, the scheme outperforms existing methods in terms of computational and communication overhead.
+Key words: vehicular Ad hoc network( VANET) ; blockchain; privacy protection; reputation mechanism
+
+0
+
+VANET 的应用和推广中的关键问题 [7] 。
+
+引言
+近年来,随着汽车保有量的急剧上升,交通运输系统面临
+
+严峻考验,车载自组织网络( VANET) 成为解决上述问题的有
+
+效途径 [1] 。 VANET 是一种由车辆和路侧单元( road side unit,
+RSU) 构成的网络系统,VANET 通过车辆与车辆( V2V) 以及车
+辆与基础设施( V2I) 之间的实时通信,能够快速共享交通信息
+并实现协同决策,从而提升道路安全性和交通效率 [2, 3] 。 在车
+
+辆通信过程中,大量敏感数据的传输和存储不可避免地增加了
+用户隐私泄露的风险,尤其是在数据交换过程中,车辆的位置
+信息和行驶轨迹等个人隐私信息可能被暴露 [4, 5] 。 这些隐私
+风险不仅威胁到用户的个人安全,还可能被恶意利用,导致更
+严重的社会问题,如车辆跟踪、身份盗窃等 [6] 。 因此,如何在
+保证交通信息有效共享的同时,保护用户的隐私数据,成为
+收稿日期: 2025- 02-24; 修回日期: 2025-04-11
+
+VANET 中车辆的高速移动性导致网络拓扑频繁变化,传
+统中心化方案难以适应动态环境下的数据一致性需求;同时,
+车载终端计算能力有限,现有加密方案的高计算开销易导致实
+时性下降 [8] 。 在 VANET 缺乏有效安全机制的情况下,虚假消
+息的传播可能会误导其他车辆,进而引发严重的交通安全隐
+患 [9, 10] 。 现有解决方案中,部分方案仅依赖基于数字签名的
+
+方法来验证消息的真实性,然而这种方法无法完全阻止虚假信
+息的快速传播 [11] 。 为解决虚假消息传播问题,Luo 等人 [12] 提
+出利用差分隐私技术保护数据,但该方法难以在隐私预算的选
+择与数据可用性之间达到理想的平衡。 为此,研究者们提出了
+多种加密算法来保护车辆数据的隐私。 例如,Yang 等人 [13] 提
+
+出了一种结合零知识证明和同态加密等多种加密方法的方案,
+以增强数据隐私保护;Zhang 等人 [14] 则通过基于身份的加密、
+
+基金项目: 黑龙江省省属高等学校基本科研业务费优秀创新团队建设项目(2022-KYY-
+
+WF-0654) ;佳木斯大学国家基金培育项目( JMSUGPZR2022-014) ;黑龙江省自主智能与信息处理重点实验室开放课题( ZZXC202302) ;佳木斯大学
+“ 东极” 学术团队 ( DJXSTD202417 ) ; 黑 龙 江 省 省 属 本 科 高 校 优 秀 青 年 教 师 基 础 研 究 支 持 计 划 ( YQJH2024239 ) ; 黑 龙 江 省 外 国 专 家 项 目
+( G2024020) ;佳木斯大学博士专项科研启动项目( JMSUBZ2024-07) ;黑龙江省自然科学基金联合基金培育项目( PL2024F002) ;基本科研业务费基
+础研究项目(2024-KYYWF-0564)
+
+作者简介: 张磊(1982—) ,男,黑龙江绥化人,教授,硕导,博士,CCF 会员,主要研究方向为信息安全、隐私保护;白永波(2000—) ,女,内蒙古
+赤峰人,硕士研究生,主要研究方向为隐私保护、车联网;陈运(2000—) ,男,安徽合肥人,硕士研究生,主要研究方向为隐私保护、联邦学习;陈杰
+(2000—) ,男,陕西西安人,硕士研究生,主要研究方向为隐私保护、差分隐私;刘义(1979—) ,男( 通信作者) ,黑龙江望奎人,副教授,硕导,硕士,
+主要研究方向为隐私保护、虹膜识别(4390263@ qq. com) .
+
+第 10 期
+
+张
+
+磊,等:基于智能合约信誉管理的 VANET 数据共享隐私保护方案
+
+广播代理重新加密、车辆伪名等技术,实现了 VANET 中数据
+的安全共享;Wu 等人 [15] 提出了一个集成了加密技术、匿名技
+术和扰动技术等多种隐私保护手段的 VANET 数据隐私保护
+框架。 虽然这些方法能有效保护隐私,但存在计算开销大、隐
+私与可用性平衡困难和实时性差的问题。 为应对这些问题,部
+分研究尝试将信誉机制引入数据共享的隐私保护中 [16, 17] ,以
+期通过用户行为评估提升系统的可信度。 然而,信誉机制的实
+施也带来了新的隐私风险,如:车辆历史行为和信誉评分的暴
+露可能导致身份信息泄露,进而影响用户的可信度和系统的整
+体安全性。
+为解决上述问题,本文提出了一种基于信誉管理的 VANET
+数据共享隐私保护方案。 首先,该方案利用区块链的分布式存
+储特性,解决了传统数据中心存储的单点故障和数据窜改风
+险,同时通过智能合约实现高效的数据验证与共享,降低了计
+算开销并提升了实时性;其次,通过动态信誉评估机制,对用户
+行为进行实时量化评估,建立了一套科学合理的可信度评价体
+系,避免了传统信誉机制中因历史行为暴露导致的隐私泄露问
+题,进一步提升了数据共享的安全性和可靠性。 本文的主要贡
+献如下:
+a) 智能合约驱动的数据管理:设计了数据管理( DMSC) 和
+信誉管理( RMSC) 两类智能合约,通过动态评估用户行为,激
+励诚实用户并惩罚恶意用户,从而实现了数据加密访问控制、
+高效查询和信誉动态更新,显著降低了用户计算开销,提高了
+数据共享的安全性和效率。
+b) 同态加密的反馈评分保护:利用同态加密对反馈评分
+进行加密,使得多个加密评分可聚合运算,既保证了用户隐私,
+又能准确更新信誉值。
+c) 对本文提出的基于信誉管理的 VANET 数据共享隐私
+保护方案通过一系列实验,主要从抵御恶意行为能力、计算和
+通信资源开销、计算时间和吞吐量等方面进行了评估,并与现
+有方法进行了对比分析,验证了其有效性和性能优势。
+
+1
+
+相关工作
+
+为解决 VANET 中的隐私泄露问题,国内外学术界和产业
+界已经对其进行了广泛的研究,并取得了较多的研究成果。
+1. 1
+
+传统数据共享隐私保护方法
+
+随着 VANET 技术的不断发展,数据共享和隐私保护成为
+亟待解决的关键问题 [18] 。 针对这一挑战,学术界和产业界提
+出了多种数据共享保护方法,以提高数据隐私保护的安全性,
+同时确保 VANET 中的数据共享效率。
+Li 等人 [19] 提出了一种高效的多接收者数据授权与搜索方
+案,通过无配对加密技术降低计算开销,支持加密数据的批量
+共享与检索,具有较高的安全性。 在此基础上,Bao 等人 [20] 进
+一步提出了两种方案( PH-ABE-DS 和 EA-PH-ABE-DS) ,旨在
+解决 VANET 中的数据隐私保护、数据加密共享和动态用户组
+管理问题。 基于属性基加密( ABE) 技术实现了细粒度访问控
+制,确保只有满足特定属性的用户能够解密数据。 通过在线 /
+离线加密机制,方案减少了实时加密的计算开销,并采用间接
+用户撤销机制高效处理恶意用户的访问权限。 其中,EA-PHABE-DS 方案结合边缘计算框架,将计算任务外 包 至 边 缘 设
+备,进一步减轻了车载终端的负担,提升了系统的整体效率。
+针对云边协同存储框架中的数据泄露风险,Tao 等人 [21] 提出
+了一种安全数据搜索与共享方案。 该方案通过用户自管理密
+钥和边缘服务器分担计算任务,增强了数据共享的安全性,同
+时降低了边缘服务器的计算负担。 为进一步应对动态数据流
+中的隐私保护需求,Ghane 等人 [22] 提出了差分隐私数据流系
+
+· 2923·
+
+统。 该系统通过在车辆端添加差分隐私噪声保护数据隐私,无
+须依赖可信通信方,适用于不可信的边缘控制器和服务器环
+境。 此外,该系统结合 Haar 小波变换进行数据压缩,利用阈值
+处理提高数据可用性,并通过过滤技术应对动态数据流的隐私
+保护需求。
+传统方法主要利用加密算法及差分隐私方法进行数据保
+护,能够有效保护数据在传输过程中的机密性,但加密算法通
+常面临计算开销较大的问题,而差分隐私的效果则受到隐私预
+算和噪声大小的影响。 因此,传统的隐私保护方法在计算资源
+优化、隐私保护与数据可用性平衡以及动态环境下的适应性方
+面仍有较大的改进空间。
+1. 2
+
+基于区块链的数据共享隐私保护方法
+
+近年来,为增强 VANET 数据隐私保护,研究者提出多种
+方法以提升数据共享的可靠性。 访问控制 [23] 作为关键安全措
+施,动态授权和风险预测 [24] 等方法虽增强了安全性,但未考虑
+多域特性,导致各区域访问策略独立且缺乏协调。 为解决这一
+问题,研究者们开始探索利用区块链技术来提升 VANET 的信
+任管理和隐私保护能力。
+在利用车辆的可信度来评估消息的信任值的研究中, Lu
+等人 [25] 提出了一种基于区块链的 VANET 信任管理系统。 该
+系统通过信誉评分评估消息可信度,并构建了 MesBC、CerBC
+和 RevBC 三种区块链,分别用于存储广播消息、证书证明和公
+钥撤销记录,以保障匿名认证的真实性并避免争议。 在此基础
+上,张海波等人 [26] 进一步提出了一种基于区块链的 VANET 信
+任管理方案,通过信息识别、信誉更新、数据存储和共识机制优
+化,提升了系统的信任度并减少了资源消耗。
+为进一步提升数据安全性和隐私保护,Wang 等人 [27] 结合
+区块链、可追踪环签名和边缘计算技术,提出利用区块链的去
+中心化和不可窜改性确保数据安全,并通过可追踪环签名技术
+保护车辆隐私,同时利用边缘计算技术减轻计算负担。 Yang
+等人 [28] 则提出了一个区块链驱动的 IoV 信任管理模型,采用
+区块链和 Dirichlet 分布等技术,提升了车辆交互的信任度和安
+全性。 Zhang 等人 [29] 在此基础上提出了一种结合区块链和可
+追踪环签名的解决方案,并引入边缘计算技术以提高效率。
+Shrestha 等人 [30] 面向 VANET 提出了一种基于区块链的消息安
+全交换方案,通过公有链存储节点信任值和消息可信度,本地
+链存储车辆完整信任信息和事件消息历史记录。
+区块链的去中心化和不可窜改特性有效解决了传统方法
+中的单点故障和可信通信方依赖问题,并通过智能合约实现了
+自动化访问控制,同时确保了数据的不可窜改,但用户身份和
+行为信息仍可能暴露,隐私保护机制仍需加强。 此外由于区块
+链共识机制的高计算开销,导致其在大规模 VANET 环境中面
+临性能瓶颈,难以满足实时性要求。 最后,区块链在多域、动态
+环境下的实现和管理复杂度较高,尤其在访问控制方面,系统
+的协调和优化仍有待改进。
+
+2
+
+预备知识
+
+2. 1
+
+系统架构
+
+本文系统采用数据层、设备层和用户层三层架构设计。 图
+1 展示了系统中各实体之间的交互关系。 系统各层次包含的
+实体及其功能如下:
+a) 数据层由分布式数据库 IPFS 与区块链系统( 基于 Hyperledger Fabric) 共同构成,两者协同合作,为 VANET( 车载自
+组织网络) 数据共享提供了安全、高效且透明的支撑。 IPFS 作
+为去中心化的数据存储核心,基于内容寻址机制,通过唯一的
+哈希值( CID) 标识数据内容,而非传统的 基 于 位 置 寻 址 ( 如
+
+· 2924·
+
+计 算 机 应 用 研 究
+
+URL) 方式,从而实现高效、安全的数据存储与检索。 其去中心
+化特性消除了单点故障的风险,不可窜改特性通过哈希值与内
+容的绑定保障了数据的完整性和防窜改能力,而分布式哈希表
+( DHT) 则实现了高效的数据检索。 在本文方案中,IPFS 主要
+用于存储 VANET 用户收集的加密数据:数据提供者( DO) 首
+先使用 AES 等加密算法对原始数据进行加密,随后将密文上
+传至 IPFS,IPFS 完成数据切分与存储后返回生成的 CID;数据
+使用者( DU) 通过获取的 CID 向 IPFS 检索加密数据,在身份验
+证与权限校验通过后获取解密密钥以恢复原始数据。 IPFS 的
+去中心化、不可窜改和高效检索能力,为 VANET 环境下的动
+态数据共享提供了坚实的数据存储基础。
+IPFS
+
+78A
+
+;<=>?
+
+#$%&
+
+7、
+
+!"#$
+
+2、
+
+…
+RSU 1
+
+RSU 2
+
+3、
+"#$%
+
+8、
+&'()
+
+RSU 3
+
+BCA
+
+RSU n
+
+8、
+& ' () 4、
+789:
+
+6、
+*+,5、
+./01234
+DO
+
+1、
+./56
+
+1、
+./56
+
+DU
+
+D EA
+
+CA
+
+图 1 实体交互图
+Fig. 1 Entity interaction diagram
+
+本文方案基于 Hyperledger Fabric 联盟链框架构建,结合
+PBFT 共识算法,为车联网( VANET) 用户数据共享提供安全、
+高效的解决方案。 Fabric 的多通道机制实现数据隔离存储与
+分层治理,每个独立通道配置专属账本与访问控制策略,确保
+用户数据仅对授权节点可见,有效规避传统区块链全网广播模
+式下的隐私泄露风险。 PBFT 共识机制的应用显著提升了交易
+吞吐量与处理效率,为车联网环境下的高频数据交互提供了可
+靠支撑。 Fabric 通过智能合约与细粒度访问控制策略的结合,
+实现了数据权限的精确管理。 其隐私保护机制利用密码学技
+术,确保数据在验证与处理过程中不暴露敏感内容,同时维持
+了数据的可验证性。 此外,Fabric 的分布式账本技术为数据访
+问行为提供了透明、可追溯且防窜改的记录,确保所有操作均
+可审计。
+b) 设备层由多个路边单元 RSU 组成。 RSU 负责定期收集
+VANET 数据,并对数据进行加密和上传存储。 此外,RSU 还负
+责对车辆进行信誉更新,确保数据的可信性和完整性。
+c) 用户层包含证书颁发机构( certificate authority, CA) 和
+大量的 VANET 用户,他们在身份注册后可以根据需求管理自
+己的数据。 VANET 用户在数据共享中通常分为两种角色:数
+据提供者( DO) 负责提供 VANET 数据,旨在通过协作数据共
+享支持车载自组织网络的运行;数据使用者( DU) 接收并使用
+共享数据,以满足自身的具体需求。 用户可以根据实际情况灵
+活选择角色。 CA 负责初始化整个区块链系统,生成必要的系
+统参数和密钥,并通过安全通道将这些信息分发给对应的实
+体,确保系统的安全性和可信性。
+通过各实体的协同工作,本文系统实现了 VANET 数据的
+高效收集、加密存储和可信共享,为车载自组织网络的运行提
+供了可靠支持。
+2. 2
+
+问题提出
+
+随着 VANET 技术的发展,车辆信息共享对提升交通效率
+和道路安全至关重要。 然而,现有的隐私保护方案在加密访问
+
+第 42 卷
+
+控制、匿名性和不可窜改性方面仍存在不足,无法满足大规模
+VANET 的安全需求。
+现有的加密访问控制方案,如属性基加密( ABE) 和角色
+基加密( RBE) ,虽然能实现细粒度控制,但在动态 VANET 环
+境中,计算开销大、密钥管理复杂,难以有效应对大规模数据共
+享和用户动态变化的问题。 虽然边缘计算有助于减轻车载终
+端负担,但在多域环境下,访问控制策略协调性差,无法满足动
+态用户组管理需求。 匿名性保护方面,现有方案通过伪名技术
+实现数据共享,但容易被恶意节点识别真实身份。 虽然零知识
+证明和同态加密能增强隐私保护,但在大规模数据处理时,计
+算资源限制导致车载终端的匿名性保护效果不佳。 车辆位置
+信息可能通过共享数据的时空关联被推断,攻击者可利用历史
+轨迹数据实现用户身份追踪。 区块链技术在 VANET 数据共
+享中广泛应用,但现有基于区块链的方案在不可窜改性方面面
+临挑战。 区块链的共识机制带来了较高的计算开销,难以满足
+实时性要求,且在处理动态数据时,系统扩展性和实时响应能
+力不足,无法平衡数据共享的安全性和实时性。 在紧急车辆路
+径优先调度场景中,若恶意节点传播虚假道路拥堵信息,将导
+致紧急车辆选择错误路径,延误救援时间。
+因此,现有 VANET 数据隐私保护方案存在显著不足,亟
+需一种具有动态信誉评估与防窜改特性的隐私保护方案,能够
+在确保安全性、效率和隐私保护的基础上,解决隐私泄露、虚假
+信息传播和恶意行为等问题。
+2. 3
+
+相关知识
+
+1) Paillier 同态加密
+Paillier 同态加密是基于数论的公钥加密方案,具有可加
+性同态特性,即加密后的密文可以进行加法操作,并且解密后
+得到的结果等于对明文直接进行加法操作的结果。 该算法由
+以下几个部分组成:
+a) 密钥生成。 选择两个大素数 p、q,计算 n = pq 和 λ = lcm
+2
+( p - 1,q - 1) 。 随机选择一个整数 g∈ n 并且 gcd( L( g λ mod
+2
+n ) ,n) = 1。 其中,L( x) = ( x - 1) / x,x 是计算得到的数值。 计
+算 μ = ( L( g λ( n) mod n2 ) ) - 1 mod n,得到公钥( n,g) 、私钥( λ
+( n) ,μ) 。
+b) 加密过程。 利用公钥( n,g) 对明文进行加密。 随机选
+择一个随机数 r∈ n ,计算加密后的数据 c = g m ·r n mod n2 。
+c) 解密过程。 使用私钥( λ( n) ,μ) 对密文 c 解密获得明文
+m = L( c λ( n) mod n2 ) ·μ mod n。
+Paillier 算法 具 有 如 下 加 法 同 态 性 质: c1 = g m1 · r1 n mod
+2
+n ,c2 = g m2 · r2 n mod n2 ,加密后密文 c1 、 c2 的成绩对应明文
+m1 、m2 的和,具体同态公式:c1·c2 = (gm1 ·r1n )·(gm2 ·r2n ) =
+
+g m1 + m2 ·( r1 n ·r2 n ) mod n2 ,解密后结果为 m1 + m2 key_list。
+2) 智能合约
+智能合约作为区块链技术的核心组件之一,是一种基于代
+码的自动化协议,能够在满足预设条件时自动执行预定义的操
+作。 其去中心化、透明性和不可篡改的特性,使其在数据共享
+和隐私保护领域具有广泛的应用前景。 智能合约通过将复杂
+的业务逻辑编码为可执行的程序,确保了数据共享过程中的安
+全性和高效性,同时减少了人为干预的风险。
+在本文方案中,智能合约被用于管理用户数据和信誉信
+息,确保数据共享过程的透明性和可追溯性。 通过智能合约,
+系统能够自动执行数据访问控制、信誉评分更新等操作,从而
+有效防止恶意行为,提升系统的整体安全性和可靠性。 具体而
+言,本文方案设计了数据管理智能合约( DMSC) 和信誉管理智
+能合约( RMSC) 两类智能合约,分别用于实现细粒度的数据访
+问控制和动态信誉评估。 这些智能合约的具体实现细节将在
+
+第 10 期
+
+张
+
+磊,等:基于智能合约信誉管理的 VANET 数据共享隐私保护方案
+
+第 3 章中详细阐述。
+
+3
+
+数,根据事件等级取不同值,其中反馈令牌无效为 1 级,负面评
+分多于 1 / 2 为 2 级。
+算法 1 信誉管理智能合约( RMSC)
+
+数据共享隐私保护方案
+
+本文方案包含智能合约的部署、数据共享与授权、信誉值
+反馈与更新三个阶段。 通过动态信誉评估模型,结合车辆节点
+的实时行为更新信誉值,解决车辆频繁加入、退出导致的信任
+管理难题;利用分布式存储,降低高移动性场景下的数据同步
+延迟。 为便于读者理解,表 1 给出了该方案所涉及的符号及相
+关解释。
+Tab. 1
+
+符号
+RS i
+
+表1
+
+注释
+用户 U i 的信誉值
+
+DO 和系统的信誉阈值
+
+N
+
+用户收到的信誉反馈的总数
+
+NR
+ID i,pk i,sk i
+
+某一个时间段用户收到的信誉反馈的数量
+用户 U i 的 id、公钥和私钥
+
+M i,Enc( M i)
+
+数据文件及其加密
+
+ri
+
+α,β,γ,μ
+Ci
+addr
+
+3. 1
+
+符号及相关解释
+
+Symbols and their related explanations
+
+RS T,μ T
+
+· 2925·
+
+数据加密使用的随机数
+信誉更新参数
+加密后的信誉评分
+数据存储地址
+
+智能合约的部署
+
+VANET( 车载自组织网络) 环境中,数据共享和隐私保护
+是亟待解决的关键问题。 具体来说:a) 数据共享:车辆用户需
+要高效、安全地共享数据,同时确保数据的完整性和机密性;
+b) 隐私保护:在数据共享过程中,防止用户隐私泄露,避免恶
+意行为对系统造成威胁;c) 可信机制:建立一套科学合理的信
+誉评估体系,激励诚实用户并惩罚恶意用户。 为了实现上述目
+标,本文提出了一种基于区块链的解决方案,并设计了信誉管
+理智能合约和数据管理智能合约,分别针对用户行为治理与数
+据资源管理两大关键问题。
+3. 1. 1 信誉管理智能合约
+信誉管理智能合约( reputation management smart contract,
+RMSC) 的主要功能是对用户的行为进行分类评估,并动态更
+新用户的信誉值。 其设计依据包括以下几点:a) 实时信誉评
+估:通过收集和聚合用户的反馈评分,实时更新用户的信誉值;
+b)惩罚机制:对违反规则的用户实施信誉惩罚,降低其参与数据
+共享的机会;c)历史行为记录:记录用户的长期行为表现,作为
+信誉评估的重要依据。 该合约包含两个索引表,分别是记录区
+块链系统中车辆用户的基本信息的索引表 key_list 和用于记录
+信誉分数低于信誉阈值的车辆用户的索引表 revo_list。 RMSC
+主要包含如下五个主要功能函数,其伪代码如算法 1 所示。
+a) Init( ) 函数,用于初始化不在 key_list 也不在 revo_list 中
+的车辆用户的信誉信息。
+b) Get_reputation( ) 函数,用于查询车辆用户 U i 的信誉值。
+c) Get_rating( ) 函数,用于数据请求者 DU 查询车辆用户
+U i 在指定时间段内的所有信誉评分。
+d) Update( ) 函数,用于更新车辆用户信誉值,根据信誉更
+NR
+NR
+新公式:RS new1 = RS old + α × (
+) × RS old + β × (
+) + γ 更新
+N new
+N new
+车辆用户的信誉值,其中 N new = N old + NR,α 反映历史权重,β
+反映新评分的直接贡献,γ 表示新评分对信誉提升的最低贡
+献,N old 表示更新前的信誉评分总数,RS old ,RS new1 分别表示更新
+前和更新后的信誉分数;N new 表示更新后的信誉评分总数。
+e) Punish( ) 函数,用于对违规行为的车辆用户进行信誉惩
+罚,根据信誉惩罚公式 RS new2 = RS old × μ 对车辆用户进行信誉
+惩罚。 其中,RS new2 表示惩罚后的信誉值, μ 表示信誉惩罚参
+
+function 1 init( ) / / 初始化信誉信息
+输入:无。
+输出:车辆用户的信誉信息。
+for U i not in key_list and not in revo_list / / 判断用户是否在账本中
+RS i = initial_reputation_value / / 初始化信誉信息
+N = 1
+add U i to key_list
+end for
+end function 1
+function 2 get_reputation( ) / / 查询车辆用户的信誉值
+输入:车辆用户 U i
+输出:若 U i 在 key_list 中,返回其当前信誉值;否则,返回 “ user not
+in blockchain system” 。
+if U i in key_list / / 若用户在账本中则直接返回信誉信息
+return current reputation value of U i
+else
+return “ user not in blockchain system”
+end if
+end function 2
+function 3 get_rating( ) / / 查询指定时间段内车辆用户的信誉评分
+输入:车辆用户 U i ;指定时间段 time_period。
+输出:若 U i 在 key_list 中,返回其在指定时间段内收到的所有评分
+信息;否则,返回 “ user not in blockchain system” 。
+if U i in key_list
+return all ratings of U i in time_period
+else
+return “ user not in blockchain system”
+end if
+end function 3
+function 4 update( ) / / 更新车辆用户信誉值
+输入:车辆用户 U i ,利用 get_rating( ) 收集到的信誉评分。
+输出:车辆用户 U i 的信誉值。
+N new = N old + NR
+NR
+NR
+RS new1 = RS old + α × (
+) × RS old + β × (
+) + γ / / 信誉更新公式
+N new
+N new
+if RS new1 < μ T / / 若更新后的信誉值小于系统阈值
+add U i to revo_list / / 将用户加入注销列表
+remove U i from key_list
+end if
+end function 4
+function 5 punish( ) / / 对车辆进行惩罚
+输入:车辆用户 U i ;事件等级 event_level。
+输出:车辆用户 U i 的信誉值。
+if U i in key_list
+RS old = reputation value before punishment
+μ = get_punishment_coefficient( event_level) / / 判断事件等级,选
+择惩罚系数
+RS new2 = RS old × μ / / 信誉惩罚公式
+if RS new2 < μ T
+add U i to revo_list
+remove U i from key_list
+end if
+end function 5
+
+上述信誉管理智能合约( RMSC) 伪代码的设计直接解决
+了以下关键问题:首先,针对恶意行为防范,RMSC 通过动态信
+誉评估机制精准识别并惩罚恶意用户,显著降低了恶意行为对
+系统的潜在威胁,确保系统的稳定运行。 其次,在信任机制建
+立方面,RMSC 构建了一套科学且合理的信誉评价体系,通过
+激励机制促使用户保持诚实行为,从而在系统内建立起可靠的
+信任机制,为数据共享和交互提供了坚实基础。 最后,为确保
+用户隐私,RMSC 采用了同态加密技术对反馈评分进行加密处
+理。 这一技术的应用不仅保障了用户隐私不被泄露,还确保了
+
+· 2926·
+
+第 42 卷
+
+计 算 机 应 用 研 究
+
+整个信誉评估过程的安全性和可靠性。
+综上所述,RMSC 凭借其高效的信誉管理和隐私保护机
+制,为 VANET 系统提供了一个安全、可信且隐私友好的运行
+环境。 这一设计不仅有效解决了车联网系统中的核心问题,还
+为车联网技术的广泛应用奠定了坚实基础,具有重要的理论和
+实践意义。
+3. 1. 2 数据管理智能合约
+在 VANET 系统架构中,数据管理智能合约( data management smart contract, DMSC) 的主要功能是对数据文件进行索
+引、存储位置查询以及记录数据共享事务。 其设计依据包括以
+下几点:a) 数据索引与存储:在区块链中为数据文件建立索
+引,确保数据能够被快速定位和访问;b) 细粒度访问控制:通
+过验证用户的信誉值,限制不可信节点访问敏感数据;c) 数据
+共享事务记录:记录用户之间的数据共享行为,确保所有操作
+可追溯。 该合约设置了两个索引表:index_list 主要用于精准记
+录车辆数据文件在区块链中的存储地址;share_list 负责完整记
+录车辆用户之间发生的所有数据共享事务。 DMSC 具备以下
+三项主要功能函数,其伪代码如算法 2 所示。
+a) storage( ) 函数,用于在区块链内为数据文件建立索引;
+b) search( ) 函数,用于根据车辆用户的索引信息搜索其数
+据存储位置;
+c) share( ) 函数,用于记录用户之间的数据共享事务。
+算法 2 数据管理智能合约( DMSC)
+
+function 1 storage( ) / / 在区块链内为数据文件建立索引
+输入:车辆用户 U i 及其信誉值 RS i 。
+输出:车辆用户在区块链系统中的存储地址或错误消息。
+if U i in key_list / / 若用户在账本中
+if RS i > μ T / / 若用户信誉值大于系统阈值
+add U i to index_list / / 将用户加入索引列表
+return aadr M i
+else
+return “ reputation is error”
+end if
+return “ invaluable vehicle”
+end if
+end function
+function 2 search( ) / / 搜索数据文件
+输入:车辆用户 U i 。
+输出:车辆用户在区块链系统中的存储地址或查找失败消息。
+if U i in key_list / / 若用户在账本中
+if U i in index_list / / 若用户在索引列表中
+return aadr M i in blockchain
+else
+return false
+end if
+else
+return “ invaluable vehicle”
+end if
+end function 2
+function 3 share( ) / / 记录共享事务
+输入:数据提供者 pk DO ;数据接受者 pk DU 。
+输出:数据共享成功消息或数据共享失败消息。
+RS DU = get_reputation( pk DU ) / / 获取数据请求者的信誉值
+RS DO = get_reputation( pk DO ) / / 获取数据所有者的信誉值
+if pk DO in key_list and pk DU in key_list / / 若 DU 和 DO 均在账本中
+if RS DU > RS T / / DU 的信誉值大于 DO 的信誉阈值
+record (pkDO ,pkDU ) in share_list / / 将 DU 和 DO 记录在 share_list
+中
+return “ data share successfully”
+else
+return “ data share fail”
+end if
+end function 3
+
+上述数据管理智能合约( DMSC) 的设计直接解决了以下
+问题:首先,通过验证参与者的信誉值,避免不可信节点参与数
+据交换,保障数据传输的安全性;其次,通过索引机制和事务记
+
+录,实现了数据的高效管理和查询;最后,所有数据共享行为都
+被记录在区块链上,增强了系统的透明性和可追溯性。
+RMSC 负责信誉管理,通过动态评估用户行为,维护系统
+的可信环境。 DMSC 负责数据管理,确保数据共享过程的安全
+性和高效性。 通过这两个智能合约的协同工作,本文方案实现
+了 VANET 数据共享的自动化管理和隐私保护,提升了整个系
+统的透明度、安全性和效率。 同时,基于区块链的去中心化特
+性,智能合约的执行确保了系统操作的不可窜改性,为 VANET
+环境中的数据共享提供了一个安全可靠的解决方案。
+3. 2
+
+数据共享与授权
+
+在数据共享阶段,DO 和 DU 可以利用 DMSC 来实现数据
+的高效索引和查询。 数据共享时序图如图 2 所示。 数据共享
+与授权相关过程的伪代码如算法 3 所示。
+@MN
+'(O
+
+DO
+
+DU
+
+RSU
+
+H ( SK DO r DO)
+
+PQR
+ST
+
+Enc( M i)
+IJEnc( M i),
+KLaddr Mi
+
+!"storage()
+!"search(),#$%&'(
+
++,'(-.
+!"get_reputation(),)*RS DU
+/0RS DU> RS T1234
+Enc( sk DO)
+'(-.56
+'(-.78msg 3
+)*Enc( M i)
+!"share()
+A>Enc( M i)BCM i
+9:TK;<
+=>?@C i
+:D?@ETK
+:D?@ETK
+FGTK、A>?@
+!"punish()、
+updat e ()
+
+Fig. 2
+
+图 2 数据实体间共享时序
+Temporal data sharing among data entities
+
+a) 数据存储:DO 将自己的虚拟地理位置坐标 pos i 作为索
+引,使用自己的私钥的哈希函数 H( sk DO ‖r DO ) 作为密钥利用
+AES 对称加密算法对数据文件 M i 进行加密,获得密文,并将密
+文发送给 RSU。 RSU 对密文 Enc( M i ) 进行数据完整性检查,若
+数据完整,则将密文存储至分布式数据库,作为响应,数据库向
+RSU 返回数据文件存储地址 addr M i 。 RSU 将此消息打包为数
+
+据存储事务 msg1 = ( ID RSU i ,ID DO ,pos i ,addr M i ,RS DO ,ID RSU i ,RS T ,
+Enc( M i ) ,r DO ) 。 值得注意的是 RS T 表示信任阈值,高于该信
+任阈 值, DO 认 为 DU 是 可 信 的。 RSU 并 调 用 DMSC 中 的
+storage( ) 函数以进一步验证事务的正确性。 然后,验证的存储
+交易被发布到区块链。 虚拟地理位置坐标作为数据索引,避免
+直接暴露真实位置信息,同时结合 AES 加密与哈希绑定,防止
+攻击者通过数据内容关联车辆身份。
+b) 数据共享请求:U i 寻找特定位置数据的 DU 通过 DMSC
+内的 search( ) 函数使用地理位置坐标 pos 启动对相关存储事
+务的搜索。 数据的可信度可以从 DO 的信誉分数 RS DO 反映。
+同时,DU 评估其信誉分数 RS DU 是否满足 DO 设置的信誉分数,
+如果是,则 DU 向 DO 发送数据共享请求 msg2 = ( ID DO ,pk DO ,
+ID DU ,pk DU ,pos) 。
+c) 数据共享授权:当 DO 接收到 msg2 时,它首先验证 DU
+的身份。 验证通过后,DO 调用 RMSC 中的 get_reputation( ) 函
+数来检索 DU 的信誉分数,并确认 RS DU > RS T 是否成立。 一旦
+确认,DO 通过对私钥 sk DO 进行 RSA 加密后传输给 DU。 同时
+向 RSU 和 DU 发 送 数 据 共 享 消 息 msg3 = ( ID DU , ID DO , pk DU ,
+pk DO ,addr M i ) ,RSU 收到数据共享消息后将其打包为数据共享
+事务( pk DU ,pk DO ) ,运行 DMSC 的 Share( ) 函数以进一步检查事
+
+第 10 期
+
+张
+
+磊,等:基于智能合约信誉管理的 VANET 数据共享隐私保护方案
+
+务的正确性。 如果成功,则在区块链上发布此交易。
+d) 共享数据采集:DU 收到授权消息 msg3 后,根据其中的
+addr M i 向数据库请求 DO 存储的数据,数据库返回加密的数据。
+DU 使用自己的私钥对授权消息中包含的经过 RSA 加密的对
+称密钥进行解密,得到 DO 对原始数据加密的秘钥,后利用得
+到的密钥对加密的数据进行解密,恢复原始数据。
+算法 3 数据共享与授权算法
+
+输入:DO 的信誉阈值 DO_reputation_threshold; DU 的信誉分数 DU_rs,
+数据文件 data_file;加密后的数据 enc_data;数据存储地址 data_storage_
+add。
+输出:授权状态 authorization_status;共享的数据 shared_data; 解密
+后的原始数据 plaintext。
+if validate( DU_identity) == false
+output “ DU 身份验证失败,数据共享请求被拒绝”
+return
+if DU_rs < DO_reputation_threshold
+output “ DU 信誉分数不足,数据共享请求被拒绝”
+return
+enc_data = AES_enc( data_file, DO_pri_key)
+data_storage_address = RSU. store_data( enc_data)
+/ / 将加密后的数据发送给 RSU,RSU 将存储数据并返回存储地址
+aut_message = RSA_enc( DO_pri_key, DU_pub_key)
+/ / DO 生成授权消息,并使用 RSA 加密后发送给 DU
+RSU. broadcast_aut( aut_message, data_storage_addr)
+/ / RSU 广播存储消息
+DO_pri_key = RSA_dec( aut_message, DU_pri_key)
+/ / DU 对加密消息进行解密获得 DO 私钥
+shared_data = RSU. get_data( data_storage_addr)
+/ / RSU 获得从数据库中获得数据
+dec_data = AES_dec( shared_data, DO_pri_key)
+/ / 对加密数据进行解密获得原始数据
+authorization_status = “ 成功”
+output authorization_status, decrypted_data
+
+算法 3 通过多种安全措施确保数据共享过程中的身份验
+证、信誉管理以及数据加密解密的过程,强化了数据共享的安
+全性与信任性。 凭借验证和信誉分数检查有效地防止了恶意
+用户的访问,而数据加密和授权消息的机制确保了数据在传输
+过程中的隐私保护。
+3. 3
+
+信誉值反馈与更新
+
+在信誉更新与反馈阶段,DO 和 DU 通过 RMSC 和反馈令
+牌机制实现用户信誉分数的更新。 信誉值反馈与更新相关过
+程的伪代码如算法 4 所示。
+a) 反馈令牌生成:在数据共享阶段结束后,数据 请 求 者
+DU 和数据提供者 DO 通过生成反馈令牌来确认数据共享的完
+成。 具体而言,DU 在获取 DO 提供的数据后,生成反馈令牌
+TK DU 并发送给 DO。 DO 收到 TK DU 后,生成反馈令牌 TK DO ,并
+发送给 DU。 这种双向确认机制确保了双方的行为都被记录,
+避免单方面作弊,同时为后续的信誉评分提供了依据。
+b) 信誉评分产生:在数据共享阶段结束后,DU 和 DO 分别
+对对方的行为进行评估,生成信誉评分。 系统为该阶段指定了
+两种类型的反馈评级:1 表示行为正常且可信,0 表示行为异常
+或不可信。 DU 基于 DO 提供的数据质量和可信度进行评分
+r DU→DO ,DO 基于 DU 的数据请求行为和数据使用情况进行评分
+r DO→DU 。 为了保护评分的隐私性,评分结果通过 Paillier 同态加
+密技术进行加密,确保在传输和存储过程中不被泄露,加密后
+的评分 r DU→DO 记为 C DU→DO ,r DO→DU 记为 C DO→DU 。
+c) 信誉评分收集与验证:DU 和 DO 将各自的信誉评分信
+息发送给区块链成员 RSU。 每个区块链成员收到信誉评分信
+息后,利用用户的公钥验证反馈令牌的有效性。 对于未通过验
+证的反馈令牌,系统将执行惩罚机制,即 punish( ) 函数,对该用
+户进行一级惩罚;对于验证通过的用户,RSU 利用同态加密的
+
+· 2927·
+
+加法同态性,将多个加密评分进行聚合。 聚合后的加密评分
+C agg 被发送给区块链节点,由节点使用私钥解密以获得最终的
+评分值 r agg 。 随后,对收集到的信誉评分进行统计。 如果负面
+评分数量超过总评分数的一半,则对该用户执行二级惩罚;若
+反馈令牌验证通过且正面评分多于负面评分,则执行 update( )
+函数,更新该用户的车辆信誉值。
+综上所述,反馈令牌机制通过实现双向确认和验证,确保
+评估过程基于真实行为,从而有效防止虚假或恶意评价的出
+现。 其次,信誉评分机制明确了评分标准,并对评分数据进行
+加密处理,这不仅提高了评估的客观性,还增强了数据的安全
+性。 此外,多节点验证机制借助 RSU 的验证和统计分析,进一
+步减少了作弊行为的可能性。 同时,智能合约的自动化管理通
+过设定信誉阈值和事务验证,确保了评估过程的公正性和客观
+性。 最后,区块链的去中心化特性,凭借其不可篡改性和透明
+性,显著增强了评估结果的信任度。 这些机制的协同作用,使
+得 DU 和 DO 之间的评估过程既安全又可靠,为 VANET 环境
+中的数据共享提供了坚实的信任基础。
+算法 4 信誉值反馈与更新算法
+
+输入:DO 对 DU 的反馈评分 DU_feedback;DU 对 DO 的反馈评分
+DU_feedback;DO 的信誉分数 DO_rs;DU 的信誉分数 DU_rs;系统的信
+誉阈值 μ T ;DO 生成的反馈令牌 TK DO ;DU 生成的反馈令牌 TK DU 。
+输出:更新后的 DO 信誉分数 DO_new_reputation;更新后的 DU 信
+誉分数 DU_new_reputation。
+TK DO = generate_feedback_token( DO) / / DO 生成反馈令牌
+TK DU = generate_feedback_token( DU) / / DU 生成反馈令牌
+DO_feedback = evaluate_DU_behavior( DU) / ∗ DO 对 DU 的行为
+进行评分∗ /
+DU_feedback = evaluate_DO_behavior( DO) / ∗ DU 对 DO 的行为
+进行评分∗ /
+RSU. receive _ feedback ( DO _ feedback, TK DO , TK DU , DU _ feedback)
+/ / DO和 DU 将评分信息和反馈令牌发送给 RSU
+if verify_feedback_token( TK DO , TK DU ) == false
+apply_penalty( DO, DU, level = 1)
+return / / 终止算法执行
+DO_feedback_score = Paillier_enc( DO_feedback) / ∗ 解密 DO 对 DU
+的评分∗ /
+DU_feedback_score = Paillier_dec( DU_feedback) / ∗ 解密 DU 对 DO
+的评分∗ /
+updated_DO_reputation = update_reputation( DO_rs, DU_feedback_
+score) / / 更新 DO 的信誉分数
+updated_DU_reputation = update_reputation( DU_rs, DO_feedback_
+score) / / 更新 DU 的信誉分数
+if updated_DO_reputation < μ T
+add_to_blacklist( DO) / / 将 DO 加入黑名单
+if updated_DU_reputation < μ T
+add_to_blacklist( DU) / / 将 DU 加入黑名单
+output DO_new_reputation, DU_new_reputation
+
+算法 4 通过信誉反馈与更新机制动态调整 DO 和 DU 的信
+誉分数,确保数据共享过程中双方的信任关系能够根据行为表
+现及时调整。 通过反馈令牌、评分解密、信誉检查等环节,系统
+能够有效防止恶意行为,确保信誉管理的公正性与透明度。 同
+时,黑名单机制对低信誉用户的惩罚有效地维护了系统的健壮
+性,避免了恶意用户的干扰。
+
+4
+4. 1
+
+安全性分析
+加密访问控制
+
+本文方案 通 过 结 合 属 性 基 加 密 ( ABE ) 与 角 色 基 加 密
+(RBE) 技术实现数据访问控制方案,针对 VANET 中的数据共
+享和隐私保护需求提供了有效的解决方案。
+设用户的属性集合为 A,访问策略为 P,数据加密密钥为
+K。 只有当用户的属性集合 A 满足访问策略 P 时,用户才能解
+密数据。 加密和解密过程分别表示为
+
+· 2928·
+encrypt( K,P) →CT
+decrypt( CT,A) →K
+
+(1)
+
+其中:CT 是密文;K 是解密后的密钥。
+设用户的角色为 R,访问策略为 P,数据加密密钥为 K。 只
+有当用户的角色 R 满足访问策略 P 时,用户才能解密数据。
+加密和解密过程可以表示为
+encrypt( K,P) →CT
+decrypt( CT,R) →K
+
+(2)
+
+ABE 和 RBE 的安全性基于双线性映射和离散对数问题的
+困难性。 假设攻击者无法在多项式时间内破解离散对数问题,
+则无法通过暴力破解获取密钥 K,从而保证了数据访问控制的
+安全性。
+匿名性
+
+本文提出的基于区块链的 VANET 数据共享方案通过多
+种隐私保护机制实现了用户信息的匿名性。 首先,系统采用公
+钥与身份解耦机制,确保用户在数据共享和交易过程中仅通过
+公钥进行身份标识,避免了真实身份信息的泄露。
+设用户的真实身份为 ID, 公钥为 PK,私钥为 SK。 用户的
+身份信息 ID 与公钥 PK 解耦,系统仅通过公钥 PK 进行身份标
+识。 用户的身份信息 ID 仅由可信权威机构( CA) 掌握。
+PK = H( ID,r)
+
+(3)
+
+其中:H 是哈希函数,r 是随机数。
+其次,区块链技术保证了交易的匿名性,通过仅使用公钥
+标识参与者身份,有效防止了身份的泄露。 智能合约在执行过
+程中也仅基于公钥和属性信息,进一步提升了匿名性。 此外,
+采用 Paillier 同态加密对用户的评分信息进行加密处理,不仅
+保护了评分隐私,还有效防止了恶意报复行为。 通过这些机
+制,本文方案在保障数据共享效率的同时,有效保护了用户的
+隐私,确保了在开放和去中心化的环境中数据共享的安全性与
+匿名性。
+4. 3
+
+可靠的安全保障。
+
+5
+5. 1
+
+实验验证
+实验环境设置
+
+本文方案进行区块链仿真实验,旨在模拟 VANET 中的数
+据共享与智能合约执行过程。 实验硬件配置包括 Intel Core i710700K 处理器、32 GB 内存、1 TB NVMe SSD 存储和千兆以太
+网卡,确保计算、存储和网络传输的高效性。 软件配置方面,实
+验运行在 Ubuntu 20. 04 LTS 操作系统上,使用 Python 3. 13 进
+行区块 链 仿 真、 智 能 合 约 和 数 据 共 享 逻 辑 的 实 现, 依 托
+Hyperledger Fabric 2. 2 框架构建区块链网络,PyCryptoDome 提
+供加密支持,NS-3 用于仿真 VANET 通信和网络拓扑。 该环境
+能够提供稳定、高效的测试平台,为 VANET 区块链技术的性
+能评估提供支持。
+5. 2
+
+实验结果及分析
+
+本节将对提出的基于区块链的 VANET 数据共享隐私保
+护方案进行详细的实验验证与分析。 实验验证主要从效率、安
+全性和性能三个方面评估了该方案的有效性和优越性。
+1) 不同事务的计算时间与吞吐量对比
+本文方案的核心机制主要包含数据共享与授权阶段以及
+信誉反馈与更新阶段两个关键阶段。 其中,数据请求事务是数
+据共享与授权阶段的核心操作,而信誉反馈事务和信誉更新事
+务则构成了信誉反馈与更新阶段的核心流程。 通过对这三种
+事务 的 效 率 进 行 分 析, 可 以 更 全 面 地 展 示 本 文 方 案 的 性 能
+表现。
+图 3 展示了随着数据量的增加,数据请求、信誉反馈和信
+誉更新三种事务的计算时间变化趋势。
+550
+500
+
+不可伪造性
+
+本文方案通过区块链的不可窜改性、同态加密技术、智能
+合约、细粒度访问控制以及匿名性与身份解耦机制等多重技术
+手段,有效保障了 VANET 数据共享环境中的数 据 不 可 伪 造
+性。 区块链的不可篡改特性确保了上链的交易记录、信誉评分
+和数据访问请求一旦记录便无法被窜改或伪造。
+设区块链上的交易记录为 T,区块的哈希值为 H( T) 。 每
+个区块的哈希值依赖于前一个区块的哈希值,形成链式架构。
+窜改任何一个区块的内容都会导致后续区块的哈希值不匹配,
+从而被系统检测到。 区块的哈希计算表示为
+H( T i ) = H( T i - 1 ‖T i )
+
+(4)
+
+E( S new ) = E( S old ) + E( ΔS)
+
+(5)
+
+其中:T i 是第 i 个区块的交易记录;T i - 1 是前一个区块的交易
+记录。
+同态加密技术保护用户反馈评分数据,使其在收集和更新
+过程中始终保持加密状态,即使攻击者获取加密数据也无法推
+断原始评分值。 设用户的信誉评分为 S,同态加密后的评分为
+E( S) 。 同态加密允许在加密数据上进行计算,而不需要解密。
+信誉评分的更新可以表示为
+其中:ΔS 是信誉评分的变化量。
+智能合约的自动执行则保证了数据共享和信誉更新操作
+的透明性和不可伪造性,所有操作均可追溯且不受人为干扰。
+此外,本文方案结合属性基加密和角色基加密技术,实施细粒
+度访问控制,确保只有符合条件的用户才能访问数据;身份验
+证机制进一步保障了参与数据共享的用户身份合法性。 这些
+机制协同作用,确保了数据的真实性、完整性和安全性,有效防
+止了恶意伪造或窜改行为的发生,为 VANET 数据共享提供了
+
+)*+,/ms
+
+4. 2
+
+第 42 卷
+
+计 算 机 应 用 研 究
+
+-./0
+1234
+1256
+
+450
+400
+350
+300
+250
+100
+
+Fig. 3
+
+200
+300
+400
+!"#$%&'(
+
+500
+
+图 3 不同事务的计算时间对比
+Comparison of latency for different transactions
+
+由图 3 可知,信誉更新操作的计算时间最长,其次是信誉
+反馈操作,而数据请求操作的计算时间最短。 随着系统处理的
+任务数量从 100 增加到 500,所有操作的计算时间均呈现上升
+趋势。 这一现象主要是由于区块链网络在处理更多数据时,计
+算和存储需求增加,导致处理时间相应延长。 信誉更新操作的
+计算时间最高,这是由于信誉更新操作涉及复杂的计算和逻辑
+判断,如信誉分数的计算和更新以及惩罚机制的执行,这些操
+作需要较多的计算和状态更改,所以计算时间最长。 信誉反馈
+虽然也需要一定的计算,如对反馈信息的验证和处理,但其计
+算复杂度和状态更改较少,因此计算时间较小。 数据请求主要
+涉及简单的数据检索和传输,计算和状态更改较少,因此计算
+时间最低。 此外,数据处理和存储需求、加密解密操作以及网
+络通信开销也在计算时间差异中起着重要作用。 信誉更新需
+要访问和修改多个数据字段,涉及较高的数据存储和处理需
+求。 加密操作和较大的数据传输量进一步增加了计算时间。
+相比之下,信誉反馈和数据请求对数据存储、计算和加密的需
+求较少,计算时间相对较低。
+图 4 展示了数据请求、信誉反馈和信誉更新三种事务的吞
+
+张
+
+磊,等:基于智能合约信誉管理的 VANET 数据共享隐私保护方案
+
+吐量随着系统处理任务数量增加的变化趋势。 吞吐量是指系统
+在单位时间内成功处理的用户操作请求的数量,通常以每秒处
+理的操作请求的数量( TPS) 来衡量。 在本文实验中,吞吐量的
+计算基于系统在特定时间段内完成的用户操作请求的数量。
+由图 4 可知数据请求的吞吐量最高,这是因为数据请求操
+作相对简单,主要涉及数据检索和传输,计算开销较低,且较少
+依赖区块链的共识机制。 因此,系统能够在单位时间内处理更
+多的数据请求事务。 信誉反馈的吞吐量次之,这是因为信誉反
+馈操作涉及加密和区块链交易的生成。 虽然这些操作增加了
+计算负担,但由于其复杂性低于信誉更新,系统仍能在单位时
+间内处理较多的信誉反馈事务。 信誉更新的吞吐量最低是因
+为信誉更新操作最为复杂,涉及多步计算、状态更新和共识验
+证。 这些操作消耗了大量的计算资源,导致系统在单位时间内
+处理的事务数量较少。 随着系统处理的任务数量的增加,数据
+处理、存储需求和网络通信的压力进一步加大,影响了系统的
+吞吐量。
+!"#$ %&'( %&)*
+
+342/(5/s)
+
+50
+40
+30
+20
+10
+0
+
+100
+
+200
+300
+400
++,-./012
+
+500
+
+图 4 不同事务的吞吐量对比
+Comparison of throughput for different transactions
+
+Fig. 4
+
+2) 信誉更新系数对信誉值变化的影响
+根据 3. 1 节的信誉更新公式:
+
+NR
+NR
+RS new1 = RS old + α × (
+) × RS old + β × (
+) +γ
+N new
+N new
+
+140
+
+(6)
+
+可知不同信誉更新系数 α 和 β 对用户信誉值变化存在影
+响。 图 5 展示了信誉更新系数,即新行为对信誉值影响的系数
+α 值和历史行为对信誉值影响的系数 β 值对用户信誉值的综
+合作用。 通过测试不同 α 和 β 值的组合,分析了它们对信誉值
+的影响。
+
+· 2929·
+
+誉值下降的速度加快。 当 β 值较低( 如 β = 0. 1) 时,历史行为
+对信誉值的影响较小,信誉值下降较慢( 如降至 92. 34) 。 而随
+着 β 值增大至 0. 9 时,历史行为的影响加剧,信誉值迅速下降
+至 11. 45。
+综合分析 α 值和 β 值的交互作用,结果表明,两者对信誉
+值的影响具有协同效应。 当 α 值和 β 值同时增大时,恶意行为
+对信誉值的影响更加显著,导致信誉 值 迅 速 下 降。 例 如, 当
+α = 0. 1 且 β = 0. 9 时,信誉值降至 11. 45,而 α = 0. 1 且 β = 0. 1
+时,信誉值为 90. 23。 在 α 值较大时( 如 0. 5、0. 7、0. 9) ,新行为
+的影响逐渐占主导,恶意行为后信誉值下降加速。
+3) 恶意节点比例对消息延迟与到达率的影响分析
+为分析和验证系统在 VANET 应用中的性能表现。 通过
+设置不同的车辆密度、恶意节点比例(10% 、20% 、30% ) 和攻
+击类型( 窜改数据、虚假消息、刷信誉) ,模拟不同的交通密度
+和攻击场景。 实验通过消息延迟、消息到达率指标,评估系统
+在 VANET 中的实时性和可靠性,从而全面验证系统在不同恶
+意节点环境下的适应性和有效性。
+图 6 表明,消息延迟随着恶意节点比例和车辆密度的增加
+呈现非线性增长。 在高密度场景中,如车辆密度为 400 辆 / km2
+时,恶意节点比例从 10% 增加至 30% ,消息延迟从 74. 9 ms 增
+长至 138. 5 ms。 然而,所有场景下的延迟均控制在 140 ms 以
+内,满足车联网对实时性的需求。 技术上,系统通过信誉机制、
+区块链优化和分布式存储有效控制了延迟。 信誉机制通 过
+RMSC 智能合约隔离恶意节点,减少了无效数据转发带来的拥
+塞;Hyperledger Fabric 的多通道和 PBFT 共识机制优化了交易
+吞吐量,避免了传统区块链延迟放大效应;IPFS 的分布式存储
+和高效检索进一步降低了延迟。 综合来看,本文方案在恶意节
+点比例较高时依然能保持较好的性能,满足 VANET 的实时性
+要求。
+120
+%&'(/ms
+
+第 10 期
+
+10%)*+,
+20%)*+,
+30%)*+,
+
+100
+80
+60
+40
+20
+
+80
+
+0.1
+
+Fig. 5
+
+0.3
+
+0.5
+α
+
+80
+
+60
+
+70
+
+40
+
+60
+
+20
+
+50
+
+0.9
+0.7
+
+40
+
+0.5
+0.3 β
+0.7
+0.9 0.1
+
+50 100 150 200 250 300 350 400
+2
+!"#$/("/km )
+
+90
+
+!"#
+
+100
+
+30
+20
+
+图 5 α 和 β 不同取值对用户信誉值的影响
+Impact of different values of α and β on user reputation
+
+图 5 展示了在用户初始信誉值为 100 时,遇到恶意行为后
+不同 α 和 β 的取值下的信誉值的变化情况。 α 值代表恶意行
+为对信誉值的即时影响,β 值则代表历史行为对信誉值的影
+响。 图 5 表明,随着 α 值的增大,恶意行为对信誉值的冲击加
+剧,导致信誉值下降更快。 当 α 值较低( 如 0. 1) 时,恶意行为
+对信誉值的影响较为缓慢,信誉值相对较高( 如 90. 23) 。 而 α
+值增 大 至 0. 9 时, 恶 意 行 为 后 信 誉 值 显 著 下 降 ( 如 降 至
+11. 45) ,显示出新行为对信誉值的影响逐步加强。 同理,随着
+β 值的增加,历史行为对信誉值的影响变得更加显著,导致信
+
+图 6 消息延迟与车辆密度的关系
+Fig. 6 Message delay vs vehicle density
+
+图 7 表明,在恶意节点比例较低时( 如 10% ) ,系统能够保
+持较高的消息到达率(85% ~ 95% ) 。 在极端场景下,如车辆
+密度为 400 辆 / km2 且恶意节点比例达到 30% , 系 统 仍 保 持
+34. 8% 的到达率,远高于 VANET 的最低可用性阈值 30% 。 技
+术上,Paillier 同态加密算法有效防止恶意节点伪造反馈数据,
+实验表明 20% 恶意节点时系统仍能保持 54. 3% 的到达率。 双
+重索引机制通过数据冗余存储提升了数据恢复能力,在 200
+辆 / km2 的场景下,数据恢复成功率提升了 63% 。 此外,动态信
+誉权重机制平衡了长期行为和短期表现,使得在恶意节点比例
+为 30% 时,系统仍能保持 43. 1% 的消息到达率。 这些技术手
+段综合提升了系统在不同恶意节点比例下的可靠性和可用性。
+4) 抵御恶意行为能力对比
+为了说明本文方案在抵御恶意行为能力方面的优势,将本
+文方案与文献 [31] 提出的 BIDS-IoT 方案、文献 [ 32 ] 提 出 的
+BSC-EGI 方案和文献[13] 提出的 BSRP-IoT 方案进行了对比分
+析,实验结果如表 2 所示。 攻击检测率是指系统能够成功识别
+
+· 2930·
+
+恶意行为的比例,而攻击阻止率则表示系统在检测到恶意行为
+后,能够有效阻止其造成实际危害的比例。
+
+%&'()/%
+
+90
+80
+70
+60
+50
+10%!"#$
+20%!"#$
+30%!"#$
+
+40
+
+50 100 150 200 250 300 350 400
+2
+*+,-/(+/km )
+
+图 7 消息到达率与车辆密度的关系
+Fig. 7 Message arrival rate vs vehicle density
+
+由表 2 内容可知,与其他方案相比在安全性方面,本文方
+案表 现 出 色, 攻 击 检 测 率 和 攻 击 阻 止 率 分 别 达 到 94. 7% 和
+89. 3% ,且系统性能无明显下降,主要是因为区块链技术提供
+了去中心化和不可窜改的特性,有效防止恶意窜改数据;同态
+加密技术增强了数据传输和存储的安全性;信誉机制通过动态
+更新用户信誉分数,及时检测并惩罚恶意行为,防止伪造或窜
+改信誉评分。 BIDS-IoT 主要通过单一的匿名化技术保护数据
+隐私,对于伪造信誉分数和数据窜改攻击的防护能力较弱,容
+易被恶意节点利用漏洞进行攻击,在检测率和阻止率方面表现
+较差仅为 74. 2% 和 70. 6% ,且系统性能明显下降;BSC-EGI 通
+过区块链和加密技术的结合来保护 VANET 中的数据隐私和
+安全性,但表现中等,为 84. 5% 和 79. 8% ,系统性能略有下降;
+BSRP-IoT 应用了多种先进的加密技术,如零知识证明和随机
+签名,在攻击检测率和攻击阻止率方面表现优异,达到 95. 2%
+和 88. 7% ,但系统性能略有下降。 综上所述,本文方案通过多
+重安全机制,在抵御数据窜改和伪造信誉分数方面表现优异,
+同时 在 性 能 和 安 全 性 之 间 取 得 了 良 好 平 衡, 优 于 其 他 对 比
+方案。
+Tab. 2
+
+表2
+
+抵御恶意行为能力结果对比
+
+Comparison of results for malicious behavior resistance capability
+
+方案
+
+第 42 卷
+
+计 算 机 应 用 研 究
+
+攻击检测率 / %
+
+攻击阻止率 / %
+
+74. 2
+
+70. 6
+
+94. 7
+
+本文方案
+BIDS-IoT
+BSC-EGI
+
+综合评价
+
+无明显变化
+
+最优
+
+明显下降
+
+较低
+
+略有下降
+
+中等
+
+略有下降
+
+优
+
+89. 3
+
+84. 5
+
+BSRP-IoT
+
+系统性能变化
+
+79. 8
+
+95. 2
+
+88. 7
+
+5) 计算开销与通信开销对比
+图 8 展示了本文方案与 BIDS-IoT、BSC-EGI 方案、BRS-IoT
+进行计算开销和通信开销方面的对比。
+2.5
+
+!"#$/s
+
+2.0
+
+BIDS - IoT
+BSC - EGI
+-./0
+BSRP - IoT
+
+1.5
+1.0
+
+17 500
+15 000
+12 500
+
+BIDS - IoT
+BSC - EGI
+!"#$
+BSRP - IoT
+
+10 000
+7 500
+5 000
+2 500
+0
+
+Fig. 9
+
+6
+
+100
+
+200 300 400
+%&'()*+,
+
+500
+
+图 9 通信开销对比
+Comparison of communication overhead
+
+结束语
+
+本文针对车载自组织网络( VANET) 中数据共享面临的计
+算开销大、隐私与可用性平衡困难、实时性较差等问题,提出了
+一种基于区块链的数据共享隐私保护方案。 该方案通过区块
+链的不可窜改性和分布式存储特性,确保了数据的完整性和可
+追溯性,同时利用智能合约实现了细粒度的数据管理和动态信
+誉评估机制。 通过同态加密技术,方案保护了用户反馈评分的
+隐私性,确保在加密状态下进行数据聚合和处理,进一步增强
+了系统的安全性。 此外,信誉机制通过动态更新用户信誉分
+数,激励诚实用户参与数据共享,并对恶意用户进行惩罚,有效
+防止了虚假信息的传播和恶意行为的发生。 实验结果表明,该
+方案在抵御恶意行为、保护数据隐私以及系统性能方面表现优
+异,特别适用于资源受限的 VANET 环境。 未来研究可以进一
+步优化区块链的负载管理,提升系统的扩展性和实时响应能
+力,同时探索更高效的加密算法和共识机制,以满足大规模
+VANET 环境下的数据处理需求。
+参考文献:
+
+0.5
+
+[1] Chen Wendong, Wu Haiqin, Chen Xiao, et al. A review of research
+
+0.0
+100
+
+Fig. 8
+
+共识机制优化了系统性能,简化了隐私保护措施,减少了计算
+资源的需求。 BSC-EGI 的计算开销也较低,主要依靠智能合约
+动态调整激励参数,且没有采用复杂的加密技术,因此计算开
+销相对较小。 BSRP-IoT 的计算开销最高,因为它使用了同态
+加密、零知识证明等复杂的加密技术,显著增加了计算负担,并
+且频繁调用智能合约。 相较于 BIDS-IoT、BSC-EGI,本文方案由
+于采用了同态加密、匿名认证和信誉机制等技术来提高安全
+性,所以计算时间相对较高,但仍在可接受范围内。
+图 9 展示了四种方案在通信开销方面的对比。 BIDS-IoT
+的通信开销最低,因为它通过分片技术和高效共识机制减少了
+数据传输,优化了通信效率。 BSC-EGI 的通信开销也较低,系
+统设计简洁,未引入复杂的加密或频繁的数据交换,因此通信
+开销较小。 BSRP-IoT 的通信开销最大,主要是由于频繁的数
+据加密解密和智能合约调用,增加了通信负担。 本文方案的通
+信开销适中,虽然相较于 BIDS-IoT、BSC-EGI 有较高的通信开
+销,但在隐私保护方面具有更高的安全性,且设计合理,通信开
+销仍在可接受范围内。
+因此,综合系统资源开销与隐私保护能力来看,本文方案
+的较高资源开销,正是其强大的隐私保护能力和安全性保障的
+必然结果。
+
+200 300 400
+%&'()*+,
+
+500
+
+图 8 计算时间对比
+Comparison of computational overhead
+
+图 8 展示了本文方案与其他三种方案在计算时间方面的
+对比。 BIDS-IoT 的计算开销最低,因为它通过分片技术和高效
+
+on privacy protection of Internet of vehicles based on blockchain [ J] .
+Journal of Sensor and Actuator Networks, 2022, 11(4) : 86.
+
+[2] 李怡霖, 闫峥, 谢皓萌. 车载自组织网络的隐私保护综述 [ J] .
+
+信息网络安全, 2019, 19(4) : 63- 72. ( Li Yilin, Yan Zheng, Xie
+Haomeng. Survey of privacy preservation in VANET [ J] . Netinfo
+Security, 2019, 19(4) : 63- 72. )
+
+第 10 期
+
+张
+
+· 2931·
+
+磊,等:基于智能合约信誉管理的 VANET 数据共享隐私保护方案
+
+[3] Giripunje L M, Vidyarthi A, Shandilya S K. Adaptive congestion
+
+prediction in vehicular Ad hoc networks ( VANET) using type-2 fuzzy
+model to establish reliable routes [ J] . Wireless Personal Communications, 2022, 125(4) : 3527- 3548.
+
+[4] Al-ani R, Baker T, Zhou Bo, et al. Privacy and safety improvement
+
+of VANET data via a safety-related privacy scheme [ J] . International Journal of Information Security, 2023, 22(4) : 763- 783.
+
+[5] Hozouri A, Mirzaei A, Razaghzadeh S, et al. An overview of VANET
+
+(2024- 08- 06) . https: / / doi. org / 10. 19678 / j. issn. 100- 3428.
+
+0069457.
+
+[18] Li Yijing, Bi Ran, Jiang Nan, et al. Methods and challenges of cryp-
+
+tography-based privacy-protection algorithms for vehicular networks
+[ J] . Electronics, 2024, 13(12) : 2372.
+
+[19] Li Wenchao. Multi-receiver data authorization with data search for da-
+
+ta sharing in cloud-assisted IoV [ J] . IEEE Trans on Intelligent
+Transportation Systems, 2024, 25(5) : 4233- 4250.
+
+vehicular networks [ EB / OL] . (2023- 09- 13 ) . https: / / arxiv. org /
+
+[20] Bao Yangyang, Qiu Weidong, Cheng Xiaochun, et al. Fine-grained
+
+[6] 邓雨康, 张磊, 李晶. 车联网隐私保护研究综述 [ J] . 计算机应
+
+group service for the IoV [ J] . IEEE Trans on Intelligent Transpor-
+
+abs / 2309. 06555.
+
+用研究, 2022, 39(10) : 2891- 2906. ( Deng Yukang, Zhang Lei,
+Li Jing. Overview of research on privacy protection of Internet of Ve-
+
+hicles [ J] . Application Research of Computers, 2022, 39(10) :
+
+2891- 2906. )
+
+[7] Ding Fan, Jiang Jiwan, Zhou Yang, et al. Unravelling the impacts of
+parameters on surrogate safety measures for a mixed platoon [ J ] .
+Sustainability, 2020, 12(23) : 9955.
+
+data sharing with enhanced privacy protection and dynamic users
+tation Systems, 2023, 24(11) : 13035- 13049.
+
+[21] Tao Ye, Xu Peng, Jin Hai. Secure data sharing and search for cloudedge-collaborative storage [ J] . IEEE Access, 2019, 8: 15963-
+
+15972.
+
+[22] Ghane S, Jolfaei A, Kulik L, et al. Preserving privacy in the Internet
+of connected vehicles [ J] . IEEE Trans on Intelligent Transportation Systems, 2021, 22(8) : 5018- 5027.
+
+[8] 周建华, 侯英哲, 吕臣臣, 等. 智能网联汽车安全防护技术研究
+
+[23] 谢绒娜, 李晖, 史国振, 等. 基于区块链的可溯源访问控制机制
+
+( Zhou Jianhua, Hou Yingzhe, Lyu Chenchen, et al. A review on se-
+
+Guozhen, et al. Blockchain-based access control mechanism for data
+
+综述 [ J] . 武 汉 大 学 学 报: 理 学 版, 2023, 69 ( 5 ) : 617- 635.
+
+curity and defense technologies for intelligent connected vehicle [ J] .
+
+Journal of Wuhan University: Natural Science Edition, 2023,
+
+69(5) : 617- 635. )
+
+[9] Mahi M J N, Chaki S, Humayun E, et al. A review on VANET secu-
+
+rity: future challenges and open issues [ J] . Indonesian Journal of
+Electrical Engineering and Informatics, 2023, 11(1) : 180- 193.
+
+[ J] . 通信学报, 2020, 41(12) : 82-93. ( Xie Rongna, Li Hui, Shi
+
+traceability [ J] . Journal on Communications, 2020, 41 ( 12 ) :
+
+82- 93. )
+
+[24] Liu Yuanni, Xiao Man, Zhou Yanyan, et al. An access control
+mechanism based on risk prediction for the IoV [ C] / / Proc of the 91st
+IEEE Vehicular Technology Conference.
+Press, 2020: 1- 5.
+
+Piscataway, NJ: IEEE
+
+[10] Parameswari S, Parameswari S, Kavitha K, et al. A novel energy
+
+[25 ] Lu Zhaojun, Wang Qian, Qu Gang, et al. BARS: a blockchain-
+
+tion in vehicular Ad hoc networks [ J] . International Journal of
+
+[ C] / / Proc of the 17th IEEE International Conference on Trust, Se-
+
+aware cluster based routing protocol for emergency message disseminaHealth Sciences, 2022: 4205- 4224.
+
+[11] 刘媛妮, 李奕, 陈山枝. 基于区块链的车联网安全综述 [ J] . 中
+
+国科学: 信息科学, 2023, 53(5) : 841-877. ( Liu Yuanni, Li Yi,
+Chen Shanzhi. A survey of Internet of vehicles / vehicle to everything
+
+security based on blockchain [ J] . Scientia Sinica: Informationis,
+
+2023, 53(5) : 841- 877. )
+
+[12] Luo Xue, Wang Juan, Xu Jing, et al. Research on data privacy pro-
+
+tection of Internet of vehicles based on differential privacy [ J] . IOP
+
+Conference Series: Earth and Environmental Science, 2020,
+
+428(1) : 012007.
+
+[13] Yang Wei, Hou Chengqi, Zhang Zhiming, et al. Secure and efficient
+
+data sharing for IoT based on blockchain and reputation mechanism
+[J]. IEEE Internet of Things Journal, 2024, 11(11): 20631- 20647.
+
+[14] Zhang Jing, Su Shuangshuang, Zhong Hong, et al. Identity-based
+
+broadcast proxy re-encryption for flexible data sharing in VANETs
+[ J] . IEEE Trans on Information Forensics and Security, 2023,
+
+18: 4830- 4842.
+
+[15] Wu Xiaotong, Xu Xiaolong, Bilal M. Toward privacy protection com-
+
+position framework on Internet of vehicles [ J] . IEEE Consumer
+Electronics Magazine, 2022, 11(6) : 32- 38.
+
+[16] Zhang Lei, Li Jiangtao, Yang Yafang. Message linkable group signature with information binding and efficient revocation for privacy- preserving announcement in VANETs [ J] . IEEE Trans on Dependable and Secure Computing, 2024, 21(6) : 5667- 5680.
+
+[17] 刘代东, 金睿, 魏松杰. 基于联盟链的分布式车联网节点信誉管
+理系统 [ J / OL] . 计算机工程. (2024- 08- 06) . https: / / doi. org /
+
+10. 19678 / j. issn. 100- 3428. 0069457. ( Liu Daidong, Jin Rui,
+Wei Songjie. Consortium blockchain-based distributed reputation
+management system for IoV nodes [ J / OL] . Computer Engineering.
+
+based anonymous reputation system for trust management in VANETs
+curity and Privacy in Computing and Communications / the 12th IEEE
+International Conference on Big Data Science and Engineering. Piscataway,NJ: IEEE Press, 2018: 98- 103.
+
+[26] 张海波, 曹钰坤, 刘开健, 等. 车联网中基于区块链的分布式信
+
+任管理方案 [ J] . 通 信 学 报, 2023, 44 ( 5 ) : 148- 157. ( Zhang
+Haibo, Cao Yukun, Liu Kaijian, et al. Distributed trust management
+
+scheme based on blockchain in Internet of Vehicles [ J] . Journal on
+Communications, 2023, 44(5) : 148- 157. )
+
+[27] Wang Di, Zhang Xiaohong. Secure data sharing and customized services for intelligent transportation based on a consortium blockchain
+[ J] . IEEE Access, 2020, 8: 56045- 56059.
+
+[28] Yang Zhigang, Wang Ruyan, Wu Dapeng, et al. Blockchain-enabled
+trust management model for the Internet of vehicles [ J] . IEEE Internet of Things Journal, 2023, 10(14) : 12044- 12054.
+
+[29] Zhang Xiaohong, Lai Jiaming, Moshayedi A J. Traffic data security
+
+sharing scheme based on blockchain and traceable ring signature for
+
+VANETs [ J] . Peer-to-Peer Networking and Applications, 2023,
+
+16(5) : 2349- 2366.
+
+[30] Shrestha R, Bajracharya R, Shrestha A P, et al. A new type of
+
+blockchain for secure message exchange in VANET [ J ] . Digital
+Communications and Networks, 2020(2) : 177- 186.
+
+[31] 蔡婷, 林晖, 陈武辉, 等. 区块链赋能的高效物联网数据激励共
+
+享方案 [ J] . 软件学报, 2021, 32(4) : 953- 972. ( Cai Ting, Lin
+Hui, Chen Wuhui, et al. Efficient blockchain-empowered data sharing incentive scheme for Internet of Things [ J] . Journal of Software, 2021, 32(4) : 953- 972. )
+
+[32] Xuan Shichang, Zheng Li, Chung I, et al. An incentive mechanism
+for data sharing based on blockchain with smart contracts [ J] . Computers & Electrical Engineering, 2020, 83: 106587.
+
+

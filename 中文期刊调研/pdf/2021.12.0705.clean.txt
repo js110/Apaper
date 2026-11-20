@@ -1,0 +1,745 @@
+收稿日期:2 0 2 1  1 2  1 9 ;修回日期:2 0 2 2  0 2  0 1基金项目:教育部信息安全一流专业建设点项目
+作者简介:赵兴波( 1 9 9 6  ) ,男,辽宁凌源人,硕士研究生,主要研究方向为密码学;李梦东( 1 9 6 4  ) ,男(通信作者) ,山东利津人,教授,主要研究
+方向为密码算法及其应用( l m d @b e s t . e d u . c n ) ;王颖( 1 9 9 8  ) ,女,北京怀柔人,硕士研究生,主要研究方向为密码学;朱屹霖( 1 9 9 8  ) ,女,河南新乡
+人,硕士研究生,主要研究方向为密码学.
+基于超奇异同源的零知识证明及群签名方案
+赵兴波,李梦东
+,王颖,朱屹霖
+(北京电子科技学院密码科学与技术系,北京1 0 0 0 7 0 )
+摘要:B u l l e n s等人在C S I  F i s h中留下了一个开放问题,即设计一个识别协议,允许系统挑战空间是( N,而不
+是小集合{- S , …, S } 。提出了一个基于超奇异同源的零知识证明方案。该方案将挑战C作为一个同源,从而
+解决了这一问题,并实现了更小的稳固性误差以及公钥长度。该方案也可以通过F i a t  S h a m i r变换为非交互零知
+识证明,进而可以在量子随机预言下实现基于超奇异同源的签名方案以及群签名方案,最后分析了方案的安全
+性以及正确性。
+关键词:零知识证明;超奇异;同源;群签名
+中图分类号:T P 3 9 3  0 4文献标志码:A文章编号:1 0 0 1  3 6 9 5 ( 2 0 2 2 ) 0 9  0 4 1  2 8 2 6  0 6
+d o i : 1 0 . 1 9 7 3 4 / j . i s s n . 1 0 0 1  3 6 9 5 . 2 0 2 1 . 1 2 . 0 7 0 5
+Z e r o  k n o w l e d g ep r o o f a n dg r o u ps i g n a t u r e s b a s e do ns u p e r s i n g u l a r i s o g e n y
+Z h a oX i n g b o ,L i M e n g d o n g 
+,Wa n gY i n g ,Z h uY i l i n
+( D e p t .o f C r y p t o l o g yS c i e n c e &T e c h n o l o g y ,B e i j i n gE l e c t r o n i c S c i e n c e &T e c h n o l o g y I n s t i t u t e ,B e i j i n g 1 0 0 0 7 0 ,C h i n a )
+A b s t r a c t :B u l l e n s e t a l . l e f t a no p e np r o b l e m s i nC S I  F i s hw a s t od e v i s ea ni d e n t i f i c a t i o np r o t o c o l t h a t a l l o w e df o r t h ec h a l 
+l e n g es e t t o b e ( Nr a t h e r t h a nt h e s m a l l s e t {- S , …, S } . T h i s p a p e r p r o p o s e da z e r o  k n o w l e d g e p r o o f s c h e m e b a s e do ns u p e r 
+s i n g u l a r i s o g e n y . T h i s s c h e m e a d d r e s s e dt h e o p e np r o b l e mb y t a k i n g t h e c h a l l e n g e Ca s a ni s o g e n y , a n dr e d u c e dt h e s o u n d n e s s
+e r r o r a n dt h e s i z eo f p u b l i ck e y . T h i s s c h e m e c o u l db e t u r n e di n t o n o n  i n t e r a c t i v e z e r o  k n o w l e d g e p r o o f s c h e m e u s i n g t h e F i a t 
+S h a m i r t r a n s f o r m . T h e ns i g n a t u r e s c h e m e a n dg r o u ps i g n a t u r e s c h e m e b a s e d o n s u p e r s i n g u l a r i s o g e n y c o u l d b e i m p l e m e n t e du n 
+d e r t h eq u a n t u mr a n d o mo r a c l e s m o d e l . A n dt h i s p a p e r a n a l y z e dt h e s e c u r i t y a n dc o r r e c t n e s s o f t h e s e s c h e m e s .
+K e yw o r d s :z e r o  k n o w l e d g e p r o o f ;s u p e r s i n g u l a r ;i s o g e n y ;g r o u ps i g n a t u r e
+0引言
+同源密码是后量子密码学一个很有发展前景和研究价值的
+候选者。同源是两条椭圆曲线之间保持基点的同态映射,是一
+种群同态[ 1 ]
+。早期,基于同源的密码系统主要研究通常曲
+线[ 2 , 3 ]
+,但因为通常曲线同源问题存在亚指数时间的量子算法,
+而B i a s s e等人[ 4 ]
+研究发现超奇异同源问题的量子算法为指数时
+间,所以目前同源密码大多是超奇异椭圆曲线上的方案。
+目前构造同源签名的基础主要是计算超奇异同源( C S S I )
+问题[ 5 ]
+和类群作用逆问题( G A I P ) [ 6 ]
+,且基于同源的签名大多
+是结合F i a t  S h a m i r变换来构造的[ 7 , 8 ]
+。在文献[ 9 , 1 0 ] 中提出
+的基于C S S I的签名方案,即使在最优化的变体[ 1 0 ]
+中也产生至
+少1 2K B大小的签名。另一方面,依靠G A I P并采用F i a t 
+S h a m i r w i t ha b o r t s方法, D e F e o等人[ 1 1 ]
+提出了一个新的签名方
+案,称为S e a S i g n。S e a S i g n提供的签名非常小,在1 2 8b i t安全
+级别下小于1K B。最近, B e u l l e n s等人[ 1 2 ]
+通过计算理想类群,
+改进了S e a S i g n并获得了第一个实用的基于同源的签名方案,
+命名为C S I  F i S h。它允许从理想类群中进行均匀抽样,并对其
+元素进行规范表示。C S I  F i S h只需要3 9 0m s来签名或验证消
+息,签名大小只有2 6 3B y t e。因此,基于C S I  F i S h同源特征的
+签名是非常实用的。
+通过对C S I  F i S h方案以及其他基于超奇异同源签名方案
+的研究与分析,本文提出了一种基于超奇异同源的零知识证明
+系统。该系统改进了C S I  F i s h中的证明系统,解决了C S I  F i s h
+中提出的开放问题,即将系统的挑战空间由小集合{-S+ 1 ,
+S - 1 } 提升为C S I D H  5 1 2中理想类群的阶数N。本文方案与
+C S I  F i S h方案相比,具有更小的稳固性误差以及公钥长度,本
+文仅需一个椭圆曲线作为公钥。基于该证明系统,本文构造了
+基于超奇异椭圆曲线同源的签名方案以及群签名方案,并对签
+名方案进行了安全性证明。
+1背景知识
+1  1超奇异椭圆曲线及同源
+椭圆曲线之间的同源 φ : E →E 1为一个态射,也是群同态,
+且 φ ( )E )=)E 1
+。T a t e指出[ 1 3 ]
+:有限域& p上的两条椭圆曲线
+E、E 1是同源的,当且仅当# E ( & q )= # E 1 ( & q ) 。
+对于同源 φ : E →E 1 ,当E= E 1时称为自同态。椭圆曲线的
+自同态集用E n d ( E ) 表示,具有点加法和函数复合运算的环结
+构[ 1 4 ]
+。在E n d p ( E ) 中, E的F r o b e n i u s自同态 π满足特征方
+程: π
+2
+- t π+ q = 0 , t称为F r o b e n i u s迹。当且仅当t = 0时,曲线
+E是超奇异的。F p  有理自同态环E n d p( E ) 是虚二次域K=
+) ( - 槡p ) 的序)。E n d p ( E ) 中总是包含Z [ π q ] 这个子环。
+设 ε λ λ ( ), π ) 表示在& p上定义的所有超奇异椭圆曲线E
+的集合,设)是虚二次域的序, π ∈)使得 ε λ λ ( O , π ) 非空。理
+想类群c l ( )) 自由地和传递地作用于集合 ε λ λ ( ), π ) ,在)和
+E n d p ( E ) 之间存在一个F r o b e n i u s映射使得 φ ( )E )=)E且( x ,
+y ) →( x p
+, y p
+) ,用表示这一作用[ 1 5 ]
+。最近,该作用被用来设
+计几种密码源语— — —C S I D H及其延伸签名方案S e a S i g n、C S I 
+第3 9卷第9期
+2 0 2 2年9月
+计算机应用研究
+A p p l i c a t i o nR e s e a r c ho f C o m p u t e r s
+V o l  3 9N o  9
+S e p . 2 0 2 2F i s h等。这几种方案的安全性都是基于类群作用逆问题,定义
+如下:
+问题1类群作用逆问题 ( g r o u pa c t i o ni n v e r s ep r o b l e m ,
+G A I P ) 给定两个曲线E 0、E 1 ,其自同态环E n d ( E 0 )= E n d ( E 1 )=
+),找到一个理想 α )使得E 1= α E。
+1  2 C S I  F i s h
+B e u l l e n s等人提出了一种基于C S I D H  5 1 2困难性的有效
+签名方案。对于在C S I D H中为C S I D H  5 1 2参数集选择的素数
+集l 1 …l 7 4 , B e u l l e n s等人确定了自同态环的相关类群是循环的,
+由g生成,且阶数N= c l ( )) 由下式给出
+N= 3× 3 7× 1 4 0 7 1 8× 5 1 5 9 3 6 0 4 2 9 5 2 9 5
+8 6 7 7 4 4 2 9 3 5 8 4 8 8 9× 3 1 5 9 9 4 1 4 5 0 4 6 8 1
+9 9 5 8 5 3 0 0 8 2 7 8 7 4 5 5 8 7 3 2 2 0 4 9 0 9
+对于任何理想 α ∈c l ( )) ,可以写做 α= g a
+,其中a ∈ ( N,因
+为群是循环的。只要使用C S I D H  5 1 2参数集,任何人都可以对
+类群元素进行均匀采样,并拥有唯一的表示。对于与E 0同源
+的椭圆曲线E ′ ,简化符号 α E 0= [ a ] E 0 ,有了这个符号,就有
+了[ a ] ( [ b ] E 0 )= [ a + b ] E 0
+[ 1 2 ]
+。
+1  3零知识证明
+零知识证明( z e r o  k n o w l e d g ep r o o f , Z K P ) 是证明者和验证
+者之间的双方协议,证明者通过和验证者交互,向验证者证明
+他知道一些秘密信息,而除了声明本身已经揭示的之外,不透
+露任何关于秘密的信息。
+对于一个语言L { 0 , 1 } 
+,其中的串x都伴随着一个二元
+关系R { 0 , 1 } 
+× { 0 , 1 } 
+,存在w使得( x , w ) ∈R , w称为x ∈L
+的证据( w i t n e s s ) 。参考文献[ 1 6 ] ,下面对零知识证明进行定义。
+定义1设( P , V ) 是一个双方协议,其中V是概率多项式
+时间( p r o b a b i l i s t i c p o l y n o m i a l t i m e , P P T ) 算法,设L , L ′ { 0 , 1 } 
+是具有二元关系R、R ′ 的语言,使得R R ′ 当且仅当它满足下
+列条件,那么( P , V ) 称为L , L ′ 是具有完全性误差 α 、挑战集C、
+公共输入x和秘密输入w的 Σ协议。
+三轮形式( t h r e e  m o v ef o r m ) :证明者P在输入( x , w ) 时,计
+算承诺t并将其发送给验证者V。验证者V在输入x时,选择
+一个挑战c ←C并将其发送给P。证明者向验证者发送一个响
+应r。根据协议文本( t , c , r ) ,验证者最终接受或拒绝证明。
+证明系统需要具有以下三个性质:
+a ) 完全性( c o m p l e t e n e s s ) 。对于一个诚实的证明者P和验
+证者V ,当任一( x , w ) ∈R ,则验证者接受的概率至少为1- α 。
+b ) 特殊稳固性( s p e c i a l s o u n d n e s s ) 。存在一种P P T算法K
+(知识提取器) ,其将满足c ≠c ′ 的两个接受文本( t , c , r ) , ( t , c ′ ,
+r ′ ) 作为输入,并输出w ′ ,使得( x , w ′ ) ∈R ′ 。稳固性误差 δ = 1 / C。
+诚实验证者零知识 (h o n e s t  v e r i f i e rz e r o k n o w l e d g e ,
+H V Z K ) 。存在以x ∈L和c ∈C为输入的P P T模拟器,该算法
+输出( t , r ) ,使得三元组( t , c , r ) 与由真实协议运行生成的协议
+文本不可区分[ 1 6 ]
+。
+一个3轮—特殊稳固的—诚实验证者零知识证明协议,可
+以应用F i a t  S h a m i r转换,将其转换为非交互式零知识证明协议。
+定义2一个规范的认证方案I D= ( K , P , V , c ) ,其中K是
+概率多项式时间的密钥生成算法,在输入安全参数 λ时输出
+一对( p k , s k ) ; P也是P P T算法,输入s k输出一条消息m ; c ≥1
+是挑战的整数位长度; V是一种确定性多项式时间验证算法,
+将p k和证明文本作为输入,输出0或1 [ 1 7 ]
+。
+1  4签名
+一个签名方案S=( K e y G e n , S i g n , V e r i f y ) 由如下三个算法
+组成:
+a ) K e y G e n ( 1 λ
+) 。密钥生成算法输入安全参数 λ ,输出一
+对公/ 私钥对( p k , s k ) 。
+b ) S i g n ( s k , m ) 。签名算法输入私钥s k和消息m ,输出一
+个签名 σ 。
+c ) V e r i f y ( p k , m , s ) 。验证算法输入公钥p k、消息m和签名 σ ,
+输出1b i t , 1代表 σ是消息m的一个合法签名, 0代表不合法。
+定义3选择消息攻击下的不可伪造性: E U F  C M A安全。
+如果对于所有P P T敌手A ,有A d v E U F  C M A
+A , S ( 1 λ
+)=P r [ Aw i n ]=
+n e g l ( 1 λ
+) ,则一个签名方案S是E U F  C M A安全的[ 1 8 ]
+。
+定理1 [ 1 0 ]
+设R与生成算法K是困难关系,令( P , V ) 是 Σ
+协议中R的证明者和验证者,对于某些整数c ≥1具有c b i t挑
+战。假设 Σ协议是完整的,特殊稳固的以及诚实验证者零知
+识的。那么( K , P , V , c ) 是一个规范的识别方案,在被动攻击下
+是安全的。
+定理2 [ 1 0 ]
+令I D是一个规范的认证方案,在被动攻击下
+是安全的。设S为使用F i a t  S h a m i r变换从I D中导出的签名方
+案。在随机预言模型下, S在选择消息攻击下是不可伪造的。
+1  5群签名
+下面介绍群签名的定义以及安全模型。
+定义4群签名。群签名方案由下面的五个多项式时间
+算法组成:
+a ) G S e t u p :输入安全参数,生成系统公共参数和群公、私钥
+对( G Mp k , G Ms k ) 。
+b ) G J i o n :成员加入是由用户和群管理员执行的交互式算
+法,若算法成功,则用户成为有效的群成员,并得到公、私钥对
+( U p k , U s k ) 。
+c ) G S i g n :对于给定的消息m ,其签名由管理员和群成员共
+同合作完成。
+d ) G V e r i f y :验证者根据群公钥和消息m对签名进行验证。
+e ) G T r a c e :通过该算法,管理员G M可以找出对消息m真
+正的签名者。
+群签名的安全性定义需满足以下性质:
+a ) 正确性。对于给定的消息m ,只有经合法的群成员运行
+签名算法产生的群签名才能够被正确验证。
+b ) 不可伪造性。只有合法的群成员通过和管理员交互才
+能够产生被验证正确的群签名。
+c ) 匿名性。只有群管理员能够确定签名者的身份,其他
+人只能验证群签名是否正确。
+d ) 可跟踪性。当出现矛盾争端的时候,管理员可以通过
+追踪算法打开群签名,识别出具体的签名者身份,并给出证据。
+e ) 抗合谋性。即使多个群成员合谋在一起,也不能产生
+有效的被管理员追踪不到的群签名。
+2新的零知识证明以及签名方案
+2  1零知识证明的身份认证协议
+对于C S I D H  5 1 2参数集, C S I  F i S h指出其理想类群是循环
+的,具有已知阶数N和生成元g。只要使用C S I D H  5 1 2参数
+集,任何人都可以对类群元素进行均匀采样,并拥有唯一的表
+示。在此基础上,本文描述了新的基于超奇异同源问题的身份
+认证协议(图1 ) ,与C S I  F i s h中的身份认证协议相比,本文的
+认证协议实现了更小的稳固性误差( s o u n d n e s s e r r o r ) ,且具有
+更小的公钥长度。
+图1识别协议
+F i g . 1 I d e n t i f i c a t i o np r o t o c o l
+· 7 2 8 2 · 第9期赵兴波,等:基于超奇异同源的零知识证明及群签名方案零知识证明协议的设置如下:
+a ) 参数设置。选取大素数p = 4 ·l 1…l n - 1 ,其中l i是小
+的不同的奇素数,给定集合 ε λ λ ( ), π ) 和理想类群以及在& p上
+具有自同态环的超奇异椭圆曲线E 0。为了证明秘密a的知
+识,证明者与验证者进行如下 Σ协议操作,如图2所示。
+图2零知识证明
+F i g . 2 Z e r ok n o w l e d g ep r o o f
+b ) 密钥生成。选取一个随机的同源[ a ] : E 0→E 1 ,得到一
+个随机椭圆曲线E 1。公钥为E 1 ,密钥为a。
+识别协议如下:
+a ) 承诺:证明者随机选取b ∈R( N,且b ≠a ,将E= [ b ] E 0
+发送给验证者。
+b ) 挑战:验证者检验E是否等于E 1 ,若相等,则拒绝;否则
+随机选取挑战c ∈ ( N,然后发送给证明者。
+c ) 响应:证明者发送r = c + b - am o dN给验证者。
+d ) 验证:验证者检查是否[ r ] E 1= [ c ] E= E 2 ,相等则接受;
+否则拒绝。
+2  2安全性分析
+定理3基于同源的识别协议是一个完整和安全的 Σ协
+议,它具有完全性、特殊稳固性以及诚实验证者零知识。
+证明完全性。假设证明者的行为总是诚实的,即其知道
+一个秘密E 1= [ a ] E 0。验证者检查[ r ] E 1 =[ c ] E=E 2是否成
+立,因为[ r ] E 1 =[ c ] [ b ] [ a ] E 1 =[ c ] [ b ] [ a ] [-a ] E 0 =
+[ c ] [ b ] E 0= [ c ] E ,这证明了验证者总是接受诚实生成的证明。
+特殊稳固性。给定两个具有不同挑战的有效证明,即 π=
+( E , c , r ) 和 π ′ =( E , c ′ , r ′ ) ,其中c ≠c ′ ,那么r ≠r ′ 。本文有
+[ r ] E 1=[ c ] E以及[ r ′ ] E 1 =[ c ′ ] E ,因此可以提取( c -c ′ )+
+( r - r ′ ) ,其为G A I P问题的一个解。与此同时,作弊证明者不
+能通过验证,除非他成功猜测挑战c。特别是,由于挑战空间
+现在是 ( N,其中包含N个元素,所以该协议实现了1 / N的稳固
+性误差。
+诚实验证者零知识。为了模拟证明,从( N中随机抽取样
+本c ,模拟器从 ( N中随机抽取r。计算E 2 =[ r ] E 1并输出证明
+π= ( E , c , r ) 。根据决策G A I P问题,模拟器生成的证明与诚实
+执行的挑战等于c的协议证明是无法区分的,因为真实证明和
+模拟证明都具有r以及E 2 =[ r ] E 1的均匀随机分布值作为响
+应,所以该认证协议是诚实验证者零知识的。
+2  3签名方案
+在算法1~ 3中描述了基于同源的签名方案,该方案的安
+全性基于G A I P困难假设。它是通过对2 . 1节中介绍的零知
+识证明协议应用F i a t  S h a m i r变换得到的。其主要思想是用临
+时密钥E以及消息m的哈希值来替换挑战c ,即c =H ( E ‖
+m ) 。签名 σ由r、E组成,验证者计算c ′ = H ( E ‖m ) ,并检查是
+否[ r ] E 1= [ c ′ ] E。为了减少了签名的大小,下面详细描述了
+基于超奇异同源的签名方案,具体如下。
+算法1 K e y G e n
+输入:初始曲线E 0以及理想类群的阶数N。
+输出:公、私钥对( s k , p k ) 。
+a ←R( N
+E 1= [ a ] E 0
+p k = E 1
+r e t u r n ( s k = a , p k = E 1 )
+算法2 S i g n
+输入:消息m以及私钥s k。
+输出:签名 σ= ( r , E ) 。
+b ←R( N, b ≠a
+E= [ b ] E 0
+c = H ( E ‖m )
+r = c + b - am o dN
+r e t u r nσ= ( r , E )
+算法3 V e r i f y
+输入:消息m , E 0 ,公钥p k以及签名 σ 。
+输出: V a l i d或I n v a l i d。
+( r , E ) ←σ
+c ′ = H ( E ‖m )
+i f [ r ] E 1= [ c ′ ] Et h e n
+r e t u r nV a l i d
+e l s e
+r e t u r nI n v a l i d
+2  4安全性分析
+定理4在随机预言模型中,上述基于超奇异同源的签名
+方案具有选择消息攻击下的不可伪造性,即E U F  C M A安全。
+证明如2 . 4节所示,该身份认证方案( Σ协议) 具有特殊
+稳固性和诚实验证者零知识。因此,定理1意味该认证方案是
+安全的,可以抵御假冒被动攻击。由定理2可知,该签名方案
+在随机预言模型中是E U F  C M A安全的。
+2  5对比分析
+C S I  F i s h中描述的基础身份认证协议如下:证明者为了证
+明其知道一个群元素 α使得E 1= [ a ] E 0 ,然后证明者随机选取
+b ∈ ( N,并将E= [ b ] E 0发送给验证者。验证者随机选取比特
+c ∈{ 0 , 1 } ,然后发送给证明者。当c = 0时,证明者回复r =b ,
+验证者检查是否E=[ r ] E 0 ;当c = 1时,证明者回复r =b -a
+m o dN ,验证者检查E是否等于[ r ] E 1。该协议的挑战空间仅
+为二进制比特c ∈{ 0 , 1 } ,公钥长度为1个曲线。
+为了降低稳固性误差, C S I  F i s h增加了挑战空间,但这也
+增加了公钥的大小。其方法为选择一个正整数S ,密钥是S - 1
+维的向量,如 ( a 1 ,…,a S - 1) ,公钥为 ( E 0 ,[ a 1]E 0 ,…,
+[ a S - 1 ] E 0 ) 。证明者现在必须证明他知道一个秘密s ∈( N,使
+得E j= [ s ] E i出现在公钥列表中的某对椭圆曲线上。证明者
+再次随机选择b ∈ ( N,并通过E= [ b ] E 0来对他进行承诺。验
+证者从集合{- S + 1 , S - 1 } 中均匀地采样挑战c ,证明者用r =
+b - a cm o dN来响应。验证检查E=[ r ] E c ,当c为负值时,有
+E - c= E t
+c。C S I  F i S h的这种适应方案实现了1 / 2 S - 1的安全稳
+固性,公钥长度为S - 1个曲线。
+在C S I  F i S h的基础上,证明者可以简单地模仿基于离散对
+数的构造,因为现在可以在环 ( N中工作,所以可以创建特有的
+响应来表达临时密钥、秘密密钥和挑战的组合。然而,主要的
+问题是验证者如何验证这个组合是正确的,因为当考虑曲线
+g a
+E时,群作用只允许在g的指数上增加一个已知的常数。
+也就是,若在经典D H中进行系数乘( r =b +a c ) 的形式,则群
+作用就成为了映射g a
+→( g a
+) c
+,但在环( N的环境下是不存在这
+种类似映射的[ 1 8 ]
+。
+本文方案将挑战c视做一个同源,这样做的好处是可以将
+临时密钥b和挑战c结合到一起,变为[ b +c ] 的形式,避免出
+现g a
+→( g a
+) c
+的情况。且这样做使得挑战c可以在环( N中随
+机选取,也就使得挑战空间变为类群阶数N ,从而实现了1 / N
+的安全稳固性。但是采用这种方案的缺点是需要多计算一次
+· 8 2 8 2 · 计算机应用研究第3 9卷同源,即E 2 =[ c ] E ,这增加了计算时间、提高了额外计算量。
+本文方案公钥长度为1个椭圆曲线。表1、2分别给出了本文
+方案与C S I  F i s h中的识别协议与签名方案的比较结果。
+表1识别协议方案比较
+T a b . 1 C o m p a r i s o no f i d e n t i f i c a t i o np r o t o c o l
+方案公钥长度挑战空间稳固性误差同源次数
+C S I  F i s h基础方案1 { 0 , 1 } 1 / 2 2
+C S I  F i s h适应方案S - 1 {- S + 1 , S - 1 } 1 / 2 S - 1 2
+表2签名方案比较
+T a b . 2 C o m p a r i s o no f s i g n a t u r es c h e m e
+方案公钥长度签名长度同源次数
+C S I  F i s h签名方案S 2 S 2 S
+本文签名方案1 2 2
+3基于新Z K的群签名方案
+在群签名中,为了代表群签名,群成员需要生成一个N I Z K
+来证明他有一个有效的密钥/ 公钥对。签名包括密文和证明
+(消息嵌入在证明中) 。为了验证签名,验证者只是检查证明
+的有效性。下面给出了本文群签名方案的详细描述。它与文
+献[ 1 9 ]一样借助状态列表的方法实现群签名,文献[ 1 9 ] 中采
+用双线性映射来实现成员的身份认证,但本文采用上述提出的
+同源Z K来实现。用同源来实现群签名方案的优点是密钥短、
+抗量子攻击等,但缺点是计算量更大、计算时间较长。
+本文群签名方案存在公钥状态列表L P K、群管理员G M、群
+成员U i以及可信时间戳机构四类实体。其中,公钥状态列表
+中显示当前群成员的身份信息I D i、公钥E i、授权签名起始时
+间t i m e s t a r t和终止时间t i m e e n d ;管理员G M负责群成员的加入、
+群签名的追踪以及实时更新维护,并向所有群成员广播最新的
+L P K ;可信时间戳机构负责向群管理员及群成员提供时间戳服
+务;群成员U i负责完成群签名。
+3  1基于超奇异同源的群签名方案
+本文方案包含系统建立、成员加入、签名、验证和追踪五个
+步骤。
+a ) 系统建立。选取大素数p = 4 ·l 1…l n - 1 ,其中l i是小
+的不同的奇素数,给定集合 ε λ λ ( ), π ) 和理想类群以及在& p上
+具有自同态环的超奇异椭圆曲线E 0 , H 1 : { 0 , 1 } 
+→ ( N, H 2 : { 0 ,
+1 } 
+→ ( N。对于G M:取x ←R( N,计算E G M =[ x ] E 0 ,其中x为
+群管理员私钥, E G M为公钥。故群公共参数为{ p , N , E 0 , H 1 ,
+H 2 } ,群公钥为E G M。
+b ) 成员加入。成员U i想要加入,先随机选取x i , a i ←R ( N,
+计算E i= [ x i ] E 0 , h i= a i+H 1 ( I D i )m o dN , E I D i= [ a i ] E 0 ,最后
+将( I D i , E I D i , E i , h i ) 发送给G M。其中I D i代表成员U i的现实
+身份信息。
+收到( I D i , E I D i , E i , h i ) 后, G M先验证等式[ H 1 ( I D i ) ] E I D i=
+[ h i ] E 0是否成立,确认I D i的有效性。若成立,计算E G M i=
+[ x ] E i ,将E G M i发送给U i ,并存储I D i、E i。其中I D i、E i以及时戳
+t i m e构成公开的公钥状态列表L P K ,如表3所示。公钥状态列
+表L P K的实时维护由群管理员G M负责,每当群成员加入或撤
+销,都要实时更新L P K ,并向所有群成员广播最新的L P K ,同时
+将( I D i , E i , t i m e s t a r t - i , t i m e e n d - i ) 发送给群成员U i ,作为群成员U i
+的群签名证书。设计一个公钥状态列表L P K可以实现动态地
+增加和撤销群成员,提高执行效率。在撤销某个群成员时,只
+需将L P K中群成员对应的终止时间修改为当时的时间即可。
+当成员被撤销后,它不可以生成新的合法群签名。当群成员公
+钥有效时,可以将其终止时间设置为一个足够大的值。
+成员U i收到E G M i后,计算E G M i= [ x i ] E G M是否成立。若成
+立,则成员U i公钥为E i ,私钥为x i。
+表3公钥列表L P k
+T a b . 3 P u b l i c k e y l i s t L P k
+序号群成员成员公钥开始时间终止时间
+i I D i E i t i m e s t a r t - i t i m e e n d - i
+   
+c ) 群签名过程。群成员U i对消息m进行签名,需要和管
+理员G M共同完成。群成员U i随机选择b i ←R( N,并向可信
+时间戳机构请求当前时间t i m e ,然后计算E b i=[ b i ] E 0 , t i=
+H 2 ( E i ‖E 0 ‖E b i ‖m) , s i=t i+b i-x im o dN ,群成员U i将
+( t i m e , E i , m , E b i , s i ) 发送给G M。
+G M接收到( E i , m , E b i , s i ) 后,先根据E i值查找L P K ,看其
+在当前时间是否为有效值。若有效,则检验t ′ i= H 2 ( E i ∥E 0 ∥
+E b i ∥m ) ,且[ t ′ i ] E b i= [ s i ] E i是否成立。若成立,则管理员G M
+计算E v i= [ x + t ′ ] E 0 ,并将I D T r a=( I D i , m , E v i , t ′ i , s i ) 存储到追
+踪列表,如表4所示。群成员对消息m的签名记为 σ i=( E v i ,
+t ′ i , s i ) 。
+表4追踪列表L t r a c k
+T a b . 4 T r a c kl i s t L t r a c k
+序号群成员I D T r a
+i I D i I D T r a= ( I D i , m , E v i , t ′ i , s i )
+  
+d ) 验证。验证者接收到签名后,检验E v i=[ t ′ i ] E G M是否
+成立。若成立,则接受 σ i= ( E v i , t ′ i , s i ) 为消息m的群签名;否
+则,不接受。
+e ) 追踪。关于签名 σ i= ( E v i , t ′ i , s i ) 产生矛盾分歧时,群管
+理员可以通过查询追踪列表中对应的t ′ i、s i追踪到该签名的签
+名人U i的身份, G M根据签名追踪列表中的I D T r a =( I D i , m ,
+E v i , t ′ i , s i ) 信息查找相应I D i ,证明该签名确实是群成员U i产
+生的。
+3  2正确性分析
+该方案中的系统建立存在管理员与成员双向验证身份的
+过程。
+a ) 成员加入过程中管理员与成员互验身份。管理员G M
+接收到成员U i发送的( I D i , E I D i , E i , h i ) 后,检验[ H 1( I D i ) ]
+E I D i= [ H 1 ( I D i ) ] [ a i ] E 0 =[ h i ] E 0成立,则证明了I D i的有效
+性。管理员完成对成员的检验后,计算E G M i= [ x ] E i并将其发
+送给U i , U i验证E G M i= [ x i ] E G M是否成立,确认G M的身份。
+b ) 签名过程中验证成员身份。群管理员G M和群中成员
+U i协作生成群签名。在G M接收到( t i m e , E i , m , E b i , s i ) 后,首
+先检验U i在当前时间内是否存在,若成立,则检验t ′ i=
+H 2 ( E i ‖E 0 ‖E b i ‖m ) ,且[ t ′ i ] E b i=[ s i ] E i是否成立,若成立,
+则证明发送方确实为群中成员U i。
+c ) 签名的正确性。验证签名中E v i的有效性,即检验E v i=
+[ x + t ′ i ] E 0= [ t ′ i ] E G M,证明群管理员参与了签名过程。
+验证t ′ i= H 2 ( E i ‖E 0 ‖E b i ‖m ) 的正确性,即验证t ′ i=H 2
+( E i ‖E 0 ‖E b i ‖m )= H 2 ( E i ‖E 0 ‖[ b i ] E 0 ‖m )= H 2 ( E i ‖E 0 ‖
+[ s i+ x i- t i ] E 0 ‖m ) 。仅需验证[ b i ] E 0 =[ s i+x i-t im o dN ]
+E 0。因为s i= t i+b i-x im o dN ,所以[ b i ] E 0 =[ s i+x i-t im o d
+N ] E 0= [ s i- t im o dN ] E i= [ s i- t ′ im o dN ] E i。
+通过以上分析,证明了本文方案的正确性。
+3  3安全性分析
+定理5匿名性。对于任意多项式时间敌手A ,本文方案
+在随机预言模型下是匿名的。
+证明通过挑战者C和敌手A之间的游戏完成证明。
+G 0游戏如下:
+a ) 挑战者C输入安全参数p = 4 ·l 1 …l n- 1 ,其中l i是小的
+不同的奇素数,给定集合 ε λ λ ( ), π ) 和理想类群c l ( )) 以及在
+· 9 2 8 2 · 第9期赵兴波,等:基于超奇异同源的零知识证明及群签名方案& p上具有自同态环的超奇异椭圆曲线E 0 , H 1 : { 0 , 1 } 
+→( N,
+H 2 : { 0 , 1 } 
+→ ( N。随机选取x ←R( N,计算E G M = [ x ] E 0。公开
+群公共参数为{ p , N , E 0 , H 1 , H 2 } 以及群公钥E G M,保留私钥x。
+b ) 敌手A输入需签名的消息m ,两个群成员U i 0
+、U i 1
+∈L p k给
+挑战者C ,挑战者C选取b = 0 ,其中b ∈{ 0 , 1 } ,生成群成员U i b
+对应的私钥x i 0
+∈R ( N,令实际群成员U i= U i 0
+执行签名算法。
+c ) 挑战者C运行签名算法,生成签名 σ i=( E v i , t ′ i , s i ) ,并
+发送给敌手A。
+d ) 敌手A收到签名后给出关于b的猜测。
+G 1游戏如下:
+G 1游戏与G 0游戏的过程类似,其区别在于挑战者C选取
+b = 1 ,其中b ∈{ 0 , 1 } ,生成群成员U i b
+对应的私钥x i b
+∈R( N,并
+用群成员U i 1
+对应的私钥执行签名算法,生成签名 σ 
+i =( E 
+v i ,
+t ′ 
+i, s 
+i) ,并发送给敌手A。敌手A接收到签名后给出关于b
+的猜测。
+下面说明假设敌手A赢得匿名性攻击游戏的优势A d v a n o n
+A =
+( | P r [ b 
+= b ]- 1 / 2 | = ε 是可忽略的,只需要证明挑战者C用成
+员U i b
+的私钥计算生成的群签名 σ i=( E v i , t ′ i , s i ) 与用群成员
+U i 1 - b
+的私钥计算生成的群签名 σ 
+i =( E 
+v i , t ′ 
+i, s 
+i ) 是不可区
+分的即可。
+对于签名 σ i ,由签名过程易知,当挑战者C用成员U i b
+的
+私钥计算签名时,均匀抽样b i ←R( N, t i=H 2( E i ‖E 0‖E b i ‖
+m ) , s i= t i+ b i- x im o dN ,最终生成签名 σ i= ( E v i , t ′ i , s i ) ;当挑
+战者C用成员U i 1 - b
+的私钥计算签名时,均匀抽样并最终生成
+签名 σ 
+i =( E 
+v i , t ′ 
+i, s 
+i ) 。根据决策C S I D H ,签名 σ i=( E v i ,
+t ′ i , s i ) 与 σ 
+i =( E 
+v i , t ′ 
+i, s 
+i ) 是不可区分的。因此,敌手A的
+优势是可以忽略A d v a n o n
+A。
+综上所述,本文提出的基于超奇异同源的群签名满足随机
+预言模型下的匿名性。
+定理6不可伪造性。如果G A I P问题是困难的,本文提出
+的基于超奇异同源的群签名在随机预言模型下是不可伪造的。
+证明通过挑战者C和敌手A之间的游戏完成证明。假
+设敌手A能够以不可忽略的概率 ε成功伪造签名,下面将展
+示挑战者C如何利用敌手A的伪造结果找到一个理想e ,构造
+一个G A I P问题的解。敌手A与挑战者C之间的游戏如下:
+a ) s e t u p。输入安全参数,挑战者C进行如下操作:
+挑战者C输入安全参数p = 4 ·l 1 …l n- 1 ,其中l i是小的不
+同的奇素数,集合 ε λ λ ( ), π ) 和理想类群以及在F p上具有自同
+态环的超奇异椭圆曲线E 0 , H 1 : { 0 , 1 } 
+→ ( N, H 2 : { 0 , 1 } 
+→ ( N。
+将群公共参数{ p , N , E 0 , H 1 , H 2 } 发送给敌手A。
+b ) q u e r y。敌手A可以进行多项式次访问预言机并进行如
+下询问,挑战者C作出响应,挑战者C分别建立列表L 1~ L 4来
+存储敌手A的H 1询问、H 2询问、私钥询问及签名询问,所有列
+表初始化为空。设在进行私钥及签名询问之前,已进行过所有
+相关的h a s h询问。
+( a ) 哈希询问。
+H 1询问: A可以选择群成员身份I D i进行询问, C检查列
+表L 1 ,若A进行过此询问,则返回相同结果。否则令h i=a i+
+H 1 ( I D i )m o dN ,将h i返回给A ,并将( I D i , h i , a i ) 加入列表L 1。
+H 2询问:接收到A查询输入( m , E b i ) 时, C检查列表L 2 ,若
+A进行过此询问,则返回相同结果。否则C随机选择t i ←R ( N
+返回给A ,并将( m , E b i , t i ) 加入列表L 2。
+( b ) 私钥询问。
+A可以选择群成员身份I D i进行私钥询问, C随机地选取
+私钥x i ←R( N,并输出( U p k i , U s k i )=( E i , x i ) ,将私钥返回给
+A ,并将( I D i , E i , x i ) 加入列表L 3。
+( c ) 签名询问。
+A可以选择群成员身份I D i ,提交待签消息m的签名询
+问, C查询列表L 2、L 3找到对应记录并用签名算法计算对消息
+m的签名结果 σ i ,随机选取b i ←R( N,计算t i= H 2 ( E i ‖E 0 E b i ‖
+m ) , s i= t i+ b i- x im o dN ,最终生成签名 σ i= ( E v i , t ′ i , s i ) 。
+c ) f o r g e r y。敌手A向挑战者C提交一个消息m 
+、群成员
+身份为I D 
+i以及伪造的群签名 σ 
+i =( E 
+v i , t ′ 
+i, s 
+i ) ,且满足敌
+手A没有询问过用户I D 
+i的签名私钥;敌手A没有询问过
+( E 
+v i , t ′ 
+i, s 
+i) 的签名两个条件。
+如果签名 σ 
+i = ( E 
+v i , t ′ 
+i, s 
+i ) 是合法签名,下面将展示挑
+战者C如何利用敌手A的伪造结果求得理想e ,其为G A I P问
+题的一个解。挑战者C查询敌手A的询问列表L 2 ,若不存在
+集合( m 
+, E 
+b i , t 
+i ) ,挑战者C放弃并终止游戏。否则,因为
+σ 
+i = ( E 
+v i , t ′ 
+i, s 
+i) 是合法签名,由签名的验证过程得
+E v i= [ t ′ i ] E G M
+E 
+v i= [ t ′ 
+i] E { G M
+若t i- t 
+i = 0 ,则挑战者放弃游戏,否则可以计算出E v i=
+[ t i- t 
+i m o dN ] E 
+v i。令e =t i-t 
+i m o dN ,则有E v i=[ e ] E 
+v i =
+e E 
+v i ,即理想e是G A I P问题的一个解。
+综上所述,如果G A I P问题是困难的,本文方案在随机预
+言模型下是不可伪造的。
+定理7抗合谋性。对于任意多项式时间敌手A ,本文方
+案在随机预言模型下是抗合谋的。
+证明抗合谋攻击是指即使部分成员联合起来也无法产
+生G M追踪不到的合法群签名。在本文方案的群成员加入算
+法中,管理员G M将成员身份信息存储在群成员列表中,签名
+时先通过搜索列表中的存储信息验证成员的身份合法性,验证
+成功才提供签名帮助,与群成员合作产生签名,避免了群中成
+员合谋产生无法追踪的签名;此外基于G A I P问题的困难性,
+使得群管理员G M无法获知群成员的私钥,且群成员之间无法
+得出其他成员的私钥;最后,群中所有成员以及管理员G M的
+私钥都完全保密;且互相无关。所以,该方案具有抗合谋性。
+定理8可追踪性。对于任意多项式时间敌手A ,本文方
+案在随机预言模型下是可追踪的。
+证明方案的可追踪性是指管理员可以通过打开签名来
+找到签名者的真实身份。本文方案的签名由管理员和群成员
+共同完成,在执行签名算法时,用户会先声称自己的部分签名,
+然后将其发送给G M, G M收到签名后,查询用户U i是否在群
+成员列表中,并通过判断[ t ′ i ] E b i=[ s i ] E i是否成立来验证用
+户签名的合法性。在通过验证之后,管理员才会计算签名;同
+时将其存储到追踪列表里。由此可以看出,管理员G M只需通
+过搜索追踪列表来打开签名,即可查出签名者身份。
+此外,攻击者无法在没有群管理员的情况下独自生成合法
+签名。假设敌手A具有增加和撤销群成员的权力以及获得群
+私钥和群中任意成员私钥的能力。此外, A还可以运行签名预
+言机和打开预言机。
+若在I D i下对于消息M, A伪造群成员i的签名 σ i ,但只要
+群管理G M是安全的, G M的私钥不被获取,那么A就无法伪
+造出不能被G M追踪到的签名。因为群签名是由群成员和群
+管理员共同合作完成的。U i只有在G M协助下才可以产生有
+效的群签名,而G M在协助U i时,将U i的相关身份信息记录
+在追踪列表L t r a c k中;此外因为G A I P问题是困难的、是计算不
+可行的,那么即使群成员被攻破,只要G M的私钥未被泄露,签
+名仍然不可伪造,所以本文方案满足可跟踪性。
+· 0 3 8 2 · 计算机应用研究第3 9卷3  4性能分析
+将本文群签名方案与文献[ 1 9 ] 方案进行比较。文献[ 1 9 ]
+方案采用双线性映射,实现群管理员对群成员的身份认证,而
+本文方案为提出的基于同源的零知识身份认证,且同样具有以
+下优点:
+a ) 工作效率高。本文提出的签名方案中群签名长度是固
+定不变的,不随群中成员个数的变化而变化且签名长度短,公
+钥和签名长度均与群成员的数量n无关,所以整体群签名效率
+较高。本文方案适合大群组的群签名方案。
+b ) 动态性。本文方案设置了公钥状态列表,可以实现动
+态地增加和撤销群成员,其加入、撤销代价较小,群成员可以随
+机地加入和撤销。群成员的撤销简单快捷,只要修改群成员对
+应的终止时间便能实现群成员的即时撤销。
+不同之处在于:
+a ) 本文群签名方案基于同源的G A I P问题,由公钥求出私
+钥是困难的,规避了被撤销成员联合得出其他成员私钥的
+风险。
+b ) 本文群签名中,群成员的私钥由自己随机选择生成,因
+此可以抵挡群管理员的陷害攻击。
+c ) 本文群签名方案包含了超奇异同源的特殊性质,如密
+钥短、抗量子攻击等,但计算时间长。
+4结束语
+本文在B u l l e n s等人提出的C S I  F i s h的基础上,提出了一
+个新的零知识证明方案。与C S I  F i s h中的方案相比,该方案在
+仅有一个公钥的前提下,将挑战空间提升为类群阶数N ,实现
+了更强的稳固性。同时本文通过应用F i a t  S h a m i r变换,在量
+子随机预言模型下得到了基于超奇异同源的签名方案以及群
+签名方案,并对提出的签名方案进行了安全性证明。
+参考文献:
+[ 1 ] S i l v e r m a nJ H . T h e a r i t h m e t i c o f e l l i p t i c c u r v e s [ M] . B e r l i n : S p r i n g e r ,
+2 0 0 9 .
+[ 2 ] R o s t o v t s e vA , S t o l b u n o vA . P u b l i c  k e yc r y p t o s y s t e mb a s e do ni s o g e 
+n i e s [ E B / O L ] .( 2 0 0 6  0 5  0 2 ) . h t t p s : / / e p r i n t . i a c r . o r g / 2 0 0 6 / 1 4 5 .
+[ 3 ] C h i l d s A , J a oD , S o u k h a r e vV . C o n s t r u c t i n ge l l i p t i cc u r v ei s o g e n i e s i n
+q u a n t u ms u b e x p o n e n t i a l t i m e [ J ] . J o u r n a l o f Ma t h e ma t i c a l C r y p t o 
+l o g y , 2 0 1 4 , 8 ( 1 ) : 1  2 9 .
+[ 4 ] B i a s s e J F , J a o D , S a n k a r A . Aq u a n t u ma l g o r i t h mf o r c o m p u t i n g i s o g e 
+n i e s b e t w e e ns u p e r s i n g u l a r e l l i p t i cc u r v e s [ C ] / / P r o co f I n t e r n a t i o n a l
+C o n f e r e n c eo nC r y p t o l o g yi nI n d i a . C h a m : S p r i n g e r , 2 0 1 4 : 4 2 8  4 4 2 .
+[ 5 ] J a o D , D e F e o L . T o w a r d s q u a n t u m  r e s i s t a n t c r y p t o s y s t e m s f r o ms u p e r 
+s i n g u l a r e l l i p t i c c u r v ei s o g e n i e s [ C ] / / P r o co f I n t e r n a t i o n a l Wo r k s h o p
+o nP o s t  Q u a n t u mC r y p t o g r a p h y . B e r l i n : S p r i n g e r , 2 0 1 1 : 1 9  3 4 .
+[ 6 ] C a s t r y c kW, L a n g eT , M a r t i n d a l eC , e t a l . C S I D H : a ne f f i c i e n t p o s t 
+q u a n t u mc o m m u t a t i v eg r o u pa c t i o n [ C ] / / P r o co f I n t e r n a t i o n a l C o n f e 
+r e n c eo n T h e o r y a n d A p p l i c a t i o n o f C r y p t o l o g y a n d I n f o r m a t i o nS e c u r i 
+t y . C h a m : S p r i n g e r , 2 0 1 8 : 3 9 5  4 2 7 .
+[ 7 ] F i a t A , S h a m i r A . H o wt o p r o v e y o u r s e l f : p r a c t i c a l s o l u t i o n s t o i d e n t i f i 
+c a t i o na n d s i g n a t u r e p r o b l e m s [ C ] / / P r o c o f C o n f e r e n c e o n T h e o r y a n d
+A p p l i c a t i o no f C r y p t o g r a p h i cT e c h n i q u e s . B e r l i n : S p r i n g e r , 1 9 8 6 : 1 8 6 
+1 9 4 .
+[ 8 ] A b d a l l a M , A nJ H , B e l l a r eM , e t a l . F r o mi d e n t i f i c a t i o nt os i g n a t u r e s
+v i a t h e F i a t  S h a m i r t r a n s f o r m : m i n i m i z i n g a s s u m p t i o n s f o r s e c u r i t y a n d
+f o r w a r d  s e c u r i t y [ C ] / / P r o c o f I n t e r n a t i o n a l C o n f e r e n c e o nT h e o r y a n d
+A p p l i c a t i o n so fC r y p t o g r a p h i cT e c h n i q u e s . B e r l i n :S p r i n g e r , 2 0 0 2 :
+4 1 8  4 3 3 .
+[ 9 ] Y o o Y , A z a r d e r a k h s hR , J a l a l i A , e t a l . Ap o s t  q u a n t u md i g i t a l s i g n a 
+t u r e s c h e m e b a s e do ns u p e r s i n g u l a r i s o g e n i e s [ C ] / / P r o co f I n t e r n a 
+t i o n a lC o n f e r e n c eo n F i n a n c i a lC r y p t o g r a p h ya n d D a t aS e c u r i t y .
+C h a m : S p r i n g e r , 2 0 1 7 : 1 6 3  1 8 1 .
+[ 1 0 ]G a l b r a i t hSD , P e t i t C , S i l v aJ . I d e n t i f i c a t i o np r o t o c o l sa n ds i g n a t u r e
+s c h e m e s b a s e do ns u p e r s i n g u l a r i s o g e n y p r o b l e m s [ C ] / / P r o c o f I n t e r 
+n a t i o n a l C o n f e r e n c e o nT h e o r ya n dA p p l i c a t i o no f C r y p t o l o g ya n dI n 
+f o r m a t i o nS e c u r i t y . C h a m : S p r i n g e r , 2 0 1 7 : 3  3 3 .
+[ 1 1 ]D e F e oL , G a l b r a i t hSD . S e a S i g n : c o m p a c t i s o g e n ys i g n a t u r e sf r o m
+c l a s s g r o u pa c t i o n s [ C ] / / P r o co f A n n u a l I n t e r n a t i o n a l C o n f e r e n c eo n
+T h e o r ya n dA p p l i c a t i o n so f C r y p t o g r a p h i cT e c h n i q u e s . C h a m : S p r i n 
+g e r , 2 0 1 9 : 7 5 9  7 8 9 .
+[ 1 2 ]B e u l l e n s W, K l e i n j u n gT , V e r c a u t e r e nF . C S I  F i S h : e f f i c i e n t i s o g e n y
+b a s e ds i g n a t u r e s t h r o u g hc l a s s g r o u pc o m p u t a t i o n s [ C ] / / P r o c o f I n t e r 
+n a t i o n a l C o n f e r e n c e o nT h e o r ya n dA p p l i c a t i o no f C r y p t o l o g ya n dI n 
+f o r m a t i o nS e c u r i t y . C h a m : S p r i n g e r , 2 0 1 9 : 2 2 7  2 4 7 .
+[ 1 3 ]G a l b r a i t hSD . M a t h e m a t i c so f p u b l i ck e yc r y p t o g r a p h y [ M] . C a m 
+b r i d g e : C a m b r i d g e U n i v e r s i t y P r e s s , 2 0 1 2 .
+[ 1 4 ]D eF e oL . M a t h e m a t i c so fi s o g e n yb a s e dc r y p t o g r a p h y [ E B / O L ] .
+( 2 0 1 7  1 1  1 1 ) . h t t p : / / d o i . o r g / 1 0 . 4 8 5 5 0 / a r x i v . 1 7 1 1 . 0 4 0 6 2 .
+[ 1 5 ]C o z z o D , S m a r t NP . S a s h i m i : c u t t i n gu pC S I  F i S hs e c r e t k e y s t op r o 
+d u c e a na c t i v e l y s e c u r e d i s t r i b u t e ds i g n i n gp r o t o c o l [ C ] / / P r o co f I n 
+t e r n a t i o n a l C o n f e r e n c eo nP o s t  Q u a n t u mC r y p t o g r a p h y . C h a m : S p r i n 
+g e r , 2 0 2 0 : 1 6 9  1 8 6 .
+[ 1 6 ]B e n h a m o u d a F , C a m e n i s c hJ , K r e n nS , e t a l . B e t t e r z e r o  k n o w l e d g e p r o o f s
+f o r l a t t i c e e n c r y p t i o na n dt h e i r a p p l i c a t i o nt o g r o u ps i g n a t u r e s [ C ] / / P r o c
+o f I n t e r n a t i o n a l C o n f e r e n c e o nT h e o r ya n dA p p l i c a t i o no f C r y p t o l o g ya n d
+I n f o r m a t i o nS e c u r i t y . B e r l i n : S p r i n g e r , 2 0 1 4 : 5 5 1  5 7 2 .
+[ 1 7 ]B e l l a r eM , P o e t t e r i n gB , S t e b i l aD . F r o mi d e n t i f i c a t i o nt os i g n a t u r e s ,
+t i g h t l y : a f r a m e w o r ka n dg e n e r i c t r a n s f o r m s [ C ] / / P r o c o f I n t e r n a t i o n a l
+C o n f e r e n c e o nT h e o r ya n dA p p l i c a t i o no f C r y p t o l o g ya n dI n f o r m a t i o n
+S e c u r i t y . B e r l i n : S p r i n g e r , 2 0 1 6 : 4 3 5  4 6 4 .
+[ 1 8 ]E I K a a f a r a n i A , K a t s u m a t a S , P i n t o r e F . L o s s yC S I  F i S h : e f f i c i e n t s i g 
+n a t u r es c h e m ew i t ht i g h t r e d u c t i o nt od e c i s i o n a l C S I D H  5 1 2 [ C ] / /
+P r o c o f I A C RI n t e r n a t i o n a l C o n f e r e n c eo nP u b l i c  K e yC r y p t o g r a p h y .
+C h a m : S p r i n g e r , 2 0 2 0 : 1 5 7  1 8 6 .
+[ 1 9 ]于璇,侯书会.一种高效安全的群签名方案[ J ] .通信技术, 2 0 1 8 ,
+5 1 ( 2 ) : 4 1 3  4 1 8 .( Y u X u a n , H o u S h u h u i . E f f i c i e n t a n ds e c u r e g r o u p
+s i g n a t u r e s c h e m e [ J ] . C o mmu n i c a t i o n sT e c h n o l o g y , 2 0 1 8 , 5 1 ( 2 ) :
+4 1 3  4 1 8 . )
+(上接第2 8 2 5页)
+[ 2 5 ]张盛仕,胡湘宏,熊晓明.基于国密算法S M 2软硬件协同系统的
+F P G A架构[ J ] .单片机与嵌入式系统应用, 2 0 1 9 , 1 9 ( 7 ) : 1 5  1 9 .
+( Z h a n g S h e n g s h i , H uX i a n g h o n g , X i o n gX i a o m i n g . F P G Aa r c h i t e c t u r e
+o f s o f t w a r ea n dh a r d w a r ec o  d e s i g nb a s e do nn a t i o ns e c r e t a l g o r i t h m
+S M 2 [ J ] . Mi c r o c o n t r o l l e r sa n dE mb e d d e dS y s t e ms , 2 0 1 9 , 1 9
+( 7 ) : 1 5  1 9 . )
+[ 2 6 ]G u a nZ h e n y u , L i Y u n h a o , S h a n g T a o , e t a l . I m p l e m e n t a t i o no f S M 4o n
+F P G A : t r a d e  o f f a n a l y s i s b e t w e e na r e aa n ds p e e d [ C ] / / P r o co f I E E E
+I S R . P i s c a t a w a y , N J : I E E EP r e s s , 2 0 1 8 : 1 9 2  1 9 7 .
+[ 2 7 ]L i uZ i l o n g , L i uD o n g s h e n g , Z o uX u e c h e n g . A ne f f i c i e n t a n df l e x i b l e
+h a r d w a r e i m p l e m e n t a t i o no f t h e d u a l  f i e l de l l i p t i cc u r v ec r y p t o g r a p h i c
+p r o c e s s o r [ J ] . I E E ET r a n so nI n d u s t r i a l E l e c t r o n i c s , 2 0 1 7 , 6 4 ( 3 ) :
+2 3 5 3  2 3 6 2 .
+[ 2 8 ]张丽.双域椭圆曲线密码协处理器关键技术研究[ D ] .西安:西安
+电子科技大学, 2 0 1 9 .( Z h a n gL i . R e s e a r c ho nk e yt e c h n o l o g yo f
+d u a l f i e l de l l i p t i c c u r v ec r y p t o g r a p h yc o p r o c e s s o r [ D ] . X i ’ a n : X i d i a n
+U n i v e r s i t y , 2 0 1 9 . )
+[ 2 9 ]刘金峒,梁科,王锦,等. S M 4加密算法可裁剪式结构设计与硬件
+实现[ J ] .南开大学学报:自然科学版, 2 0 1 9 , 5 2 ( 4 ) : 4 1  4 5 .( L i u
+J i n t o n g , L i a n gK e , Wa n gJ i n , e ta l . T a i l o r a b l es t r u c t u r ed e s i g na n d
+h a r d w a r ei m p l e m e n t a t i o no f S M 4e n c r y p t i o na l g o r i t h m [ J ] . J o u r n a l o f
+N a n k a i U n i v e r s i t y : N a t u r a l S c i e n c e , 2 0 1 9 , 5 2 ( 4 ) : 4 1  4 5 . )
+[ 3 0 ]何诗洋,李晖,李凤华. S M 4算法的F P G A优化实现方法[ J ] .西安
+电子科技大学学报, 2 0 2 1 , 4 8 ( 3 ) : 1 5 5  1 6 2 .( H eS h i y a n g , L i H u i ,
+L i F e n g h u a . O p t i m i z a t i o na n di m p l e m e n t a t i o no f t h eS M 4o nF P G A
+[ J ] . J o u r n a l o f X i d i a nU n i v e r s i t y , 2 0 2 1 , 4 8 ( 3 ) : 1 5 5  1 6 2 . )
+· 1 3 8 2 · 第9期赵兴波,等:基于超奇异同源的零知识证明及群签名方案

@@ -14,4 +14,10 @@
 !paper_a/venue_jnca/system_architecture.pdf
 !paper_a/venue_jnca/decision_counterexample.pdf
 !paper_a/venue_jnca/protocol_sequence.pdf
+
+# Chinese draft figure PDFs and downloaded reference papers (project sources)
+!chinese_draft/figures/*.pdf
+!中文期刊调研/pdf/*.pdf
+
+.DS_Store
 __pycache__/

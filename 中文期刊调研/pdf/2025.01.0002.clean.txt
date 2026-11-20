@@ -1,0 +1,1267 @@
+收稿日期:2 0 2 5  0 1  0 3 ;修回日期:2 0 2 5  0 2  2 0基金项目:湖北省重大攻关项目( J D ) ( 2 0 2 3 B A A 0 2 7 ) ;湖北省重点研发计划资助项目
+( 2 0 2 3 B A B 1 7 1 )
+作者简介:吴婷( 2 0 0 0 —) ,女,湖北黄石人,硕士, C C F会员,主要研究方向为区块链;张莎莎( 1 9 8 2 —) ,女(通信作者) ,湖北襄阳人,副教授,
+硕导,博士,主要研究方向为密码学( a m u s h a s h a @1 6 3 . c o m ) .
+基于同态加密和零知识证明的区块链
+可扩展隐私保护方案
+吴婷,张莎莎
+(湖北大学网络空间安全学院,武汉4 3 0 0 6 2 )
+摘要:为了解决随着区块链技术的广泛应用而日益突出的隐私保护和性能扩展问题,提出了一种基于
+O k a m o t o  U c h i y a m a加密算法的改进算法,该算法在实现数据加密的同时支持零知识证明,实现了用户交易数据的
+完全隐私保护。此外,设计了一种基于匿名双向链下通道的支付方案,支持链下快速且高频的交易,有效缓解了
+区块链的可扩展性问题。相比现有相关算法,所提算法在系统参数生成、密钥生成及加解密效率方面均具有显
+著优势。理论分析与实验结果验证了该方案的安全性、可行性与高效性。
+关键词:区块链;同态加密;零知识证明;隐私保护;可扩展性
+中图分类号:T P 3 0 9 . 2文献标志码:A文章编号:1 0 0 1  3 6 9 5 ( 2 0 2 5 ) 0 7  0 0 3  1 9 3 9  0 9
+d o i : 1 0 . 1 9 7 3 4 / j . i s s n . 1 0 0 1  3 6 9 5 . 2 0 2 5 . 0 1 . 0 0 0 2
+S c a l a b l eb l o c k c h a i np r i v a c yp r o t e c t i o ns c h e m eb a s e do n
+h o m o m o r p h i ce n c r y p t i o na n dz e r o  k n o w l e d g ep r o o f
+WuT i n g ,Z h a n gS h a s h a 
+( C o l l e g e o f C y b e r s p a c e S e c u r i t y ,H u b e i U n i v e r s i t y ,W u h a n 4 3 0 0 6 2 ,C h i n a )
+A b s t r a c t :T o a d d r e s s t h ei n c r e a s i n gp r i v a c yp r o t e c t i o na n ds c a l a b i l i t yi s s u e sa r i s i n gw i t ht h ew i d e s p r e a du s eo f b l o c k c h a i n
+t e c h n o l o g y , t h i s p a p e r p r o p o s e da ni m p r o v e da l g o r i t h mb a s e do nt h e O k a m o t o  U c h i y a m a e n c r y p t i o ns c h e m e . T h i s a l g o r i t h mn o t
+o n l yi m p l e m e n t e dd a t a e n c r y p t i o nb u t a l s o s u p p o r t e dz e r o  k n o w l e d g e p r o o f s , e n s u r i n g c o m p l e t e p r i v a c y p r o t e c t i o no f u s e r t r a n s 
+a c t i o nd a t a . A d d i t i o n a l l y , t h e p a p e r d e s i g n e da p a y m e n t s c h e m e b a s e do na na n o n y m o u s b i d i r e c t i o n a l o f f  c h a i nc h a n n e l , w h i c h
+s u p p o r t e df a s t a n dh i g h  f r e q u e n c yo f f  c h a i nt r a n s a c t i o n s , e f f e c t i v e l ya l l e v i a t i n gb l o c k c h a i ns c a l a b i l i t yc o n c e r n s . C o m p a r e dt o
+e x i s t i n ga l g o r i t h m s , t h e p r o p o s e dm e t h o dd e m o n s t r a t e ds i g n i f i c a n t a d v a n t a g e s i ns y s t e mp a r a m e t e r g e n e r a t i o n , k e yg e n e r a t i o n ,
+e n c r y p t i o na n d d e c r y p t i o n e f f i c i e n c y . T h e o r e t i c a l a n a l y s i s a n d e x p e r i m e n t a l r e s u l t s v a l i d a t e t h e s e c u r i t y , f e a s i b i l i t y , a n d e f f i c i e n 
+c yo f t h e s c h e m e .
+K e yw o r d s :b l o c k c h a i n ;h o m o m o r p h i c e n c r y p t i o n ;z e r o  k n o w l e d g e p r o o f ;p r i v a c y p r o t e c t i o n ;s c a l a b i l i t y
+0引言
+区块链技术因其去中心化、无可信第三方、分布式账本和
+交易记录不可窜改的特性,近年来在物联网领域的交易应用中
+备受关注。在能源互联网领域,传统的操作模式通常依赖于一
+个中心化的权威机构来处理交易验证、存储和管理,以及维护
+交易信息的完整性。然而,这种中心化的架构存在着单点故障
+的风险,且在隐私保护方面存在缺陷,容易成为网络攻击的目
+标。相比之下,区块链技术提供了一种更为安全的解决方案。
+区块链由一系列按时间顺序排列的区块组成,每个区块包含一
+定数量的交易记录、一个时间戳和一个指向前一个区块的哈希
+值。区块链网络中的全节点都有一份区块链的完整副本,所有
+节点通过共识机制保持数据的一致性,它通过将集中式管理转
+变为分散和自治的架构,从而降低了中心化带来的风险。
+在区块链系统的实际使用中,为了保证区块链上记录数据
+的可溯源、可验证等特性,所有数据都必须公开给区块链网络
+中的所有节点。这一特性在保障数据安全、可验证的同时,也
+带来了隐私安全隐患,导致恶意敌手可以直接获取区块链账本
+中记录的数据,并通过分析数据窥探用户隐私[ 1 ]
+。并且由于
+全节点都需要存储整个区块链的副本,随着区块链的增长,存
+储需求也会不断增加。同态加密技术和零知识证明技术为解
+决这些问题提供了新的思路,同态加密技术与传统的加密技术
+不同的是其允许在不访问密钥的情况下对加密数据执行计算
+操作,得到的计算结果与原始数据相同,这意味着即使攻击者
+成功解密了同态加密的结果,也无法获知加密前的具体数据信
+息,从而提高了信息的安全性和隐私性[ 2 ]
+。零知识证明技术
+则允许用户证明某个陈述是真实的,验证者相信的同时无法获
+得任何额外信息[ 3 ]
+。目前,已有一些研究采用上述两种技术
+来试图解决区块链系统的隐私保护问题和可扩展性问题。
+文献[ 4 ] 利用国密S M 2算法、同态加密和混淆地址,提出
+了一种新的区块链混币方案。通过使用E C  E l G a m a l半同态加
+密技术加密交易金额,实现在链上交易过程中完全隐藏交易金
+额,通过混淆地址,打破交易发起方和接收方的联系,实现了交
+易的不可链接性和不可追踪性。文献[ 5 ] 提出了基于P a i l l i e r
+同态加密的区块链交易数据隐私保护方案,利用同态加密及其
+特性对交易信息进行隐藏和验证。文献[ 6 ] 根据P a i l l i e r算法
+设计了一种主私钥合成算法,保障了用于链上数据修改的私钥
+在合成过程中的安全。文献[ 7 ] 提出集成完全同态加密
+第4 2卷第7期
+2 0 2 5年7月
+计算机应用研究
+A p p l i c a t i o nR e s e a r c ho f C o m p u t e r s
+V o l  4 2N o  7
+J u l . 2 0 2 5( F H E ) 来增强区块链应用的安全性,拓展了区块链的应用范
+围,利用F H E的特性提高区块链的隐私性和安全性。文献[ 8 ]
+提出了一种基于S E A L库的同态加权电子投票系统,通过全同
+态操作实现密文计票,可有效抵抗来自计票中心内部的恶意攻
+击,保证选票保密性和计票结果正确性。文献[ 9 ] 提出了支持
+B F V全同态加密的区块链电子投票系统。该系统使用第二代
+全同态加密算法B F V来隐藏计票数据,为投票过程中的不可
+操纵性、匿名性、可验证性、不可重用性、不可胁迫性和抗量子
+攻击等安全属性提供保障。上述方案均采用单一同态加密技
+术来实现区块链上的隐私保护,无法满足区块链对安全性的多
+元需求。此外全同态加密技术虽然理论上能够在保护数据隐
+私的同时允许计算,但其高昂的计算成本限制了其在高交易吞
+吐量环境下的应用,且目前的全同态加密方案在支持的计算次
+数上存在限制,这使得它们难以适应区块链交易量大且频繁的
+特性,因此并不适合作为区块链交易的通用解决方案。
+文献[ 1 0 ] 基于A H  E l G a m a l同态加密和零知识证明提出
+了一种区块链上无可信拍卖师的密封式竞拍方案,实现了竞标
+者报价机密性,确保竞拍过程的公开公平公正。文献[ 1 1 ] 基
+于一次性地址加密和零知识证明设计了监管可靠的一次性地
+址方案和可链接可撤销环签名方案,在实现基于自主混币的身
+份隐私保护的同时,还满足了交易双方身份“ 可控匿名” 的监
+管要求。文献[ 1 2 ] 提出了一种基于零知识证明的匿名认证方
+案,采用仿真可提取零知识z k  S N A R K s以实现匿名和条件隐
+私,并通过省略重复计算使方案在V A N E T环境中轻量级且高
+效运行。文献[ 1 3 ] 基于E l G a m a l承诺方案、 Σ协议、B u l l e t p r o o f s
+范围协议和 + H o m E l G同态加密算法提出了一种面向联盟链
+转账隐私保护的零知识证明协议,通过 +H o m E l G算法加密交
+易金额及账户余额提高了效率,根据 Σ协议和B u l l e t p r o o f s范
+围协议来设计密文的零知识证明,使得交易合法性验证策略更
+完善。文献[ 1 4 ] 在P a i l l i e r加密算法的基础上,结合F u j i s a k i 
+O k a m o t o承诺方案,提出了基于零知识证明的区块链隐私保护
+算法。该算法既能对交易数据进行加密,又能支持零知识证
+明,能够在保证交易合法性的前提下保护用户的隐私,但零知
+识证明过程的复杂性,加上区块链交易确认时间较长的固有特
+性,限制了该方案在实际应用中的效率。此外, P a i l l i e r算法虽
+然在加密过程中提供了较高的安全性,但其加解密操作的性能
+表现并不突出,文献[ 1 5 ] 则结合P a i l l i e r加密算法与E l G a m a l
+加密算法提出了同态加密算法P a i l G a m a l。该算法既支持密文
+直接解密,又支持监管方对所有密文进行监管。结合P a i l G a 
+m a l算法与范围证明方案B u l l e t p r o o f s设计了一种高效的隐私
+交易方案,利用零知识证明技术在提供隐私保护的同时保证了
+数据的可用性和合法性。但该系统中每个用户都处于监管之
+中,且监管方掌握系统私钥来对每一笔交易进行监管,因此该
+方案更适用于一些对监管性有要求的场景。上述方案将同态
+加密技术和零知识证明技术结合,能够有效提高交易数据隐私
+保护的强度,在实现用户交易或身份信息的隐私保护上都各有
+其优势,但这些方案仍未能有效解决区块链交易的可扩展性
+问题。
+针对P a i l l i e r加密算法效率较低以及区块链交易的可扩展
+性问题,本文采用了相比P a i l l i e r算法效率更高的O k a m o t o 
+U c h i y a m a同态加密算法( O U算法) ,并对O U算法进行了改进,
+使其在实现数据加密的同时支持零知识证明。根据F u j i s a k i
+O k a m o t o承诺方案设计了密文的零知识证明,为需要上传至公
+开区块链的交易双方账户金额提供一种可验证的隐藏方案,采
+用匿名双向链下支付通道技术,支持交易双方快速且频繁的交
+易而无须上链,有效解决了可扩展性问题。最后对方案进行了
+仿真实验以测试方案的可行性及算法效率。
+1相关知识
+1  1区块链及相关技术
+1  1  1区块链
+区块链是一种去中心化的分布式账本技术,依托于密码
+学、共识算法和分布式网络来确保数据的安全性和不可窜改
+性,其基本原理是通过将交易数据打包存储在多个区块中,并
+通过哈希函数将这些区块以链式结构相连,从而形成一个连续
+的、不可逆的账本。每个区块不仅包含当前的交易记录,还存
+储了前一个区块的哈希值,这使得攻击者很难对区块链中的交
+易进行窜改。
+区块链的运行依赖于共识机制,如工作量证明( p r o o f o f
+w o r k , P o W) 或权益证明( p r o o f o f s t a k e , P o S ) 。共识机制确保了
+一个无窜改的环境,使分布式网络中的节点通过竞争或投票达
+成一致,共同决定数据的真实性与有效性。同时,区块链技术
+具有透明性和不可窜改性,所有交易记录都可以公开验证,保
+证数据的完整性和系统的信任基础。
+根据应用场景的不同,区块链一般被分为公有链、私有链
+和联盟链三类。公有链是完全开放的,任何人都可以读取、发
+送或接受交易,并允许任何参与者加入共识过程。它的去中心
+化程度最高,但性能和能耗问题较为明显。私有链则由特定机
+构控制,其写入和访问权限被严格限制,只有授权用户可以访
+问和验证交易,通常用于企业或组织内部的系统。联盟链则介
+于公有链和私有链之间,由多个可信实体共同管理,适用于跨
+企业的合作和行业联盟场景。不同类型的区块链根据其架构
+设计,提供了不同层次的去中心化、隐私性和效率保障。
+1  1  2匿名双向支付通道
+链下通道是一种建立在两个参与者之间信任基础上的可
+靠链下支付通道,旨在实现两个参与者的快速链下支付[ 1 6 ]
+。
+双向支付通道中,两方参与者首先需要在链上锁定一部分资
+金,然后在链下进行多次交易,每次交易都会更新双方的资金
+分配,但不会广播到链上。只有当双方想要关闭通道时,才会
+将最终的资金分配结果提交到链上,解锁资金并分配给双方。
+这样可以减少链上的交易次数、提高支付效率、降低手续费,并
+保证双方的资产安全。
+匿名双向支付通道是链下通道技术的一种,由G r e e n等
+人[ 1 7 ]
+在2 0 1 7年提出。匿名支付通道是一种允许参与者在不
+暴露其真实身份或具体交易信息的情况下进行支付和交易的
+链下通道,旨在提高链下交易的隐私性和安全性。开启通道
+后,交易双方可以互相执行转账协议,在通道内执行多次转账
+而无须上链,用户需要使用零知识证明来证明资金的正确性以
+及新余额与原始余额的差值是正确的,区块链中只记录初始通
+道余额和最终余额,并在关闭通道后将资金正确分配到通道双
+方的账户中。
+1  2零知识证明技术
+零知识证明( z e r o  k n o w l e d g ep r o o f , Z K P ) 是一种在不透露
+任何额外信息的情况下证明某一陈述为真的密码学协议,它允
+许证明者( p r o v e r ) 向验证者( v e r i f i e r ) 提供一个证明,证明某个
+声明或计算是正确的,而不暴露与此声明有关的任何额外信
+息。这一理论概念由文献[ 1 8 ] 于1 9 8 5年首次提出,被广泛应
+用于数据隐私和安全领域。
+零知识证明必须满足完备性 ( c o m p l e t e n e s s ) 、可靠性
+( s o u n d n e s s ) 和零知识性( z e r o  k n o w l e d g e ) 三个基本性质。完备
+性确保如果声明是正确的,诚实的证明者总是能够让验证者信
+服。可靠性意味着如果声明是假的,验证者几乎不可能被欺
+骗。零知识性则保证证明过程中,验证者无法获得除声明的真
+· 0 4 9 1 · 计算机应用研究第4 2卷实性之外的任何其他信息。
+根据交互方式的不同,零知识证明可以分为交互式零知识
+证明( i n t e r a c t i v ez e r o  k n o w l e d g ep r o o f ) 和非交互式零知识证明
+( n o n  i n t e r a c t i v ez e r o  k n o w l e d g ep r o o f , N I Z K ) 。在交互式零知识
+证明中,证明者和验证者通过多次交互来完成证明过程;而在
+非交互式零知识证明中,证明者能够一次性提供所有证明,减
+少了验证的复杂性和交互需求,因而更适合大规模、自动化的
+系统。
+1  3 F u j i s a k i  O k a mo t o承诺方案
+F u j i s a k i  O k a m o t o承诺方案由文献[ 1 9 ] 于1 9 9 7年提出,相
+关理论内容如下[ 2 0 ]
+:
+设n是一个R S A模数, A l i c e和B o b不知道它的分解。h
+是由g生成的循环群中的元素。g和h的阶是大于1 6 0b i t的
+素数,使得在它们生成的循环群中计算离散对数是不可行的。
+此外, A l i c e不知道l o g h
+g。A l i c e选择随机整数r ∈[- 2 s
+n+ 1 ,
+2 s
+n - 1 ] ,其中s为安全参数。计算E= E ( x , r )= g x
+h r
+m o dn ,并
+将E发送给B o b作为对整数x的承诺。A l i c e不可能找到两个
+不相等的整数x 1和x 2使得E ( x 1 , r 1 )= E ( x 2 , r 2 ) ,除非他能分
+解n或者知道l o g h
+g ; B o b也无法从承诺中获得关于x的任何信
+息。该协议是统计安全的,详细的安全分析见文献[ 1 8 ] 。
+1  4 O k a mo t o  U c h i y a ma同态加密
+O U同态加密算法是文献[ 2 1 ] 在1 9 9 8年提出的概率型公
+钥加密算法,其安全性是基于大整数因数分解问题和P子群
+问题,且该算法满足I N D  C P A安全。相关理论内容如下:
+a ) 密钥生成。随机选择两个位数相等的大素数p和q ,计
+算出模数n = p 2
+q。在 ! 
+n中随机选择一个g (其中! 
+n表示! n中
+对乘法可逆的元素构成的乘法群) ,使得g p - 1
+m o dp 2
+的阶为p。
+计算h = g n
+m o dn ,定义一个函数L ( x )= ( x - 1 ) / p。得到公钥
+为( n , g , h ) ,私钥为( p , q ) 。
+b ) 加密。对于明文m , 0 ≤m ≤p - 1 ,选择一个随机数r ∈
+! n ,计算并输出c = g m
+h r
+m o dn。
+c ) 解密。对于密文c ,计算并输出明文: m=( L ( c p - 1
+m o d
+p 2
+) ) / ( L ( g p - 1
+m o dp 2
+) )m o dp 2
+。
+d ) 同态属性。O U加密算法是一种半同态加密算法,具有
+加法同态属性,即在不知道明文m和n的情况下,通过计算
+E n c ( m ) E n c( n ) ,可以得到E n c ( m+ n ) 的值。例如,对于明文
+m和n加密得到E n c ( m )= g m
+h r
+1m o dn , E n c ( n )= g n
+h r
+2m o dn ,
+而后计算E n c ( m ) E n c ( n ) ,在不知道明文m和n的情况下,可
+以得到m+ n的加密值。
+E n c ( m ) E n c ( n )= ( g m
+h r
+1m o dn ) ( g n
+h r
+2m o dn )m o dn =
+g m+ n
+h r
+1
++ r
+2m o dn = E n c ( m+ n ) ( 1 )
+私钥持有者可以使用解密函数得到明文的和:
+D e c( E n c ( m ) E n c ( n ) )= D e c ( ( g m
+h r
+1m o dn ) ( g n
+h r
+2m o dn ) )=
+D e c ( g m+ n
+h r
+1
++ r
+2m o dn )= m+ n ( 2 )
+2算法及方案设计
+2  1加解密算法设计
+O U算法虽然能加密用户交易数据,但在零知识证明的应
+用中存在计算开销大、密钥管理复杂、参数传输成本高等问题,
+限制了其在区块链场景中的实际应用。因此,本文优化了O U
+同态加密算法的系统参数选取和加解密过程,使其能够在同一
+套系统参数下生成多套公私钥,简化密钥管理和分发,减少零
+知识证明过程中需要传递的参数数量,从而降低系统负载,提
+高计算效率。算法具体内容如下。
+2  1  1系统参数及公私钥生成
+在本文方案中,每成功开启一条链下通道都会为通道生成
+一套独立的系统参数。该系统参数一经设定便不可修改,在整
+个通道的生命周期中保持不变,并存储在账本中,供用户和C A
+在交易过程中调用。系统参数及公私钥的生成过程如下:
+随机选择两个位数相等的大素数p和q ,计算出模数n=
+p 2
+q ,在 ! 
+n中随机选择一个g 1 (其中 ! 
+n表示 ! n中对乘法可逆的
+元素构成的乘法群) ,使得g p - 1
+1 m o dp 2
+的阶为p。然后随机选
+择整数r 0 ∈ ! n ,计算g 2= g r
+0
+1 m o dn。将( n , g 1 , g 2 ) 作为系统参
+数,记为S P。
+随机选择整数x ∈!n且p !x ,计算h = g x
+2m o dn。将h作为
+用户公钥, ( x , p ) 作为用户私钥。将用户公钥和私钥分别记为
+P K和S K。
+2  1  2加解密过程
+a ) 加密过程。当用户开启链下通道并进行交易时,需要
+对初始余额、交易过程中的转账金额、转账后余额等交易数据
+进行加密,并发送至C A。
+对于明文信息m ∈! p ,选择随机整数r ∈! p ,使用系统参
+数S P中的n , g 2以及公钥P K中的h ,分别计算:
+c 1= g r
+2m o dn ( 3 )
+c 2= g m
+2h r
+m o dn ( 4 )
+将得到的密文记为c = ( c 1 , c 2 ) 。
+该加密过程记为E n c ( m , r , S P , P K ) 。
+b ) 解密过程。对于密文c = ( c 1 , c 2 ) ,可以使用私钥解密出
+对应的明文信息m。解密过程如下:
+使用系统参数S P中的n、g 2和私钥S K中的x和p ,以及密
+文中的c 1、c 2。计算:
+c m = c - x
+1 c 2m o dn ( 5 )
+然后根据式( 6 ) 解密m。
+m=
+L ( c p - 1
+m m o dp 2
+)
+L ( g p - 1
+2 m o dp 2
+)
+m o dp ( 6 )
+解密m的过程记为D e c ( c , S P , S K ) ,其中L ( x )= ( x - 1 ) / p。
+c ) 加法同态性质。修改后的算法仍然具有加法同态的性
+质。对于两个明文a和b ,将对其加密得到的密文分别记为
+c a= ( c 1 a
+, c 2 a
+) 、c b= ( c 1 b
+, c 2 b
+) 。将密文乘积c a c b记为c a b。则有
+c a b= ( c 1 a b
+, c 2 a b
+) 。
+根据式( 7 ) ( 8 ) 计算密文:
+c 1 a b
+= c 1 a
+c 1 b
+= g r a
+2g r b
+2 m o dn = g r a + r b
+2 m o dn ( 7 )
+c 2 a b
+= c 2 a
+c 2 b
+= ( g a
+2 h r a ) ( g b
+2 h r b )m o dn = g a + b
+2 h r a + r bm o dn ( 8 )
+解密时使用系统参数S P中的n、g 2和私钥S K中的x和p ,
+以及密文c 1 a b
+和c 2 a b
+,根据式( 9 ) 计算出c m a b
+,再根据式( 1 0 ) 可
+以解密得到a + b :
+c m a b
+= c - x
+1 a b
+c 2 a b
+m o dn = g ( a + b ) r 0
+1 m o dn ( 9 )
+D e c( c m a b
+, S P , S K )=
+L ( c p - 1
+m a b
+m o dp 2
+)
+L ( g p - 1
+2 m o dp 2
+)
+m o dp = a + b ( 1 0 )
+其中: r a和r b为加密a和b时使用的随机数。
+2  2零知识证明设计
+在本文方案中,交易通常由转账方发起。当交易需要验证
+或仲裁时,由权威认证机构C A进行。为了确保交易的有效性,
+用户不仅需要生成C A验证所需要的加密交易数据,还需创建
+相等性证明和范围证明,包括交易金额的相等性证明、交易金额
+大于零证明、交易余额大于零证明以及交易合法性证明。这些
+加密交易数据和证明随后被发送到C A进行验证。若验证未通
+过,交易将被拒绝,并且用户会接收到交易失败的通知。
+2  2  1交易金额相等性证明
+交易金额相等性证明即证明两个F O承诺中秘密数相
+同[ 2 0 ]
+,该N I Z K协议记为 П e q= ( "e q , #e q , $e q ) ,其关系如下:
+· 1 4 9 1 · 第7期吴婷,等:基于同态加密和零知识证明的区块链可扩展隐私保护方案%e q= { ( ( E , F , g 2 , h A , h B ) , ( v A , v B , r A , r B ) ) :
+E= g 2
+v A h r A
+A∧F= g 2
+v B h B
+r B ∧v A= v B ∧v A , v B , r A , r B ∈ ! p }
+其过程如下所述:
+a ) 当通道内发起一笔转账时, A l i c e和B o b随机选择r A、
+r B ∈ ! p ,并使用系统参数和双方的公钥分别对自己的交易金额
+v A和v B加密得到密文c v A
+和c v B
+,从密文中提取出c v A 2
+和c v B 2
+,然
+后根据式( 1 1 ) ( 1 2 ) 为交易双方生成承诺E和F :
+E= c v A 2
+= g 2
+v A h A
+r Am o dn ( 1 1 )
+F= c v B 2
+= g 2
+v B h B
+r Bm o dn ( 1 2 )
+其中: g 2和n来自系统参数S P ; h A、h B分别为A l i c e和B o b的
+公钥; r A、r B则为A l i c e和B o b选取的随机数。随后A l i c e和
+B o b将生成的承诺E和F分别发送到C A。
+b ) A l i c e和B o b通过下面的过程共同生成交易金额相等性
+证明。
+A l i c e选择随机数 ω ∈[ 1 , 2 t + l
+- 1 ] ,并通过安全信道发送
+给B o b。随机数 η 1 ∈[ 1 , 2 t + l + s 1
+- 1 ] 和 η 2 ∈[ 1 , 2 t + l + s 2
+- 1 ] 则
+分别由A l i c e和B o b选择,其中t、l、s 1和s 2为四个安全参数, H
+为抗碰撞安全哈希函数, a ‖b表示两个字符串a和b的连接。
+A l i c e计算:
+W 1= g ω
+2h η 1 A m o dn ( 1 3 )
+B o b计算:
+W 2= g ω
+2h η 2 B m o dn ( 1 4 )
+A l i c e和B o b通过安全信道共享W 1和W 2并计算哈希值:
+C= H ( W 1 ‖W 2 ) ( 1 5 )
+然后A l i c e计算:
+D A= ω+ C v A ( 1 6 )
+D 1= η 1+ C r A ( 1 7 )
+将 π e q 1
+= ( C , D A , D 1 ) 发送到C A。
+B o b计算:
+D B= ω+ C v B ( 1 8 )
+D 2= η 2+ C r B ( 1 9 )
+将 π e q 2
+= ( D B , D 2 ) 发送到C A。
+c ) C A接收到承诺E、F、 π e q 1
+和 π e q 2
+后,验证:
+P 1= g D B
+2 h D 1
+A E- C
+m o dn ( 2 0 )
+P 2= g D A
+2 h D 2
+B F- C
+m o dn ( 2 1 )
+然后验证等式C=H ( P 1 ‖P 2 ) 是否成立,若成立,则相信
+v A= v B ,即承诺E和F中隐藏着同一个秘密值。
+2  2  2交易金额大于零证明
+当A l i c e向B o b发起一笔转账时,交易双方通过前文所述
+步骤生成承诺E和F并发送到C A ,随后,证明承诺E=g v
+2 h A r A
+m o dn中包含的交易金额v是一个正数[ 2 2 ]
+,将该N I Z K协议记
+为 П v= ( "v , #v , $v ) ,其关系如下:
+%v= { ( ( E , g 2 , h A ) , ( v , r A ) ) :
+E= g 2
+v
+h r A
+A∧v > 0 ∧v , r A ∈ ! p }
+其过程如下所述:
+a ) A l i c e选择随机整数 φ ∈[ 0 , 2 t + l + s + T
+- 1 ] , η ∈[- 2 t + l + s
+n +
+1 , 2 t + l + s
+n - 1 ] ,其中: v ∈[ a , b ] ; | a | ≥1 ; | b | ≥1 ; | b -a | ≤T。t、
+l、s为三个安全参数。计算:
+W= g φ
+2h η
+A
+m o dn ( 2 2 )
+C ′ = H ( W ) ( 2 3 )
+C ″ = H ( W)m o d 2 t
+( 2 4 )
+D 3= φ+ v C ′ ( 2 5 )
+D 4= η+ r A C ′ ( 2 6 )
+若D 3 ∈[ 2 s + T
+C ′ , 2 t + l + s + T
+- 1 ] ,则进入下一步,否则重复此
+步骤。
+b ) A l i c e选择随机整数 α ≠0 , 0< ω ≤2
+s + T
+,使得u = α
+2
+( v -
+a + 1 )+ ω> 2 l + t + s + T
+,选择随机整数r 1 , r 2 , r 3 ∈[- 2 s
+n + 1 , 2 s
+n -
+1 ] ,使得 - r A α
+2
+- r 1 α- r 2 ∈[- 2 s
+n + 1 , 2 s
+n - 1 ] ,计算:
+D ′ = g v - a + 1
+2 h r A
+A m o dn ( 2 7 )
+G 1= ( D ′ ) α
+h r 1
+A m o dn ( 2 8 )
+G 2= G α
+1h r 2
+A m o dn ( 2 9 )
+G 3= g ω
+2h r 3
+A m o dn ( 3 0 )
+G 4= g u
+2/ G 2= g ω
+2h - r A α 2 - r 1 α- r 2
+A m o dn ( 3 1 )
+然后将 π v=( u , C ′ , C ″ , D 3 , D 4 , D ′ , G 1 , G 2 , G 3 , G 4 ) 发送给
+C A。
+c ) C A验证承诺G 1和G 2隐藏着同一个秘密值 α ,承诺G 3
+和G 4隐藏着同一个秘密值 ω ,以及:
+u > 2 t + l + s + T
+( 3 2 )
+D 3 ∈[ 2 s + T
+C ′ , 2 t + l + s + T
+- 1 ] ( 3 3 )
+C ″ = H ( g D 3
+2 h D 4
+A E- C ′
+m o dn )m o d2 t
+( 3 4 )
+上述关系式是否均成立,若成立,则C A相信交易金额
+v ≥a。
+2  2  3交易后余额大于零证明
+交易后余额大于零证明与交易金额大于零证明类似,
+A l i c e随机选择r A ′ ,使用公钥为交易后余额进行加密得到密文
+c A ′ ,然后从密文c A ′ 中提取出c A ′ 2
+,生成交易后余额的承诺E ′ 并
+发送到C A ,随后参照2 . 2 . 2节的过程为交易后余额A ′ 产生交
+易后余额大于零证明 π b a l=( u , C ′ , C ″ , D 3 , D 4 , D ′ , G 1 , G 2 , G 3 ,
+G 4 ) 并发送到C A进行验证。将该N I Z K协议记为 Πb a l= ( "b a l ,
+#b a l , $b a l ) ,其关系如下:
+%b a l= { ( ( E ′ , g 2 , h A ) , ( A ′ , r A ′ ) ) : E ′ = g 2
+A ′
+h A
+r A ′ ∧A ′ > 0 ∧A ′ , r A ′ ∈ ! p }
+2  2  4交易合法性证明
+交易合法性证明即验证交易过程中是否始终有: a ) 对于
+转账方,转账后余额与转账金额的和等于转账前余额; b ) 对于
+接收方,接受转账后的余额等于转账前的余额与转账金额之
+和。将该N I Z K协议记为 Πt x l= ( "t x l , #t x l , $t x l ) ,其关系如下:
+%t x l= { ( ( n , g 2 , h A , h B ) , ( A , v A , A ′ , B , v B , B ′ ) ) :
+A ′ + v A= A ∧B ′ = B+ v B }
+验证过程如下:
+a ) 假设A l i c e发起了一笔转账, A l i c e根据式( 3 5 )~( 3 7 )
+分别对自己的交易前余额A ,交易金额v A ,交易后余额A ′ 生成
+密文:
+c A= E n c( A , r A 1
+, S P , P K ) ( 3 5 )
+c v A
+= E n c( v A , r A 2
+, S P , P K ) ( 3 6 )
+c A ′= E n c ( A ′ , r A 3
+, S P , P K ) ( 3 7 )
+其中: r A 1
+、r A 2
+和r A 3
+为A l i c e在加密时选取的随机数。注意在加
+密时,为满足同态性,需要对r A 1
+、r A 2
+、r A 3
+添加约束条件r A 1
+=
+r A 2
++ r A 3
+。随后将 π t x l 1
+= ( c A , c v A
+, c A ′ ) 发送到C A。
+b ) B o b接收到来自A l i c e的转账后,同样对自己的交易前余
+额B、交易金额v和交易后余额B ′ 进行加密,并根据式( 3 8 )~
+( 4 0 ) 分别为B、v B和B ′ 生成密文并发送到C A :
+c B= E n c ( B , r B 1
+, S P , P K ) ( 3 8 )
+c v B
+= E n c( v B , r B 2
+, S P , P K ) ( 3 9 )
+c B ′= E n c ( B ′ , r B 3
+, S P , P K ) ( 4 0 )
+其中: r B 1
+、r B 2
+和r B 3
+为B o b在加密时选取的随机数。这里同样
+需要对r B 1
+、r B 2
+、r B 3
+添加约束条件r B 3
+= r B 1
++r B 2
+。随后将 π t x l 2
+=
+( c B , c v B
+, c B ′ ) 发送到C A。
+c ) C A接收到 π t x l 1
+和 π t x l 2
+后,验证:
+c A= c v A
+c A ′ ( 4 1 )
+c B ′= c B c v B
+( 4 2 )
+若上述关系式均成立,则相信交易过程中无论是转账方还
+是接收方,交易始终满足交易合法性。
+· 2 4 9 1 · 计算机应用研究第4 2卷2  3整体描述
+本文方案涉及系统管理员、用户、验证中心C A、共识节点
+和区块链网络五个关键实体。它们各自承担相应的职责,确保
+方案的安全性、隐私性以及交易的合法性。
+a ) 系统管理员。被认为是一个完全诚实的实体,其行为
+不会对系统造成威胁。主要负责交易通道的系统参数生成以
+及用户密钥对的生成和分发。
+b ) 用户。交易的参与者,负责对交易信息进行加密以及
+生成一系列零知识证明以供C A进行校验。
+c ) 验证中心C A。交易的验证者,负责验证交易的合法性
+和正确性,提交链下交易的最终结果。
+d ) 共识节点。通过共识机制对C A提交的交易进行确认,
+并将交易写入区块链。
+f ) 区块链网络。作为交易信息记录和存储的平台,确保交
+易信息的不可窜改性。
+系统框架和工作流程如图1所示。
+通道准备阶段!!""
+用户交易阶段!#"$
+交易上传阶段! %&
+'生成通道
+参数和密钥对
+$返回交易验证结果系统管理员
+!用户达成共识!
+申请开启链下通道
+"分发密钥对
+&通过共识机制对 #$ 提交的交
+易进行最终确认并上传区块链
+区块链网络
+如用户在一轮交易后决定
+继续交易!则重复过程
+#"$!否则执行%&
+共识节点
+%提交链下交易
+最终结果
+(验证交易
+%$
+#用户之间发起一笔交易!生
+成交易密文和零知识证明!发送
+用户
+图1系统框架和工作流程
+F i g . 1 S y s t e mf r a m e w o r ka n dw o r k f l o w
+在本文所述的交易方案中,涉及到的过程被细分为用户加
+密和C A验证两个主要部分,这两部分协同工作,确保交易的
+安全性和效率。以下是对这一过程的详细描述:
+a ) 当A l i c e和B o b准备开启交易通道时,向系统管理员提
+交请求,请求中包含两个用户签名和用户准备存入的初始余
+额。系统管理员验证签名无误后,为A l i c e和B o b创建一个多
+签名钱包并存入初始金额,这笔交易称为“ 锚点事务” 。系统
+管理员生成通道的系统参数和A l i c e、B o b的公私钥,并使用系
+统参数和双方公钥分别加密初始金额。然后将加密后的“ 锚
+点事务” 广播到网络并记录到区块链上,标志通道开启, A l i c e
+和B o b的后续交易全部在链下通道中进行。创建通道时生成
+的系统参数可在需要时供用户和验证中心C A调用。A l i c e和
+B o b的公钥公开,私钥则各自保管。
+b ) 当A l i c e向B o b发起一笔转账时,双方分别使用公钥和
+系统参数对自己的交易前余额、本次交易金额和交易后余额等
+信息进行加密,将生成的密文作为交易合法性证明发送到C A。
+c ) 随后交易双方进行如下操作:
+( a ) A l i c e和B o b从各自的密文中提取出c v A 2
+和c v B 2
+,作为
+承诺E和F发送到C A ,随后共同为承诺E和F产生交易金额
+相等性证明并发送到C A ;
+( b ) A l i c e为式( 1 ) 中的承诺E产生交易金额大于零证明
+并发送到C A ;
+( c ) A l i c e从c A ′ 中提取出c A ′ 2
+,生成交易后余额的承诺E ′ 并
+产生交易后余额大于零证明发送到C A。
+d ) 当C A接收到来自A l i c e和B o b发送的一系列密文、承
+诺和证明后,分别进行交易合法性验证、交易金额相等性验证、
+交易金额大于零验证和交易后余额大于零验证。
+e ) 若C A验证无误,则确认交易正确合法,可继续进行后
+续交易。此外, A l i c e和B o b需签署“ 承诺事务” 以记录余额状
+态。例如,双方初始各存入5B T C , A l i c e向B o b支付1B T C后,
+新承诺事务将记录A l i c e有4B T C , B o b有6B T C。承诺事务经
+双方签名交换并由C A存储。当创建新的承诺事务时,之前的
+承诺事务则作废。金额以密文形式记录,产生争议时,双方提
+交私钥至C A解密金额以解决争议。
+f ) 若验证失败,则认为该笔交易无效, C A会向A l i c e和
+B o b返回一个交易失败的信息,告知他们此次交易未能通过验
+证。系统会强制关闭当前的交易通道,根据最新的承诺事务将
+通道内的资金正确地分配回交易双方的账户中,并以密文形式
+将交易双方的最终余额( C A n
+, C B n
+) 上传到区块链中。除了验证
+失败的情况外,当通道容量耗尽或通道过期时,通道也会自动
+关闭。
+g ) 人为关闭通道的情况有双方一致同意关闭或单方决定
+关闭两种。当双方一致同意关闭支付通道时,他们会共同签署
+并广播一个“ 结算事务” 。这个结算事务记录了通道的最终余
+额分配,经过共识节点确认后上传区块链。另外,在某些情况
+下,一方可能需要单方面关闭支付通道,例如另一方离线或无
+法达成共识时。此时,单方可以将最后一笔承诺事务提交,然
+后进入一个挑战期。挑战期的时间长度可以根据系统的具体
+需求设定为数小时至数天,以平衡安全性与结算效率,其目的
+是为了防止一方恶意提交过时或不准确的余额状态,以确保通
+道关闭时资金的公正分配。在挑战期内,另一方可以提交新的
+承诺事务,如果提交的承诺事务通过验证, C A将以更新后的余
+额状态作为最终结算依据。若挑战期结束时没有新的承诺事
+务提交或争议未能得到有效证明, C A会根据最后一笔验证无
+误的承诺事务进行结算并上传到区块链。成功关闭通道后,系
+统管理员会将通道标记为销毁状态,并丢弃通道的系统参数和
+密钥,以确保通道不再被使用。
+本文方案对交易过程中可能产生的交易问题进行了多重
+校验,保障了交易数据隐私性和安全性。采用了链下交易通道
+机制提升了交易效率并减少了数据存储需求。以上交易方案
+流程如图2所示。
+· 3 4 9 1 · 第7期吴婷,等:基于同态加密和零知识证明的区块链可扩展隐私保护方案签署结算事务
+并广播
+系统管理员生成系
+统参数和公私钥!
+加密初始金额
+!"#$% 存入初始金额存入初始金额 &'(创建一个多签
+名钱包
+广播锚点事务!
+记录到区块链
+开启通道
+发起一笔交易
+验证失败
+分配资金!
+上传区块链!
+销毁通道
+用户加密交易
+数据
+用户生成承诺
+和证据并发送
+)!
+验证交易
+出现争议!提
+交私钥到 *+
+解密
+签署并更新
+承诺事务
+无争议
+验证成功
+,"'$- $./01
+继续交易
+结束交易
+单方关闭通道双方关闭道道
+广播承诺事务!
+进入挑战期
+图2交易方案整体流程
+F i g . 2 O v e r a l l f l o wo f t r a d i n g s c h e m e
+3方案分析及性能评估
+3  1正确性分析
+交易金额相等性证明、交易金额大于零证明以及交易余额
+大于零证明为已有研究结果[ 1 8 , 2 0 ]
+,本文不再对其进行正确性
+分析,仅对算法加解密的正确性和交易合法性证明的正确性进
+行分析。
+3  1  1算法加解密的正确性分析
+定理1修改后的O U算法,加密后可以使用解密式( 5 )
+( 6 ) 解得明文m。
+证明根据2 . 1 . 1节中的参数设置,有g p ( p - 1 )
+1 ≡1m o dp 2
+,
+即g p ( p - 1 )
+1 - 1= k p 2
+,令a = g p - 1
+1 ,则g p ( p - 1 )
+1 - 1=a p
+- 1=( a- 1 )
+( 1+ a 2
++ … +a p - 1
+)=k p 2
+,所以有p 2
+| ( a-1 ) ( 1+a+… +
+a p - 1
+) ,可得p | ( a - 1 ) 且p | ( 1+ a + … + a p - 1
+) , p | ( a - 1 ) a =
+1+ p k ,即g p - 1
+1 ≡1+ p km o dp 2
+。所以:
+c p - 1
+m = ( c - x
+1 c 2 ) p - 1
+m o dp 2
+= (
+g m
+2g x r
+2
+g x r
+2
+) p - 1
+m o dp 2
+=
+( g 1
+r 0 m
+) p - 1
+m o dp 2
+= ( g p - 1
+1 ) r 0 m
+m o dp 2
+=
+( 1+ p k ) r 0 m
+m o dp 2
+= 1+p k r 0 m ( 4 3 )
+所以L ( c p - 1
+m m o dp 2
+)= m k r 0。同理可得到L ( g p - 1
+2 m o dp 2
+)=
+k r 0。因此:
+m=
+L ( c ( p - 1 )
+m m o dp 2
+)
+L ( g ( p - 1 )
+2 m o dp 2
+)
+m o dp =
+m k r 0
+k r 0
+m o dp = m ( 4 4 )
+由此可证明,修改后的O U算法,加解密仍具有正确性。
+3  1  2交易合法性证明的正确性分析
+定理2 C A可以通过验证等式c A =c v A
+c A ′ 和c B ′=c B c v B
+来
+确认该笔交易满足交易合法性。
+证明根据2 . 2 . 4节中交易合法性证明的过程,有:
+c A 1
+= g 2
+r A 1m o dn , c A 2
+= g A
+2 h A
+r A 1m o dn ( 4 5 )
+c v A 1
+c A ′ 1= ( g 2
+r A 2 ) ( g 2
+r A 3 )m o dn = g 2
+r A 2
++ r A 3m o dn ( 4 6 )
+c v A 2
+c A ′ 2
+= ( g v
+2 h r A 2 A ) ( g A ′
+2h r A 3 A )m o dn = g v + A ′
+2 h r A 2
++ r A 3 A m o dn ( 4 7 )
+由于r A 1
+= r A 2
++ r A 3
+,若等式c A= c v A
+c A ′ 成立,则有A= v + A ′ ;
+同理,若等式c B ′= c v B
+c B成立,则有B ′ = v + B ,由此可证明该交
+易合法。
+3  2安全性分析
+下面将对方案的安全性进行分析,为此先给出以下三个主
+要定理。
+定理3修改后的O U算法在I N D  C P A安全模型下是安
+全的。
+证明首先构建攻击实验如下:
+a ) 实验中拥有一具有多项式资源的敌手&和一个能自由
+调用加密算法的挑战者';
+b ) 挑战者'将公钥P K= ( n , g 1 , g 2 , h ) 发送给敌手&;
+c ) 敌手&选择两个长度相同的明文m 0、m 1∈! p发送给挑
+战者';
+d ) 挑战者'随机选择b ∈0 , 1 ,向敌手&发送密文C m b
+=
+E ( m , r ) ,其中r是加密m b时选取的随机数;
+e ) 敌手&猜测挑战者'上一步进行加密的明文是m 0还是
+m 1 ,并且将猜测结果输出,输出结果记为m ′ ,若m ′ =m b ,则攻
+击成功,否则失败。
+修改后的O U算法和原始O U算法一样,其安全性是基于
+大整数因数分解问题和P子群问题,根据文献[ 1 8 ] 的安全性
+证明,当P子群问题是困难的时,对任意概率多项式时间敌手
+· 4 4 9 1 · 计算机应用研究第4 2卷A d v ,对于任意常数c ,以及足够大的k ,获胜的概率为
+P r [ A d v( n , g 1 , g 2 , h , m 0 , m 1 , C m b
+)= m b ]<
+1
+2
++
+1
+k c
+( 4 8 )
+其中: k为素数p和q的位数。由此可见修改后的O U算法在
+I N D  C P A安全模型下是安全的。
+定理4本文零知识证明协议在随机谕言机下具有计算
+零知识性。
+证明首先以2 . 2 . 1节的交易金额相等性证明为例来分
+析。在该证明中,敌手可获得的公开数据为( c v A
+, c v B
+, E , F ,
+π e q 1
+, π e q 2
+) ,并且可以在需要时调用相应的系统参数。由定理
+3可知,敌手从c v A
+、c v B
+、E、F中获取关于交易金额v A和v B的相
+关知识是困难的。π e q 1
+和 π e q 2
+中包含C、D A、D B、D 1、D 25个式
+子,其中式C为安全哈希函数, D A和D B为关于随机数 ω和交
+易金额v A、v B的式子, D 1为关于随机数 η 1和随机数r A的式
+子, D 2为关于随机数 η 2和随机数r B的式子,而交易金额v A、
+v B、 ω 、 η 1、 η 2、r A和r B对于敌手都是未知的。而敌手很难从拥
+有两个未知数的式子中确认其中一个未知数的值。因此敌手
+从 π e q 1
+和 π e q 2
+中获取关于交易金额v A和v B的相关知识是困难
+的。2 . 2 . 2节的交易金额大于零证明和2 . 2 . 3节的交易后余
+额大于零证明是两个C F T协议,在随机谕言机下属于计算零
+知识,因此敌手从这两个证明中获得v的相关知识是困难的。
+在2 . 2 . 4节的交易合法性验证中,敌手可获得的公开数据为
+( c A , c v A
+, c A ′ , c B , c v B
+, c B ′ ) ,同样根据定理3可知,敌手从这些密
+文中获取相应的明文信息是困难的。综上,本文零知识证明协
+议在随机谕言机下具有计算零知识性。
+定理5本文零知识证明协议具有完备性和可靠性。
+证明根据3 . 1节的正确性分析和零知识证明的正确性
+可知,诚实的证明者执行本文方案,一定能够被验证者验证通
+过。在本文方案中,零知识证明部分基于F u j i s a k i  O k a m o t o承
+诺方案构建,该承诺在统计上是安全的,即证明者无法找到两
+个不相等的整数m 1和m 2 ,使得它们对应的承诺值E ( x 1 , r 1 ) 和
+E ( x 2 , r 2 ) 相等,这意味着证明者无法在生成承诺时欺骗验证
+者。以2 . 2 . 1节的交易金额相等性证明为例,假如证明者想要
+欺骗验证者,则需要在生成证明时找到一组( C , D A , D B , D 1 , D 2 )
+使得零知识验证式成立,这需要破解安全哈希函数,在计算上是
+不可行的。而2 . 2 . 2节的交易金额大于零证明和2 . 2 . 3节的交
+易后余额大于零证明是两个C F T协议, C F T协议本身具有完备
+性和可靠性。综上,本文零知识证明协议具有完备性和可
+靠性。
+3  3性能评估
+为验证方案的可行性以及测试算法性能,本节基于H y 
+p e r l e d g e r F a b r i c 2 . 4 . 4搭建了联盟链网络对方案进行测试,仿
+真实验采用在V M w a r e 1 7 . 0 . 0下建立虚拟机的方式来模拟多
+节点环境,主机处理器为A M DR y z e n55 6 0 06  C o r eC P U@
+3 . 5 0G H z ,机器配置处理器内核4个,内存8G B。相关环境配
+置包括G o 1 . 2 1 . 1 0、D o c k e r 2 4 . 0 . 7以及D o c k e r C o m p o s e 2 . 2 . 2
+等,编程语言为G o语言。测试分为功能测试和算法效率测试
+两部分。
+3  3  1功能测试
+功能性测试主要涵盖链下通道开启与销毁、交易零知识验
+证以及数据上链三个方面。交易双方首先向系统管理员提交
+请求,请求中包含两个用户签名和用户准备存入的初始余额。
+系统管理员验证双方签名,验证通过后创建一个多签名钱包,
+为通道生成系统参数和A l i c e、B o b的公私钥,并使用双方公钥
+对初始金额加密。随后生成一个通道I D ,将通道I D连同锚点
+事务一起记录到区块链上。查看容器日志显示生成了通道的
+相关信息,如图3所示。具体实现如算法1所示。
+图3创建交易通道
+F i g . 3 C r e a t i n ga t r a n s a c t i o nc h a n n e l
+算法1开启交易通道
+输入:r e q u e s t A ( s i g A , A 0 ) , r e q u e s t B ( s i g B , B 0 ) 。
+输出:c h a n n e l S t a t e。
+a )i f ( v e r i f y ( s i g A )∧ v e r i f y ( s i g B ) )t h e n
+r e t u r nc h a n n e l S t a t e← " i n v a l i ds i g n a t u r e "
+e n di f
+/ / 验证A l i c e和B o b的签名
+b )S P← S P G e n ( )
+k e y s A ← K e y G e n ( ) / / k e y s A={ P K A , S K A }
+k e y s B ← K e y G e n ( ) / / k e y s B={ P K B , S K B }
+D i s t r i b u t e K e y s ( k e y s A , k e y s B )
+/ / 生成系统参数和双方的密钥对并分发
+c )r A , r B ← r a n d o m ( )
+C A 0 ← E n c ( A 0 , r A , S P , P K A )
+C B 0 ← E n c ( B 0 , r B , S P , P K B )
+/ / 使用系统参数和公钥加密A l i c e和B o b的初始金额
+d )w a l l e t ← C r e a t e Wa l l e t ( s i g A , s i g B , C A 0
+, C B 0
+)
+/ / 用签名和密文初始化多签名钱包
+e )t x ← C r e a t e A n c h o r T r a n ( w a l l e t )
+/ / 创建锚点事务,包含多签名钱包及其信息
+f )c r e a t e C h a n n e l ( t x )
+/ / 创建交易通道
+g )c h a n n e l S t a t e ← " O p e n "
+r e t u r nc h a n n e l S t a t e
+/ / 返回通道开启状态
+在交易零知识验证测试中,链码实例化为用户A l i c e在通
+道中存入初始金额1 0 0 , B o b存入初始金额5 0 ,由A l i c e向B o b
+发起交易,金额为1 0 ,由A l i c e和B o b生成各自的交易密文、承
+诺、交易合法性证明, A l i c e和B o b合作产生交易相等性证明,
+并由A l i c e生成交易金额大于零和交易后余额大于零证明发
+送到C A ,随后C A进行验证,实验结果显示C A返回了验证成
+功的信息。查看容器日志可以看到C A接收到的交易信息均
+为密文状态,如图4所示。除了验证正确的知识外, C A还能够
+拒绝恶意交易,当交易金额设置为大于初始余额或交易金额与
+输出金额不等时,尽管用户输出了相应的承诺和证明,但均未
+通过C A校验。交易验证部分的实现如算法2、3所示。
+图4 C A验证交易
+F i g . 4 C Av e r i f i c a t i o no f t r a n s a c t i o n s
+算法2用户生成承诺和零知识证明
+输入: A , v A , A ′ , B , v B , B ′ , n , g 2 , h A , h B , r A , r v A
+, r A ′ , r B , r v B
+, r B ′ 。
+输出: E , F , E ′ , π t x l 1
+, π t x l 2
+, π e q 1 , π e q 2 , π v , π b a l。
+a ) π t x l 1 ←#t x l ( A , v A , A ′ , n , g 2 , h A , r A , r v A
+, r A ′ )
+π t x l 2 ←#t x l ( B , v B , B ′ , n , g 2 , h B , r B , r v B
+, r B ′ )
+/ / A l i c e和B o b为此次交易生成交易合法性证明
+· 5 4 9 1 · 第7期吴婷,等:基于同态加密和零知识证明的区块链可扩展隐私保护方案b ) E ←g 2
+v A h A
+r
+Am o dn
+F ←g 2
+v B h B
+r
+Bm o dn
+/ / A l i c e和B o b为v A和v B生成承诺
+c ) π e q 1 , π e q 2 ← #e q ( n , g 2 , h A , h B , ω , η 1 , η 2 , v A , v B , r A , v B )
+/ / A l i c e和B o b合作产生v A和v B的交易相等性证明
+d ) π v ← #v ( n , g 2 , h A , φ , η , α , ω , r 1 , r 2 , r 3 , v , r A )
+/ / A l i c e对交易金额v生成交易金额大于零证明
+e ) E ′ ← g 2
+A ′
+h A
+r
+A ′ m o d n
+/ / A l i c e对交易后余额A ′ 生成承诺
+f )π b a l ← #b a l ( n , g 2 , h A , φ , η , α , ω , r 1 , r 2 , r 3 , A ′ , r A )
+/ / A l i c e对交易后余额A ′ 生成交易后余额大于零证明
+g )s e n dE , F , E ′ , π t x l 1
+, π t x l 2
+, π e q 1 , π e q 2 , π v , π b a l
+/ / 发送承诺和零知识证明到C A
+算法3 C A验证零知识证明
+输入:E , F , E ′ , π t x l 1
+, π t x l 2
+, π e q 1 , π e q 2 , π v , π b a l , n , g 2 , h A , h B。
+输出:v e r i f i c a t i o n S t a t e。
+a ) b 0 ←V t x l ( π t x l 1
+, π t x l 2
+)
+/ / 验证交易合法性
+b ) b 1 ←V e q ( π e q 1 , π e q 2 , E , F , n , g 2 , h A , h B )
+/ / 验证交易相等性
+c ) b 2 ←V v ( π v , E , n , g 2 , h A )
+/ / 验证交易金额大于零
+d ) b 3 ←V b a l ( π b a l , E ′ , n , g 2 , h A )
+/ / 验证交易后余额大于零
+e ) i f b 0 ∧b 1 ∧b 2 ∧b 3= 1t h e n
+r e t u r nv e r i f i c a t i o n S t a t e ←t r u e
+e l s e
+r e t u r nv e r i f i c a t i o n S t a t e ←f a l s e
+/ / 返回验证结果
+当一笔交易成功结束后,交易双方需签署“ 承诺事务” 并
+交换以记录余额状态,如果出现争议则提交私钥到C A解密来
+解决争议。若双方决定不再继续交易,则共同签署“ 结算事
+务” ,将“ 结算事务” 记录到区块链上并由系统管理员销毁通
+道。查看容器日志可以看到该交易的结算事务已被记录,并显
+示通道已成功销毁,如图5所示,具体实现如算法4所示。
+图5交易结算和通道销毁
+F i g . 5 T r a n s a c t i o ns e t t l e m e n t a n dc h a n n e l d e s t r u c t i o n
+算法4关闭交易通道
+输入:s i g A , s i g B , C A n
+, C B n
+,c h a n n e l I D。
+输出:c h a n n e l S t a t e。
+a ) s i g n C o m m i t m e n t T r a n ( s i g A , s i g B , C A n
+, C B n
+)
+/ / 签署承诺事务
+b ) i f s i g n C o m m i t m e n t S t a t u s = d i s p u t e t h e n
+R e s o l v e D i s p u t e ( )
+e n di f
+/ / 处理争议情况
+c ) e n d T r a n ←E n d T r a n ( s i g A , s i g B , C A n
+, C B n
+)
+/ / 签署结算事务
+d ) d e s t r o y C h a n n e l ( c h a n n e l I D )
+/ / 销毁通道,丢弃相关参数
+e ) c h a n n e l S t a t e ←" d e s t r o y e d "
+r e t u r nc h a n n e l S t a t e
+/ / 返回通道销毁状态
+3  3  2算法效率测试
+H E P Z P [ 1 4 ]
+和P a i l g a m a l算法[ 1 5 ]
+是目前区块链隐私保护方
+向性能较好的两种算法。本节将对本文算法与原版O U算法、
+H E P Z P算法和P a i l g a m a l算法进行对比分析。实验分别对系统
+参数中的密钥长度取10 2 4、20 4 8、30 7 2b i t进行测试,交易金
+额设置为6 4b i t随机整数。表1是进行2 0 0次实验得到的平
+均测试结果以及对测试结果的分析。
+表1不同密钥长度下的效率对比
+T a b . 1 E f f i c i e n c yc o m p a r i s o nu n d e r d i f f e r e n t k e yl e n g t h s
+算法操作10 2 4b i t 20 4 8b i t 30 7 2b i t
+本文算法
+系统参数生成5 6 . 4 6 7m s 1 7 6 . 3 2 5m s 5 1 0 . 4 4 7m s
+密钥生成2 . 5 3 3m s 1 8 . 2 4 1m s 6 1 . 5 6 7m s
+加密5 . 2 0 1m s 3 7 . 6 8 7m s 1 2 0 . 1 8 3m s
+解密5 . 3 1 7m s 3 5 . 3 9 8m s 1 1 3 . 5 3 1m s
+原版O U
+密钥生成5 5 . 9 2 5m s 1 7 5 . 3 5 3m s 5 0 8 . 9 2 6m s
+加密7 . 8 9 5m s 5 4 . 5 1 7m s 1 7 7 . 0 1 4m s
+解密2 . 4 4 8m s 1 7 . 6 5 8m s 5 5 . 2 7 4m s
+H E P Z P
+系统参数生成7 7 . 0 1 2m s 3 2 5 . 2 4 1m s 11 3 2 . 8 5 5m s
+密钥生成8 . 4 7 8m s 6 1 . 7 6 9m s 2 0 7 . 5 3 7m s
+加密4 2 . 4 3 3m s 3 1 3 . 3 6 0m s 10 2 8 . 6 7 1m s
+解密1 6 . 9 0 3m s 1 2 3 . 8 3 9m s 4 0 7 . 2 4 8m s
+P a i l G a m a l
+系统参数生成7 7 . 8 8 3m s 3 2 7 . 5 4 8m s 11 4 6 . 1 9 8m s
+密钥生成1 6 . 1 3 6m s 1 2 6 . 3 1 9m s 4 1 8 . 4 7 9m s
+加密4 3 . 1 3 0m s 3 1 7 . 2 1 4m s 10 3 0 . 4 9 2m s
+解密1 6 . 5 8 6m s 1 2 7 . 6 4 6m s 4 0 8 . 2 7 6m s
+经过对表1数据的深入对比分析,发现修改后的O U算法
+在密钥生成和加密操作上展现出了相较于原算法更高的效率。
+尽管在解密效率上有所下降,但在本文方案中除交易出现争议
+外,基本无须用到解密算法,因此不会对整个方案的性能产生
+影响。结合实验数据来看,本文算法与H E P Z P和P a i l g a m a l算
+法相比在系统参数生成、密钥生成和加解密上都更具优势。
+根据2 . 3节的整体方案描述,在表2、3中详细记录了交易
+双方和C A在执行零知识证明的各项操作时的时间开销。此
+外,结合表1~ 3中的数据,表4汇总了在无争议情况下完整一
+轮交易中各参与方操作的时间开销。从表中可以观察到,在3
+0 7 2b i t安全密钥长度下,零知识证明生成证明和验证的各个
+步骤处理时间均控制在毫秒级别。由于零知识证明的各个阶
+段是独立的,可以并行处理,所以该方案依旧具有较高的效率。
+此外,本文方案采用链下通道机制来提高交易效率,采用“ 一
+通道一参数” 机制,并在通道销毁后丢弃参数,相比H E P Z P和
+P a i l g a m a l中系统参数始终不变的机制更具安全性。
+表2生成零知识证明的平均时间开销
+T a b . 2 A v e r a g e t i m eo v e r h e a df o r g e n e r a t i n gaz e r o  k n o w l e d g ep r o o f
+相关操作10 2 4b i t 20 4 8b i t 30 7 2b i t
+生成交易合法性证明1 5 . 6 0 3m s 1 1 3 . 0 6 1m s 3 6 0 . 5 4 9m s
+生成交易金额相等性证明3 . 7 0 7m s 2 1 . 0 1 2m s 6 4 . 5 8 5m s
+生成交易金额大于零证明7 0 . 7 1 1m s 3 7 3 . 5 2 3m s 6 7 4 . 9 4 5m s
+生成交易余额大于零证明7 0 . 7 1 1m s 3 7 3 . 5 2 3m s 6 7 4 . 9 4 5m s
+表3 C A验证交易的平均时间开销
+T a b . 3 A v e r a g et i m eo v e r h e a do f C Ai nt r a n s a c t i o nv e r i f i c a t i o n
+相关操作10 2 4b i t 20 4 8b i t 30 7 2b i t
+验证交易合法性0 . 0 1 6m s 0 . 0 3 6m s 0 . 0 6 7m s
+验证交易金额相等性4 . 7 7 9m s 2 6 . 0 4 1m s 7 7 . 6 0 0m s
+验证交易金额大于零3 4 . 5 5 3m s 2 2 9 . 7 1 5m s 6 8 1 . 2 9 9m s
+验证交易余额大于零3 4 . 5 5 3m s 2 2 9 . 7 1 5m s 6 8 1 . 2 9 9m s
+表4执行一次完整交易各方的总时间开销
+T a b . 4 T o t a l t i m eo v e r h e a df o r a l l p a r t i e s i ne x e c u t i n g
+ac o m p l e t et r a n s a c t i o n
+操作方10 2 4b i t 20 4 8b i t 30 7 2b i t
+转账方1 5 8 . 8 7 85m s 8 7 0 . 6 1 3m s 17 4 2 . 8 1 2m s
+接收方1 7 . 4 5 6m s 1 2 3 . 5 6 7m s 3 9 2 . 8 4 2m s
+C A 7 3 . 9 0 1m s 4 8 5 . 5 0 7m s 14 4 0 . 2 6 5m s
+4结束语
+本文通过对O U同态加密算法改进,有效地拓展了O U同
+· 6 4 9 1 · 计算机应用研究第4 2卷态加密算法的应用范围,使其不仅可以对交易金额进行加密,
+同时支持零知识证明,能够对交易数据进行多重校验而无须披
+露任何交易细节,保障了交易数据的隐私性。此外,本文将匿
+名双向支付通道技术与O U同态加密算法相结合,实现了在链
+下环境中的快速交易,有效缓解了区块链网络确认交易时间过
+长所带来的限制问题。最后,通过理论分析和仿真测试验证了
+方案的安全性、高效性和可行性。
+本文提出的区块链隐私保护方案仅涉及交易数据的隐藏,
+且零知识证明协议效率不突出。因此,研究区块链交易中身份
+信息的隐私保护方案,以及更高效的零知识证明协议,是下一
+步的研究方向。
+参考文献:
+[ 1 ] 张奥,白晓颖.区块链隐私保护研究与实践综述[ J ] .软件学报,
+2 0 2 0 , 3 1 ( 5 ) : 1 4 0 6  1 4 3 4 .( Z h a n gA o , B a i X i a o y i n g . S u r v e yo f r e 
+s e a r c ha n dp r a c t i c e s o nb l o c k c h a i np r i v a c y p r o t e c t i o n [ J ] . J o u r n a l o f
+S o f t w a r e , 2 0 2 0 , 3 1 ( 5 ) : 1 4 0 6  1 4 3 4 . )
+[ 2 ] 谭朋柳,徐滕,杨思佳,等.区块链隐私保护技术研究综述[ J ] .计
+算机应用研究, 2 0 2 4 , 4 1 ( 8 ) : 2 2 6 1  2 2 6 9 .( T a nP e n g l i u , X uT e n g ,
+Y a n g S i j i a , e t a l . R e v i e wo f r e s e a r c ho nb l o c k c h a i np r i v a c yp r o t e c t i o n
+t e c h n o l o g i e s [ J ] . A p p l i c a t i o nR e s e a r c ho fC o mp u t e r s , 2 0 2 4 , 4 1
+( 8 ) : 2 2 6 1  2 2 6 9 . )
+[ 3 ] 贾淼,姚中原,祝卫华,等.零知识证明赋能区块链的进展与展望
+[ J ] .计算机应用, 2 0 2 4 , 4 4( 1 2 ) : 3 6 6 9  3 6 7 7 . ( J i aM i a o , Y a o
+Z h o n g y u a n , Z h u We i h u a ,e ta l .P r o g r e s sa n d p r o s p e c to fz e r o 
+k n o w l e d g ep r o o f e n a b l i n g b l o c k c h a i n [ J ] . J o u r n a l o f C o mp u t e r A p 
+p l i c a t i o n s , 2 0 2 4 , 4 4 ( 1 2 ) : 3 6 6 9  3 6 7 7 . )
+[ 4 ] 王冬,李政,肖冰冰.基于同态加密的区块链混币方案[ J ] .计算机
+科学, 2 0 2 4 , 5 1 ( 3 ) : 3 3 5  3 3 9 .( Wa n gD o n g , L i Z h e n g , X i a oB i n g 
+b i n g . B l o c k c h a i nc o i nm i x i n gs c h e m eb a s e do nh o m o m o r p h i ce n c r y p 
+t i o n [ J ] . C o mp u t e r S c i e n c e , 2 0 2 4 , 5 1 ( 3 ) : 3 3 5  3 3 9 . )
+[ 5 ] 肖瑶,冯勇,李英娜,等.基于同态加密的区块链交易数据隐私保
+护方案[ J ] .密码学报, 2 0 2 2 , 9 ( 6 ) : 1 0 5 3  1 0 6 6 .( X i a oY a o , F e n g
+Y o n g , L iY i n g n a , e ta l . Ap r i v a c y  p r e s e r v e ds c h e m ef o rb l o c k c h a i n
+t r a n s a c t i o nb a s e do nh o m o m o r p h i c e n c r y p t i o n [ J ] . J o u r n a l o f C r y p t o 
+l o g i cR e s e a r c h , 2 0 2 2 , 9 ( 6 ) : 1 0 5 3  1 0 6 6 . )
+[ 6 ] 薛庆水,薛震,王晨阳,等.基于加法同态的可修改区块链方案
+[ J ] .计算机应用研究, 2 0 2 2 , 3 9 ( 1 1 ) : 3 2 3 2  3 2 3 7 .( X u eQ i n g s h u i ,
+X u e Z h e n , Wa n gC h e n y a n g , e t a l . O n em o d i f i a b l eb l o c k c h a i ns c h e m e
+b a s e do na d d i t i v e h o m o m o r p h i ce n c r y p t i o na l g o r i t h m [ J ] . A p p l i c a t i o n
+R e s e a r c ho f C o mp u t e r s , 2 0 2 2 , 3 9 ( 1 1 ) : 3 2 3 2  3 2 3 7 . )
+[ 7 ] WuX i a o h u a , Wa n g J i n g , Z h a n g T i n g b o . I n t e g r a t i n g f u l l y h o m o m o r p h i c
+e n c r y p t i o nt oe n h a n c e t h e s e c u r i t y o f b l o c k c h a i na p p l i c a t i o n s [ J ] . F u 
+t u r eG e n e r a t i o nC o mp u t e r S y s t e ms , 2 0 2 4 , 1 6 1 : 4 6 7  4 7 7 .
+[ 8 ] 杨亚涛,赵阳,张奇林,等.基于S E A L库的同态加权电子投票系
+统[ J ] .计算机学报, 2 0 2 0 , 4 3 ( 4 ) : 7 1 1  7 2 3 .( Y a n gY a t a o , Z h a o
+Y a n g , Z h a n gQ i l i n , e t a l . We i g h t e de l e c t r o n i cv o t i n gs y s t e mw i t hh o 
+m o m o r p h i ce n c r y p t i o nb a s e do nS E A L[ J ] . C h i n e s eJ o u r n a lo f
+C o mp u t e r s , 2 0 2 0 , 4 3 ( 4 ) : 7 1 1  7 2 3 . )
+[ 9 ] 杨亚涛,刘德莉,刘培鹤,等. B F V  B l o c k c h a i n v o t i n g :支持B F V全同
+态加密的区块链电子投票系统[ J ] .通信学报, 2 0 2 2 , 4 3 ( 9 ) : 1 0 0 
+1 1 1 .( Y a n g Y a t a o , L i uD e l i , L i uP e i h e , e t a l . B F V  B l o c k c h a i n v o t i n g :
+b l o c k c h a i n  b a s e de l e c t r o n i cv o t i n gs y s t e m sw i t hB F Vf u l l h o m o m o r 
+p h i ce n c r y p t i o n [ J ] . J o u r n a l o nC o mmu n i c a t i o n s , 2 0 2 2 , 4 3 ( 9 ) :
+1 0 0  1 1 1 . )
+[ 1 0 ]刘雪峰,杨丹平,仇卿云,等.区块链上无可信拍卖师的密封式竞
+拍方案[ J ] .密码学报, 2 0 2 3 , 1 0 ( 3 ) : 4 9 1  5 0 5 .( L i uX u e f e n g , Y a n g
+D a n p i n g , Q i uQ i n g y u n , e t a l . S e a l e db i d d i n ga u c t i o nw i t hn ot r u s t e d
+a u c t i o n e e r o nb l o c k c h a i n [ J ] . J o u r n a l o fC r y p t o l o g i cR e s e a r c h ,
+2 0 2 3 , 1 0 ( 3 ) : 4 9 1  5 0 5 . )
+[ 1 1 ]宋靖文,张大伟,韩旭,等.区块链中可监管的身份隐私保护方案
+[ J ] .软件学报, 2 0 2 3 , 3 4 ( 7 ) : 3 2 9 2  3 3 1 2 .( S o n gJ i n g w e n , Z h a n g
+D a w e i , H a nX u , e t a l . S u p e r v i s e di d e n t i t y p r i v a c y p r o t e c t i o ns c h e m e i n
+b l o c k c h a i n [ J ] . J o u r n a l o f S o f t w a r e , 2 0 2 3 , 3 4 ( 7 ) : 3 2 9 2  3 3 1 2 . )
+[ 1 2 ]S h a h r o u z J K , A n a l o u i M. A na n o n y m o u sa u t h e n t i c a t i o ns c h e m ew i t h
+c o n d i t i o n a l p r i v a c y  p r e s e r v i n gf o r v e h i c u l a r A dh o c n e t w o r k s b a s e do n
+z e r o  k n o w l e d g e p r o o f a n db l o c k c h a i n [ J ] . A dh o cN e t w o r k s , 2 0 2 4 ,
+1 5 4 : 1 0 3 3 4 9 .
+[ 1 3 ]景旭,杨少坤.面向联盟链转账隐私保护的 +
+H o m E l G零知识证明
+协议[ J ] .工程科学与技术, 2 0 2 3 , 5 5 ( 5 ) : 2 7 2  2 8 2 .( J i n gX u ,
+Y a n gS h a o k u n . +
+H o m E l Gz e r o  k n o w l e d g ep r o o f p r o t o c o l f o rp r i v a c y
+p r o t e c t i o no fc o n s o r t i u m b l o c k c h a i nt r a n s f e r [ J ] . A d v a n c e dE n g i 
+n e e r i n gS c i e n c e s , 2 0 2 3 , 5 5 ( 5 ) : 2 7 2  2 8 2 . )
+[ 1 4 ]李龚亮,贺东博,郭兵,等.基于零知识证明的区块链隐私保护算
+法[ J ] .华中科技大学学报:自然科学版, 2 0 2 0 , 4 8 ( 7 ) : 1 1 2  1 1 6 .
+( L i G o n g l i a n g , H eD o n g b o , G u oB i n g , e t a l . B l o c k c h a i np r i v a c yp r o 
+t e c t i o na l g o r i t h m sb a s e do nz e r o  k n o w l e d g ep r o o f [ J ] . J o u r n a l o f
+H u a z h o n gU n i v e r s i t yo f S c i e n c ea n dT e c h n o l o g y : N a t u r a l S c i 
+e n c eE d i t i o n , 2 0 2 0 , 4 8 ( 7 ) : 1 1 2  1 1 6 . )
+[ 1 5 ]杨敏,徐长通,夏?,等.一种高效且可监管的隐私交易方案[ J ] .
+武汉大学学报:理学版, 2 0 2 3 , 6 9 ( 1 ) : 3 9  5 0 . ( Y a n gM i n , X u
+C h a n g t o n g , X i aZ h e , e t a l . A ne f f i c i e n t a n dr e g u l a t a b l ec o n f i d e n t i a l
+t r a n s a c t i o ns c h e m e [ J ] . J o u r n a l o f Wu h a nU n i v e r s i t y : N a t u r a l S c i 
+e n c eE d i t i o n , 2 0 2 3 , 6 9 ( 1 ) : 3 9  5 0 . )
+[ 1 6 ]刘懿中,姜楠,陈若楠,等.区块链链下通道研究综述[ J ] .密码学
+报, 2 0 2 4 , 1 1 ( 1 ) : 4 5  6 6 .( L i uY i z h o n g , J i a n gN a n , C h e nR u o n a n , e t
+a l . O v e r v i e wo n b l o c k c h a i n o f  c h a i nc h a n n e l s [ J ] . J o u r n a l o f C r y p t o 
+l o g i cR e s e a r c h , 2 0 2 4 , 1 1 ( 1 ) : 4 5  6 6 . )
+[ 1 7 ]G r e e nM , M i e r s I . B o l t : a n o n y m o u s p a y m e n t c h a n n e l s f o r d e c e n t r a l i z e d
+c u r r e n c i e s [ C ] / / P r o co f A C MS I G S A CC o n f e r e n c eo nC o m p u t e r a n d
+C o m m u n i c a t i o n s S e c u r i t y . N e wY o r k : A C MP r e s s , 2 0 1 7 : 4 7 3  4 8 9 .
+[ 1 8 ]G o l d w a s s e r S , M i c a l i S , R a c k o f f C . T h e k n o w l e d g e c o m p l e x i t y o f i n t e r 
+a c t i v e p r o o f  s y s t e m s [ C ] / / P r o co f t h e 1 7 t hA n n u a l A C MS y m p o s i u m
+o nT h e o r y o f C o m p u t i n g . N e wY o r k : A C MP r e s s , 1 9 8 5 : 2 9 1  3 0 4 .
+[ 1 9 ]F u j i s a k i E , O k a m o t oT . S t a t i s t i c a l z e r ok n o w l e d g ep r o t o c o l st op r o v e
+m o d u l a r p o l y n o m i a l r e l a t i o n s [ C ] / / P r o co f t h e1 7 t hA n n u a l I n t e r n a 
+t i o n a lC r y p t o l o g yC o n f e r e n c eo nA d v a n c e si nC r y p t o l o g y .B e r l i n :
+S p r i n g e r , 1 9 9 7 : 1 6  3 0 .
+[ 2 0 ]伍前红,张键红,王育民.一个高效的匹配协议[ J ] .通信学报,
+2 0 0 4 , 2 5 ( 8 ) : 1 3 9  1 4 4 .( WuQ i a n h o n g , Z h a n gJ i a n h o n g , Wa n gY u 
+m i n . A ne f f i c i e n t m a t c hp r o t o c o l [ J ] . J o u r n a l o f C h i n aI n s t i t u t eo f
+C o mmu n i c a t i o n s , 2 0 0 4 , 2 5 ( 8 ) : 1 3 9  1 4 4 . )
+[ 2 1 ]O k a m o t o T , U c h i y a m aS . An e wp u b l i c  k e yc r y p t o s y s t e ma s s e c u r ea s
+f a c t o r i n g [ M] / / N y b e r gK . A d v a n c e si nC r y p t o l o g y —E U R O C R Y P T ’
+9 8 . B e r l i n : S p r i n g e r , 1 9 9 8 : 3 0 8  3 1 8 .
+[ 2 2 ]伍前红,张键红,王育民.简单证明一个承诺值在特定区间
+内[ J ] .电子学报, 2 0 0 4 , 3 2( 7 ) : 1 0 7 1  1 0 7 3 . ( WuQ i a n h o n g ,
+Z h a n g J i a n h o n g , Wa n gY u m i n . S i m p l ep r o o f t h a t ac o m m i t t e dn u m b e r
+i s i na s p e c i f i ci n t e r v a l [ J ] . A c t aE l e c t r o n i c aS i n i c a , 2 0 0 4 , 3 2 ( 7 ) :
+1 0 7 1  1 0 7 3 . )
+· 7 4 9 1 · 第7期吴婷,等:基于同态加密和零知识证明的区块链可扩展隐私保护方案

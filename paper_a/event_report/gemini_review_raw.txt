@@ -1,0 +1,1262 @@
+Gemini said
+(1) 总体评估与审稿建议（Brief Assessment and Editorial Recommendation）
+
+本文针对车载群智感知（Vehicular Crowdsensing）中的单报告提交场景，设计并实现了一种基于 Groth16（BN254）的“报告绑定（report-bound）”零知识证明验证关系。该方案通过共享参与者秘密 
+𝑠
+s 与任务上下文 
+𝑐
+c，将参与者凭证、授权事件签发者（Event Issuer）签发的时空事件回执、提交的加密报告字节包（ML-KEM-768 + AES-256-GCM）以及任务范围的去重标签 
+𝑁
+N 绑定在同一个 R1CS 电路中进行联合验证，并逐步扩展了离散网格区域成员证明（深度为 8 的 Merkle 树）、基于 ElGamal 的凭证关联身份可验证加密（用于审计追责）以及活跃凭证集合成员证明（深度为 8 的 Merkle 树）。
+
+优势与坦诚性评估：手稿的行文较为克制，作者在多处主动且坦诚地披露了原型系统的边界与局限性（例如：明确承认底层密码学组件均为既有原语、网关状态仅保存在单实例内存中、实验在单进程内存中基于合成数据完成且不含真实网络传输与传感器采样、挑战新鲜性不保证传感器物理采样新鲜性、EdDSA 与 Groth16 不具备抗量子安全性等）。配套代码和实验记录亦声明随附于补充材料中。
+
+核心缺陷与审稿结论：从通信与网络系统期刊（Telecommunications and Network Systems Journal）的发表标准衡量，手稿目前存在较为严重的贡献增量不足、协议架构与隐私模型隐患、形式化证明缺失以及实验基线设计单薄等问题：
+
+相对于作者前序工作 TST-Audit [3] 的创新增量有限：本文作者团队与所引用的核心对比文献 TST-Audit [3]（He, Jiang, Yang, Zhang, Ad Hoc Networks, 2026）高度重合。TST-Audit [3] 已定义了涵盖隐藏时空事件、凭证有效性与网格-纪元唯一性的微证明（microproof）接口；本文仅聚焦于单条报告的接纳关系，将其具象化为标准密码学原语（EdDSA、MiMC、Merkle 树、ElGamal）的组合电路，且完全剥离了车载网络系统的通信协议、多网关状态同步与移动性建模。
+
+协议交互顺序与签发者-网关合谋隐私漏洞：在协议设计（第 4.1 节）中，上下文 
+𝑐
+=
+ContextField
+(
+𝑇
+,
+𝑞
+,
+𝑅
+)
+c=ContextField(T,q,R) 既以明文形式发送给事件签发者用于生成签名（式 3），又在验证网关处被明文重构并作为公开实例输入（式 2、式 6）。这意味着只要事件签发者与验证网关发生日志关联或合谋，即可通过唯一的 
+𝑐
+c 确定性地将签发者物理观测到的车辆位置/时间 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t) 与网关收到的匿名报告 
+𝑅
+R 及任务标签 
+𝑁
+N 直接关联，从而彻底瓦解零知识证明旨在保护的位置、时间及签发者隐私。同时，要求车辆在通过路侧签发者之前必须先向网关获取未过期挑战 
+𝑞
+q 并完成报告采样与加密以计算 
+𝑐
+c，在真实高动态车载网络中存在严重的同步耦合瓶颈。
+
+形式化安全性证明严重缺失：全文仅包含一个关于单实例网关原子锁去重的平凡命题（Proposition 1），缺乏针对持有者绑定（Holder Binding）、上下文绑定（Context Binding）、零知识隐私性、跨任务不可关联性以及可验证加密健全性的形式化安全定义与归约证明。
+
+实验缺乏外部基线且对照消融实验近乎同义反复：第 5.1 节与第 5.2 节的“Bearer control”与“No-context”基线仅是将自身电路中的哈希输入替换为常量的自我删减版本（R1CS 约束层面的单元测试），缺乏与 TST-Audit [3] 或其他相关方案的定量对比；且深度固定为 8（最多 256 个活跃凭证槽位）的设计难以支撑真实城市级车联网规模。
+
+审稿决定建议：大修后重审（Major Revision）或拒稿重投（Reject and Resubmit）（若期刊要求必须具备网络系统级协议评估或严密密码学归约，则倾向于 Reject and Resubmit；若允许以工程原型形式聚焦单报告验证机制，则需完成下述强制性大修）。
+
+(2) 按优先级排列的主要问题（Prioritized Major Issues）
+
+以下问题按严重程度排序，每项均明确标注手稿具体章节、引用/转述原文、问题分析，并严格区分“已从手稿证实的结论（Verified Findings）”与“需核查源码/实验脚本的假设（Hypotheses Requiring Source/Code Verification）”。
+
+问题 1：相对于核心关联文献 TST-Audit [3] 及现有工作的创新度（Novelty）与系统级贡献不足
+
+涉及章节与原文定位：
+
+第 1 节（第 2 页左栏第 2 段）："This report-level relation complements TST-Audit [3], which verifies accumulated spatiotemporal coverage through a grid-epoch microproof interface. Here, the acceptance object is an individual task report, characterized by an explicit relation between the issuer-signed event and the submitted bytes."
+
+第 2 节（第 2 页右栏第 2 段及第 3 页左栏第 2–3 段）："TST-Audit [3] specifies per-record microproofs... Because the task-level report relation studied here addresses a different acceptance object, neither work's interface should be treated as a complete substitute for all possible instantiations of the other." 以及 "In this work, we incorporate a credential-linked identity ciphertext into the report relation; the underlying encryption and proof techniques are established primitives."
+
+第 2 节表 1（第 4 页）：对比了 SPOON [1]、TST-Audit [3]、Bogdanov et al. [12]、Brito et al. [11] 与本文的验证对象。
+
+已从手稿证实的结论（Verified Findings）：
+
+已披露的局限性：作者在第 2 页和第 3 页坦诚指出底层可验证加密与证明技术均为既有原语（"established primitives"），并将本文定位于补充 TST-Audit [3] 的单报告接纳关系。
+
+核心增量审视：根据表 1 对 TST-Audit [3] 的描述，TST-Audit 已经定义了包含隐藏事件位置与时间、凭证有效性以及网格-纪元唯一性的可插拔微证明（microproof）接口。本文的核心工作实际上是构造了该单记录微证明的一个具体 Groth16 R1CS 实例（将任务/挑战/密文哈希 
+𝑐
+c 与持有者秘密派生值 
+ℎ
+=
+𝐻
+103
+(
+𝑠
+,
+𝑐
+)
+h=H
+103
+	​
+
+(s,c) 纳入 EdDSA 签名消息，并拼接深度为 8 的 Merkle 树与 ElGamal 身份密文）。
+
+网络系统维度的缺失：对于通信与网络系统期刊而言，本文去掉了 TST-Audit [3] 的聚合覆盖审计层，但并未补充真实车载网络系统层面的机制设计（如路侧事件签发者发现与切换、V2I 通信丢包/时延下的挑战生命周期管理、分布式多网关间的去重状态同步等）。
+
+重要性说明：若仅将标准密码学组件（EdDSA、MiMC、Merkle 树、ElGamal）在 gnark 中编写为 R1CS 电路并在单进程内存中进行微基准测试，其理论深度（对密码学领域）与系统深度（对通信网络领域）均显得单薄，作者必须更清晰地界定相对于 TST-Audit [3] 的不可替代技术增量。
+
+问题 2：事件签发者与验证网关之间的上下文 
+𝑐
+c 关联漏洞及车载交互顺序的现实可行性（Trust, Threat Assumptions & Protocol Architecture）
+
+涉及章节与原文定位：
+
+第 3 节（第 3 页右栏第 2 段）："Likewise, an authorised event issuer is assumed to follow the designated observation procedure when assigning signed event coordinates... The gateway is trusted to apply the configured task and authority parameters, rely on a trustworthy clock, and faithfully maintain its acceptance state."
+
+第 4.1 节式 (1)–(3)（第 5 页左栏第 2 段至右栏第 1 段）：参与者根据网关下发的挑战 
+𝑞
+=
+(
+𝑛
+,
+𝑒
+)
+q=(n,e) 和加密报告包 
+𝑅
+R 计算 
+𝑐
+=
+ContextField
+(
+𝑇
+,
+𝑞
+,
+𝑅
+)
+c=ContextField(T,q,R)（式 2），随后计算 
+ℎ
+=
+𝐻
+103
+(
+𝑠
+,
+𝑐
+)
+h=H
+103
+	​
+
+(s,c) 并提交给事件签发者；签发者签名 
+𝑚
+=
+𝐻
+104
+(
+𝑐
+,
+ℎ
+,
+𝑥
+,
+𝑦
+,
+𝑡
+)
+,
+𝜎
+𝐸
+=
+Sign
+𝑊
+(
+𝑚
+)
+m=H
+104
+	​
+
+(c,h,x,y,t),σ
+E
+	​
+
+=Sign
+W
+	​
+
+(m)（式 3）；文中还要求 "To apply its own issuance rules, the issuer must receive sufficient authenticated task and challenge information."
+
+第 4.2 节式 (6)（第 5 页右栏）与第 4.7 节（第 7 页右栏第 2 段）：公开实例为 
+(
+𝐴
+,
+tid
+,
+𝑐
+,
+𝑁
+,
+𝑙
+,
+𝑢
+)
+(A,tid,c,N,l,u)，第 4.7 节声称 "In this construction, the participant secret, credential, event coordinates, and issuer key remain private witnesses, whereas the gateway observes the task parameters, challenge, tag, proof, received envelope, and communication metadata."
+
+已从手稿证实的结论（Verified Findings）：
+
+未披露的合谋/日志关联隐私漏洞（关键缺陷）：在式 (3) 中，事件签发者（Event Issuer）在签发回执时必须获知明文 
+𝑐
+c、
+ℎ
+h 以及车辆的真实物理坐标与时间 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t)（甚至直接观测到物理车辆）；而在式 (2) 和式 (6) 中，验证网关（Verification Gateway）根据收到的报告包 
+𝑅
+R 和挑战 
+𝑞
+q 独立重构出完全相同的明文 
+𝑐
+c 作为公开输入。由于每次提交的 
+𝑐
+c 包含随机挑战随机数 
+𝑛
+n 和密文 
+𝑅
+R 的 SHA-256 摘要，
+𝑐
+c 在全局是唯一且确定性的。这意味着：只要事件签发者与验证网关发生合谋，或者事后比对双方的日志记录，就能通过公共值 
+𝑐
+c 零成本地将签发者观测到的物理车辆及精确时空坐标 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t)、签发者公钥 
+𝑊
+W 与网关收到的匿名报告 
+𝑅
+R、任务标签 
+𝑁
+N 以及审计密文 
+(
+𝐶
+1
+,
+𝐶
+2
+)
+(C
+1
+	​
+
+,C
+2
+	​
+
+) 实施 100% 精确关联。手稿在第 3 节和第 4.7 节中完全没有声明“事件签发者与验证网关严禁合谋/严禁共享日志”这一核心隐私前提，也未意识到 
+𝑐
+c 在两侧均为明文会直接旁路掉零知识证明对 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t) 和 
+𝑊
+W 的隐藏作用。
+
+车载高移动场景下的交互顺序僵化：根据图 1 和第 4.1 节，车辆必须先与验证网关通信获取未过期挑战 
+𝑞
+=
+(
+𝑛
+,
+𝑒
+)
+q=(n,e)，再完成传感器采集与 ML-KEM 报告加密得到最终字节包 
+𝑅
+R 以算出 
+𝑐
+c 和 
+ℎ
+h，然后才能向路侧事件签发者请求签发 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t) 的时空回执 
+𝜎
+𝐸
+σ
+E
+	​
+
+。在真实车载网络中，车辆高速驶过事件发生点（及路侧签发设备覆盖区）往往只有数秒窗口；若要求在与路侧签发者交互前必须先完成网关挑战获取和完整报告打包加密（且一旦报告字节 
+𝑅
+R 后续有任何改动或挑战过期，已获取的时空回执 
+𝜎
+𝐸
+σ
+E
+	​
+
+ 即刻作废），这在弱网或高移动车载环境下极不切实际。
+
+抗量子设计的内部矛盾（第 4.1 节 vs. 第 4.4 节 vs. 第 4.7 节）：
+
+已披露部分：作者在第 4.7 节（第 7 页右栏）已坦诚披露 "although ML-KEM protects the encapsulated report key, the EdDSA and Groth16 proof components are not post-quantum primitives."
+
+未分析的结构性矛盾：为了保护 40 字节的感知报告明文，方案引入了 ML-KEM-768（导致密文信封 
+𝑅
+R 膨胀至 1,158 字节，占整个 1,482 字节提交负载的 78.1%），其唯一合理的动机是防御“现在截获、未来量子解密（Harvest-Now, Decrypt-Later）”（因为实时伪造证明需要实时量子计算机，而历史密文可被未来量子计算机离线破解）。然而，在第 4.4 节的审计追责电路中，参与者的注册身份点 
+𝐼
+I 却使用经典的 BN254 椭圆曲线 ElGamal 加密为 
+𝐶
+1
+=
+[
+𝜌
+]
+𝐵
+,
+𝐶
+2
+=
+𝐼
++
+[
+𝜌
+]
+𝑃
+𝐴
+C
+1
+	​
+
+=[ρ]B,C
+2
+	​
+
+=I+[ρ]P
+A
+	​
+
+ 并作为公开见证发送！这意味着面对“现在截获、未来量子解密”的攻击者，虽然其未来无法用量子计算机解密 ML-KEM-768 保护的报告内容 
+𝑅
+R，但完全可以利用 Shor 算法求离散对数直接破解公开的 BN254 点 
+(
+𝑃
+𝐴
+,
+𝐶
+1
+,
+𝐶
+2
+)
+(P
+A
+	​
+
+,C
+1
+	​
+
+,C
+2
+	​
+
+)，从而恢复所有历史提交者的真实身份点 
+𝐼
+I。这使高昂的 ML-KEM-768 通信开销在整体长期隐私保护上失去了木桶短板平衡。
+
+Groth16 可信设置（Trusted Setup）的信任归属缺失：第 4.3 节（第 6 页左栏）提到 "with its circuit-specific setup and verification key generated prior to report verification"，但第 3 节威胁模型中未说明由哪个实体执行这 4 个电路的 Groth16 CRS 初始化并销毁秘密陷门（toxic waste）。若生成方保留陷门，则可在无有效凭证和签发者回执的情况下伪造任意证明。
+
+问题 3：形式化安全性定义与证明不完整，密码学细节规范存在缺漏（Soundness, Security & Completeness of Proofs）
+
+涉及章节与原文定位：
+
+第 4.2 节式 (4)–(8)（第 5 页右栏）：定义了基础矩形电路的验证关系。
+
+第 4.3、4.4、4.5 节（第 6–7 页）：仅以散文描述离散区域、身份加密与活跃凭证扩展，未给出任何数学关系式或完整的公开/私有见证元组定义。
+
+第 4.7 节 Proposition 1（第 7 页左栏至右栏）：全文唯一的命题与证明。
+
+已从手稿证实的结论（Verified Findings）：
+
+证明极度简略且未覆盖核心安全目标：全文唯一的正式命题 Proposition 1 (Task-scoped single acceptance) 仅假设证明系统具备健全性（"Assume the soundness of the proof relation"），然后用三句话说明网关在单锁下原子检查并记录 
+𝑁
+=
+𝐻
+105
+(
+𝑠
+,
+tid
+)
+N=H
+105
+	​
+
+(s,tid) 即可保证每个 
+(
+𝑠
+,
+tid
+)
+(s,tid) 最多接纳一次。这本质上只是一个内存哈希表去重的并发互斥说明，而非密码学安全性证明。
+
+缺乏核心性质的形式化定义与归约：手稿的核心主张包括持有者绑定（防回执转移）、上下文绑定（防报告/任务/挑战替换）、零知识性与跨任务标签不可关联性（Cross-task tag unlinkability）以及身份可验证加密的健全性（Accountability soundness），但文中既无基于安全博弈（Game-based）的定义，也无从底层原语（EdDSA 的 EUF-CMA、MiMC 与 SHA-256 的抗碰撞/PRF 性质、Groth16 的知识健全性 Knowledge Soundness 与零知识性）到上述目标的形式化归约证明。
+
+跨任务标签隐私的密码学假设缺乏论证：第 4.7 节（第 7 页右栏第 2 段）声称 "cross-task tag privacy relies on an appropriate keyed-hash assumption for 
+𝐻
+105
+(
+𝑠
+,
+⋅
+)
+H
+105
+	​
+
+(s,⋅)"，而第 4.1 节定义 
+𝐻
+𝑑
+(
+𝑣
+1
+,
+…
+,
+𝑣
+𝑘
+)
+=
+𝐻
+(
+𝑑
+,
+𝑣
+1
+,
+…
+,
+𝑣
+𝑘
+)
+H
+d
+	​
+
+(v
+1
+	​
+
+,…,v
+k
+	​
+
+)=H(d,v
+1
+	​
+
+,…,v
+k
+	​
+
+)，第 4.3 节指明 
+𝐻
+H 为 gnark 实现的 MiMC。在 gnark 的标准 MiMC（Miyaguchi-Preneel 模式）中，固定域标签 
+105
+105 与秘密 
+𝑠
+s 按序吸收后仅形成一个确定性的中间域元素状态 
+𝑢
+=
+𝑓
+(
+105
+,
+𝑠
+)
+u=f(105,s)，随后对公开的 
+tid
+tid 仅执行一轮以 
+𝑢
+u 为链接状态的 MiMC 置换。由于 MiMC 在有限域 
+𝐹
+𝑟
+F
+r
+	​
+
+ 上的代数次数较低，当攻击者收集同一车辆在大量不同任务 
+tid
+𝑖
+tid
+i
+	​
+
+ 下的公开标签 
+𝑁
+𝑖
+=
+𝐻
+(
+105
+,
+𝑠
+,
+tid
+𝑖
+)
+N
+i
+	​
+
+=H(105,s,tid
+i
+	​
+
+) 时，单次域元素输入下的 MiMC 调用是否满足标准 PRF 不可区分性（抵抗代数/插值分析），文中未给出任何密码学论证或文献支撑。
+
+第 4.3–4.5 节电路方程与域分离标签未完全公开：
+
+第 4.3 节称 "unused leaves are assigned a separate domain label"，第 4.5 节称 "empty leaves use a separate label"，但均未给出具体的域标签数值。
+
+第 4.4 节未给出扩展后的完整公开实例与私有见证元组，也未写出电路内验证 
+𝜎
+𝐼
+σ
+I
+	​
+
+、
+𝐶
+1
+=
+[
+𝜌
+]
+𝐵
+C
+1
+	​
+
+=[ρ]B、
+𝐶
+2
+=
+𝐼
++
+[
+𝜌
+]
+𝑃
+𝐴
+C
+2
+	​
+
+=I+[ρ]P
+A
+	​
+
+ 的正式编号方程。
+
+需核查源码/实验脚本的假设（Hypotheses Requiring Source/Code Verification）：
+
+身份点 
+𝐼
+I、审计公钥 
+𝑃
+𝐴
+P
+A
+	​
+
+、密文点 
+(
+𝐶
+1
+,
+𝐶
+2
+)
+(C
+1
+	​
+
+,C
+2
+	​
+
+) 及标量 
+𝜌
+ρ 的子群/曲线检查：第 4.2 节与第 5.3 节明确说明对签发者公钥 
+𝑊
+W 和签名点进行了曲线及子群（排除单位元和 2 阶点）验证；但在第 4.4 节的身份加密电路中，需核查源码确认电路是否对私有输入点 
+𝐼
+=
+(
+𝐼
+𝑥
+,
+𝐼
+𝑦
+)
+I=(I
+x
+	​
+
+,I
+y
+	​
+
+) 和公开输入点 
+(
+𝑃
+𝐴
+,
+𝐶
+1
+,
+𝐶
+2
+)
+(P
+A
+	​
+
+,C
+1
+	​
+
+,C
+2
+	​
+
+) 显式施加了在扭曲 Edwards 曲线素数阶子群上的约束，以及随机标量 
+𝜌
+ρ 的位长/非零约束是如何实现的。
+
+注册阶段（Enrollment）秘密 
+𝑠
+s 的生成方式：第 4.1 节称参与者选择 
+𝑠
+s 并获得注册机构对 
+𝐻
+101
+(
+𝑠
+)
+H
+101
+	​
+
+(s) 的签名 
+𝜎
+𝐴
+σ
+A
+	​
+
+；但在第 5 节评估中，需核查源码 Fixture 是由参与者本地生成 
+𝑠
+s 仅上传 
+𝐻
+101
+(
+𝑠
+)
+H
+101
+	​
+
+(s)，还是由测试台统一生成 
+𝑠
+s（若注册机构未要求参与者提供关于 
+𝑠
+s 的知识证明而直接对任意提交的域元素签名，是否允许恶意参与者提交并非由哈希派生的数值）。
+
+问题 4：对照基线（Control Baselines）设计过于平凡，且缺乏与外部方案的定量对比（Control Baselines & Fair Interpretation of Experimental Evidence）
+
+涉及章节与原文定位：
+
+摘要（第 1 页）："In a controlled receipt-transfer ablation, a bearer-style relation accepted a proof constructed with another participant's receipt, whereas the holder-bound relation rejected the substituted witness."
+
+第 5.1 节与表 2（第 8 页）：构造“Bearer control”，将签发者回执中的 
+𝐻
+103
+(
+𝑠
+,
+𝑐
+)
+H
+103
+	​
+
+(s,c) 替换为固定常量，测试两个共享相同任务、挑战、报告和事件的参与者互换回执。
+
+第 5.2 节与表 3（第 8 页）：构造“No-context circuit”，将 
+ℎ
+h 和回执中的 
+𝑐
+c 替换为固定常量，测试替换报告、挑战或任务。
+
+已从手稿证实的结论（Verified Findings）：
+
+消融基线属于同义反复（Strawman / Tautological Ablation）：在 R1CS 电路中，如果人为把代表持有者秘密的哈希项 
+𝐻
+103
+(
+𝑠
+,
+𝑐
+)
+H
+103
+	​
+
+(s,c) 删掉并替换为固定常量（Bearer control），或者把代表上下文的 
+𝑐
+c 删掉并替换为固定常量（No-context control），那么从代数恒等式上必然导致替换另一个人的秘密 
+𝑠
+′
+s
+′
+ 或替换上下文 
+𝑐
+′
+c
+′
+ 时电路依然满足。这实质上只是验证代码编写没有漏掉约束线的软件单元测试（Unit Test），将其包装为实验章节的核心对比发现（甚至写进摘要作为核心实验结论）属于对实验证据的过度拔高（Overclaim）。
+
+表 2 与表 3 实验执行流程的不对称性（作者已在表注中坦诚披露）：
+
+已披露部分：表 2 表注（第 8 页右栏）明确写道："The holder-bound cases and the bearer own-receipt case reflect constraint-solver checks, whereas the copied-receipt bearer case also includes a verified Groth16 proof." 表 3 表注亦写道："Outcomes for the full relation reflect constraint-solver checks, whereas outcomes for the no-context relation additionally include Groth16 proof generation and verification."
+
+问题所在：尽管作者诚实地披露了这一差异，但在同一个对比表格中，对本方案（Full relation）的正样本（Accept）仅运行了约束求解器检查（Constraint-solver check），而对消融基线运行了完整的 Groth16 证明生成与验证，这种不一致的测试标准在严谨性上是不规范的。
+
+完全缺失与外部基线（特别是 TST-Audit [3]）的定量对比：第 5 节没有任何一个表格或实验将本文方案与 TST-Audit [3] 的微证明或传统的非报告绑定匿名凭证方案进行约束数量、证明耗时、验证耗时或通信字节数的横向对比。
+
+问题 5：系统可扩展性瓶颈与实验数据的内部一致性及可复现性细节（Scalability, Experimental Interpretation & Reproducibility）
+
+涉及章节与原文定位：
+
+第 4.3 节（第 6 页左栏）与第 4.5 节（第 6–7 页）：离散区域 Merkle 树和活跃凭证 Merkle 树深度均固定为 8（最多支持 
+2
+8
+=
+256
+2
+8
+=256 个叶子节点/凭证槽位）。
+
+第 4.5 节（第 7 页左栏）："Removing a credential changes the root; a proof generated for the earlier root does not verify against the updated root... the instance rejects earlier versions, previously used roots"。
+
+第 5 节（第 8 页左栏）、第 5.1 节（第 8 页右栏）、第 5.4 节表 4 与图 2（第 9–10 页）、第 5.5 节表 5（第 10 页）、第 5.6 节（第 10–11 页）。
+
+已从手稿证实的结论（Verified Findings）：
+
+256 个活跃凭证上限与强同步根更新在车联网中的可扩展性缺陷：
+
+已披露部分：作者在第 4.5 节（第 7 页左栏）已明确披露 "with up to 256 credential slots"。
+
+系统级影响：在车载群智感知中，一个城市或任务区域的注册活跃车辆通常达数千至数十万辆，256 个凭证槽位远不足以支撑实际部署。虽然第 5.5 节（表 5）测试了区域树深度 
+𝑑
+∈
+{
+4
+,
+6
+,
+8
+}
+d∈{4,6,8}，但手稿未测试活跃凭证树在真实车辆规模（如 
+𝑑
+=
+16
+d=16 即 65,536 辆车，或 
+𝑑
+=
+20
+d=20 即百万辆车）下的电路约束增长与证明耗时。更重要的是，由于网关一旦更新活跃集根即拒绝所有旧根（第 7 页左栏），在大规模车载系统中，任何单辆车的凭证撤销都会导致同一时刻正在生成证明（耗时约 400 ms）或处于网络传输途中的所有其他合法车辆证明全部失效被拒！
+
+实验表 4 与第 5.6 节之间的耗时倒挂现象与冷启动异常（需在文中合理阐释）：
+
+表 4 vs. 第 5.6 节耗时倒挂：在表 4（第 10 页）中，Active set 电路仅包含 Proving 一步的平均耗时即为 
+422.47
+±
+23.72
+ ms
+422.47±23.72 ms；然而在第 5.6 节（第 10 页右栏）的完整端到端工作流测试中，包含挑战签发、ML-KEM 加密、签名、见证构造、Active-set 证明生成、序列化、网关验证、解密和去重在内的总耗时反而是 
+410.47
+±
+17.90
+ ms
+410.47±17.90 ms（其中证明生成耗时降至 
+408.09
+ ms
+408.09 ms）。结合图 2 左图（第 10 页）可见，表 4 的 Active credential 在第 3 次测量出现了超过 
+530
+ ms
+530 ms 的显著离群毛刺，拉高了均值与标准差。文中对此未作任何解释。
+
+表 4 编译时间（Compilation time）的反常非单调性：在表 4 中，约束最少的 Rectangle 电路（29,833 约束）编译耗时高达 
+103.84
+ ms
+103.84 ms，而约束更多的 Region（35,798 约束）、Accountability（62,627 约束）和 Active set（68,592 约束）编译耗时却分别仅为 
+50.35
+ ms
+50.35 ms、
+71.96
+ ms
+71.96 ms 和 
+76.22
+ ms
+76.22 ms。这是因为 Compilation 仅测量了单次运行（one run）且未做预热，Rectangle 作为首个编译的电路承担了 Go 运行时与内存分配的冷启动开销。
+
+可复现性缺口（式 1–2 的编码规范与软件环境版本号）：
+
+第 4.1 节（第 5 页左栏）仅用文字描述 
+TaskField
+(
+id
+)
+TaskField(id) 和 
+ContextField
+(
+𝑇
+,
+𝑞
+,
+𝑅
+)
+ContextField(T,q,R) 使用了 SHA-256、域分离任务编码、任务与挑战的 JSON 编码以及提交字节的 SHA-256 摘要并约化为域元素，但未给出具体的字节拼接格式、JSON 键名顺序及模约化方式（例如直接  big.Int.Mod 还是截取比特），脱离补充代码无法独立复现。
+
+第 5 节（第 8 页左栏）报告的实验环境版本号为：gnark 0.16.4、gnark-crypto 0.21.1-0.20260913224755-1409fe592052、macOS 27.2、Go 1.26.8（注：Apple 自 macOS 26 起采用年份命名或特定内部版本号，建议核实并准确记录操作系统与工具链的构建信息及 CPU 具体型号如 M1 Base/Pro/Max，以确保可复现性）。
+
+需核查源码/实验脚本的假设（Hypotheses Requiring Source/Code Verification）：
+
+核查基准测试脚本中表 4 的四个电路是否按 Rectangle -> Region -> Accountability -> Active set 顺序在同一进程中依次编译而未对 Compilation 进行预热，从而证实 Rectangle 编译耗时异常偏高的原因。
+
+核查第 5.6 节中 1,482 bytes 总传输大小的精确字段构成（其中信封 
+𝑅
+R 为 1,158 字节，证明 
+𝜋
+π 为 164 字节，剩余 160 字节如何由挑战随机数 
+𝑛
+n、标签 
+𝑁
+N 和两个压缩点 
+𝐶
+1
+,
+𝐶
+2
+C
+1
+	​
+
+,C
+2
+	​
+
+ 及序列化头部精确组成）。
+
+(3) 次要技术与写作问题（Minor Technical and Writing Issues）
+
+公式与符号笔误（Verified in Section 4）：
+
+第 4.1 节（第 4 页右栏倒数第 2 行）："each event issuer holds a verification key 
+𝑊
+=
+(
+𝑊
+𝑥
+,
+𝑊
+𝑢
+)
+W=(W
+x
+	​
+
+,W
+u
+	​
+
+) together with an authority signature 
+𝜎
+𝑊
+σ
+W
+	​
+
+ on 
+𝐻
+102
+(
+𝑊
+𝑥
+,
+𝑊
+𝑦
+)
+H
+102
+	​
+
+(W
+x
+	​
+
+,W
+y
+	​
+
+)" —— 公钥纵坐标下标误写为 
+𝑊
+𝑢
+W
+u
+	​
+
+，应统一为 
+𝑊
+𝑦
+W
+y
+	​
+
+。
+
+第 4.1 节（第 5 页右栏第 9 行）："computes a context-dependent holder value 
+ℎ
+=
+𝐻
+103
+(
+𝑠
+‾
+,
+𝑐
+)
+h=H
+103
+	​
+
+(
+s
+,c)" —— 秘密 
+𝑠
+s 上方多出了一横线 
+𝑠
+‾
+s
+，应与式 (6) 中的 
+𝐻
+103
+(
+𝑠
+,
+𝑐
+)
+H
+103
+	​
+
+(s,c) 保持一致。
+
+第 4.1 节式 (3)（第 5 页右栏）：
+𝜎
+𝐸
+=
+Sign
+𝑊
+(
+𝑚
+σ
+E
+	​
+
+=Sign
+W
+	​
+
+(m 缺失右括号 )，应为 
+𝜎
+𝐸
+=
+Sign
+𝑊
+(
+𝑚
+)
+σ
+E
+	​
+
+=Sign
+W
+	​
+
+(m)。
+
+第 4.2 节式 (4)–(8) 排版（第 5 页右栏）：式 (4) 与式 (5) 的公式编号在双栏排版中错位到了公式上方；式 (5) 末尾缺失逗号。
+
+语法错误（Verified in Section 4.7）：
+
+第 4.7 节 Proposition 1（第 7 页左栏倒数第 5 行）："upon on each successful submission" 存在介词重复（upon on 
+→
+→ upon）。
+
+参考文献严重排版缺失与页码损坏（Verified in References, pp. 11–13）：
+
+参考文献 [11]（第 12 页左栏）：IEEE, ??? (2026) 存在未填充的 BibTeX 出版地占位符 ???。
+
+参考文献 [19]（第 12 页右栏）：Springer, ??? (2003) 同样存在未填充的占位符 ???。
+
+参考文献 [4]（第 11 页右栏）：页码/文章号打印为 31-13130（应为 Article 31, 31:1–31:30）。
+
+参考文献 [20]（第 12–13 页）：页码/文章号打印为 3 1330（应为 Article 3, 3:1–3:30）。
+
+网关拒绝服务（DoS）边界讨论不足（Section 4.6）：
+
+第 4.6 节（第 7 页左栏）指出验证失败不会消耗未过期的挑战（"a failed proof verification does not consume an unexpired challenge"）。这虽然防止了攻击者抢先发送错误证明来作废合法用户的挑战，但也意味着攻击者可以利用同一个未过期挑战 nonce 反复重放无效的 Groth16 证明以消耗网关算力（每次验证约 1 ms），或通过高频请求挑战耗尽网关内存。建议补充网关侧速率限制与挑战缓存淘汰策略的说明。
+
+(4) 基于当前原型的具体、按优先级排列的可行修改建议（Concrete, Prioritized Revision Actions）
+
+以下修改建议完全基于作者现有的 Go/gnark 原型架构，无需推翻重做底层系统即可在修改期内切实执行：
+
+【优先级 1：修复签发者-网关合谋隐私漏洞或重构上下文绑定方式（或显式修正威胁模型）】
+
+可行方案 A（小幅修改现有 gnark 电路，彻底消除 
+𝑐
+c 的明文关联）：不要让事件签发者直接对明文 
+𝑐
+c 和 
+ℎ
+h 签名。签发者仅对参与者秘密派生的盲化持有者承诺（例如 
+ℎ
+=
+𝐻
+103
+(
+𝑠
+,
+𝑟
+𝐸
+)
+h=H
+103
+	​
+
+(s,r
+E
+	​
+
+) 或凭证公钥）以及事件坐标 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t) 签名：
+𝜎
+𝐸
+=
+Sign
+𝑊
+(
+𝐻
+104
+(
+ℎ
+,
+𝑥
+,
+𝑦
+,
+𝑡
+)
+)
+σ
+E
+	​
+
+=Sign
+W
+	​
+
+(H
+104
+	​
+
+(h,x,y,t))（或引入周期性 epoch/nonce 防重放）；而在零知识证明电路内部，同时验证 
+𝜎
+𝐸
+σ
+E
+	​
+
+ 并通过含秘密 
+𝑠
+s 的约束（如 
+𝑐
+c 作为公开输入参与电路内验证或 
+𝑁
+N/绑定标签计算）将 
+(
+𝑥
+,
+𝑦
+,
+𝑡
+)
+(x,y,t)、秘密 
+𝑠
+s 与公开上下文 
+𝑐
+=
+ContextField
+(
+𝑇
+,
+𝑞
+,
+𝑅
+)
+c=ContextField(T,q,R) 绑定。这样一来：(i) 事件签发者完全看不到 
+𝑐
+c，即使与网关合谋也无法通过 
+𝑐
+c 关联车辆与报告；(ii) 车辆经过路侧签发者时无需预先从网关获取挑战 
+𝑞
+q 并加密好报告 
+𝑅
+R，彻底解决高移动场景下的交互顺序死锁！
+
+可行方案 B（若保持现有电路不变，必须在文本中严格界定威胁模型）：如果作者坚持保留式 (3) 中签发者对 
+𝑐
+c 签名的设计，则必须在第 3 节和第 4.7 节中明确增加强非合谋假设（Strict Non-Collusion Assumption between Event Issuer and Verification Gateway），坦诚分析由于 
+𝑐
+c 在签发者与网关两侧均为明文所导致的日志关联风险，并明确说明协议仅适用于车辆在进入签发区域前已获取挑战并完成报告打包的静态/准静态感知场景。
+
+【优先级 2：补齐第 4 节的形式化电路方程与安全性证明】
+
+在第 4.3、4.4、4.5 节中，仿照第 4.2 节式 (4)–(8) 的格式，完整写出离散区域、身份可验证加密、活跃凭证集合三个扩展电路的公开实例元组、私有见证元组、所有未指明的哈希域标签（如空叶子标签）以及编号约束方程（包括对身份点 
+𝐼
+I 和密文点的曲线/子群约束说明）。
+
+在第 4.7 节中，补充针对持有者绑定（Holder-Binding Unforgeability）、上下文绑定（Context-Binding Soundness）和审计解密正确性（Accountability Opening Soundness）的正式命题与基于 Groth16 知识健全性（Knowledge Soundness）、EdDSA 不可伪造性（EUF-CMA）及哈希抗碰撞性的归约证明。
+
+针对 
+𝑁
+=
+𝐻
+105
+(
+𝑠
+,
+tid
+)
+N=H
+105
+	​
+
+(s,tid) 的跨任务不可关联性，明确说明在 MiMC 下所需的具体伪随机假设，或讨论将 
+𝑠
+s 作为 MiMC 加密密钥（而非仅作为单轮消息块吸收）的安全裕度。
+
+在第 3 节和第 4.7 节中补充 Groth16 CRS 可信设置（Trusted Setup）的生成方假设，并专门讨论第 4.1 节（ML-KEM-768 抗量子报告加密）与第 4.4 节（经典 BN254 ElGamal 身份加密）在“现在截获、未来量子解密”威胁模型下的安全级别差异。
+
+【优先级 3：扩展当前 gnark 原型的实验规模与对比基线】
+
+扩展活跃凭证树深度实验（利用现有代码即可直接运行）：仿照第 5.5 节对区域树深度 
+𝑑
+∈
+{
+4
+,
+6
+,
+8
+}
+d∈{4,6,8} 的参数扫描，对第 4.5 节的活跃凭证树（Active-set tree）增加 
+𝑑
+∈
+{
+8
+,
+12
+,
+16
+,
+20
+}
+d∈{8,12,16,20}（对应 
+256
+256 至 
+10
+6
+10
+6
+ 辆注册车辆）的电路约束数、证明生成时间与验证时间测试，并讨论支持历史根滑动窗口（允许最近 
+𝐾
+K 个活跃集根有效）以缓解凭证撤销对并发在途证明的冲击。
+
+强化与 TST-Audit [3] 的定量对比：由于作者团队拥有 TST-Audit [3] 的实现基础，建议在相同硬件（Apple M1）与 gnark 环境下，定量对比 TST-Audit [3] 的微证明电路与本文 4 个电路变体的约束规模、证明/验证耗时及通信开销，从而用实证数据支撑表 1 的定性对比。
+
+规范表 2 与表 3 的实验流程并客观表述消融实验定位：在表 2 和表 3 的所有 Accept 单元格中统一执行完整的 Groth16 证明生成与验证（消除表注中的流程不对称），并将第 5.1/5.2 节的表述调整为“对电路约束完备性的受控验证（Controlled Constraint Verification）”，避免将其夸大为与外部基线的性能或安全性对比。
+
+【优先级 4：修正实验数据解释、复现规范与全文排版错误】
+
+在第 5.4 节和第 5.6 节中解释表 4 Active set 证明耗时（422.47 ms）高于第 5.6 节端到端总耗时（410.47 ms）的原因（如图 2 中的离群点波动），并对表 4 中的 Compilation 耗时增加预热或说明首次编译冷启动影响。
+
+在第 5.6 节中增加一个小表格，精确列出 1,482 bytes 提交负载的逐字段字节拆解（信封 
+𝑅
+R 的 1,158 字节内部构成 + 证明 164 字节 + 其余 160 字节的精确构成），并在第 4.1 节给出 
+TaskField
+TaskField 与 
+ContextField
+ContextField 的精确字节序列化定义。
+
+全面修正第 3 节指出的所有公式下标笔误（
+𝑊
+𝑢
+→
+𝑊
+𝑦
+W
+u
+	​
+
+→W
+y
+	​
+
+、
+𝑠
+‾
+→
+𝑠
+s
+→s、
+Sign
+𝑊
+(
+𝑚
+)
+Sign
+W
+	​
+
+(m) 补齐括号）、语法错误（upon on）以及参考文献 [4]、[11]、[19]、[20] 中的 ??? 占位符和页码错误。

@@ -1,0 +1,246 @@
+{
+ "G1": {
+  "query": "Blockchain-Enabled Conditional Decentralized Vehicular Crowdsensing System",
+  "url": "https://api.openalex.org/works?search=Blockchain-Enabled%20Conditional%20Decentralized%20Vehicular%20Crowdsensing%20System&per-page=6&mailto=research@example.org",
+  "count": 267,
+  "results": [
+   {
+    "id": "https://openalex.org/W4225743892",
+    "doi": "https://doi.org/10.1109/tits.2022.3166216",
+    "title": "Blockchain-Enabled Conditional Decentralized Vehicular Crowdsensing System",
+    "year": 2022,
+    "venue": "IEEE Transactions on Intelligent Transportation Systems",
+    "cited_by": 29,
+    "abstract": "The rapid growth of connected and autonomous vehicles (CAVs) shows an urgent demand for driving and transportation-related data, which gives rise to vehicular crowdsensing systems (VCSs). Nevertheless, the existing centralized VCS framework mainly faces the system reliability problem while the decentralized one cannot satisfy the management flexibility. In addition, when the privacy preservation scheme that prevents information leakage encounters the user selection scheme that desires detailed information of participants, how to balance this seemingly irreconcilable contradiction is inevitable for VCS. To remedy that, we take the first research attempt and explore the balance point between the system management, privacy preservation, and quality of experience (QoE) of participants. By fully exploiting the characters of participating entities, a blockchain-enabled conditional decentralized VCS is proposed in this paper. Firstly, we propose a privacy-preserving scheme where the zk-SNARK proof combines with the mixed-task smart contract to guarantee the interaction process will not reveal any private information of participants. Secondly, we propose an efficient reputation management mechanism that renders certain the participants can get a satisfactory QoE even under the condition that the private information of users is secured. And also, the malicious operations in the system will be effectively supervised. Theoretical analysis and extensive simulations demonstrate the securi"
+   },
+   {
+    "id": "https://openalex.org/W3001837371",
+    "doi": "https://doi.org/10.3390/electronics9020215",
+    "title": "A Blockchain-Based Hybrid Incentive Model for Crowdsensing",
+    "year": 2020,
+    "venue": "Electronics",
+    "cited_by": 44,
+    "abstract": "Crowdsensing is an emerging paradigm of data aggregation, which has a pivotal role in data-driven applications. By leveraging the recruitment, a crowdsensing system collects a large amount of data from mobile devices at a low cost. The critical issues in the development of crowdsensing are platform security, privacy protection, and incentive. However, the existing centralized, platform-based approaches suffer from the single point of failure which may result in data leakage. Besides, few previous studies have addressed the considerations of both the economic incentive and data quality. In this paper, we propose a decentralized crowdsensing architecture based on blockchain technology which will help improve the attack resistance. Furthermore, we present a hybrid incentive mechanism, which integrates the data quality, reputation, and monetary factors to encourage participants to contribute their sensing data while discouraging malicious behaviors. The effectiveness our of proposed incentive model is verified through a combination of the theory of mechanism design. The performance analysis and simulation results illustrate that the proposed hybrid incentive model is a reliable and efficient mean to promote data security and incentivizing positive conduct on the crowdsensing application."
+   },
+   {
+    "id": "https://openalex.org/W4293192615",
+    "doi": "https://doi.org/10.1109/comst.2022.3160925",
+    "title": "A Comprehensive Survey on the Applications of Blockchain for Securing Vehicular Networks",
+    "year": 2022,
+    "venue": "IEEE Communications Surveys & Tutorials",
+    "cited_by": 150,
+    "abstract": "Vehicular networks promise features such as traffic management, route scheduling, data exchange, entertainment, and much more. With any large-scale technological integration comes the challenge of providing security. Blockchain technology has been a popular choice of many studies for making the vehicular network more secure. Its characteristics meet some of the essential security requirements such as decentralization, transparency, tamper-proof nature, and public audit. This study catalogues some of the notable efforts in this direction over the last few years. We analyze around 75 blockchain-based security schemes for vehicular networks from an application, security, and blockchain perspective. The application perspective focuses on various applications which use secure blockchain-based vehicular networks such as transportation, parking, data sharing/ trading, and resource sharing. The security perspective focuses on security requirements and attacks. The blockchain perspective focuses on blockchain platforms, blockchain types, and consensus mechanisms used in blockchain implementation. We also compile the popular simulation tools used for simulating blockchain and for simulating vehicular networks. Additionally, to give the readers a broader perspective of the research area, we discuss the role of various state-of-the-art emerging technologies in blockchain-based vehicular networks. Finally, we summarize the survey by listing out some common challenges and future research d"
+   },
+   {
+    "id": "https://openalex.org/W2935561061",
+    "doi": "https://doi.org/10.1109/iccw.2019.8757184",
+    "title": "Blockchain-Based Lightweight Authentication Mechanism for Vehicular Fog Infrastructure",
+    "year": 2019,
+    "venue": "IEEE International Conference on Communications workshops",
+    "cited_by": 107,
+    "abstract": "With the increasing development of advanced communication technologies, vehicles are becoming smarter and more connected. Due to the tremendous growth of various vehicular applications, a huge amount of data is generated through advanced on-board devices and is deemed critical to improve driving safety and enhance vehicular services. However, cloud based models often fall short in applications where latency and mobility are critical. In order to fully realize the potential of vehicular networks, the challenges of efficient communication and computation need to be addressed. In this direction, vehicular fog computing (VFC) has emerged which extends the concept of fog computing to conventional vehicular networks. It is a geographically distributed paradigm that has the potential to conduct time-critical and data-intensive tasks by pushing intelligence (i.e. computing resources, storage, and application services) in the vicinity of end vehicles. However secure and reliable transmission are of significant importance in highly-mobile vehicular networks in order to ensure the optimal Quality of Service (QoS). In this direction, several authentication mechanisms have been proposed in the literature but most of them are found unfit due to absence of decentralization, anonymity, and trust characteristics. Thus, an effective cross-datacenter authentication and key-exchange scheme based on blockchain and elliptic curve cryptography (ECC) is proposed in this paper. Here, the distributed "
+   },
+   {
+    "id": "https://openalex.org/W2909030650",
+    "doi": "https://doi.org/10.1109/access.2019.2893262",
+    "title": "Decentralized Trust Evaluation in Vehicular Internet of Things",
+    "year": 2019,
+    "venue": "IEEE Access",
+    "cited_by": 116,
+    "abstract": "Trust management in a decentralized vehicular network, such as vehicular ad hoc network, is particularly challenging due to the lack of centralized communication infrastructure and a fast varying feature of the vehicular environment. In this paper, we propose a decentralized trust management scheme for vehicular networks. The proposed scheme uses a fuzzy logic-based trust calculation approach to evaluate the direct trust where trustee nodes are located within the transmission range of a trustor node. A reinforcement learning-based approach is also employed to estimate the indirect trust where the behaviors of trustee cannot be observed directly. The extensive simulations are conducted to show the advantage of the proposed scheme over other baseline approaches."
+   },
+   {
+    "id": "https://openalex.org/W4315927040",
+    "doi": "https://doi.org/10.36227/techrxiv.21864477",
+    "title": "Comments on “BSIF: Blockchain-Based Secure, Interactive, and Fair Mobile Crowdsensing”",
+    "year": 2023,
+    "venue": null,
+    "cited_by": 0,
+    "abstract": "Mobile crowdsensing (MCS) is a promising sensing paradigm which allows users to outsource a range of sensing tasks to a crowd of mobile workers with mobile devices. Location-dependent MCS, as the name implies, is a geographically-dependent sensing paradigm in which service requestors outsource location-specific tasks to many workers with mobile devices, and the workers accepting the tasks collect data at a particular location by physically arriving at the desired locations. Many efforts have been devoted to protecting location privacy of the workers accepting the tasks while ensuring task allocation accuracy and efficiency. In 2022, Wang et al. proposed BSIF, a blockchain-based MCS system (published in IEEE Journal on Selected Areas in Communications (JSAC)) that can prevent not only illegitimate participants but also location privacy leakage. For the purpose of protecting location privacy, they proposed a location-based symmetric key generation algorithm, which coordinates session keys for the target ranges between the service requestor and the workers accepting the tasks without revealing the location information. However, in this paper, we will point out a flaw in their location-based symmetric key generation algorithm, which indicates that BSIF does not work. Furthermore, we propose a novel approach to achieve the location-based symmetric key generation using a witness encryption scheme."
+   }
+  ]
+ },
+ "G2": {
+  "query": "Anonymous attestation with user-controlled linkability",
+  "url": "https://api.openalex.org/works?search=Anonymous%20attestation%20with%20user-controlled%20linkability&per-page=6&mailto=research@example.org",
+  "count": 3523,
+  "results": [
+   {
+    "id": "https://openalex.org/W2148820333",
+    "doi": "https://doi.org/10.1007/s10207-013-0191-z",
+    "title": "Anonymous attestation with user-controlled linkability",
+    "year": 2013,
+    "venue": "International Journal of Information Security",
+    "cited_by": 78,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W7222081020",
+    "doi": "https://doi.org/10.25405/ncl.34520874",
+    "title": "Anonymous attestation with user-controlled linkability",
+    "year": 2013,
+    "venue": "Newcastle University ePrints (Newcastle Univesity)",
+    "cited_by": 0,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W2331728307",
+    "doi": "https://doi.org/10.3724/sp.j.1016.2013.01434",
+    "title": "Anonymous Attestation Scheme with User-Controlled-Linkability for Trusted Mobile Platform",
+    "year": 2014,
+    "venue": "Chinese Journal of Computers",
+    "cited_by": 0,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W2233023171",
+    "doi": "https://doi.org/10.1007/978-3-319-22846-4_14",
+    "title": "DAA-A: Direct Anonymous Attestation with Attributes",
+    "year": 2015,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 36,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W1537060725",
+    "doi": "https://doi.org/10.1007/978-3-642-13869-0_13",
+    "title": "An Anonymous Attestation Scheme with Optional Traceability",
+    "year": 2010,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 3,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W1917507691",
+    "doi": "https://doi.org/10.1109/uic-atc-scalcom.2014.30",
+    "title": "An Anonymous Remote Attestation Protocol to Prevent Masquerading Attack",
+    "year": 2014,
+    "venue": "IEEE International Conference on Ubiquitous Intelligence and Computing, Autonomic and Trusted Computing, and Scalable Computing and Communications (UIC-ATC-ScalCom)",
+    "cited_by": 5,
+    "abstract": "Since TCG v1.2, an anonymous attestation protocol was proposed, called direct anonymous attestation (DAA), which is designed to preserve the user privacy. However, this scheme is vulnerable to the masquerading attack, meanwhile not be practically deployed with existing network protocols. In this paper, we proposed a novel anonymous remote attestation protocol based on the direct anonymous attestation and the transport layer security (TLS) protocol. We integrate anonymous attestation, integrity report and key agreement mechanisms to establish a trusted channel, which provides platform configuration attestation and anonymous identity authentication. Security analysis shows that our protocol satisfies anonymity, unforgeability, uncloneability and user-control link ability in identity authentication as well as resists the replay attack and the masquerading attack."
+   }
+  ]
+ },
+ "G3": {
+  "query": "An Efficient System for Non-transferable Anonymous Credentials with Optional Anonymity Revocation",
+  "url": "https://api.openalex.org/works?search=An%20Efficient%20System%20for%20Non-transferable%20Anonymous%20Credentials%20with%20Optional%20Anonymity%20Revocation&per-page=6&mailto=research@example.org",
+  "count": 679,
+  "results": [
+   {
+    "id": "https://openalex.org/W2165210192",
+    "doi": "https://doi.org/10.1007/3-540-44987-6_7",
+    "title": "An Efficient System for Non-transferable Anonymous Credentials with Optional Anonymity Revocation",
+    "year": 2001,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 1351,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W2949549519",
+    "doi": null,
+    "title": "An Efficient System for Non-transferable Anonymous Credentials with Optional Anonymity Revocation.",
+    "year": 2001,
+    "venue": "IACR Cryptology ePrint Archive",
+    "cited_by": 0,
+    "abstract": "A credential system is a system in which users can obtain credentials from organizations and demonstrate possession of these credentials. Such a system is anonymous when transactions carried out by the same user cannot be linked. An anonymous credential system is of significant practical relevance because it is the best means of providing privacy for users. In this paper we propose a practical anonymous credential system that is based on the strong RSA assumption and the decisional Diffie-Hellman assumption modulo a safe prime product and is considerably superior to existing ones: (1) We give the first practical solution that allows a user to unlinkably demonstrate possession of a credential as many times as necessary without involving the issuing organization. (2) To prevent misuse of anonymity, our scheme is the first to offer optional anonymity revocation for particular transactions. (3) Our scheme offers separability: all organizations can choose their cryptographic keys independently of each other. Moreover, we suggest more effective means of preventing users from sharing their credentials, by introducing all-or-nothing sharing: a user who allows a friend to use one of her credentials once, gives him the ability to use all of her credentials, i.e., taking over her identity. This is implemented by a new primitive, called circular encryption, which is of independent interest, and can be realized from any semantically secure cryptosystem in the random oracle model."
+   },
+   {
+    "id": "https://openalex.org/W1502328873",
+    "doi": "https://doi.org/10.1007/978-3-642-00468-1_27",
+    "title": "An Accumulator Based on Bilinear Maps and Efficient Revocation for Anonymous Credentials",
+    "year": 2009,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 307,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W169471852",
+    "doi": "https://doi.org/10.1007/11733447_15",
+    "title": "Anonymous Authentication with Optional Shared Anonymity Revocation and Linkability",
+    "year": 2006,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 5,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W4366307363",
+    "doi": "https://doi.org/10.1007/978-3-031-30872-7_7",
+    "title": "PAPR: Publicly Auditable Privacy Revocation for Anonymous Credentials",
+    "year": 2023,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 10,
+    "abstract": ""
+   },
+   {
+    "id": "https://openalex.org/W2150399720",
+    "doi": "https://doi.org/10.1007/978-3-642-03356-8_7",
+    "title": "Randomizable Proofs and Delegatable Anonymous Credentials",
+    "year": 2009,
+    "venue": "Lecture notes in computer science",
+    "cited_by": 284,
+    "abstract": ""
+   }
+  ]
+ },
+ "G4": {
+  "query": "Adaptive Group-Based Zero-Knowledge Proof-Authentication Protocol in Vehicular Ad Hoc Networks",
+  "url": "https://api.openalex.org/works?search=Adaptive%20Group-Based%20Zero-Knowledge%20Proof-Authentication%20Protocol%20in%20Vehicular%20Ad%20Hoc%20Networks&per-page=6&mailto=research@example.org",
+  "count": 1677,
+  "results": [
+   {
+    "id": "https://openalex.org/W2921057824",
+    "doi": "https://doi.org/10.1109/tits.2019.2899321",
+    "title": "Adaptive Group-Based Zero Knowledge Proof-Authentication Protocol in Vehicular Ad Hoc Networks",
+    "year": 2019,
+    "venue": "IEEE Transactions on Intelligent Transportation Systems",
+    "cited_by": 64,
+    "abstract": "Vehicular ad hoc networks (VANETs) are a particular subclass of mobile ad hoc networks that raise a number of security challenges, notably from the way users authenticate the network. Authentication technologies based on existing security policies and access control rules in such networks assume full trust on roadside unit (RSU) and authentication servers. The disclosure of authentication parameters enables user's traceability over the network. VANETs' trusted entities (e.g., RSU) can utilize such information to track a user traveling behavior, violating user privacy and anonymity. In this paper, we proposed a novel, light-weight, adaptive group-based zero knowledge proof-authentication protocol (AGZKP-AP) for VANETs. The proposed authentication protocol is capable of offering various levels of users' privacy settings based on the type of services available on such networks. Our scheme is based on the zero-knowledge-proof crypto approach with the support of tradeoff options. Users have the option to make critical decisions on the level of privacy and the amount of resources usage they prefer such as short system response time versus the number of private information disclosures. Furthermore, AGZKP-AP is incorporated with a distributed privilege control and revoking mechanism that render user's private information to law enforcement in case of a traffic violation."
+   },
+   {
+    "id": "https://openalex.org/W4414888282",
+    "doi": "https://doi.org/10.1007/s11227-025-07912-5",
+    "title": "Anonymous authentication based on blockchain and zero-knowledge proof for vehicular ad hoc networks",
+    "year": 2025,
+    "venue": "The Journal of Supercomputing",
+    "cited_by": 12,
+    "abstract": "Vehicular Ad Hoc Networks (VANETs) are now a pivotal component of Intelligent Transportation Systems. However, ensuring secure vehicle identity authentication and protecting user privacy remain two challenging issues in VANETs. Addressing these challenges, this paper seamlessly integrates blockchain technology with the InterPlanetary File System to realize a fully decentralized storage solution for identity verification information. Simultaneously, it employs zk-SNARK and elliptic curve cryptography to allow vehicle users to anonymously complete identity verification. Additionally, the lightweight identity authentication proof obtained after successful verification maintains credibility while reducing the computational and communication costs for both roadside units and vehicles. The security and performance analysis of the system show that the proposed scheme has significant advantages in both communication and computation compared with similar research, while also offering superior security and a broader range of functional attributes compared to existing competitive approaches."
+   },
+   {
+    "id": "https://openalex.org/W4210332986",
+    "doi": "https://doi.org/10.3390/a15020050",
+    "title": "Adaptive Authentication Protocol Based on Zero-Knowledge Proof",
+    "year": 2022,
+    "venue": "Algorithms",
+    "cited_by": 15,
+    "abstract": "Authentication protocols are expanding their application scope in wireless information systems, among which are low-orbit satellite communication systems (LOSCS) for the OneWeb space Internet, automatic object identification systems using RFID, the Internet of Things, intelligent transportation systems (ITS), Vehicular Ad Hoc Network (VANET). This is due to the fact that authentication protocols effectively resist a number of attacks on wireless data transmission channels in these systems. The main disadvantage of most authentication protocols is the use of symmetric and asymmetric encryption systems to ensure high cryptographic strength. As a result, there is a problem in delivering keys to the sides of the prover and the verifier. At the same time, compromising of keys will lead to a decrease in the level of protection of the transmitted data. Zero-knowledge authentication protocols (ZKAP) are able to eliminate this disadvantage. However, most of these protocols use multiple rounds to authenticate the prover. Therefore, ZKAP, which has minimal time costs, is developed in the article. A scheme for adapting protocol parameters has been developed in this protocol to increase its efficiency. Reductions in the level of confidentiality allow us to reduce the time spent on the execution of the authentication protocol. This increases the volume of information traffic. At the same time, an increase in the confidentiality of the protocol entails an increase in the time needed for aut"
+   },
+   {
+    "id": "https://openalex.org/W201277407",
+    "doi": null,
+    "title": "Group-Based Authentication Mechanisms for Vehicular Ad-Hoc Networks",
+    "year": 2010,
+    "venue": "OpenSIUC (Southern Illinois University Carbondale)",
+    "cited_by": 0,
+    "abstract": "Vehicular ad hoc networks (VANETs) provide opportunities to exchange traffic information among vehicles allowing drivers to not only adjust their routes but also prevent possible collisions. Due to the criticality of exchanged information, message authentication which will not expose the privacy of vehicles is required. The majority of current authentication schemes for VANETs depend primarily on public-key cryptography which brings extra overhead in terms of delay and requires infrastructure support for certificate verification. Symmetric-key based techniques can be more efficient, but they introduce significant key maintenance overheads. Herein, by considering the natural group behavior of vehicle communications, we propose an efficient and lightweight symmetric-key based authentication scheme for VANETs based on group communication. Expanding the protocol's flexibility, we also propose an extension which integrates certain benefits of asymmetric-key techniques. We analyze the security properties of our proposed schemes to show there applicability when there is little to no infrastructure support. In addition, the proposed protocol was implemented and tested with real-world vehicle data. Simulation results confirmed the efficiency in terms of delay with respect to other proposed techniques."
+   },
+   {
+    "id": "https://openalex.org/W4313388842",
+    "doi": "https://doi.org/10.3390/info14010027",
+    "title": "Using Adaptive Zero-Knowledge Authentication Protocol in VANET Automotive Network",
+    "year": 2022,
+    "venue": "Information",
+    "cited_by": 18,
+    "abstract": "One of the most important components of intelligent transportation systems (ITS) is the automotive self-organizing VANET network (vehicular ad hoc network). Its nodes are vehicles with specialized onboard units (OBU) installed on them. Such a network can be subject to various attacks. To reduce the effectiveness of a number of attacks on the VANET, it is advisable to use authentication protocols. Well-known authentication protocols support a security policy with full trust in roadside unit (RSU) base stations. The disadvantage of these authentication protocols is the ability of the RSU to track the route of the vehicle. This leads to a violation of the privacy and anonymity of the vehicle’s owner. To eliminate this drawback, the article proposes an adaptive authentication protocol. An advantage of this protocol is the provision of high imitation resistance without using symmetric and asymmetric ciphers. This result has been achieved by using a zero-knowledge authentication protocol. A scheme for adapting the protocol parameters depending on the intensity of the user’s traffic has been developed for the proposed protocol. The scientific novelty of this solution is to reduce time spent on authentication without changing the protocol execution algorithm by reducing the number of modular exponentiation operations when calculating true and “distorted” digests of the prover and verifying the correctness of responses, as well as by reducing the number of responses. Authentication, a"
+   },
+   {
+    "id": "https://openalex.org/W2943481347",
+    "doi": "https://doi.org/10.26599/tst.2018.9010131",
+    "title": "Lattice-based double-authentication-preventing ring signature for security and privacy in vehicular Ad-Hoc networks",
+    "year": 2019,
+    "venue": "Tsinghua Science & Technology",
+    "cited_by": 69,
+    "abstract": "Amidst the rapid development of the Internet of Things (IoT), Vehicular Ad-Hoc NETwork (VANET), a typical IoT application, are bringing an ever-larger number of intelligent and convenient services to the daily lives of individuals. However, there remain challenges for VANETs in preserving privacy and security. In this paper, we propose the first lattice-based Double-Authentication-Preventing Ring Signature (DAPRS) and adopt it to propose a novel privacy-preserving authentication scheme for VANETs, offering the potential for security against quantum computers. The new construction is proven secure against chosen message attacks. Our scheme is more efficient than other ring signature in terms of the time cost of the message signing phase and verification phase, and also in terms of signature length. Analyses of security and efficiency demonstrate that our proposed scheme is provably secure and efficient in the application."
+   }
+  ]
+ }
+}

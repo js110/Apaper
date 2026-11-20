@@ -1,0 +1,84 @@
+{
+ "iacr_2026/1503": {
+  "error": "The read operation timed out"
+ },
+ "iacr_2024/1073": {
+  "error": "<urlopen error _ssl.c:1064: The handshake operation timed out>"
+ },
+ "F9_zk_encrypted_report": {
+  "query": "\"zero-knowledge\" AND \"encrypted report\"",
+  "n": 0,
+  "items": []
+ },
+ "F10_zk_ciphertext_sensing": {
+  "query": "\"zero-knowledge\" AND \"ciphertext\" AND \"sensing\"",
+  "n": 13,
+  "items": [
+   {
+    "t": "New technique for chosen-ciphertext security based on non-interactive zero-knowledge",
+    "y": 2019,
+    "doi": "https://doi.org/10.1016/j.ins.2019.03.063",
+    "c": 3
+   },
+   {
+    "t": "Balancing Privacy and Credibility in High‐Definition Maps: A Zero‐Knowledge Watermarking Algorithm Based on Compressed Sensing",
+    "y": 2025,
+    "doi": "https://doi.org/10.1111/tgis.70117",
+    "c": 1
+   },
+   {
+    "t": "Nonmalleable Cryptography",
+    "y": 2000,
+    "doi": "https://doi.org/10.1137/s0097539795291562",
+    "c": 744
+   },
+   {
+    "t": "Non-malleable cryptography",
+    "y": 1991,
+    "doi": "https://doi.org/10.1145/103418.103474",
+    "c": 1005
+   },
+   {
+    "t": "Nonmalleable Cryptography",
+    "y": 2003,
+    "doi": "https://doi.org/10.1137/s0036144503429856",
+    "c": 69
+   },
+   {
+    "t": "Verifiable Decryption for Fully Homomorphic Encryption",
+    "y": 2018,
+    "doi": "https://doi.org/10.1007/978-3-319-99136-8_19",
+    "c": 10
+   },
+   {
+    "t": "Black-Box Proof of Knowledge of Plaintext and Multiparty Computation with Low Communication Overhead",
+    "y": 2013,
+    "doi": "https://doi.org/10.1007/978-3-642-36594-2_23",
+    "c": 3
+   },
+   {
+    "t": "Shorter Quasi-Adaptive NIZK Proofs for Linear Subspaces",
+    "y": 2013,
+    "doi": "https://doi.org/10.1007/978-3-642-42033-7_1",
+    "c": 167
+   }
+  ]
+ },
+ "F11_signed_commitment_zk": {
+  "query": "\"signed commitment\" AND \"zero-knowledge\"",
+  "n": 1,
+  "items": [
+   {
+    "t": "Zero-Knowledge Proofs and Permissioned Blockchain for Privacy- Preserving ESG Reporting in Green Human Resource Management",
+    "y": 2026,
+    "doi": "https://doi.org/10.59324/ejtas.2026.4(5).47",
+    "c": 0
+   }
+  ]
+ },
+ "F12_zk_duplicate_anonymous": {
+  "query": "\"zero-knowledge\" AND \"duplicate\" AND \"anonymous\" AND \"credential\"",
+  "n": 0,
+  "items": []
+ }
+}
