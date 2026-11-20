@@ -19,5 +19,9 @@
 !chinese_draft/figures/*.pdf
 !中文期刊调研/pdf/*.pdf
 
+# Experiment logs cited by the Chinese draft (project sources)
+!paper_a/event_report/experiments/context_hiding_candidate.log
+!paper_a/event_report/experiments/context_linkability.log
+
 .DS_Store
 __pycache__/

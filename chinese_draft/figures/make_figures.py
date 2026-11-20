@@ -174,7 +174,7 @@ def fig2():
     footnote(fig, "◆ 该情形还生成并验证了 Groth16 证明；其余为约束求解器检查。"
                   "“接受”表示见证/证明被放行，“拒绝”表示被挡下。", y=0.045)
     export(fig, "fig2_ablation",
-           "图 2 受控消融：各项绑定挡住的攻击。(a) 回执转移；(b) 上下文替换。",
+           "图 4 受控消融：各项绑定挡住的攻击。(a) 回执转移；(b) 上下文替换。",
            ["experiments/binding.log", "experiments/context_ablation.log"],
            ["逐字转录 RESULT 行的接受/拒绝判定，未做聚合或折算"],
            "分类结果，无不确定度；证据级别（R1CS / R1CS+Groth16）以 ◆ 标注",
@@ -213,7 +213,7 @@ def fig3():
     footnote(fig, "横轴为截断坐标（点编码，非柱长），用于分辨 2% 量级的差异；"
                   "上下文隐藏构造未测时间，故本图不含时间。")
     export(fig, "fig3_context_hiding_cost",
-           "图 3 三个矩形电路变体的约束数与安全性后果。",
+           "图 5 三个矩形电路变体的约束数与安全性后果。",
            ["experiments/ablation_cost.log",
             "experiments/context_hiding_candidate.log",
             "experiments/benchmark.log"],
@@ -279,7 +279,7 @@ def fig4():
     footnote(fig, "活跃 = 活跃凭证成员性电路。误差棒为样本标准差（n=30，一次预热后）；"
                   "深灰点为逐次原始测量。")
     export(fig, "fig4_circuit_cost",
-           "图 4 四个电路的规模与本地开销。",
+           "图 6 四个电路的规模与本地开销。",
            ["experiments/benchmark.log", "experiments/region_benchmark.log",
             "experiments/accountability_benchmark.log",
             "experiments/revocation_benchmark.log"],
@@ -312,7 +312,7 @@ def fig5():
     fig.legend(h, l, frameon=False, loc="lower center", ncol=4,
                bbox_to_anchor=(0.5, 0.012), handletextpad=0.5, columnspacing=1.8)
     export(fig, "fig5_per_run",
-           "图 5 四个电路各三十次本地证明生成与验证的逐次测量（虚线为中位数；"
+           "图 7 四个电路各三十次本地证明生成与验证的逐次测量（虚线为中位数；"
            "(b) 纵轴自 0.7 ms 起，为点编码）。",
            ["experiments/benchmark.log", "experiments/region_benchmark.log",
             "experiments/accountability_benchmark.log",
@@ -397,7 +397,7 @@ def fig6():
     footnote(fig, "误差棒为样本标准差（n=30）。(a) 纵轴为截断坐标（折线/点编码，非柱长）；"
                   "(b)(c) 为零基线，各自独立量程，未用双轴。")
     export(fig, "fig6_region_scaling",
-           "图 6 区域树深度对约束数、证明生成与验证时间的影响。",
+           "图 8 区域树深度对约束数、证明生成与验证时间的影响。",
            ["experiments/region_scale_4.log", "experiments/region_scale_6.log",
             "experiments/region_scale_8.log"],
            ["ns→ms；均值与样本标准差 ddof=1；增长率由两端均值/约束数相除算得"],
@@ -473,7 +473,7 @@ def fig7():
              y=0.018)
     reserve_bottom(fig, 0.07)
     export(fig, "fig7_accept_latency",
-           "图 7 同进程受理路径的耗时分解。",
+           "图 9 同进程受理路径的耗时分解。",
            ["experiments/end_to_end.log"],
            ["ns→ms；各分量取 30 次样本均值；其余合计 = 总均值 − 证明生成均值"],
            "样本标准差，n=30；(a) 标注总耗时的均值±标准差",
@@ -545,7 +545,7 @@ def fig8():
     footnote(fig, "信封 = ML-KEM-768 密文 + AES-256-GCM；身份密文为两个压缩群点。"
                   "公开见证由网关本地重构，不计入 (a)；(a) 不含传输成帧与配置分发。", y=0.02)
     export(fig, "fig8_communication",
-           "图 8 单份提交的通信量构成与证明尺寸。",
+           "图 10 单份提交的通信量构成与证明尺寸。",
            ["experiments/end_to_end.log", "experiments/benchmark.log",
             "experiments/region_benchmark.log",
             "experiments/accountability_benchmark.log",
