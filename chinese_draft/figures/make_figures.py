@@ -192,26 +192,24 @@ def fig3():
     reserve_bottom(fig, 0.085)
     ys = np.arange(len(items))[::-1]
     ax.set_ylim(-0.72, 2.62)
-    ax.set_xlim(28900, 30120)
-    ax.axvline(29833, color=GREY, linestyle="--", linewidth=0.9, zorder=1)
-    ax.text(30090, 2.50, "主关系基准 29,833", ha="right", va="top",
+    ax.set_xlim(0, 33500)
+    ax.axvline(29833, color=GREY, linestyle="--", linewidth=0.9, zorder=5)
+    ax.text(29833, 2.50, "主关系基准 29,833", ha="right", va="top",
             fontsize=8, color=GREY)
     for y, (name, val, col, mk, note) in zip(ys, items):
-        ax.scatter([val], [y], s=100, color=col, marker=mk, zorder=4,
-                   edgecolors="white", linewidths=0.9)
-        ax.text(val, y + 0.17, f"{val:,}", ha="center", va="bottom",
-                fontsize=9.5, fontweight="bold", color=col,
-                bbox=dict(boxstyle="round,pad=0.14", facecolor="white",
-                          edgecolor="none"))
-        ax.text(28930, y - 0.40, note, ha="left", va="top", fontsize=8, color=GREY)
+        ax.barh(y, val, height=0.46, color=col, alpha=0.85, edgecolor="white",
+                linewidth=0.8, zorder=3)
+        ax.text(val + 350, y, f"{val:,}", ha="left", va="center",
+                fontsize=9.5, fontweight="bold", color=col)
+        ax.text(350, y - 0.36, note, ha="left", va="top", fontsize=8, color=GREY)
     ax.set_yticks(ys)
     ax.set_yticklabels([i[0] for i in items], fontsize=9.5)
     ax.set_xlabel("R1CS 约束数（条）")
-    ax.set_xticks([29000, 29250, 29500, 29750, 30000])
-    ax.set_xticklabels(["29,000", "29,250", "29,500", "29,750", "30,000"])
+    ax.set_xticks([0, 10000, 20000, 30000])
+    ax.set_xticklabels(["0", "10,000", "20,000", "30,000"])
     ax.grid(axis="y", visible=False)
-    footnote(fig, "横轴为截断坐标（点编码，非柱长），用于分辨 2% 量级的差异；"
-                  "上下文隐藏构造未测时间，故本图不含时间。")
+    footnote(fig, "横轴为零基线；三个变体约束数相对差异不足 2.3%，具体数值直接标注在"
+                  "柱端；上下文隐藏构造未测时间，故本图不含时间。")
     export(fig, "fig3_context_hiding_cost",
            "图 5 三个矩形电路变体的约束数与安全性后果。",
            ["experiments/ablation_cost.log",
@@ -219,7 +217,7 @@ def fig3():
             "experiments/benchmark.log"],
            ["约束数取日志 CIRCUIT/RESULT 行的整数值"],
            "约束数为确定性计数，无不确定度",
-           "点编码＋截断横轴已在图内与图注披露；每点附绝对值与安全性后果")
+           "横轴零基线柱状图；柱端标注绝对值，每柱下方注明安全性后果")
 
 
 # ------------------------------------------------------- 图4 四电路开销
@@ -306,14 +304,14 @@ def fig5():
         ax.set_ylabel("时间 (ms)")
         ax.set_title(title, loc="left")
         ax.grid(axis="x", visible=False)
-    axes[0].set_ylim(100, 520)
-    axes[1].set_ylim(0.7, 1.9)
+    axes[0].set_ylim(0, 520)
+    axes[1].set_ylim(0, 1.9)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, frameon=False, loc="lower center", ncol=4,
                bbox_to_anchor=(0.5, 0.012), handletextpad=0.5, columnspacing=1.8)
     export(fig, "fig5_per_run",
            "图 7 四个电路各三十次本地证明生成与验证的逐次测量（虚线为中位数；"
-           "(b) 纵轴自 0.7 ms 起，为点编码）。",
+           "两面板纵轴均为零基线）。",
            ["experiments/benchmark.log", "experiments/region_benchmark.log",
             "experiments/accountability_benchmark.log",
             "experiments/revocation_benchmark.log"],
@@ -345,25 +343,26 @@ def fig6():
                     ha="center", fontsize=9, fontweight="bold", color=BLUE,
                     bbox=dict(boxstyle="round,pad=0.14", facecolor="white",
                               edgecolor="none"))
-    ax.set_ylim(32400, 37200)
+    ax.set_ylim(0, 37600)
     ax.set_xlim(3.4, 8.6)
     ax.set_xticks(depths, xt)
     ax.set_xlabel("区域树深度 / 授权单元数")
     ax.set_ylabel("R1CS 约束数（条）")
     ax.set_title("(a) 约束数", loc="left")
     ax.yaxis.set_major_formatter(lambda v, p: f"{int(v):,}")
-    ax.text(0.03, 0.96, "+2,652 条（+8.0%）", transform=ax.transAxes,
+    ax.text(0.03, 0.60, "+2,652 条（+8.0%）", transform=ax.transAxes,
             fontsize=9, color=VERM, fontweight="bold", va="top")
-    ax.text(0.03, 0.875, "单元数 ×16", transform=ax.transAxes,
+    ax.text(0.03, 0.52, "单元数 ×16", transform=ax.transAxes,
             fontsize=8.2, color=GREY, va="top")
 
     ax = axes[1]
     ax.errorbar(depths, pm, yerr=ps, color=GREEN, marker="s", markersize=7,
                 linewidth=1.6, capsize=4, capthick=1.0, elinewidth=1.0,
                 markeredgecolor="white", markeredgewidth=0.9, zorder=3)
-    for d, m, s in zip(depths, pm, ps):
+    for i, (d, m, s) in enumerate(zip(depths, pm, ps)):
+        dy = 12 if i != 1 else -20
         ax.annotate(f"{m:.2f}±{s:.2f}", (d, m), textcoords="offset points",
-                    xytext=(0, 12), ha="center", fontsize=8.0,
+                    xytext=(0, dy), ha="center", fontsize=8.0,
                     fontweight="bold", color=GREEN,
                     bbox=dict(boxstyle="round,pad=0.12", facecolor="white",
                               edgecolor="none"))
@@ -394,15 +393,15 @@ def fig6():
             fontsize=9, color=VERM, fontweight="bold", va="top")
     for ax in axes:
         ax.grid(axis="x", visible=False)
-    footnote(fig, "误差棒为样本标准差（n=30）。(a) 纵轴为截断坐标（折线/点编码，非柱长）；"
-                  "(b)(c) 为零基线，各自独立量程，未用双轴。")
+    footnote(fig, "误差棒为样本标准差（n=30）。三个面板纵轴均为零基线，各自独立量程，"
+                  "未用双轴；(a) 的绝对增量与增长率直接标注在图内。")
     export(fig, "fig6_region_scaling",
            "图 8 区域树深度对约束数、证明生成与验证时间的影响。",
            ["experiments/region_scale_4.log", "experiments/region_scale_6.log",
             "experiments/region_scale_8.log"],
            ["ns→ms；均值与样本标准差 ddof=1；增长率由两端均值/约束数相除算得"],
            "样本标准差，n=30；约束数为确定性计数",
-           "(a) 截断纵轴已披露；(b)(c) 零基线且分量程，避免把 ~1 ms 的验证画成不可见")
+           "三面板均零基线且分量程；(b)(c) 独立量程，避免把 ~1 ms 的验证画成不可见")
 
 
 # --------------------------------------------------- 图7 受理耗时分解

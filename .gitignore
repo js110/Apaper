@@ -24,6 +24,8 @@
 !paper_a/event_report/experiments/context_linkability.log
 !paper_a/event_report/experiments/context_hiding_extensions.log
 !paper_a/event_report/experiments/protocol_comparison.log
+!paper_a/event_report/experiments/interleaved_comparison.log
+!paper_a/event_report/experiments/gateway_load_memory.log
 
 .DS_Store
 __pycache__/

@@ -28,7 +28,7 @@
    "约束数取日志 CIRCUIT/RESULT 行的整数值"
   ],
   "uncertainty": "约束数为确定性计数，无不确定度",
-  "encoding_notes": "点编码＋截断横轴已在图内与图注披露；每点附绝对值与安全性后果",
+  "encoding_notes": "横轴零基线柱状图；柱端标注绝对值，每柱下方注明安全性后果",
   "palette": "Okabe-Ito",
   "fonts": "Times New Roman + Songti SC fallback",
   "width_mm": 180,
@@ -57,7 +57,7 @@
   "publisher_requirements": "PENDING — target journal not yet chosen"
  },
  "fig5_per_run": {
-  "caption_zh": "图 7 四个电路各三十次本地证明生成与验证的逐次测量（虚线为中位数；(b) 纵轴自 0.7 ms 起，为点编码）。",
+  "caption_zh": "图 7 四个电路各三十次本地证明生成与验证的逐次测量（虚线为中位数；两面板纵轴均为零基线）。",
   "raw_data": [
    "experiments/benchmark.log",
    "experiments/region_benchmark.log",
@@ -87,7 +87,7 @@
    "ns→ms；均值与样本标准差 ddof=1；增长率由两端均值/约束数相除算得"
   ],
   "uncertainty": "样本标准差，n=30；约束数为确定性计数",
-  "encoding_notes": "(a) 截断纵轴已披露；(b)(c) 零基线且分量程，避免把 ~1 ms 的验证画成不可见",
+  "encoding_notes": "三面板均零基线且分量程；(b)(c) 独立量程，避免把 ~1 ms 的验证画成不可见",
   "palette": "Okabe-Ito",
   "fonts": "Times New Roman + Songti SC fallback",
   "width_mm": 180,

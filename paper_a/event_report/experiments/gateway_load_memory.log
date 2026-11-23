@@ -1,0 +1,139 @@
+=== RUN   TestGatewayLoadAndMemory
+experiment=event-report-gateway-load-memory-v1
+started_utc=2026-11-23T07:51:38.177832Z
+go=go1.26.8 os=darwin arch=arm64 logical_cpus=8 gomaxprocs=8
+cpu="Apple M1" memory_bytes=17179869184 os_product="macOS" os_version="27.2.1" os_build="26B131"
+modules="github.com/consensys/gnark v0.16.4\ngithub.com/consensys/gnark-crypto v0.21.1-0.20260913224755-1409fe592052"
+source_sha256 file=circuit.go digest=64c3abdf1018a5ccb4c1ee825a0682408601be9ed2faba6eb9f98f6ff45a8f98
+source_sha256 file=native.go digest=f01fe4da816d094c44937d82fbd6cdc9251322bc97ac2eb2f35aa59ddf4abcd4
+source_sha256 file=region.go digest=dadc4cbdd04d537c825f10c713a70e8b7cd1aaa7a181aaaef330d39b6993fbd1
+source_sha256 file=accountability.go digest=81133194598b512a363cb9d51937d0bd60033ed2b2c29b941978c0d07f33684a
+source_sha256 file=revocation.go digest=71ffe37187da580a5268b8f960a6ea94f6d3a3224eccf065576b1c37e2bbb30d
+source_sha256 file=gateway.go digest=d76caa34130ddac1f18cdd7df9d36889d98aed7386be997443edd07764f041bb
+source_sha256 file=region_gateway.go digest=3fcbd88f3361cb0f16f82a1c3736c617892f3463f3048f5861134be1e5bfac63
+source_sha256 file=accountability_gateway.go digest=385cd28c810e5c5965a60b334c70b9a94e16a3bb4836b1cd10ca19cd6ca3c8f8
+source_sha256 file=active_gateway.go digest=c1db862e85474f84b2824cf0be4d54d9b1b76b3ee48ea13e759b9263a7cf9b9f
+source_sha256 file=transport.go digest=f2b6ec485baf79878adcd70359db9d573d091ac5442eba956b8ffb51f93459ce
+source_sha256 file=kem_transport.go digest=d1d086521b192e4180294593848a0d7f1643d00388be82180c602eef5abcf601
+source_sha256 file=context_hiding_candidate_test.go digest=23fdd10a91cd07fcc7b23f8e80fd2e79c7cad5df99f9fc51f554499783a4303e
+source_sha256 file=context_hiding_extensions_test.go digest=da937bf2b872f5032cb801beca2424b3ce0bee8929cb5cfdc9d600f2cea47aef
+source_sha256 file=load_realism_test.go digest=4fbb94901a6982496964b677e8e6e344216c4d6920f8558c14e497aaf0da2b2d
+source_sha256 file=go.mod digest=39160b37ac4b02a6ae2fec2a38f70efabcd116a14398a937fc35d67b7d0c4882
+source_sha256 file=go.sum digest=aba34ea39ebaa04131ea6f715080bfccd98045a77c28a1b64c3734b618366bb5
+backend=Groth16 curve=BN254 arm=hidden_active submits=100 verify_runs_per_level=2000 procs=1,2,4,8
+ARM hidden_active constraints=68262 compile_ns=79311125 setup_ns=4869439750
+MEMORY prove=cold wall_ns=472555416 maxrss_delta_bytes=40222720 total_alloc_delta_bytes=135392072
+MEMORY prove=warm wall_ns=484988250 maxrss_delta_bytes=1130496 total_alloc_delta_bytes=135385864
+MEMORY process_peak_rss_bytes=180781056 heap_alloc_bytes=89157208 sys_bytes=174815544 gomaxprocs=8
+sample,submit_ns
+0,1314500
+1,1304500
+2,1251709
+3,1248625
+4,1232750
+5,1226250
+6,1247292
+7,1215125
+8,1211334
+9,1228084
+10,1210583
+11,1244500
+12,1231167
+13,1225500
+14,1247834
+15,1236625
+16,1241583
+17,1233125
+18,1243875
+19,1226833
+20,1220750
+21,1219000
+22,1218333
+23,1241917
+24,1224708
+25,1214708
+26,1232375
+27,1228667
+28,1236000
+29,1213916
+30,1220834
+31,1213250
+32,1222542
+33,1213708
+34,1247459
+35,1222667
+36,1219583
+37,1217250
+38,1221541
+39,1227125
+40,1225542
+41,1210334
+42,1238500
+43,1227916
+44,1227667
+45,1223292
+46,1221209
+47,1227625
+48,1228625
+49,1218000
+50,1219750
+51,1217416
+52,1211500
+53,1218875
+54,1230000
+55,1214667
+56,1211209
+57,1227542
+58,1212250
+59,1233959
+60,1218542
+61,1217333
+62,1207500
+63,1216917
+64,1208084
+65,1219292
+66,1212000
+67,1207584
+68,1208292
+69,1245875
+70,1262583
+71,1221708
+72,1222625
+73,1233000
+74,1216750
+75,1203334
+76,1215500
+77,1221209
+78,1216500
+79,1248708
+80,1218875
+81,1218833
+82,1219459
+83,1222792
+84,1218875
+85,1222375
+86,1242500
+87,1222583
+88,1222709
+89,1236500
+90,1225584
+91,1227292
+92,1221041
+93,1223167
+94,1212250
+95,1212334
+96,1215750
+97,1224625
+98,1215667
+99,1222959
+RESULT single_instance_submits=100 total_ns=123723500 mean_ns=1237235 throughput_per_s=808.25
+stage,procs,verifies,wall_ns,verifies_per_s,mean_ns
+verify,1,2000,1891838416,1057.17,945919
+verify,2,2000,1019627500,1961.50,509814
+verify,4,2000,740916000,2699.36,370458
+verify,8,2000,649561250,3079.00,324781
+SCOPE memory is the process high-water delta across one groth16.Prove on this machine, cold and warm; single-instance throughput reflects one gateway mutex; the concurrency levels bound independent verification shards, not one instance; no network or storage
+completed_utc=2026-11-23T07:52:32.055588Z
+--- PASS: TestGatewayLoadAndMemory (53.88s)
+PASS
+ok  	eventreport	54.065s

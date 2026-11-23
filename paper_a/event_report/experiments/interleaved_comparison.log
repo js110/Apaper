@@ -1,0 +1,234 @@
+=== RUN   TestInterleavedArmComparison
+experiment=event-report-interleaved-arm-comparison-inprocess-v1
+started_utc=2026-11-23T07:54:24.273946Z
+go=go1.26.8 os=darwin arch=arm64 logical_cpus=8 gomaxprocs=8
+cpu="Apple M1" memory_bytes=17179869184 os_product="macOS" os_version="27.2.1" os_build="26B131"
+modules="github.com/consensys/gnark v0.16.4\ngithub.com/consensys/gnark-crypto v0.21.1-0.20260913224755-1409fe592052"
+source_sha256 file=circuit.go digest=64c3abdf1018a5ccb4c1ee825a0682408601be9ed2faba6eb9f98f6ff45a8f98
+source_sha256 file=native.go digest=f01fe4da816d094c44937d82fbd6cdc9251322bc97ac2eb2f35aa59ddf4abcd4
+source_sha256 file=region.go digest=dadc4cbdd04d537c825f10c713a70e8b7cd1aaa7a181aaaef330d39b6993fbd1
+source_sha256 file=accountability.go digest=81133194598b512a363cb9d51937d0bd60033ed2b2c29b941978c0d07f33684a
+source_sha256 file=revocation.go digest=71ffe37187da580a5268b8f960a6ea94f6d3a3224eccf065576b1c37e2bbb30d
+source_sha256 file=gateway.go digest=d76caa34130ddac1f18cdd7df9d36889d98aed7386be997443edd07764f041bb
+source_sha256 file=region_gateway.go digest=3fcbd88f3361cb0f16f82a1c3736c617892f3463f3048f5861134be1e5bfac63
+source_sha256 file=accountability_gateway.go digest=385cd28c810e5c5965a60b334c70b9a94e16a3bb4836b1cd10ca19cd6ca3c8f8
+source_sha256 file=active_gateway.go digest=c1db862e85474f84b2824cf0be4d54d9b1b76b3ee48ea13e759b9263a7cf9b9f
+source_sha256 file=transport.go digest=f2b6ec485baf79878adcd70359db9d573d091ac5442eba956b8ffb51f93459ce
+source_sha256 file=kem_transport.go digest=d1d086521b192e4180294593848a0d7f1643d00388be82180c602eef5abcf601
+source_sha256 file=context_hiding_candidate_test.go digest=23fdd10a91cd07fcc7b23f8e80fd2e79c7cad5df99f9fc51f554499783a4303e
+source_sha256 file=context_hiding_extensions_test.go digest=da937bf2b872f5032cb801beca2424b3ce0bee8929cb5cfdc9d600f2cea47aef
+source_sha256 file=load_realism_test.go digest=4fbb94901a6982496964b677e8e6e344216c4d6920f8558c14e497aaf0da2b2d
+source_sha256 file=go.mod digest=39160b37ac4b02a6ae2fec2a38f70efabcd116a14398a937fc35d67b7d0c4882
+source_sha256 file=go.sum digest=aba34ea39ebaa04131ea6f715080bfccd98045a77c28a1b64c3734b618366bb5
+backend=Groth16 curve=BN254 region_depth=8 active_depth=8 arms=shared_active,hidden_active runs=100 warmup=1 ordering=random_per_round
+model=single_process_inprocess_synthetic; components per run as in protocol_comparison: challenge issue, envelope seal, fixture sign and witness, prove, serialize, gateway verify+decrypt+dedup; total_to_accept excludes compile, setup, enrollment and network
+ARM shared_active constraints=68592 compile_ns=74638834 setup_ns=4193166708
+ARM hidden_active constraints=68262 compile_ns=71219208 setup_ns=4168151500
+warmup arm=shared_active total_to_accept_ns=408944459
+warmup arm=hidden_active total_to_accept_ns=404831417
+round,arm,slot,first,prove_ns,total_to_accept_ns
+1,shared_active,0,shared,414224417,416534291
+1,hidden_active,1,shared,405922417,408352000
+2,hidden_active,0,hidden,399827125,402249417
+2,shared_active,1,hidden,404547583,406839334
+3,shared_active,0,shared,422113042,424438792
+3,hidden_active,1,shared,399661583,402081042
+4,hidden_active,0,hidden,389811875,392256958
+4,shared_active,1,hidden,394355708,396655458
+5,shared_active,0,shared,397138458,399421167
+5,hidden_active,1,shared,400644250,403064125
+6,shared_active,0,shared,383032542,385311375
+6,hidden_active,1,shared,389369916,391812334
+7,shared_active,0,shared,415305458,417586125
+7,hidden_active,1,shared,396482166,398935750
+8,shared_active,0,shared,387594500,389874041
+8,hidden_active,1,shared,410810834,413253750
+9,shared_active,0,shared,394345500,396645417
+9,hidden_active,1,shared,382700333,385124500
+10,hidden_active,0,hidden,390757083,393209458
+10,shared_active,1,hidden,399489958,401783416
+11,hidden_active,0,hidden,391858916,394276042
+11,shared_active,1,hidden,412279209,414596833
+12,hidden_active,0,hidden,398126375,400545875
+12,shared_active,1,hidden,417490958,419774583
+13,shared_active,0,shared,398070375,400405917
+13,hidden_active,1,shared,397519458,399988666
+14,shared_active,0,shared,397875750,400154917
+14,hidden_active,1,shared,411490708,413937459
+15,hidden_active,0,hidden,399222958,401648208
+15,shared_active,1,hidden,402927500,405240792
+16,shared_active,0,shared,397394750,399688000
+16,hidden_active,1,shared,399487209,401919000
+17,hidden_active,0,hidden,382924750,385354167
+17,shared_active,1,hidden,396378209,398680917
+18,hidden_active,0,hidden,401996208,404419958
+18,shared_active,1,hidden,396860958,399161792
+19,shared_active,0,shared,392904042,395193500
+19,hidden_active,1,shared,393758042,396213083
+20,shared_active,0,shared,396967833,399291584
+20,hidden_active,1,shared,384780125,387193291
+21,hidden_active,0,hidden,391250750,393679458
+21,shared_active,1,hidden,393834208,396158625
+22,hidden_active,0,hidden,404770666,407207500
+22,shared_active,1,hidden,377315084,379587750
+23,shared_active,0,shared,413145333,415440208
+23,hidden_active,1,shared,394377791,396786125
+24,hidden_active,0,hidden,385660834,388068541
+24,shared_active,1,hidden,393787583,396090625
+25,hidden_active,0,hidden,393884250,396325083
+25,shared_active,1,hidden,388997375,391287042
+26,hidden_active,0,hidden,395660292,398085500
+26,shared_active,1,hidden,427560958,429846750
+27,hidden_active,0,hidden,464925917,467410417
+27,shared_active,1,hidden,428649583,430971958
+28,shared_active,0,shared,400734708,403032334
+28,hidden_active,1,shared,392237000,394710625
+29,hidden_active,0,hidden,413154125,415647833
+29,shared_active,1,hidden,410955250,413242791
+30,hidden_active,0,hidden,418241916,420657708
+30,shared_active,1,hidden,414941291,417282417
+31,hidden_active,0,hidden,418830000,421352416
+31,shared_active,1,hidden,381352084,383709875
+32,hidden_active,0,hidden,387248792,389757958
+32,shared_active,1,hidden,376806541,379108000
+33,shared_active,0,shared,390409417,392717667
+33,hidden_active,1,shared,389527375,391977792
+34,shared_active,0,shared,394112292,396392667
+34,hidden_active,1,shared,396755583,399235541
+35,shared_active,0,shared,396363666,398642500
+35,hidden_active,1,shared,395069458,397504333
+36,hidden_active,0,hidden,403863834,406287084
+36,shared_active,1,hidden,385375500,387642416
+37,hidden_active,0,hidden,406782041,409200625
+37,shared_active,1,hidden,383531042,385897875
+38,shared_active,0,shared,397790667,400080333
+38,hidden_active,1,shared,393815750,396263958
+39,shared_active,0,shared,392611292,395000375
+39,hidden_active,1,shared,407411416,409888791
+40,shared_active,0,shared,392109958,394425750
+40,hidden_active,1,shared,416440625,418888000
+41,shared_active,0,shared,395130750,397400250
+41,hidden_active,1,shared,389800333,392221375
+42,shared_active,0,shared,406524000,408855958
+42,hidden_active,1,shared,400176791,402594708
+43,hidden_active,0,hidden,408292000,410723250
+43,shared_active,1,hidden,399317625,401601417
+44,shared_active,0,shared,397940291,400250417
+44,hidden_active,1,shared,404347291,406807834
+45,shared_active,0,shared,411136166,413430166
+45,hidden_active,1,shared,402437916,404856541
+46,hidden_active,0,hidden,389692250,392126334
+46,shared_active,1,hidden,382068958,384363750
+47,hidden_active,0,hidden,390293292,392728875
+47,shared_active,1,hidden,397720334,400006375
+48,hidden_active,0,hidden,388154709,390566042
+48,shared_active,1,hidden,403805875,406123250
+49,shared_active,0,shared,395006625,397269458
+49,hidden_active,1,shared,421993958,424424209
+50,shared_active,0,shared,426031292,428404209
+50,hidden_active,1,shared,381063208,383500000
+51,hidden_active,0,hidden,404105458,406533000
+51,shared_active,1,hidden,420253916,422540208
+52,shared_active,0,shared,418289875,420578583
+52,hidden_active,1,shared,384926334,387354666
+53,shared_active,0,shared,404379459,406687042
+53,hidden_active,1,shared,400728208,403177916
+54,hidden_active,0,hidden,401564583,403987417
+54,shared_active,1,hidden,391709375,393964417
+55,shared_active,0,shared,409017333,411380708
+55,hidden_active,1,shared,392602208,395046208
+56,hidden_active,0,hidden,411865792,414307083
+56,shared_active,1,hidden,406444542,408830625
+57,shared_active,0,shared,397619000,399942000
+57,hidden_active,1,shared,397796084,400284500
+58,hidden_active,0,hidden,396688166,399126708
+58,shared_active,1,hidden,377295792,379574125
+59,shared_active,0,shared,433211583,435563459
+59,hidden_active,1,shared,392438541,394904209
+60,hidden_active,0,hidden,391083000,393505417
+60,shared_active,1,hidden,383199625,385511833
+61,hidden_active,0,hidden,408179208,410619083
+61,shared_active,1,hidden,395838833,398190375
+62,hidden_active,0,hidden,416117125,418578500
+62,shared_active,1,hidden,391388500,393691667
+63,hidden_active,0,hidden,395125917,397595458
+63,shared_active,1,hidden,393178708,395503167
+64,shared_active,0,shared,410309458,412673834
+64,hidden_active,1,shared,400621292,403081000
+65,shared_active,0,shared,383058375,385377542
+65,hidden_active,1,shared,396959958,399392083
+66,shared_active,0,shared,406015708,408457250
+66,hidden_active,1,shared,389673917,392250041
+67,shared_active,0,shared,388647792,390967667
+67,hidden_active,1,shared,398549333,400966125
+68,hidden_active,0,hidden,400241584,402712375
+68,shared_active,1,hidden,389741125,392051542
+69,hidden_active,0,hidden,404743958,407170542
+69,shared_active,1,hidden,398622042,400908208
+70,shared_active,0,shared,398318791,400609083
+70,hidden_active,1,shared,404331375,406771750
+71,hidden_active,0,hidden,403912916,406367792
+71,shared_active,1,hidden,389530333,391848416
+72,hidden_active,0,hidden,401965834,404409208
+72,shared_active,1,hidden,407402208,409725875
+73,hidden_active,0,hidden,400761542,403210458
+73,shared_active,1,hidden,396368458,398684500
+74,hidden_active,0,hidden,389907875,392371042
+74,shared_active,1,hidden,407195250,409490750
+75,shared_active,0,shared,383188375,385477708
+75,hidden_active,1,shared,402740292,405204917
+76,hidden_active,0,hidden,378804666,381275542
+76,shared_active,1,hidden,401558291,404105750
+77,shared_active,0,shared,540485708,544602500
+77,hidden_active,1,shared,437442708,439946292
+78,hidden_active,0,hidden,384951416,387409542
+78,shared_active,1,hidden,395195000,397487750
+79,hidden_active,0,hidden,406102167,408512500
+79,shared_active,1,hidden,409202958,411501917
+80,shared_active,0,shared,453999584,456347292
+80,hidden_active,1,shared,399864000,402322375
+81,hidden_active,0,hidden,396818000,399271625
+81,shared_active,1,hidden,394601625,396891541
+82,shared_active,0,shared,390808791,393113666
+82,hidden_active,1,shared,396251166,398771458
+83,shared_active,0,shared,391986250,394325083
+83,hidden_active,1,shared,394402666,396877792
+84,shared_active,0,shared,387009250,389334667
+84,hidden_active,1,shared,385888250,388331542
+85,hidden_active,0,hidden,389214125,391647250
+85,shared_active,1,hidden,401852834,404156250
+86,shared_active,0,shared,382176041,384526875
+86,hidden_active,1,shared,400436542,402873042
+87,shared_active,0,shared,397355417,399667250
+87,hidden_active,1,shared,413957291,416419666
+88,hidden_active,0,hidden,406369667,408817833
+88,shared_active,1,hidden,398946708,401258875
+89,hidden_active,0,hidden,402428875,404860208
+89,shared_active,1,hidden,395170958,397504542
+90,shared_active,0,shared,397880750,400336125
+90,hidden_active,1,shared,401876917,404318959
+91,hidden_active,0,hidden,407769250,410212666
+91,shared_active,1,hidden,404538500,406846250
+92,hidden_active,0,hidden,400785667,403328458
+92,shared_active,1,hidden,399537250,401918375
+93,hidden_active,0,hidden,399600667,402054708
+93,shared_active,1,hidden,395904417,398199417
+94,shared_active,0,shared,398552875,400845666
+94,hidden_active,1,shared,396445334,398879750
+95,hidden_active,0,hidden,402417750,404858708
+95,shared_active,1,hidden,423640083,425982000
+96,hidden_active,0,hidden,399948084,402414625
+96,shared_active,1,hidden,401491750,403809917
+97,shared_active,0,shared,381489125,384075417
+97,hidden_active,1,shared,400478333,403238833
+98,shared_active,0,shared,393285666,395615958
+98,hidden_active,1,shared,397702542,400155333
+99,hidden_active,0,hidden,410625750,413085667
+99,shared_active,1,hidden,405319042,407609500
+100,hidden_active,0,hidden,390106334,392544959
+100,shared_active,1,hidden,394294583,396658333
+SCOPE randomized per-round order within one session; every round runs both arms for the same participant index; no new circuits, setups or fixtures beyond the two arms
+completed_utc=2026-11-23T07:55:54.278307Z
+--- PASS: TestInterleavedArmComparison (90.01s)
+PASS
+ok  	eventreport	90.372s

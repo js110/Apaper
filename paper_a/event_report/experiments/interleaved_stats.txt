@@ -1,0 +1,13 @@
+file=experiments/interleaved_comparison.log rounds=100 order_first_shared=48/100
+total_to_accept shared_active: n=100 mean=403.26 sd=19.29 median=399.81 (ms)
+total_to_accept hidden_active: n=100 mean=402.07 sd=11.65 median=401.99 (ms)
+prove         shared_active: n=100 mean=400.93 sd=19.15 median=397.51 (ms)
+prove         hidden_active: n=100 mean=399.62 sd=11.65 median=399.54 (ms)
+[total_to_accept] diff(shared-hidden): mean=+1.20 ms 95%CI~[-2.62,+5.01] median=-1.75
+[total_to_accept] paired t=0.63 df=99 p=0.5314; Wilcoxon W=2476 z=-0.17 p=0.8662
+[total_to_accept] Welch t=0.53 df=162.8 p=0.5956; Mann-Whitney U=4823 z=-0.43 p=0.6654
+[prove] diff(shared-hidden): mean=+1.31 ms 95%CI~[-2.48,+5.11] median=-1.60
+[prove] paired t=0.69 df=99 p=0.4907; Wilcoxon W=2497 z=-0.10 p=0.9233
+[prove] Welch t=0.59 df=163.4 p=0.5590; Mann-Whitney U=4862 z=-0.34 p=0.7360
+order_effect shared_active: first=405.55(48) second=401.16(52) Welch p=0.2702
+order_effect hidden_active: first=401.29(48) second=402.78(52) Welch p=0.5227
