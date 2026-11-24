@@ -26,6 +26,7 @@
 !paper_a/event_report/experiments/protocol_comparison.log
 !paper_a/event_report/experiments/interleaved_comparison.log
 !paper_a/event_report/experiments/gateway_load_memory.log
+!paper_a/event_report/experiments/nonsnark_baseline.log
 
 .DS_Store
 __pycache__/

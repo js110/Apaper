@@ -170,5 +170,22 @@
   "png_dpi": 400,
   "pdf_fonttype": 42,
   "publisher_requirements": "PENDING — target journal not yet chosen"
+ },
+ "fig11_nonsnark_baseline": {
+  "caption_zh": "图 13 两条匿名非零知识基线与零知识臂的四臂对照：分角色耗时、网关侧代价与单份提交通信量。",
+  "raw_data": [
+   "experiments/nonsnark_baseline.log"
+  ],
+  "transformations": [
+   "ns→ms；均值与样本标准差 ddof=1，n=30；(a) 参与者侧为请求签名与出示导出（BBS+）或盲化与令牌合成（Privacy Pass）之和；字节数取日志恒定整数"
+  ],
+  "uncertainty": "样本标准差，n=30；字节数为确定性计数",
+  "encoding_notes": "零基线柱状/堆叠条；三面板量程各自独立且 (a) 不含零知识臂，量程差异已在图注与脚注声明；每柱直接标注数值；(b) 叠加逐次原始测量；颜色非唯一线索",
+  "palette": "Okabe-Ito",
+  "fonts": "Times New Roman + Songti SC fallback",
+  "width_mm": 180,
+  "png_dpi": 400,
+  "pdf_fonttype": 42,
+  "publisher_requirements": "PENDING — target journal not yet chosen"
  }
 }

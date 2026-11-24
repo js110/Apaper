@@ -1,0 +1,84 @@
+file=experiments/nonsnark_baseline.log
+started_utc=2026-11-24T01:56:49.605189Z completed_utc=2026-11-24T01:57:06.952678Z
+go=go1.26.8 os=darwin arch=arm64 logical_cpus=8 gomaxprocs=8 modules="github.com/consensys/gnark v0.16.4\ngithub.com/consensys/gnark-crypto v0.21.1-0.20260913224755-1409fe592052\ngithub.com/cloudflare/circl v1.6.5\ngithub.com/trustbloc/bbs-signature-go v1.0.4"
+backend=Groth16 curve=BN254 curve_bbs=BLS12-381 curve_pp=P-384-SHA384 region_depth=8 region_cells=256 active_depth=8 active_credentials=256 runs=30 warmup=1
+round_trips=3_for_zk_bbs_and_trusted_arms, 4_for_privacy_pass (challenge, issuance, submission, issuer redemption RPC)
+model=single_process_sequential_synthetic; excludes network, physical event observation, initial key enrollment, setup amortization, trusted clock implementation, disk storage; every arm re-signs credential, issuer certificate and receipt per iteration
+
+== arm=hidden_active n=30 constraints=68262 compile_ns=75332625 setup_ns=4036545292
+  total_to_accept_ns                     mean=   396.570 sd=   8.348 median=   397.005 min=   375.849 max=   412.149 ms
+  challenge_ns                           mean=     0.007 sd=   0.002 median=     0.007 min=     0.005 max=     0.012 ms
+  encrypt_ns                             mean=     0.036 sd=   0.000 median=     0.036 min=     0.035 max=     0.037 ms
+  sign_and_witness_ns                    mean=     1.072 sd=   0.010 median=     1.071 min=     1.060 max=     1.113 ms
+  prove_ns                               mean=   394.108 sd=   8.345 median=   394.555 min=   373.417 max=   409.656 ms
+  gateway_verify_decrypt_dedup_ns        mean=     1.336 sd=   0.053 median=     1.326 min=     1.300 max=     1.597 ms
+  plaintext_bytes                        constant=40
+  envelope_bytes                         constant=1158
+  proof_bytes                            constant=164
+  nonce_ascii_bytes                      constant=64
+  component_sum_bytes                    constant=1482
+
+== arm=bbs_credential n=30 constraints=0 compile_ns=0 setup_ns=0 curve=BLS12-381 attributes=8 disclosed=7 issuer_pub_bytes=96
+  total_to_accept_ns                     mean=    14.052 sd=   0.120 median=    14.027 min=    13.946 max=    14.605 ms
+  challenge_ns                           mean=     0.001 sd=   0.001 median=     0.001 min=     0.001 max=     0.007 ms
+  request_sign_ns                        mean=     0.109 sd=   0.003 median=     0.108 min=     0.106 max=     0.122 ms
+  issuer_verify_and_sign_ns              mean=     2.938 sd=   0.034 median=     2.930 min=     2.906 max=     3.076 ms
+  derive_presentation_ns                 mean=     6.183 sd=   0.057 median=     6.175 min=     6.114 max=     6.436 ms
+  gateway_verify_dedup_ns                mean=     4.787 sd=   0.040 median=     4.780 min=     4.751 max=     4.984 ms
+  plaintext_bytes                        constant=40
+  credential_bytes                       constant=112
+  presentation_bytes                     constant=416
+  disclosed_bytes                        constant=224
+  envelope_bytes                         constant=1158
+  nonce_ascii_bytes                      constant=64
+  issuer_request_bytes                   constant=172
+  component_sum_bytes                    constant=704
+  RESULT arm=bbs_credential tampered_report=rejected forged_nickname=rejected report_mismatch=rejected valid_submission=accepted second_credential_same_task=rejected cross_task_credential=rejected revoked_identity=rejected revoked_record_retained_at_gateway=true issuer_nickname_matches_gateway=true issuer_other_task_nickname=derived accepted_records=33
+  RESULT arm=bbs_credential reverify_same_presentation_agrees=0of5 (library mutates shared generator state across VerifyProof calls)
+  STRUCTURE arm=bbs_credential issuer sees identity key, challenge, exact event and report digest; gateway sees the exact event in cleartext and a task-scoped nickname; presentation is untraceable inside the task set; no active-set membership proof at the gateway; revocation enforced only at issuance
+
+== arm=privacy_pass n=30 constraints=0 compile_ns=0 setup_ns=0 token_type=0x0001 suite=P384-SHA384 Ne=49 Ns=48 Nk=48
+  total_to_accept_ns                     mean=     6.581 sd=   0.021 median=     6.579 min=     6.553 max=     6.652 ms
+  challenge_ns                           mean=     0.001 sd=   0.001 median=     0.001 min=     0.001 max=     0.003 ms
+  blind_ns                               mean=     0.624 sd=   0.006 median=     0.623 min=     0.618 max=     0.640 ms
+  issuer_evaluate_ns                     mean=     2.200 sd=   0.016 median=     2.195 min=     2.189 max=     2.274 ms
+  finalize_ns                            mean=     3.133 sd=   0.009 median=     3.132 min=     3.122 max=     3.160 ms
+  issuer_redeem_ns                       mean=     0.619 sd=   0.010 median=     0.618 min=     0.613 max=     0.668 ms
+  gateway_state_ns                       mean=     0.000 sd=   0.000 median=     0.000 min=     0.000 max=     0.001 ms
+  plaintext_bytes                        constant=40
+  token_request_bytes                    constant=52
+  token_response_bytes                   constant=145
+  token_bytes                            constant=146
+  envelope_bytes                         constant=1158
+  nonce_ascii_bytes                      constant=64
+  component_sum_bytes                    constant=1496
+  RESULT arm=privacy_pass issuance_request_leaks=0of7 gateway_accepts_forged_without_issuer_key=accepted issuer_redeem_rejects_forged=rejected redeem_valid=accepted replay_rejected_by_issuer=rejected replay_at_gateway_without_callback=accepted replay_at_gateway_with_callback=rejected tokens_per_challenge_redeemable=3of3
+  STRUCTURE arm=privacy_pass issuer input is a blinded element only; the token binds to SHA256(challenge) and to nothing else, so report bytes and event coordinates must travel as cleartext metadata that the redeemer reads; the Origin cannot verify a token without the issuer private key, so redemption is an extra round trip and the single-use state lives at the issuer; there is no per-participant quota and no credential-membership proof
+
+== arm=trusted_baseline n=30 constraints=0 compile_ns=0 setup_ns=0
+  total_to_accept_ns                     mean=     0.698 sd=   0.004 median=     0.697 min=     0.694 max=     0.706 ms
+  challenge_ns                           mean=     0.001 sd=   0.000 median=     0.001 min=     0.001 max=     0.001 ms
+  request_sign_ns                        mean=     0.106 sd=   0.002 median=     0.106 min=     0.105 max=     0.113 ms
+  issuer_verify_and_sign_ns              mean=     0.358 sd=   0.004 median=     0.357 min=     0.354 max=     0.369 ms
+  gateway_verify_dedup_ns                mean=     0.233 sd=   0.002 median=     0.232 min=     0.229 max=     0.240 ms
+  plaintext_bytes                        constant=40
+  receipt_bytes                          constant=172
+  nonce_ascii_bytes                      constant=64
+  request_bytes                          constant=212
+  component_sum_bytes                    constant=276
+
+== pairwise total_to_accept (unpaired, ms)
+  hidden_active vs bbs_credential: mean 396.570 vs 14.052 ratio=28.2x Welch t=250.96 df=29.0 p=5.79e-50; MWU U=900 z=6.65 p=2.87e-11
+  hidden_active vs privacy_pass: mean 396.570 vs 6.581 ratio=60.3x Welch t=255.89 df=29.0 p=3.43e-50; MWU U=900 z=6.65 p=2.87e-11
+  hidden_active vs trusted_baseline: mean 396.570 vs 0.698 ratio=567.9x Welch t=259.75 df=29.0 p=2.22e-50; MWU U=900 z=6.65 p=2.87e-11
+  bbs_credential vs privacy_pass: mean 14.052 vs 6.581 ratio=2.1x Welch t=336.97 df=30.8 p=1.87e-56; MWU U=900 z=6.65 p=2.87e-11
+  bbs_credential vs trusted_baseline: mean 14.052 vs 0.698 ratio=20.1x Welch t=611.06 df=29.1 p=2.82e-61; MWU U=900 z=6.65 p=2.87e-11
+  privacy_pass vs trusted_baseline: mean 6.581 vs 0.698 ratio=9.4x Welch t=1512.02 df=31.2 p=1.69e-77; MWU U=900 z=6.65 p=2.87e-11
+
+== per-submission payload on the wire (bytes, component sum)
+  hidden_active    component_sum=  1482 plaintext=  40 detail=envelope=1158, proof=164, nonce_ascii=64
+  bbs_credential   component_sum=   704 plaintext=  40 detail=credential=112, presentation=416, disclosed=224, envelope=1158, nonce_ascii=64, issuer_request=172
+  privacy_pass     component_sum=  1496 plaintext=  40 detail=token_request=52, token_response=145, token=146, envelope=1158, nonce_ascii=64
+  trusted_baseline component_sum=   276 plaintext=  40 detail=receipt=172, nonce_ascii=64, request=212
+
+scope=SCOPE synthetic in-process comparison; no deployed issuers, no network, no HTTP framing; BLS12-381 and P-384 timings are not attributable to the curve choice relative to the BN254 zero-knowledge arm; BBS+ uses the trustbloc bbs12381g2pub implementation and Privacy Pass uses cloudflare/circl oprf

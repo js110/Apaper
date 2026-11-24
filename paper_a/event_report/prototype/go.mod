@@ -8,15 +8,22 @@ require (
 )
 
 require (
+	github.com/IBM/mathlib v0.0.3-0.20260123144934-21c357e3e46f // indirect
 	github.com/bits-and-blooms/bitset v1.24.6 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
+	github.com/bwesterb/go-ristretto v1.2.4 // indirect
+	github.com/cloudflare/circl v1.6.5 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.2 // indirect
 	github.com/google/pprof v0.0.0-20260802141513-ef3492d7dac3 // indirect
+	github.com/hyperledger/fabric-amcl v0.0.0-20230602173724-9e02669dceb2 // indirect
 	github.com/ingonyama-zk/icicle-gnark/v3 v3.2.2 // indirect
+	github.com/kilic/bls12-381 v0.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/ronanh/intcomp v1.1.1 // indirect
 	github.com/rs/zerolog v1.35.1 // indirect
+	github.com/trustbloc/bbs-signature-go v1.0.4 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	golang.org/x/crypto v0.54.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect

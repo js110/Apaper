@@ -242,6 +242,16 @@ data["protocol_comparison_structure"] = {
         (EXP / "protocol_comparison.log").read_text())}
 data["provenance"]["protocol_comparison.log"] = meta("protocol_comparison.log")["source_sha256"]
 
+nonsnark, nonsnark_results = variant_sections("nonsnark_baseline.log", "ARM")
+data["nonsnark_baseline"] = nonsnark
+data["nonsnark_baseline_results"] = nonsnark_results
+_ns_txt = (EXP / "nonsnark_baseline.log").read_text()
+data["nonsnark_baseline_structure"] = {
+    m.group(1): m.group(2).strip()
+    for m in re.finditer(r"STRUCTURE arm=(\w+) (.*)", _ns_txt)}
+data["nonsnark_baseline_round_trips"] = re.search(r"round_trips=(.*)", _ns_txt).group(1).strip()
+data["provenance"]["nonsnark_baseline.log"] = meta("nonsnark_baseline.log")["source_sha256"]
+
 (OUT / "measurements.json").write_text(
     json.dumps(data, ensure_ascii=False, indent=1))
 
@@ -354,5 +364,52 @@ for k in ("shared_active", "hidden_active", "trusted_baseline"):
 for line in data["protocol_comparison_results"]:
     print(" ", line)
 
+print("\n=== §5.9 非 SNARK 匿名基线（nonsnark_baseline.log, n=30, 同一会话）===")
+for k in ("hidden_active", "bbs_credential", "privacy_pass", "trusted_baseline"):
+    c = data["nonsnark_baseline"][k]
+    print(f"  {k:16s} total_to_accept={fmt(c['total_to_accept_ns'])} ms "
+          f"component_sum={c['component_sum_bytes']} B")
+    for col in [x for x in c["columns"][1:] if x.endswith("_ns") and x != "total_to_accept_ns"]:
+        print(f"  {'':16s} {col:34s} {fmt(c[col], 3)} ms")
+for line in data["nonsnark_baseline_results"]:
+    print(" ", line)
+for k, v in data["nonsnark_baseline_structure"].items():
+    print(f"  STRUCTURE {k}: {v}")
+print(f"  round_trips={data['nonsnark_baseline_round_trips']}")
+_ns = data["nonsnark_baseline"]
+_ratio = {"zk/bbs": _ns["hidden_active"]["total_to_accept_ns"]["mean"] / _ns["bbs_credential"]["total_to_accept_ns"]["mean"],
+          "zk/pp": _ns["hidden_active"]["total_to_accept_ns"]["mean"] / _ns["privacy_pass"]["total_to_accept_ns"]["mean"],
+          "zk/base": _ns["hidden_active"]["total_to_accept_ns"]["mean"] / _ns["trusted_baseline"]["total_to_accept_ns"]["mean"],
+          "gw_bbs/gw_zk": _ns["bbs_credential"]["gateway_verify_dedup_ns"]["mean"] / _ns["hidden_active"]["gateway_verify_decrypt_dedup_ns"]["mean"]}
+for k, v in _ratio.items():
+    print(f"  ratio {k:12s} = {v:.1f}x")
+for k, nd, exp in [("hidden_active", 2, "396.57±8.35"), ("bbs_credential", 2, "14.05±0.12"),
+                   ("privacy_pass", 2, "6.58±0.02"), ("trusted_baseline", 3, "0.698±0.004")]:
+    got = fmt(_ns[k]["total_to_accept_ns"], nd)
+    ok &= got == exp
+    print(f"  total_to_accept {k:16s} {'OK ' if got == exp else 'DIFF'} got={got} exp={exp}")
+for k, exp in [("hidden_active", 1482), ("bbs_credential", 704),
+               ("privacy_pass", 1496), ("trusted_baseline", 276)]:
+    got = _ns[k]["component_sum_bytes"][0]
+    ok &= got == exp
+    print(f"  component_sum {k:16s} {'OK ' if got == exp else 'DIFF'} got={got} exp={exp}")
+for k, col, nd, exp in [("hidden_active", "prove_ns", 2, "394.11±8.34"),
+                        ("hidden_active", "gateway_verify_decrypt_dedup_ns", 3, "1.336±0.053"),
+                        ("bbs_credential", "issuer_verify_and_sign_ns", 3, "2.938±0.034"),
+                        ("bbs_credential", "derive_presentation_ns", 3, "6.183±0.057"),
+                        ("bbs_credential", "gateway_verify_dedup_ns", 3, "4.787±0.040"),
+                        ("bbs_credential", "request_sign_ns", 3, "0.109±0.003"),
+                        ("privacy_pass", "blind_ns", 3, "0.624±0.006"),
+                        ("privacy_pass", "issuer_evaluate_ns", 3, "2.200±0.016"),
+                        ("privacy_pass", "finalize_ns", 3, "3.133±0.009"),
+                        ("privacy_pass", "issuer_redeem_ns", 3, "0.619±0.010")]:
+    got = fmt(_ns[k][col], nd)
+    ok &= got == exp
+    print(f"  phase {k}:{col:32s} {'OK ' if got == exp else 'DIFF'} got={got} exp={exp}")
+_gw = _ns["bbs_credential"]["gateway_verify_dedup_ns"]["mean"] / _ns["hidden_active"]["gateway_verify_decrypt_dedup_ns"]["mean"]
+print(f"  网关侧 BBS/ZK = {_gw:.1f}x (稿中 约3.6)")
+ok &= round(_gw, 1) == 3.6
+print(f"  与 §5.8 隐藏臂差 = "
+      f"{abs(_ns['hidden_active']['total_to_accept_ns']['mean'] - data['protocol_comparison']['hidden_active']['total_to_accept_ns']['mean']):.2f} ms")
 print("\nALL MATCH" if ok else "\n*** MISMATCH — 必须先查清再绘图 ***")
 print("wrote", OUT / "measurements.json")

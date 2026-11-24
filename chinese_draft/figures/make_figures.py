@@ -740,11 +740,127 @@ def fig10():
            "零基线柱状/堆叠条；每柱直接标注数值；(c) 下方文字注明各臂签发者实际可见字段，颜色非唯一线索")
 
 
+# ------------------------------------------- 图11 非 SNARK 匿名基线对照
+def fig11():
+    C = D["nonsnark_baseline"]
+    zk, bbs, pp, base = C["hidden_active"], C["bbs_credential"], C["privacy_pass"], C["trusted_baseline"]
+    arms = ["bbs_credential", "privacy_pass", "trusted_baseline"]
+    labels = ["BBS+ 匿名凭证", "Privacy Pass 令牌", "可信签发基线"]
+
+    fig = plt.figure(figsize=(W, 112 * MM))
+    ax_a = fig.add_axes([0.072, 0.605, 0.890, 0.300])
+    ax_b = fig.add_axes([0.072, 0.150, 0.415, 0.290])
+    ax_c = fig.add_axes([0.575, 0.150, 0.387, 0.290])
+
+    # (a) role-split latency of the three non-SNARK arms
+    ax = ax_a
+    parts = {
+        "bbs_credential": [("参与者侧", bbs["request_sign_ns"]["mean"] + bbs["derive_presentation_ns"]["mean"], BLUE),
+                           ("签发者侧", bbs["issuer_verify_and_sign_ns"]["mean"], VERM),
+                           ("网关侧", bbs["gateway_verify_dedup_ns"]["mean"], GREEN)],
+        "privacy_pass": [("参与者侧", pp["blind_ns"]["mean"] + pp["finalize_ns"]["mean"], BLUE),
+                         ("签发者侧", pp["issuer_evaluate_ns"]["mean"], VERM),
+                         ("网关侧", pp["gateway_state_ns"]["mean"], GREEN)],
+        "trusted_baseline": [("参与者侧", base["request_sign_ns"]["mean"], BLUE),
+                             ("签发者侧", base["issuer_verify_and_sign_ns"]["mean"], VERM),
+                             ("网关侧", base["gateway_verify_dedup_ns"]["mean"], GREEN)],
+    }
+    x = np.arange(3)
+    for i, a in enumerate(arms):
+        left = 0.0
+        for name, v, col in parts[a]:
+            ax.bar(i, v, bottom=left, width=0.54, color=col, edgecolor="white",
+                   linewidth=0.8, zorder=2)
+            if v >= 0.55:
+                ax.text(i, left + v / 2, f"{v:.2f}", ha="center", va="center",
+                        color="white", fontsize=7.6, fontweight="bold", zorder=3)
+            left += v
+        tot = C[a]["total_to_accept_ns"]
+        ax.errorbar(i, tot["mean"], yerr=tot["sd"], fmt="none", ecolor=INK,
+                    elinewidth=1.0, capsize=3.5, capthick=1.0, zorder=4)
+        ax.text(i, tot["mean"] + tot["sd"] + 0.35, f"{tot['mean']:.2f}",
+                ha="center", va="bottom", fontsize=8.4, fontweight="bold")
+    ax.set_ylim(0, 18.5)
+    ax.set_xlim(-0.62, 2.62)
+    ax.set_xticks(x, labels, fontsize=7.6)
+    ax.set_ylabel("挑战至受理总耗时 (ms)")
+    ax.set_title("(a) 非零知识三臂分角色耗时", loc="left")
+    ax.grid(axis="x", visible=False)
+    if pp["issuer_redeem_ns"]["mean"] > 0:
+        ax.annotate(f"Privacy Pass 另有签发者兑换 {pp['issuer_redeem_ns']['mean']:.3f} ms（第 4 次往返，已计入总耗时）",
+                    xy=(1, parts["privacy_pass"][0][1] + parts["privacy_pass"][1][1] / 2),
+                    xytext=(-0.55, 17.2), ha="left",
+                    arrowprops=dict(arrowstyle="-", lw=0.7, color=GREY,
+                                    connectionstyle="arc3,rad=0.22"))
+
+    # (b) gateway-side cost per submission, all four arms
+    ax = ax_b
+    gw = [(bbs, "gateway_verify_dedup_ns"), (pp, "gateway_state_ns"),
+          (zk, "gateway_verify_decrypt_dedup_ns"), (base, "gateway_verify_dedup_ns")]
+    gw_labels = ["BBS+\n出示验证", "Privacy Pass\n字段检查", "隐藏上下文\n活跃版", "可信签发\n基线"]
+    gw_cols = [VERM, PURPLE, BLUE, GREEN]
+    gx = np.arange(4)
+    means = [arm[col]["mean"] for arm, col in gw]
+    sds = [arm[col]["sd"] for arm, col in gw]
+    ax.bar(gx, means, width=0.56, color=gw_cols, edgecolor="white", linewidth=0.8, zorder=2)
+    ax.errorbar(gx, means, yerr=sds, fmt="none", ecolor=INK, elinewidth=1.0,
+                capsize=3.5, capthick=1.0, zorder=4)
+    for i, (arm, col) in enumerate(gw):
+        raw_jitter(ax, i, arm[col + "_raw_ms"], "o", 0.13, seed=11 + i)
+        nd = 3 if means[i] < 10 else 2
+        ax.text(i, means[i] + sds[i] + 0.12, f"{means[i]:.{nd}f}", ha="center",
+                va="bottom", fontsize=8.2, fontweight="bold")
+    ax.set_ylim(0, 5.9)
+    ax.set_xlim(-0.62, 3.62)
+    ax.set_xticks(gx, gw_labels, fontsize=7.6)
+    ax.set_ylabel("网关侧单份耗时 (ms)")
+    ax.set_title("(b) 网关侧验证代价", loc="left")
+    ax.grid(axis="x", visible=False)
+
+    # (c) submission payload, all four arms
+    ax = ax_c
+    sums = [bbs["component_sum_bytes"][0], pp["component_sum_bytes"][0],
+            zk["component_sum_bytes"][0], base["component_sum_bytes"][0]]
+    notes = [f"{bbs['component_sum_bytes'][0]:,}\n另需报告明文\n{bbs['plaintext_bytes'][0]} B",
+             f"{pp['component_sum_bytes'][0]:,}",
+             f"{zk['component_sum_bytes'][0]:,}",
+             f"{base['component_sum_bytes'][0]:,}"]
+    ax.bar(gx, sums, width=0.56, color=gw_cols, edgecolor="white", linewidth=0.8, zorder=2)
+    for i, v in enumerate(sums):
+        ax.text(i, v + 40, notes[i], ha="center", va="bottom", fontsize=7.6,
+                fontweight="bold", linespacing=1.2)
+    ax.set_ylim(0, 2050)
+    ax.set_xlim(-0.62, 3.62)
+    ax.set_xticks(gx, ["BBS+ 凭证", "Privacy Pass\n令牌", "隐藏上下文\n活跃版", "可信签发\n基线"], fontsize=7.6)
+    ax.set_ylabel("网关提交分量合计 (B)")
+    ax.set_title("(c) 单份提交通信量", loc="left")
+    ax.grid(axis="x", visible=False)
+
+    handles = [Rectangle((0, 0), 1, 1, facecolor=c, edgecolor="white")
+               for c in (BLUE, VERM, GREEN)]
+    fig.legend(handles, ["参与者侧（签名/盲化/出示导出）", "签发者侧（验签与签名）", "网关侧（验证与查重）"],
+               frameon=False, loc="lower center", ncol=3, bbox_to_anchor=(0.5, 0.500),
+               fontsize=7.4, handlelength=1.1, handleheight=0.9,
+               columnspacing=1.6, handletextpad=0.4)
+    footnote(fig, "四臂在同一进程、同一任务形状下顺序测量，每臂一次预热后测 30 次（nonsnark_baseline.log）；误差棒为样本标准差。\n"
+                  f"隐藏上下文活跃臂端到端 {zk['total_to_accept_ns']['mean']:.2f}±{zk['total_to_accept_ns']['sd']:.2f} ms，"
+                  f"为 BBS+ 臂的 {zk['total_to_accept_ns']['mean'] / bbs['total_to_accept_ns']['mean']:.1f} 倍、"
+                  f"Privacy Pass 臂的 {zk['total_to_accept_ns']['mean'] / pp['total_to_accept_ns']['mean']:.1f} 倍，量程与 (a) 不同故不入柱。",
+             y=0.012)
+
+    export(fig, "fig11_nonsnark_baseline",
+           "图 13 两条匿名非零知识基线与零知识臂的四臂对照：分角色耗时、网关侧代价与单份提交通信量。",
+           ["experiments/nonsnark_baseline.log"],
+           ["ns→ms；均值与样本标准差 ddof=1，n=30；(a) 参与者侧为请求签名与出示导出（BBS+）或盲化与令牌合成（Privacy Pass）之和；字节数取日志恒定整数"],
+           "样本标准差，n=30；字节数为确定性计数",
+           "零基线柱状/堆叠条；三面板量程各自独立且 (a) 不含零知识臂，量程差异已在图注与脚注声明；每柱直接标注数值；(b) 叠加逐次原始测量；颜色非唯一线索")
+
+
 if __name__ == "__main__":
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
         print("rendering:")
-        fig2(); fig3(); fig4(); fig5(); fig6(); fig7(); fig8(); fig9(); fig10()
+        fig2(); fig3(); fig4(); fig5(); fig6(); fig7(); fig8(); fig9(); fig10(); fig11()
         glyph = [str(x.message) for x in w
                  if "missing from" in str(x.message).lower()
                  or "glyph" in str(x.message).lower()]
